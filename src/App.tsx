@@ -56,8 +56,11 @@ import {
   LayoutGrid,
   Share2,
   Download,
-  ExternalLink
+  ExternalLink,
+  ShieldCheck,
+  X
 } from 'lucide-react';
+import { LEGAL_DISCLAIMER } from './data/disclaimerAndProcedures';
 
 export default function App() {
   // 1. Estado de búsqueda inicial con sincronización de URL (N.4 y FIL-009)
@@ -139,6 +142,8 @@ export default function App() {
 
   // Drawer de filtros en móviles
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
+  const [isEasyReadMode, setIsEasyReadMode] = useState<boolean>(false);
+  const [isLegalModalOpen, setIsLegalModalOpen] = useState<boolean>(false);
 
   // Notificación breve de ejecución de test
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -310,6 +315,9 @@ export default function App() {
         comparedCount={comparedIds.length}
         passportCount={passportIds.length}
         onOpenTestModal={() => setIsTestModalOpen(true)}
+        onOpenLegalModal={() => setIsLegalModalOpen(true)}
+        isEasyReadMode={isEasyReadMode}
+        onToggleEasyRead={() => setIsEasyReadMode(!isEasyReadMode)}
         onShareLink={handleShareLink}
         onExportCSV={() => downloadResultsCSV(filteredSchools, searchState)}
         onExportJSON={() => downloadResultsJSON(filteredSchools, searchState)}
@@ -497,6 +505,7 @@ export default function App() {
                         school={school}
                         state={searchState}
                         isCompared={comparedIds.includes(school.id)}
+                        isEasyReadMode={isEasyReadMode}
                         onToggleCompare={handleToggleCompare}
                         onOpenDetail={sch => {
                           setSelectedSchool(sch);
@@ -569,29 +578,63 @@ export default function App() {
       </main>
 
       {/* 4. Pie de página Institucional Limpio */}
-      <footer className="no-print bg-white border-t border-slate-200 mt-12 py-6 text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-center sm:text-left">
-            <span className="font-bold text-slate-800">Madrid Educa Apoyo v2.4</span> · Buscador con evidencia oficial y filtros acumulativos
-            <p className="text-[11px] text-slate-400 mt-0.5">
-              Consejería de Educación, Ciencia y Universidades · Comunidad de Madrid · EDUCAbase
-            </p>
-          </div>
+      <footer className="no-print bg-white border-t border-slate-200 mt-12 py-8 text-xs text-slate-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div className="col-span-1 md:col-span-1">
+              <span className="font-bold text-slate-800 text-sm">Madrid Educa Apoyo v2.4</span>
+              <p className="text-[11px] text-slate-400 mt-1">
+                Buscador con evidencia oficial y filtros acumulativos.
+              </p>
+              <p className="text-[10px] text-slate-400 mt-1">
+                Consejería de Educación, Ciencia y Universidades · Comunidad de Madrid · EDUCAbase
+              </p>
+            </div>
+            
+            <div className="col-span-1 md:col-span-2 space-y-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <button onClick={() => setActiveTab('passport')} className="text-left hover:text-blue-900 transition-colors">
+                  <div className="font-semibold text-slate-700">Pasaporte Local</div>
+                  <div className="text-[10px] text-slate-400">Consulta tus centros guardados</div>
+                </button>
+                <button onClick={() => setActiveTab('sources')} className="text-left hover:text-blue-900 transition-colors">
+                  <div className="font-semibold text-slate-700">Fuentes y Datos</div>
+                  <div className="text-[10px] text-slate-400">Resoluciones BOCM y fechas</div>
+                </button>
+                <button onClick={() => setIsLegalModalOpen(true)} className="text-left hover:text-blue-900 transition-colors">
+                  <div className="font-semibold text-slate-700">Metodología y Legal</div>
+                  <div className="text-[10px] text-slate-400">Evidencia A1/A2 y Aviso Legal</div>
+                </button>
+                <button onClick={() => setIsTestModalOpen(true)} className="text-left hover:text-blue-900 transition-colors">
+                  <div className="font-semibold text-slate-700">Pruebas Técnicas</div>
+                  <div className="text-[10px] text-slate-400">Batería de validación FIL-001/012</div>
+                </button>
+              </div>
 
-          <div className="flex items-center gap-4 text-xs font-medium">
-            <button
-              onClick={() => setIsTestModalOpen(true)}
-              className="text-slate-500 hover:text-blue-900 transition-colors cursor-pointer"
-            >
-              Batería de Pruebas FIL-001/012
-            </button>
-            <span>·</span>
-            <button
-              onClick={() => setActiveTab('sources')}
-              className="hover:text-slate-800 transition-colors cursor-pointer"
-            >
-              Fuentes y Vigencia
-            </button>
+              <div>
+                <div className="font-semibold text-slate-700 mb-2">Leyenda de Símbolos</div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                  {[
+                    { tag: 'TEA', color: '#1d4ed8', label: 'TEA' },
+                    { tag: 'AUD', color: '#0284c7', label: 'Auditiva' },
+                    { tag: 'MOT', color: '#7c3aed', label: 'Motora' },
+                    { tag: 'VIS', color: '#2563eb', label: 'Visual' },
+                    { tag: 'AAC', color: '#9333ea', label: 'Altas Cap.' }
+                  ].map(item => (
+                    <div key={item.tag} className="flex items-center gap-2 text-[10px] text-slate-600">
+                      <div className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold text-white" style={{ backgroundColor: item.color }}>
+                        {item.tag}
+                      </div>
+                      <span>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-slate-100 pt-6 text-[10px] text-slate-400 text-center">
+            No constituyen el registro oficial de la Consejería de Educación. Función puramente orientadora.
           </div>
         </div>
       </footer>
@@ -604,6 +647,7 @@ export default function App() {
         initialTab={modalInitialTab}
         isCompared={selectedSchool ? comparedIds.includes(selectedSchool.id) : false}
         isInPassport={selectedSchool ? passportIds.includes(selectedSchool.id) : false}
+        isEasyReadMode={isEasyReadMode}
         onClose={() => setSelectedSchool(null)}
         onToggleCompare={handleToggleCompare}
         onTogglePassport={handleTogglePassport}
@@ -619,6 +663,59 @@ export default function App() {
         onClose={() => setIsTestModalOpen(false)}
         onRunTest={handleRunTest}
       />
+      
+      {/* Modal Descriptivo de Marco Oficial y Metodología (movido de Header) */}
+      {isLegalModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="p-5 border-b border-slate-200 bg-slate-50 flex items-start justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-blue-700" />
+                <h3 className="text-base font-extrabold text-slate-900">
+                  Marco Legal e Información de la Herramienta
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsLegalModalOpen(false)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4 text-xs text-slate-700 leading-relaxed">
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-amber-950 font-medium">
+                <span className="font-bold">Aviso para familias: </span>
+                {LEGAL_DISCLAIMER}
+              </div>
+
+              <div>
+                <h4 className="font-bold text-slate-900 mb-1">Criterio de Evidencia</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-emerald-700 shrink-0">Confirmado (A1):</span>
+                    <span>Centro y etapa ratificados en resoluciones vigentes del BOCM y listados de la Consejería.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-amber-700 shrink-0">Por comprobar (A2):</span>
+                    <span>El centro dispone del recurso, pero la etapa específica o vacantes deben comprobarse administrativamente.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setIsLegalModalOpen(false)}
+                  className="px-4 py-2 bg-blue-700 text-white rounded-xl font-bold hover:bg-blue-800 transition-colors cursor-pointer"
+                >
+                  Entendido
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

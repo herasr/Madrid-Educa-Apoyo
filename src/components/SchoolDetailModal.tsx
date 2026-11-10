@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { LEGAL_DISCLAIMER } from '../data/disclaimerAndProcedures';
 import { SchoolMiniMap } from './SchoolMiniMap';
+import { simplifyText } from '../utils/textSimplifier';
 
 interface SchoolDetailModalProps {
   school: School | null;
@@ -33,6 +34,7 @@ interface SchoolDetailModalProps {
   initialTab?: 'why' | 'details' | 'continuity';
   isCompared: boolean;
   isInPassport: boolean;
+  isEasyReadMode: boolean;
   onClose: () => void;
   onToggleCompare: (school: School) => void;
   onTogglePassport: (school: School) => void;
@@ -45,6 +47,7 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
   initialTab = 'details',
   isCompared,
   isInPassport,
+  isEasyReadMode,
   onClose,
   onToggleCompare,
   onTogglePassport
@@ -55,6 +58,17 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
     setActiveTab(initialTab);
   }, [initialTab, school]);
 
+  // Manejo de tecla Escape para accesibilidad
+  React.useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   if (!isOpen || !school) return null;
 
   const currentSupport = state.need
@@ -62,11 +76,13 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
     : school.apoyos[0];
 
   const evidenceLevel = currentSupport?.evidencia || 'A1';
+  const formatText = (text: string) => isEasyReadMode ? simplifyText(text) : text;
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
       <div
-        className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden"
+        tabIndex={0}
+        className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-600"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-school-title"
@@ -168,10 +184,10 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                 </div>
 
                 <h4 className="text-sm font-bold text-slate-900 mb-1">
-                  Justificación de Inclusión en el Buscador Oficial
+                  {formatText('Justificación de Inclusión en el Buscador Oficial')}
                 </h4>
                 <p className="text-xs text-slate-700 leading-relaxed">
-                  {currentSupport?.detallesResolucion}
+                  {formatText(currentSupport?.detallesResolucion || '')}
                 </p>
               </div>
 

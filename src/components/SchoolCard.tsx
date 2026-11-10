@@ -32,6 +32,7 @@ import {
   GitCompare,
   ArrowUpRight
 } from 'lucide-react';
+import { simplifyText } from '../utils/textSimplifier';
 
 interface SchoolCardProps {
   school: School;
@@ -41,12 +42,14 @@ interface SchoolCardProps {
   onOpenDetail: (school: School) => void;
   onOpenWhyAppears: (school: School) => void;
   onOpenContinuity?: (school: School) => void;
+  isEasyReadMode: boolean;
 }
 
 export const SchoolCard: React.FC<SchoolCardProps> = ({
   school,
   state,
   isCompared,
+  isEasyReadMode,
   onToggleCompare,
   onOpenDetail,
   onOpenWhyAppears,
@@ -57,6 +60,7 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
     ? school.apoyos.find(a => a.needId === state.need) || school.apoyos[0]
     : school.apoyos[0];
 
+  const formatText = (text: string) => isEasyReadMode ? simplifyText(text) : text;
   const isA1 = currentSupport?.evidencia === 'A1';
 
   // Nombre amigable de la necesidad

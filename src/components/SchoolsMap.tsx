@@ -167,47 +167,25 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       const isA1 = currentSupport?.evidencia === 'A1';
       const isFocused = selectedSchoolId === school.id;
 
-      // Color de fondo y etiqueta por necesidad
-      let bgColor = '#1d4ed8'; // TEA (azul)
-      let needTag = 'TEA';
-      let needDisplayName = 'Atención preferente TEA';
-      if (needId === 'auditiva') {
-        bgColor = '#0284c7'; // Celeste
-        needTag = 'AUD';
-        needDisplayName = 'Discapacidad auditiva';
-      } else if (needId === 'motora') {
-        bgColor = '#7c3aed'; // Púrpura
-        needTag = 'MOT';
-        needDisplayName = 'Discapacidad motora';
-      } else if (needId === 'visual') {
-        bgColor = '#2563eb'; // Azul rey
-        needTag = 'VIS';
-        needDisplayName = 'Discapacidad visual';
-      } else if (needId === 'altas_capacidades') {
-        bgColor = '#9333ea'; // Violeta
-        needTag = 'AAC';
-        needDisplayName = 'Altas capacidades';
-      } else if (needId === 'tdah') {
-        bgColor = '#d97706'; // Ámbar intenso
-        needTag = 'TDA';
-        needDisplayName = 'TDAH y Conducta';
-      } else if (needId === 'tel_lenguaje') {
-        bgColor = '#0891b2'; // Cían
-        needTag = 'TEL';
-        needDisplayName = 'Trastorno del Lenguaje';
-      } else if (needId === 'salud_hospitalaria') {
-        bgColor = '#dc2626'; // Rojo sanitario
-        needTag = 'HOSP';
-        needDisplayName = 'Atención Hospitalaria';
-      } else if (needId === 'compensatoria') {
-        bgColor = '#4f46e5'; // Índigo
-        needTag = 'COMP';
-        needDisplayName = 'Compensación Educativa';
-      } else if (needId === 'educacion_especial' || school.modalidad === 'especial') {
-        bgColor = '#059669'; // Verde
-        needTag = 'CEE';
-        needDisplayName = 'Educación Especial';
-      }
+      // Configuración de marcadores
+      const NEED_CONFIGS: Record<string, { bgColor: string, tag: string, name: string }> = {
+        tea: { bgColor: '#1d4ed8', tag: 'TEA', name: 'Atención preferente TEA' },
+        auditiva: { bgColor: '#0284c7', tag: 'AUD', name: 'Discapacidad auditiva' },
+        motora: { bgColor: '#7c3aed', tag: 'MOT', name: 'Discapacidad motora' },
+        visual: { bgColor: '#2563eb', tag: 'VIS', name: 'Discapacidad visual' },
+        altas_capacidades: { bgColor: '#9333ea', tag: 'AAC', name: 'Altas capacidades' },
+        tdah: { bgColor: '#d97706', tag: 'TDA', name: 'TDAH y Conducta' },
+        tel_lenguaje: { bgColor: '#0891b2', tag: 'TEL', name: 'Trastorno del Lenguaje' },
+        salud_hospitalaria: { bgColor: '#dc2626', tag: 'HOSP', name: 'Atención Hospitalaria' },
+        compensatoria: { bgColor: '#4f46e5', tag: 'COMP', name: 'Compensación Educativa' },
+        educacion_especial: { bgColor: '#059669', tag: 'CEE', name: 'Educación Especial' }
+      };
+
+      const config = NEED_CONFIGS[needId] || NEED_CONFIGS.tea;
+      const bgColor = config.bgColor;
+      const needTag = config.tag;
+      const needDisplayName = config.name;
+
 
       // Estilo de borde: Sólido para A1 (Confirmado), Discontinuo para A2 (En comprobación)
       const borderStyle = isA1 ? '3px solid #10b981' : '3px dashed #f59e0b';
