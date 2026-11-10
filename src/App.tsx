@@ -112,18 +112,18 @@ export default function App() {
   const [comparedIds, setComparedIds] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem('madrid_educa_compared');
-      return stored ? JSON.parse(stored) : ['ceip-escuelas-aguirre', 'ceipso-maestro-rodrigo'];
+      return stored ? JSON.parse(stored) : [];
     } catch {
-      return ['ceip-escuelas-aguirre', 'ceipso-maestro-rodrigo'];
+      return [];
     }
   });
 
   const [passportIds, setPassportIds] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem('madrid_educa_passport');
-      return stored ? JSON.parse(stored) : ['ceip-escuelas-aguirre'];
+      return stored ? JSON.parse(stored) : [];
     } catch {
-      return ['ceip-escuelas-aguirre'];
+      return [];
     }
   });
 

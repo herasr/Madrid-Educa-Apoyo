@@ -1,8 +1,6 @@
 {
-  "name": "educa simplificada",
-  "description": "Buscador educativo con evidencia oficial y filtros acumulativos para centros de atención preferente (TEA, auditiva, motora) y educación inclusiva en la Comunidad de Madrid.",
+  "name": "madrid-educa-apoyo",
+  "description": "Buscador educativo inclusivo con filtros acumulativos para centros de atención preferente y educación especial en la Comunidad de Madrid (Prototipo de Demostración con Datos Simulados).",
   "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  "majorCapabilities": []
 }

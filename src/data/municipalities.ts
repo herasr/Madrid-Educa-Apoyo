@@ -206,3 +206,21 @@ export function calculateHaversineDistance(
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return Math.round(R * c * 10) / 10;
 }
+
+/**
+ * Estimación de tiempo de viaje en transporte público colectivo (Bus EMT / Metro CRTM).
+ */
+export function estimateTransitMinutes(distanceKm: number): number {
+  if (distanceKm <= 0) return 3;
+  const minutes = 7 + (distanceKm / 18) * 60;
+  return Math.round(minutes);
+}
+
+/**
+ * Estimación de tiempo de viaje en vehículo adaptado / coche.
+ */
+export function estimateCarMinutes(distanceKm: number): number {
+  if (distanceKm <= 0) return 2;
+  const minutes = 3 + (distanceKm / 28) * 60;
+  return Math.round(minutes);
+}

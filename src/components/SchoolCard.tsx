@@ -20,7 +20,7 @@
 
 import React from 'react';
 import { School, SearchState } from '../types';
-import { calculateHaversineDistance, MUNICIPALITIES } from '../data/municipalities';
+import { calculateHaversineDistance, estimateTransitMinutes, MUNICIPALITIES } from '../data/municipalities';
 import {
   FileText,
   MapPin,
@@ -165,6 +165,10 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
                   <span aria-hidden="true" className="text-slate-300">·</span>
                   <span className="font-semibold text-blue-900 bg-blue-50 px-1.5 py-0.5 rounded">
                     {distanceKm} km aprox.
+                  </span>
+                  <span aria-hidden="true" className="text-slate-300">·</span>
+                  <span className="font-medium text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded" title="Tiempo estimado en transporte público colectivo (Bus EMT / Metro CRTM)">
+                    ⏱️ ~{estimateTransitMinutes(distanceKm)} min bus/metro
                   </span>
                 </>
               )}

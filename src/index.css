@@ -10,11 +10,19 @@
 }
 
 @media print {
-  .no-print {
+  .no-print, header, footer, button:not(.print-keep), input, select {
     display: none !important;
   }
-  body {
+  body, main {
     background: white !important;
     color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+  .bg-white, .bg-slate-50, .bg-blue-50 {
+    background: transparent !important;
+    border-color: #cbd5e1 !important;
   }
 }

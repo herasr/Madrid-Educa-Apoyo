@@ -80,9 +80,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-900 transition-colors whitespace-nowrap">
                   Madrid Educa Apoyo
                 </span>
-                <span className="text-[11px] font-semibold text-slate-500 hidden sm:inline whitespace-nowrap">
-                  Evidencia Oficial
-                </span>
               </div>
             </button>
           </div>
@@ -289,6 +286,10 @@ export const Header: React.FC<HeaderProps> = ({
                       <div className="text-[11px] text-slate-400">Validación de escenarios oficiales</div>
                     </div>
                   </button>
+
+                  <div className="px-3 py-2 bg-slate-50 border-t border-slate-100 text-[10px] text-slate-500 leading-tight rounded-b-xl">
+                    No constituyen el registro oficial de la Consejería de Educación.
+                  </div>
                 </div>
               )}
             </div>

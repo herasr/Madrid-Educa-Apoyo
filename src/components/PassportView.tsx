@@ -42,6 +42,27 @@ export const PassportView: React.FC<PassportViewProps> = ({
   onOpenDetail,
   onGoToSearch
 }) => {
+  const [notesMap, setNotesMap] = React.useState<Record<string, string>>(() => {
+    try {
+      const stored = localStorage.getItem('madrid_educa_passport_notes');
+      return stored ? JSON.parse(stored) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  const handleNoteChange = (schoolId: string, note: string) => {
+    setNotesMap(prev => {
+      const updated = { ...prev, [schoolId]: note };
+      try {
+        localStorage.setItem('madrid_educa_passport_notes', JSON.stringify(updated));
+      } catch (e) {
+        console.warn('LocalStorage error saving notes:', e);
+      }
+      return updated;
+    });
+  };
+
   const currentDate = new Intl.DateTimeFormat('es-ES', {
     dateStyle: 'full',
     timeStyle: 'short'
@@ -242,6 +263,21 @@ export const PassportView: React.FC<PassportViewProps> = ({
                   <div className="text-xs text-slate-600 border-t border-slate-100 pt-2">
                     <span className="font-semibold text-slate-800">Ruta de Continuidad ESO: </span>
                     <span>{sch.continuidad.descripcion}</span>
+                  </div>
+
+                  {/* Notas de la Familia / Observaciones EOEP */}
+                  <div className="mt-3 border-t border-slate-100 pt-2.5">
+                    <label htmlFor={`note-${sch.id}`} className="block text-[11px] font-bold text-slate-700 mb-1">
+                      📝 Mis notas para la entrevista / Informe de orientación:
+                    </label>
+                    <textarea
+                      id={`note-${sch.id}`}
+                      rows={2}
+                      value={notesMap[sch.id] || ''}
+                      onChange={e => handleNoteChange(sch.id, e.target.value)}
+                      placeholder="Escribe aquí preguntas particulares, vacantes acordadas o notas para la visita..."
+                      className="w-full text-xs bg-amber-50/40 border border-slate-200 rounded-lg p-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 print:bg-white"
+                    />
                   </div>
                 </div>
               );

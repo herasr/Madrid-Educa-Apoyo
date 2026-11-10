@@ -243,7 +243,7 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
               title="Restablece todos los filtros acumulados"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              <span>Limpiar todos</span>
+              <span>Borrar filtros</span>
             </button>
           )}
         </div>
