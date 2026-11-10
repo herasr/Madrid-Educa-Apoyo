@@ -210,7 +210,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
               1. Necesidad Educativa
             </div>
             <div className="text-[11px] text-slate-500">
@@ -286,7 +286,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
               2. Etapa Educativa
             </div>
             <div className="text-[11px] text-slate-500">
@@ -351,7 +351,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     key={st.id}
                     className={`flex items-center justify-between px-3 py-2 rounded-xl border cursor-pointer transition-colors ${
                       isChecked
-                        ? 'bg-blue-50/70 border-blue-300 text-blue-950 font-semibold'
+                        ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold'
                         : 'bg-white border-transparent hover:bg-slate-50 text-slate-700'
                     }`}
                   >
@@ -360,7 +360,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => handleToggleStage(st.id)}
-                        className="rounded border-slate-300 text-blue-700 focus:ring-blue-600 cursor-pointer"
+                        className="rounded border-slate-300 text-cam-red focus:ring-cam-red cursor-pointer"
                       />
                       <span className="text-xs">{st.label}</span>
                     </div>
@@ -385,7 +385,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
               3. Ubicación y Radio
             </div>
             <div className="text-[11px] text-slate-500">
@@ -412,7 +412,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 onClick={handleUseMunicipality}
                 className={`flex-1 py-1.5 px-3 rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                   state.locationSource === 'municipality'
-                    ? 'bg-blue-700 text-white shadow-xs'
+                    ? 'bg-cam-red text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
                 }`}
               >
@@ -457,7 +457,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   className={`w-full text-xs rounded-lg px-2.5 py-1.5 transition-colors ${
                     state.locationSource === 'browser'
                       ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-60'
-                      : 'bg-white border border-slate-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 cursor-pointer'
+                      : 'bg-white border border-slate-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-cam-red cursor-pointer'
                   }`}
                 >
                   <option value="">Toda la Comunidad de Madrid</option>
@@ -486,7 +486,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     className={`w-full text-xs rounded-lg px-2.5 py-1.5 transition-colors ${
                       state.locationSource === 'browser'
                         ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-60'
-                        : 'bg-white border border-slate-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 cursor-pointer'
+                        : 'bg-white border border-slate-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-cam-red cursor-pointer'
                     }`}
                   >
                     <option value="">Cualquier distrito</option>
@@ -512,7 +512,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             <div>
               <div className="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
                 <span>Radio geodésico:</span>
-                <span className="font-mono text-blue-900 font-bold tabular-nums">
+                <span className="font-mono text-cam-red font-bold tabular-nums">
                   {state.radiusKm ? `${state.radiusKm} km` : 'Solo municipio'}
                 </span>
               </div>
@@ -526,7 +526,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   const val = Number(e.target.value);
                   onUpdateState(prev => ({ ...prev, radiusKm: val }));
                 }}
-                className="w-full accent-blue-700 cursor-pointer"
+                className="w-full accent-cam-red cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-slate-400 font-mono">
                 <span>5 km</span>
@@ -548,7 +548,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
               4. Titularidad del Centro
             </div>
             <div className="text-[11px] text-slate-500">
@@ -577,7 +577,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   key={own.id}
                   className={`flex items-center justify-between px-3 py-2 rounded-xl border cursor-pointer transition-colors ${
                     isChecked
-                      ? 'bg-blue-50/70 border-blue-300 text-blue-950 font-semibold'
+                      ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold'
                       : 'bg-white border-transparent hover:bg-slate-50 text-slate-700'
                   }`}
                 >
@@ -586,7 +586,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                       type="checkbox"
                       checked={isChecked}
                       onChange={() => handleToggleOwnership(own.id)}
-                      className="rounded border-slate-300 text-blue-700 focus:ring-blue-600 cursor-pointer"
+                      className="rounded border-slate-300 text-cam-red focus:ring-cam-red cursor-pointer"
                     />
                     <span className="text-xs">{own.label}</span>
                   </div>
@@ -610,7 +610,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
               5. Servicios del Centro
             </div>
             <div className="text-[11px] text-slate-500">
@@ -644,7 +644,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   key={srv.id}
                   className={`p-2.5 rounded-xl border text-xs transition-colors ${
                     isRequired
-                      ? 'bg-blue-50 border-blue-300'
+                      ? 'bg-cam-red-light border-cam-red-border'
                       : isPreferred
                       ? 'bg-amber-50/70 border-amber-200'
                       : 'bg-slate-50/70 border-slate-200'
@@ -663,7 +663,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                       onClick={() => handleToggleService(srv.id, true)}
                       className={`flex-1 py-1 px-2 rounded-lg text-[11px] font-semibold border text-center transition-colors cursor-pointer ${
                         isRequired
-                          ? 'bg-blue-700 text-white border-blue-800'
+                          ? 'bg-cam-red text-white border-cam-red-dark'
                           : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
                       }`}
                     >
@@ -699,7 +699,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
               6. Nivel de Evidencia Oficial
             </div>
             <div className="text-[11px] text-slate-500">
@@ -722,7 +722,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 type="checkbox"
                 checked={state.evidence.includes('A1')}
                 onChange={() => handleToggleEvidence('A1')}
-                className="mt-0.5 rounded border-slate-300 text-blue-700 focus:ring-blue-600 cursor-pointer"
+                className="mt-0.5 rounded border-slate-300 text-cam-red focus:ring-cam-red cursor-pointer"
               />
               <div>
                 <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
@@ -741,7 +741,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 type="checkbox"
                 checked={state.evidence.includes('A2')}
                 onChange={() => handleToggleEvidence('A2')}
-                className="mt-0.5 rounded border-slate-300 text-blue-700 focus:ring-blue-600 cursor-pointer"
+                className="mt-0.5 rounded border-slate-300 text-cam-red focus:ring-cam-red cursor-pointer"
               />
               <div>
                 <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">

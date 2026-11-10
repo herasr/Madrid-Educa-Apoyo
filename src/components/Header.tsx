@@ -74,20 +74,18 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => onSelectTab('search')}
-              className="text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 rounded p-1"
+              className="text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 rounded p-1"
             >
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center text-white font-black shadow-md text-base ring-2 ring-red-100">
                   M
                 </div>
                 <div>
-                  <div className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-red-800 transition-colors whitespace-nowrap flex items-center gap-1.5">
-                    <span>Madrid</span>
-                    <span className="text-red-700 font-black">Educa</span>
-                    <span className="text-slate-700 font-semibold">Apoyo</span>
+                  <div className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 whitespace-nowrap">
+                    Madrid Educa Apoyo
                   </div>
-                  <div className="text-[10px] font-bold text-red-900/70 tracking-wider uppercase">
-                    Comunidad de Madrid · Portal Oficial
+                  <div className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
+                    Comunidad de Madrid
                   </div>
                 </div>
               </div>
@@ -96,20 +94,20 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Zona 2: Navegación principal limpia (4 destinos clave + Menú Más) */}
           <nav className="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium text-slate-600" aria-label="Navegación principal">
-            {/* 1. Buscar */}
+            {/* 1. Buscar (Azul Institucional) */}
             <button
               onClick={() => onSelectTab('search')}
               className={`px-3.5 py-2 rounded-xl transition-all cursor-pointer inline-flex items-center gap-2 ${
                 currentTab === 'search'
-                  ? 'bg-red-50 text-red-900 font-bold shadow-xs border border-red-200/80'
+                  ? 'bg-blue-50 text-blue-900 font-bold shadow-xs border border-blue-200/80'
                   : 'hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              <Search className={`w-4 h-4 ${currentTab === 'search' ? 'text-red-700' : 'text-slate-500'}`} />
+              <Search className={`w-4 h-4 ${currentTab === 'search' ? 'text-blue-700' : 'text-slate-500'}`} />
               <span>Buscar</span>
             </button>
 
-            {/* 2. Comparador con contador visible (máximo 3) */}
+            {/* 2. Comparador (Rojo Institucional) */}
             <button
               onClick={() => onSelectTab('comparator')}
               className={`px-3.5 py-2 rounded-xl transition-all cursor-pointer inline-flex items-center gap-2 ${

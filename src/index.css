@@ -1,12 +1,45 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-cam-red: #A50034;
+  --color-cam-red-dark: #800028;
+  --color-cam-red-light: #FFF0F3;
+  --color-cam-red-border: #F7D0D9;
+}
+
 @layer base {
   html, body {
     overflow-x: hidden;
     max-width: 100vw;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
+}
+
+/* Clases utilitarias institucionales Comunidad de Madrid (#A50034) */
+.bg-cam-red {
+  background-color: #A50034;
+}
+.bg-cam-red-dark {
+  background-color: #800028;
+}
+.bg-cam-red-light {
+  background-color: #FFF0F3;
+}
+.text-cam-red {
+  color: #A50034;
+}
+.text-cam-red-dark {
+  color: #800028;
+}
+.border-cam-red {
+  border-color: #A50034;
+}
+.border-cam-red-border {
+  border-color: #F7D0D9;
+}
+.ring-cam-red {
+  --tw-ring-color: #A50034;
 }
 
 @media print {
@@ -21,7 +54,7 @@
     max-width: 100% !important;
     box-shadow: none !important;
   }
-  .bg-white, .bg-slate-50, .bg-blue-50 {
+  .bg-white, .bg-slate-50, .bg-blue-50, .bg-cam-red-light {
     background: transparent !important;
     border-color: #cbd5e1 !important;
   }

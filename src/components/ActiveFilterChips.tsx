@@ -215,7 +215,7 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
                 key={chip.id}
                 className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md border transition-colors ${
                   chip.isMandatory
-                    ? 'bg-blue-50 text-blue-900 border-blue-200'
+                    ? 'bg-cam-red-light text-cam-red-dark border-cam-red-border font-semibold'
                     : chip.isPreference
                     ? 'bg-amber-50 text-amber-900 border-amber-200'
                     : 'bg-slate-100 text-slate-800 border-slate-200 hover:bg-slate-200'
@@ -224,7 +224,7 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
                 <span>{chip.label}</span>
                 <button
                   onClick={chip.onRemove}
-                  className="p-0.5 hover:bg-black/10 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 cursor-pointer"
+                  className="p-0.5 hover:bg-black/10 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cam-red cursor-pointer"
                   aria-label={`Eliminar filtro ${chip.label}`}
                 >
                   <X className="w-3 h-3" />
@@ -237,7 +237,7 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
         {/* Recuento de resultados y botón Limpiar todos */}
         <div className="flex items-center gap-4 shrink-0">
           <span className="text-sm font-bold text-slate-900 tabular-nums">
-            Resultados: <span className="text-blue-900">{resultsCount}</span> {resultsCount === 1 ? 'centro' : 'centros'}
+            Resultados: <span className="text-cam-red">{resultsCount}</span> {resultsCount === 1 ? 'centro' : 'centros'}
           </span>
 
           {chips.length > 0 && (

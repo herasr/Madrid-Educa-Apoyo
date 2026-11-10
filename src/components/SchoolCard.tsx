@@ -247,7 +247,7 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
       </div>
 
       {/* Botonera de Acciones con Jerarquía Clara:
-          [Ficha completa] (Primaria) | [Comparar] (Secundaria) | ¿Por qué aparece? (Enlace explicativo) */}
+          [Ficha completa] (Primaria - Rojo CAM) | [Comparar] (Secundaria - Azul) | ¿Por qué aparece? (Enlace) */}
       <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <button
           type="button"
@@ -260,7 +260,7 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
         </button>
 
         <div className="flex items-center gap-2">
-          {/* Botón secundario: Comparar */}
+          {/* Botón secundario: Comparar (Azul) */}
           <button
             type="button"
             onClick={() => onToggleCompare(school)}
@@ -284,11 +284,11 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
             )}
           </button>
 
-          {/* Botón principal destacado: Ficha completa */}
+          {/* Botón principal destacado: Ficha completa (Rojo Carmesí CAM) */}
           <button
             type="button"
             onClick={() => onOpenDetail(school)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-blue-700 hover:bg-blue-800 shadow-xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-cam-red hover:bg-cam-red-dark shadow-xs transition-colors cursor-pointer"
           >
             <span>Ficha completa</span>
             <ArrowRight className="w-3.5 h-3.5" />

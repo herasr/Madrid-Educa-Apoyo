@@ -308,29 +308,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col antialiased overflow-x-hidden w-full">
-      {/* Banner de Entorno de Demostración Técnica (DataMad) */}
-      <div className="bg-amber-50 border-b border-amber-200/80 text-amber-950 text-xs px-4 py-2 font-medium">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
-            <span className="font-bold uppercase tracking-wider bg-amber-200 text-amber-950 px-2 py-0.5 rounded text-[10px] shrink-0">
-              Prototipo Demo · DataMad
-            </span>
-            <span className="text-[11px] text-amber-900">
-              Entorno de evaluación técnica: códigos de centro y municipios basados en la red educativa de la CAM; asignaciones de apoyo, aulas y resoluciones son sintéticas para evaluación de la plataforma.
-            </span>
-          </div>
-          <a
-            href="https://www.comunidad.madrid/servicios/educacion"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] font-bold text-amber-900 hover:text-amber-950 underline shrink-0 inline-flex items-center gap-1"
-          >
-            <span>Registro Oficial CAM</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
-      </div>
-
       {/* 1. Encabezado Oficial con Menú "Más" y Notificación Legal Desescalada */}
       <Header
         currentTab={activeTab}
@@ -380,7 +357,7 @@ export default function App() {
                 onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 shadow-xs cursor-pointer"
               >
-                <SlidersHorizontal className="w-4 h-4 text-blue-700" />
+                <SlidersHorizontal className="w-4 h-4 text-cam-red" />
                 <span>{isMobileFilterOpen ? 'Ocultar Filtros' : 'Mostrar Filtros Acumulativos'}</span>
               </button>
 
@@ -414,7 +391,7 @@ export default function App() {
                     placeholder="Buscar por nombre, código o calle..."
                     value={searchState.searchQuery}
                     onChange={e => setSearchState(prev => ({ ...prev, searchQuery: e.target.value }))}
-                    className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all"
+                    className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cam-red focus:bg-white transition-all"
                   />
                 </div>
 
@@ -603,6 +580,27 @@ export default function App() {
       {/* 4. Pie de página Institucional Limpio */}
       <footer className="no-print bg-white border-t border-slate-200 mt-12 py-8 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Banner de Entorno de Demostración Técnica (DataMad) */}
+          <div className="mb-8 bg-amber-50 border border-amber-200/80 rounded-xl p-3 text-amber-950 text-xs font-medium flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
+              <span className="font-bold uppercase tracking-wider bg-amber-200 text-amber-950 px-2 py-0.5 rounded text-[10px] shrink-0">
+                Prototipo Demo · DataMad
+              </span>
+              <span className="text-[11px] text-amber-900">
+                Entorno de evaluación técnica: códigos de centro y municipios basados en la red educativa de la CAM; asignaciones de apoyo, aulas y resoluciones son sintéticas para evaluación de la plataforma.
+              </span>
+            </div>
+            <a
+              href="https://www.comunidad.madrid/servicios/educacion"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-bold text-amber-900 hover:text-amber-950 underline shrink-0 inline-flex items-center gap-1"
+            >
+              <span>Registro Oficial CAM</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="col-span-1 md:col-span-1">
               <span className="font-bold text-slate-800 text-sm">Madrid Educa Apoyo v2.4</span>
