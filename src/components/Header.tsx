@@ -320,7 +320,7 @@ export const Header: React.FC<HeaderProps> = ({
               currentTab === 'passport' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
             }`}
           >
-            Pasaporte
+            Pasaporte ({passportCount})
           </button>
           <button
             onClick={() => onSelectTab('sources')}
@@ -329,6 +329,18 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             Fuentes
+          </button>
+          <button
+            onClick={() => setIsLegalModalOpen(true)}
+            className="whitespace-nowrap px-3 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900 cursor-pointer"
+          >
+            Aviso Legal
+          </button>
+          <button
+            onClick={onOpenTestModal}
+            className="whitespace-nowrap px-3 py-1 rounded-lg font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 cursor-pointer"
+          >
+            Pruebas FIL
           </button>
         </div>
       </header>

@@ -1463,5 +1463,632 @@ export const SCHOOLS_DATA: School[] = [
         }
       ]
     }
+  },
+
+  {
+    id: 'ceip-guindalera-madrid',
+    codigo: '28020989',
+    nombre: 'CEIP Guindalera',
+    titularidad: 'publico',
+    tipo: 'CEIP',
+    modalidad: 'preferente',
+    municipio: 'Madrid',
+    distrito: 'Salamanca',
+    codigoPostal: '28028',
+    direccion: 'C/ Boston, 8',
+    telefono: '91 725 34 20',
+    email: 'cp.guindalera.madrid@educa.madrid.org',
+    lat: 40.4365,
+    lng: -3.6672,
+    etapas: ['infantil', 'primaria'],
+    apoyos: [
+      {
+        needId: 'visual',
+        evidencia: 'A1',
+        etapasConApoyo: ['infantil', 'primaria'],
+        aulaNombre: 'Centro Ordinario con Apoyo Especializado en Discapacidad Visual (EOEP / ONCE)',
+        recursosOficiales: [
+          'Profesorado itinerante especialista en ceguera y baja visión (Convenio CAM-ONCE)',
+          'Dotación tiflotécnica: adaptadores ópticos, lupas digitales y software de ampliación',
+          'Adaptación y transcripción de libros de texto a braille y relieve',
+          'Técnico de rehabilitación para orientación y movilidad en el centro',
+          'Enfermería escolar'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · Convenio Marco CAM-ONCE y EOEP Específico de Discapacidad Visual',
+        resolucionBOCM: 'Convenio de Colaboración Comunidad de Madrid - ONCE (BOCM nº 241)',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Centro ordinario con intervención coordinada con el Equipo Específico de Discapacidad Visual de la CAM y el Centro de Recursos Educativos (CRE) de la ONCE. Adaptación tiflotécnica de aulas y material curricular.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: true,
+      aula_matinal: true,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: true,
+      plano_podotactil: true
+    },
+    continuidad: {
+      tipoContinuidad: 'adscripcion_unica',
+      descripcion: 'Adscrito al IES Avenida de los Toreros con mantenimiento del apoyo tiflotécnico itinerante en Secundaria.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: [
+        {
+          codigo: '28020990',
+          nombre: 'IES Avenida de los Toreros',
+          etapa: 'ESO y Bachillerato',
+          municipio: 'Madrid',
+          distrito: 'Salamanca',
+          tieneMismoApoyo: true,
+          detallesApoyo: 'Continuidad de apoyo tiflotécnico en ESO/Bachillerato por el Equipo Específico de Discapacidad Visual.',
+          distanciaKm: 0.9
+        }
+      ]
+    },
+    observacionesOficiales: 'Itinerarios interiores con señalización de alto contraste y pavimento podotáctil en accesos principales.'
+  },
+
+  {
+    id: 'ies-beatriz-galindo-visual',
+    codigo: '28020977',
+    nombre: 'IES Beatriz Galindo',
+    titularidad: 'publico',
+    tipo: 'IES',
+    modalidad: 'preferente',
+    municipio: 'Madrid',
+    distrito: 'Salamanca',
+    codigoPostal: '28001',
+    direccion: 'C/ Goya, 10',
+    telefono: '91 576 43 00',
+    email: 'ies.beatrizgalindo.madrid@educa.madrid.org',
+    lat: 40.4252,
+    lng: -3.6874,
+    etapas: ['eso', 'bachillerato'],
+    apoyos: [
+      {
+        needId: 'visual',
+        evidencia: 'A1',
+        etapasConApoyo: ['eso', 'bachillerato'],
+        aulaNombre: 'Apoyo Tiflotécnico y Curricular en Educación Secundaria (Convenio ONCE)',
+        recursosOficiales: [
+          'Profesor de apoyo del Equipo Específico de Discapacidad Visual CAM',
+          'Puesto tiflotécnico adaptado (línea braille, lectores de pantalla NVDA/JAWS)',
+          'Adaptaciones de acceso a la EvAU coordinadas con la comisión universitaria',
+          'Departamento de Orientación con formación específica en baja visión'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · EOEP Específico de Discapacidad Visual y D.G. Educación Secundaria',
+        resolucionBOCM: 'Instrucciones anuales de inicio de curso (Atención a la Diversidad)',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Centro de referencia de Educación Secundaria y Bachillerato para alumnado con discapacidad visual, con adaptaciones tiflotécnicas avanzadas en laboratorios y aulas digitales.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: false,
+      aula_matinal: false,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: true,
+      plano_podotactil: true
+    },
+    continuidad: {
+      tipoContinuidad: 'mismo_centro',
+      descripcion: 'Continuidad directa de ESO a Bachillerato con asesoramiento para el acceso a estudios superiores y EvAU.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: []
+    }
+  },
+
+  {
+    id: 'ies-san-mateo-madrid',
+    codigo: '28074389',
+    nombre: 'IES San Mateo',
+    titularidad: 'publico',
+    tipo: 'IES',
+    modalidad: 'preferente',
+    municipio: 'Madrid',
+    distrito: 'Centro',
+    codigoPostal: '28004',
+    direccion: 'C/ Beneficencia, 4',
+    telefono: '91 532 78 20',
+    email: 'ies.sanmateo.madrid@educa.madrid.org',
+    lat: 40.4261,
+    lng: -3.6998,
+    etapas: ['bachillerato'],
+    apoyos: [
+      {
+        needId: 'altas_capacidades',
+        evidencia: 'A1',
+        etapasConApoyo: ['bachillerato'],
+        aulaNombre: 'Centro de Excelencia y Enriquecimiento Curricular (Bachillerato de Excelencia)',
+        recursosOficiales: [
+          'Profesorado especializado en metodología de profundización e investigación',
+          'Proyectos de iniciación a la investigación en colaboración con universidades (UAM, UCM, UPM, CSIC)',
+          'Coordinación con CREACIM para programas de tutorización y mentoría',
+          'Departamento de Orientación especializado en alumnado de alto rendimiento y altas capacidades'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · Programa de Bachillerato de Excelencia (Orden 2743/2011)',
+        resolucionBOCM: 'Orden 2743/2011 y Orden 2482/2016 de la Consejería de Educación (BOCM nº 193)',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Centro público de referencia regional para Bachillerato de Excelencia y enriquecimiento curricular de alumnado de alto rendimiento intelectual y altas capacidades.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: false,
+      aula_matinal: false,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: false,
+      plano_podotactil: false
+    },
+    continuidad: {
+      tipoContinuidad: 'mismo_centro',
+      descripcion: 'Centro especializado en Bachillerato con orientación hacia la carrera investigadora y universitaria.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: []
+    },
+    observacionesOficiales: 'Centro público sede del Bachillerato de Excelencia de la Comunidad de Madrid con laboratorios avanzados.'
+  },
+
+  {
+    id: 'ceip-ramon-y-cajal-madrid',
+    codigo: '28021209',
+    nombre: 'CEIP Ramón y Cajal',
+    titularidad: 'publico',
+    tipo: 'CEIP',
+    modalidad: 'preferente',
+    municipio: 'Madrid',
+    distrito: 'Chamartín',
+    codigoPostal: '28036',
+    direccion: 'C/ Marcenado, 28',
+    telefono: '91 415 22 10',
+    email: 'cp.ramonycajal.madrid@educa.madrid.org',
+    lat: 40.4482,
+    lng: -3.6741,
+    etapas: ['infantil', 'primaria'],
+    apoyos: [
+      {
+        needId: 'altas_capacidades',
+        evidencia: 'A1',
+        etapasConApoyo: ['infantil', 'primaria'],
+        aulaNombre: 'Centro Sede Programa PEAC y Enriquecimiento Curricular (CREACIM)',
+        recursosOficiales: [
+          'Centro sede del Programa de Enriquecimiento Educativo para Altas Capacidades (PEAC) de la CAM',
+          'Profesorado formado en diferenciación pedagógica, pensamiento divergente y robótica educativa',
+          'Talleres quincenales de sábado de creatividad, filosofía para niños y proyectos STEAM',
+          'Orientador de sector del EOEP especializado en valoración y seguimiento de altas capacidades'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · Programa PEAC y CREACIM (D.G. Educación Infantil y Primaria)',
+        resolucionBOCM: 'Resolución anual del Programa de Enriquecimiento Educativo (PEAC) CAM',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Centro público seleccionado como sede comarcal del Programa PEAC para Madrid Capital Este, con proyecto de centro de enriquecimiento y agrupamientos flexibles.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: true,
+      aula_matinal: true,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: false,
+      plano_podotactil: false
+    },
+    continuidad: {
+      tipoContinuidad: 'adscripcion_unica',
+      descripcion: 'Adscrito al IES Santamarca con programa de continuidad para alumnado de altas capacidades en ESO.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: [
+        {
+          codigo: '28021210',
+          nombre: 'IES Santamarca',
+          etapa: 'ESO y Bachillerato',
+          municipio: 'Madrid',
+          distrito: 'Chamartín',
+          tieneMismoApoyo: true,
+          detallesApoyo: 'Proyectos de investigación y flexibilización curricular para alumnado PEAC.',
+          distanciaKm: 1.1
+        }
+      ]
+    },
+    observacionesOficiales: 'Sede oficial de talleres quincenales del PEAC durante los sábados lectivos.'
+  },
+
+  {
+    id: 'ceip-los-castillos-alcorcon',
+    codigo: '28043120',
+    nombre: 'CEIP Los Castillos',
+    titularidad: 'publico',
+    tipo: 'CEIP',
+    modalidad: 'preferente',
+    municipio: 'Alcorcon',
+    codigoPostal: '28925',
+    direccion: 'C/ Los Castillos, 10',
+    telefono: '91 643 21 00',
+    email: 'cp.loscastillos.alcorcon@educa.madrid.org',
+    lat: 40.3482,
+    lng: -3.8192,
+    etapas: ['infantil', 'primaria'],
+    apoyos: [
+      {
+        needId: 'visual',
+        evidencia: 'A1',
+        etapasConApoyo: ['infantil', 'primaria'],
+        aulaNombre: 'Atención a la Discapacidad Visual en Aula Ordinaria (EOEP Sur / ONCE)',
+        recursosOficiales: [
+          'Profesor itinerante de apoyo a la discapacidad visual (Convenio CAM-ONCE)',
+          'Equipamiento de magnificación de imagen y adaptaciones tiflotécnicas',
+          'Adaptación de libros de texto a relieve y braille',
+          'Técnico en orientación y movilidad'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · Convenio CAM-ONCE y DAT Sur',
+        resolucionBOCM: 'Resolución de Coordinación Tiflotécnica DAT Sur',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Centro de referencia en el municipio de Alcorcón para la inclusión de alumnado con ceguera o baja visión con atención de la ONCE.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: true,
+      aula_matinal: true,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: true,
+      plano_podotactil: true
+    },
+    continuidad: {
+      tipoContinuidad: 'adscripcion_unica',
+      descripcion: 'Adscrito al IES Jorge Guillén (Alcorcón) con apoyo de la ONCE.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: [
+        {
+          codigo: '28043156',
+          nombre: 'IES Jorge Guillén',
+          etapa: 'ESO y Bachillerato',
+          municipio: 'Alcorcon',
+          tieneMismoApoyo: true,
+          detallesApoyo: 'Continuidad de apoyo tiflotécnico en Secundaria.',
+          distanciaKm: 1.4
+        }
+      ]
+    }
+  },
+
+  {
+    id: 'ies-arquitecto-ventura-rodriguez-boadilla',
+    codigo: '28046101',
+    nombre: 'IES Arquitecto Ventura Rodríguez',
+    titularidad: 'publico',
+    tipo: 'IES',
+    modalidad: 'preferente',
+    municipio: 'Boadilla del Monte',
+    codigoPostal: '28660',
+    direccion: 'C/ Santillana del Mar, 2',
+    telefono: '91 632 00 12',
+    email: 'ies.venturarodriguez.boadilla@educa.madrid.org',
+    lat: 40.4121,
+    lng: -3.8812,
+    etapas: ['eso', 'bachillerato'],
+    apoyos: [
+      {
+        needId: 'altas_capacidades',
+        evidencia: 'A1',
+        etapasConApoyo: ['eso', 'bachillerato'],
+        aulaNombre: 'Centro Sede PEAC Oeste y Proyectos de Enriquecimiento (CREACIM)',
+        recursosOficiales: [
+          'Centro Sede del Programa PEAC en la DAT Oeste',
+          'Talleres de enriquecimiento quincenales en la etapa de ESO',
+          'Proyectos de profundización STEAM y ferias de ciencia regional',
+          'Departamento de Orientación con protocolo de flexibilización'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · Programa PEAC y DAT Oeste',
+        resolucionBOCM: 'Resolución de Sede PEAC CAM',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Sede comarcal del Programa de Enriquecimiento Educativo para Altas Capacidades para el alumnado de Boadilla, Pozuelo y Majadahonda.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: true,
+      aula_matinal: false,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: false,
+      plano_podotactil: false
+    },
+    continuidad: {
+      tipoContinuidad: 'mismo_centro',
+      descripcion: 'Continuidad en el propio centro desde 1.º de ESO hasta 2.º de Bachillerato.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: []
+    }
+  },
+
+  {
+    id: 'ceip-joaquin-costa-tdah',
+    codigo: '28020931',
+    nombre: 'CEIP Joaquín Costa',
+    titularidad: 'publico',
+    tipo: 'CEIP',
+    modalidad: 'preferente',
+    municipio: 'Madrid',
+    distrito: 'Arganzuela',
+    codigoPostal: '28045',
+    direccion: 'Paseo de las Delicias, 28',
+    telefono: '91 527 12 40',
+    email: 'cp.joaquincosta.madrid@educa.madrid.org',
+    lat: 40.4045,
+    lng: -3.6948,
+    etapas: ['infantil', 'primaria'],
+    apoyos: [
+      {
+        needId: 'tdah',
+        evidencia: 'A1',
+        etapasConApoyo: ['infantil', 'primaria'],
+        aulaNombre: 'Programa de Adaptación Metodológica y Apoyo Conductual TDAH',
+        recursosOficiales: [
+          'Especialista en Pedagogía Terapéutica en apoyo a la autorregulación y funciones ejecutivas',
+          'Adaptación de evaluaciones (tiempos ampliados, lecturas fraccionadas y supervisión)',
+          'Protocolo activo de coordinación con la Unidad de Salud Mental Infantil y Juvenil (USMIJ)',
+          'Tutorías de seguimiento con familias y entrenamiento en agendas visuales'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · Guía de Actuación con Alumnado TDAH (D.G. Educación Primaria)',
+        resolucionBOCM: 'Protocolo de Atención Educativa al Alumnado con TDAH CAM (BOCM nº 156)',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Centro público con proyecto de centro enfocado en la estructuración ambiental, autorregulación emocional y adecuación metodológica para alumnado con TDAH y trastornos de la conducta.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: false,
+      aula_matinal: true,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: false,
+      plano_podotactil: false
+    },
+    continuidad: {
+      tipoContinuidad: 'adscripcion_unica',
+      descripcion: 'Adscrito al IES Cervantes con protocolo de adaptación metodológica TDAH en Secundaria.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: [
+        {
+          codigo: '28020953',
+          nombre: 'IES Cervantes',
+          etapa: 'ESO y Bachillerato',
+          municipio: 'Madrid',
+          distrito: 'Centro',
+          tieneMismoApoyo: true,
+          detallesApoyo: 'Continuidad de adaptaciones no significativas y tiempos de examen en ESO.',
+          distanciaKm: 1.2
+        }
+      ]
+    }
+  },
+
+  {
+    id: 'ceip-fernando-el-catolico-tel',
+    codigo: '28020846',
+    nombre: 'CEIP Fernando el Católico',
+    titularidad: 'publico',
+    tipo: 'CEIP',
+    modalidad: 'preferente',
+    municipio: 'Madrid',
+    distrito: 'Chamberí',
+    codigoPostal: '28015',
+    direccion: 'C/ Fernando el Católico, 12',
+    telefono: '91 445 23 00',
+    email: 'cp.fernandoelcatolico.madrid@educa.madrid.org',
+    lat: 40.4328,
+    lng: -3.7082,
+    etapas: ['infantil', 'primaria'],
+    apoyos: [
+      {
+        needId: 'tel_lenguaje',
+        evidencia: 'A1',
+        etapasConApoyo: ['infantil', 'primaria'],
+        aulaNombre: 'Unidad de Intervención Específica en Trastornos del Lenguaje y Comunicación (TDL/TEL)',
+        recursosOficiales: [
+          '2 Maestros especialistas en Audición y Lenguaje (AL) en intervención logopédica directa',
+          'Uso de Sistemas Alternativos y Aumentativos de Comunicación (SAAC / PECS)',
+          '1 Maestro PT especializado en competencia lingüística y lectoescritura',
+          'Enfermería escolar'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · Red Específica de Apoyo a los Trastornos del Lenguaje',
+        resolucionBOCM: 'Resolución de Coordinación de Equipos Específicos CAM',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Centro de atención continuada en logopedia y lenguaje para alumnado con Trastorno del Desarrollo del Lenguaje (TDL/TEL) y disfasia.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: true,
+      aula_matinal: true,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: true,
+      plano_podotactil: false
+    },
+    continuidad: {
+      tipoContinuidad: 'adscripcion_unica',
+      descripcion: 'Adscrito al IES Lope de Vega con apoyo lingüístico en Secundaria.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: [
+        {
+          codigo: '28020858',
+          nombre: 'IES Lope de Vega',
+          etapa: 'ESO',
+          municipio: 'Madrid',
+          distrito: 'Centro',
+          tieneMismoApoyo: true,
+          detallesApoyo: 'Refuerzo de AL en competencia comunicativa para Secundaria.',
+          distanciaKm: 1.1
+        }
+      ]
+    }
+  },
+
+  {
+    id: 'aula-hospitalaria-la-paz',
+    codigo: '28079981',
+    nombre: 'CEIP Sede Aula Hospitalaria y Domiciliaria La Paz',
+    titularidad: 'publico',
+    tipo: 'CEIP',
+    modalidad: 'preferente',
+    municipio: 'Madrid',
+    distrito: 'Fuencarral-El Pardo',
+    codigoPostal: '28046',
+    direccion: 'Paseo de la Castellana, 261 (Hospital La Paz)',
+    telefono: '91 727 70 00',
+    email: 'ah.lapaz.madrid@educa.madrid.org',
+    lat: 40.4802,
+    lng: -3.6871,
+    etapas: ['infantil', 'primaria', 'eso', 'bachillerato'],
+    apoyos: [
+      {
+        needId: 'salud_hospitalaria',
+        evidencia: 'A1',
+        etapasConApoyo: ['infantil', 'primaria', 'eso', 'bachillerato'],
+        aulaNombre: 'Unidad de Escolarización Hospitalaria y Servicio de Apoyo Domiciliario (SAED)',
+        recursosOficiales: [
+          'Maestros y profesores hospitalarios de plantilla fija de la Consejería de Educación',
+          'Profesorado de Servicio de Apoyo Educativo Domiciliario (SAED) para convalecencias superiores a 30 días',
+          'Coordinación directa con el centro de origen del alumno para seguimiento del currículo ordinario y exámenes',
+          'Aulas adaptadas en oncología, pediatría y psiquiatría infantil'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · Servicio de Apoyo Educativo a Alumnado Enfermo (SAED)',
+        resolucionBOCM: 'Orden de Funcionamiento de Aulas Hospitalarias y SAED CAM (BOCM nº 182)',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Sede oficial regional para la atención educativa al alumnado hospitalizado o con enfermedades crónicas/graves que impiden la asistencia regular al colegio.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: true,
+      aula_matinal: false,
+      enfermeria: true,
+      actividades_extraescolares: false
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: true,
+      plano_podotactil: true
+    },
+    continuidad: {
+      tipoContinuidad: 'mismo_centro',
+      descripcion: 'Garantiza la continuidad educativa con el centro escolar de origen durante el periodo de ingreso o convalecencia.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: []
+    }
+  },
+
+  {
+    id: 'ceip-san-cristobal-compensatoria',
+    codigo: '28021384',
+    nombre: 'CEIP San Cristóbal',
+    titularidad: 'publico',
+    tipo: 'CEIP',
+    modalidad: 'preferente',
+    municipio: 'Madrid',
+    distrito: 'Villaverde',
+    codigoPostal: '28021',
+    direccion: 'C/ Rocafort, 5',
+    telefono: '91 795 12 30',
+    email: 'cp.sancristobal.madrid@educa.madrid.org',
+    lat: 40.3421,
+    lng: -3.6912,
+    etapas: ['infantil', 'primaria'],
+    apoyos: [
+      {
+        needId: 'compensatoria',
+        evidencia: 'A1',
+        etapasConApoyo: ['infantil', 'primaria'],
+        aulaNombre: 'Programa de Compensación Educativa y Aula de Enlace',
+        recursosOficiales: [
+          'Profesorado de Compensatoria (PTC) especialista en español como segunda lengua',
+          'Aula de Enlace para alumnado de incorporación tardía al sistema educativo',
+          '1 Maestro PT y 1 Educador Social de apoyo a familias',
+          'Comedor e itinerarios socioeducativos integrados'
+        ],
+        fuenteOficial: 'Comunidad de Madrid · D.G. de Educación Infantil, Primaria y Especial (Compensación)',
+        resolucionBOCM: 'Resolución de Autorización de Programa de Compensatoria (BOCM nº 164)',
+        fechaCorte: 'Curso 2025/2026',
+        detallesResolucion: 'Centro público autorizado con programa intensivo de compensación educativa y adquisición acelerada del idioma para alumnado inmigrante o en riesgo de exclusión social.'
+      }
+    ],
+    servicios: {
+      comedor: true,
+      transporte: true,
+      aula_matinal: true,
+      enfermeria: true,
+      actividades_extraescolares: true
+    },
+    accesibilidad: {
+      acceso_fisico: true,
+      ascensor: true,
+      bano_adaptado: true,
+      bucle_magnetico: false,
+      plano_podotactil: false
+    },
+    continuidad: {
+      tipoContinuidad: 'adscripcion_unica',
+      descripcion: 'Adscrito al IES San Cristóbal de los Ángeles con aula de enlace en Secundaria.',
+      apoyoEnSecundariaVerificado: true,
+      destinos: [
+        {
+          codigo: '28021396',
+          nombre: 'IES San Cristóbal de los Ángeles',
+          etapa: 'ESO y FP Básica',
+          municipio: 'Madrid',
+          distrito: 'Villaverde',
+          tieneMismoApoyo: true,
+          detallesApoyo: 'Continuidad de compensación educativa y programa de FP Básica adaptada.',
+          distanciaKm: 0.8
+        }
+      ]
+    }
   }
 ];

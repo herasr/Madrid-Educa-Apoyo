@@ -228,12 +228,19 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
         {openSections.needs && (
           <div className="mt-3.5 space-y-3">
-            {/* 1.1 NECESIDAD EDUCATIVA ESPECÍFICA */}
+            {/* 1.1 NECESIDAD EDUCATIVA Y MODALIDAD */}
             <div className="space-y-1.5" role="radiogroup" aria-label="Necesidad Educativa">
               {[
                 { id: 'tea' as NeedId, label: 'Atención preferente TEA', desc: 'Trastorno del Espectro Autista' },
                 { id: 'auditiva' as NeedId, label: 'Discapacidad Auditiva', desc: 'Bilingüismo LSE y logopedia' },
-                { id: 'motora' as NeedId, label: 'Discapacidad Motora', desc: 'Fisioterapia y motórica' }
+                { id: 'motora' as NeedId, label: 'Discapacidad Motora', desc: 'Fisioterapia y motórica' },
+                { id: 'visual' as NeedId, label: 'Discapacidad Visual', desc: 'Apoyo tiflotécnico y convenio ONCE' },
+                { id: 'altas_capacidades' as NeedId, label: 'Altas Capacidades', desc: 'Sedes PEAC y Bachillerato Excelencia' },
+                { id: 'educacion_especial' as NeedId, label: 'Educación Especial (CEE)', desc: 'Colegios de Educación Especial' },
+                { id: 'tdah' as NeedId, label: 'TDAH y Trastornos de Conducta', desc: 'Apoyo conductual y adaptación metodológica' },
+                { id: 'tel_lenguaje' as NeedId, label: 'Trastorno del Lenguaje (TDL/TEL)', desc: 'Intervención intensiva en comunicación' },
+                { id: 'salud_hospitalaria' as NeedId, label: 'Atención Hospitalaria / Domiciliaria', desc: 'Unidades de hospitalización y convalecencia' },
+                { id: 'compensatoria' as NeedId, label: 'Compensación Educativa', desc: 'Aulas de Enlace y desfavorecidos' }
               ].map(item => {
                 const isSelected = state.need === item.id;
                 const count = dynamicCounts.needs[item.id] ?? 0;
@@ -264,92 +271,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               })}
             </div>
 
-            {/* 1.2 SEPARACIÓN VISUAL: MODALIDAD EDUCATIVA */}
-            <div className="pt-2 border-t border-slate-100">
-              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                Modalidad Educativa
-              </div>
-              <button
-                type="button"
-                onClick={handleToggleSpecialEducation}
-                className={`w-full text-left px-3 py-2 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
-                  state.need === 'educacion_especial'
-                    ? 'bg-emerald-50 border-emerald-600 text-emerald-950 font-semibold ring-1 ring-emerald-600/20'
-                    : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700'
-                }`}
-              >
-                <div>
-                  <div className="text-xs font-bold leading-snug">
-                    Educación Especial y Unidades Específicas
-                  </div>
-                  <div className="text-[11px] text-slate-500">
-                    Colegios de Educación Especial (CEE)
-                  </div>
-                </div>
-                <span
-                  className={`text-xs tabular-nums px-2 py-0.5 rounded-md font-mono ${
-                    state.need === 'educacion_especial'
-                      ? 'bg-emerald-200 text-emerald-950 font-bold'
-                      : 'bg-slate-100 text-slate-600'
-                  }`}
-                >
-                  {dynamicCounts.needs['educacion_especial'] ?? 0}
-                </span>
-              </button>
-            </div>
 
-            {/* 1.3 ORIENTACIÓN Y PROGRAMAS (Tarjetas Compactas Destacadas) */}
-            <div className="pt-2 border-t border-slate-100 space-y-2">
-              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                Orientación y Programas Regionales
-              </div>
-
-              {/* Tarjeta Discapacidad Visual */}
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col justify-between gap-2">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-1.5 font-bold text-xs text-slate-900">
-                    <Eye className="w-4 h-4 text-blue-700 shrink-0" />
-                    <span>Discapacidad visual</span>
-                  </div>
-                  <span className="text-[10px] font-semibold text-blue-800 bg-blue-100/80 px-1.5 py-0.2 rounded">
-                    Equipo especializado
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-600 leading-snug">
-                  Atención en centros ordinarios coordinada por el Equipo Especializado EOEP y convenio ONCE.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => onOpenProcedureModal('visual')}
-                  className="self-start text-[11px] font-bold text-blue-700 hover:text-blue-900 hover:underline cursor-pointer"
-                >
-                  Consultar trámite y dictamen →
-                </button>
-              </div>
-
-              {/* Tarjeta Altas Capacidades */}
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col justify-between gap-2">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-1.5 font-bold text-xs text-slate-900">
-                    <Sparkles className="w-4 h-4 text-purple-700 shrink-0" />
-                    <span>Altas capacidades</span>
-                  </div>
-                  <span className="text-[10px] font-semibold text-purple-800 bg-purple-100/80 px-1.5 py-0.2 rounded">
-                    Programa regional
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-600 leading-snug">
-                  Programa PEAC en sábados, CREACIM y enriquecimiento curricular en centros de la CAM.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => onOpenProcedureModal('altas_capacidades')}
-                  className="self-start text-[11px] font-bold text-purple-700 hover:text-purple-900 hover:underline cursor-pointer"
-                >
-                  Consultar valoración y PEAC →
-                </button>
-              </div>
-            </div>
           </div>
         )}
       </div>

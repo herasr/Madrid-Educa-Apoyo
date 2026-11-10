@@ -64,6 +64,12 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
     currentSupport?.needId === 'tea' ? 'Atención preferente TEA' :
     currentSupport?.needId === 'auditiva' ? 'Atención discapacidad auditiva' :
     currentSupport?.needId === 'motora' ? 'Atención discapacidad motora' :
+    currentSupport?.needId === 'visual' ? 'Atención discapacidad visual (ONCE / EOEP)' :
+    currentSupport?.needId === 'altas_capacidades' ? 'Altas Capacidades (PEAC / Excelencia)' :
+    currentSupport?.needId === 'tdah' ? 'Atención TDAH y Trastornos de Conducta' :
+    currentSupport?.needId === 'tel_lenguaje' ? 'Trastorno del Lenguaje y Comunicación (TDL/TEL)' :
+    currentSupport?.needId === 'salud_hospitalaria' ? 'Atención Educativa Hospitalaria y Domiciliaria' :
+    currentSupport?.needId === 'compensatoria' ? 'Compensación Educativa y Aulas de Enlace' :
     currentSupport?.needId === 'educacion_especial' || school.modalidad === 'especial' ? 'Educación Especial (CEE)' :
     'Atención educativa especializada';
 

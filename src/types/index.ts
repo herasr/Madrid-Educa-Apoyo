@@ -10,7 +10,11 @@ export type NeedId =
   | 'motora' 
   | 'educacion_especial' 
   | 'visual' 
-  | 'altas_capacidades';
+  | 'altas_capacidades'
+  | 'tdah'
+  | 'tel_lenguaje'
+  | 'salud_hospitalaria'
+  | 'compensatoria';
 
 export type StageId = 
   | 'infantil' 

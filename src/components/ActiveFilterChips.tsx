@@ -34,7 +34,11 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
       state.need === 'motora' ? 'Discapacidad Motora' :
       state.need === 'educacion_especial' ? 'Educación Especial (CEE)' :
       state.need === 'visual' ? 'Discapacidad Visual (EOEP)' :
-      'Altas Capacidades (PEAC)';
+      state.need === 'altas_capacidades' ? 'Altas Capacidades (PEAC)' :
+      state.need === 'tdah' ? 'TDAH y Conducta' :
+      state.need === 'tel_lenguaje' ? 'Trastorno Lenguaje (TDL/TEL)' :
+      state.need === 'salud_hospitalaria' ? 'Atención Hospitalaria' :
+      'Compensación Educativa';
 
     chips.push({
       id: 'need',

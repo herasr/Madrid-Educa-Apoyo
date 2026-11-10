@@ -106,41 +106,41 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
         </div>
 
         {/* Pestañas de navegación interna del modal */}
-        <div className="flex items-center px-6 border-b border-slate-200 bg-white gap-6 text-xs font-semibold">
+        <div className="flex items-center px-4 sm:px-6 border-b border-slate-200 bg-white gap-3 sm:gap-6 text-xs font-semibold overflow-x-auto">
           <button
             onClick={() => setActiveTab('why')}
-            className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors ${
+            className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'why'
                 ? 'border-blue-700 text-blue-900 font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            <ShieldCheck className="w-4 h-4 text-blue-700" />
-            <span>¿Por qué aparece este centro? (Evidencia)</span>
+            <ShieldCheck className="w-4 h-4 text-blue-700 shrink-0" />
+            <span>Evidencia (¿Por qué?)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('details')}
-            className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors ${
+            className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'details'
                 ? 'border-blue-700 text-blue-900 font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            <Building className="w-4 h-4 text-slate-500" />
-            <span>Ficha Técnica y Servicios</span>
+            <Building className="w-4 h-4 text-slate-500 shrink-0" />
+            <span>Ficha y Servicios</span>
           </button>
 
           <button
             onClick={() => setActiveTab('continuity')}
-            className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors ${
+            className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'continuity'
                 ? 'border-blue-700 text-blue-900 font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            <GraduationCap className="w-4 h-4 text-slate-500" />
-            <span>Continuidad Primaria-Secundaria</span>
+            <GraduationCap className="w-4 h-4 text-slate-500 shrink-0" />
+            <span>Continuidad ESO</span>
           </button>
         </div>
 

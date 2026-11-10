@@ -198,7 +198,7 @@ export function sortCentres(centres: School[], state: SearchState): School[] {
  * manteniendo todos los demás filtros actuales.
  */
 export function computeDynamicCounts(schools: School[], state: SearchState): DynamicCounts {
-  const allNeeds: NeedId[] = ['tea', 'auditiva', 'motora', 'educacion_especial', 'visual', 'altas_capacidades'];
+  const allNeeds: NeedId[] = ['tea', 'auditiva', 'motora', 'educacion_especial', 'visual', 'altas_capacidades', 'tdah', 'tel_lenguaje', 'salud_hospitalaria', 'compensatoria'];
   const allStages: StageId[] = ['infantil', 'primaria', 'eso', 'bachillerato', 'fp_basica'];
   const allOwnership: OwnershipId[] = ['publico', 'concertado'];
   const allModalities: ModalityId[] = ['preferente', 'especial', 'ordinaria'];
@@ -294,7 +294,18 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
   const relaxations: RelaxationOption[] = [];
 
   // Explicación textual de la combinación
-  const needName = state.need === 'tea' ? 'TEA' : state.need === 'auditiva' ? 'Discapacidad Auditiva' : state.need === 'motora' ? 'Discapacidad Motora' : 'la necesidad seleccionada';
+  const needName = 
+    state.need === 'tea' ? 'TEA' : 
+    state.need === 'auditiva' ? 'Discapacidad Auditiva' : 
+    state.need === 'motora' ? 'Discapacidad Motora' : 
+    state.need === 'visual' ? 'Discapacidad Visual' : 
+    state.need === 'altas_capacidades' ? 'Altas Capacidades' : 
+    state.need === 'educacion_especial' ? 'Educación Especial' : 
+    state.need === 'tdah' ? 'TDAH y Conducta' : 
+    state.need === 'tel_lenguaje' ? 'Trastornos del Lenguaje' : 
+    state.need === 'salud_hospitalaria' ? 'Atención Hospitalaria' : 
+    state.need === 'compensatoria' ? 'Compensación Educativa' : 
+    'la necesidad seleccionada';
   const munName = state.municipality || 'la Comunidad de Madrid';
   const radiusText = state.radiusKm ? ` en ${state.radiusKm} km de ${munName}` : ` en ${munName}`;
 
@@ -451,7 +462,7 @@ export function parseSearchStateFromQuery(queryString: string): SearchState {
   const state: SearchState = { ...INITIAL_SEARCH_STATE };
 
   // Control lists for validation
-  const validNeeds: NeedId[] = ['tea', 'auditiva', 'motora', 'educacion_especial', 'visual', 'altas_capacidades'];
+  const validNeeds: NeedId[] = ['tea', 'auditiva', 'motora', 'educacion_especial', 'visual', 'altas_capacidades', 'tdah', 'tel_lenguaje', 'salud_hospitalaria', 'compensatoria'];
   const validStages: StageId[] = ['infantil', 'primaria', 'eso', 'bachillerato', 'fp_basica'];
   const validOwnership: OwnershipId[] = ['publico', 'concertado'];
   const validModalities: ModalityId[] = ['preferente', 'especial', 'ordinaria'];

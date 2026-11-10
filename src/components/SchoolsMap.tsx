@@ -167,18 +167,46 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       const isA1 = currentSupport?.evidencia === 'A1';
       const isFocused = selectedSchoolId === school.id;
 
-      // Color de fondo por necesidad
+      // Color de fondo y etiqueta por necesidad
       let bgColor = '#1d4ed8'; // TEA (azul)
       let needTag = 'TEA';
+      let needDisplayName = 'Atención preferente TEA';
       if (needId === 'auditiva') {
         bgColor = '#0284c7'; // Celeste
         needTag = 'AUD';
+        needDisplayName = 'Discapacidad auditiva';
       } else if (needId === 'motora') {
         bgColor = '#7c3aed'; // Púrpura
         needTag = 'MOT';
+        needDisplayName = 'Discapacidad motora';
+      } else if (needId === 'visual') {
+        bgColor = '#2563eb'; // Azul rey
+        needTag = 'VIS';
+        needDisplayName = 'Discapacidad visual';
+      } else if (needId === 'altas_capacidades') {
+        bgColor = '#9333ea'; // Violeta
+        needTag = 'AAC';
+        needDisplayName = 'Altas capacidades';
+      } else if (needId === 'tdah') {
+        bgColor = '#d97706'; // Ámbar intenso
+        needTag = 'TDA';
+        needDisplayName = 'TDAH y Conducta';
+      } else if (needId === 'tel_lenguaje') {
+        bgColor = '#0891b2'; // Cían
+        needTag = 'TEL';
+        needDisplayName = 'Trastorno del Lenguaje';
+      } else if (needId === 'salud_hospitalaria') {
+        bgColor = '#dc2626'; // Rojo sanitario
+        needTag = 'HOSP';
+        needDisplayName = 'Atención Hospitalaria';
+      } else if (needId === 'compensatoria') {
+        bgColor = '#4f46e5'; // Índigo
+        needTag = 'COMP';
+        needDisplayName = 'Compensación Educativa';
       } else if (needId === 'educacion_especial' || school.modalidad === 'especial') {
         bgColor = '#059669'; // Verde
         needTag = 'CEE';
+        needDisplayName = 'Educación Especial';
       }
 
       // Estilo de borde: Sólido para A1 (Confirmado), Discontinuo para A2 (En comprobación)
@@ -253,7 +281,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
 
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 8px; font-size: 11px; margin-bottom: 8px;">
             <div style="font-weight: 700; color: #1e293b; margin-bottom: 1px;">
-              ${needTag === 'TEA' ? 'Atención preferente TEA' : needTag === 'AUD' ? 'Discapacidad auditiva' : needTag === 'MOT' ? 'Discapacidad motora' : 'Educación Especial'}
+              ${needDisplayName}
             </div>
             <div style="color: #64748b; font-size: 10px;">
               Etapas confirmadas: <strong>${stageLabels}</strong>
