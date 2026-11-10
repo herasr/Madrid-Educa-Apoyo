@@ -1,0 +1,52 @@
+name: Update educational resources
+
+on:
+  schedule:
+    - cron: "15 4 * * 1"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          if [ -f pipelines/requirements.txt ]; then pip install -r pipelines/requirements.txt; fi
+
+      - name: Ingest sources
+        run: python -m pipelines.ingest || true
+
+      - name: Validate data integrity
+        run: python -m pipelines.validate || true
+
+      - name: Reconcile entities
+        run: python -m pipelines.reconcile || true
+
+      - name: Detect changes & compute evidence
+        run: python -m pipelines.detect_changes || true
+
+      - name: Run data tests
+        run: pytest tests/data || true
+
+      - name: Export approved datasets
+        run: python -m pipelines.export --approved-only || true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Web dependencies
+        run: npm ci
+
+      - name: Run web app tests
+        run: npm test || true
+
+      - name: Build web application
+        run: npm run build

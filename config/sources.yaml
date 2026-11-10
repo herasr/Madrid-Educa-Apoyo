@@ -1,0 +1,52 @@
+# Madrid Educa Apoyo · Registro de Fuentes Oficiales
+# Configuración de Ingesta y Periodicidades
+
+sources:
+  preferred_support:
+    name: "Centros con Atención Preferente (TEA, Auditiva, Motora)"
+    authority: comunidad_madrid
+    type: official_web
+    url: https://www.comunidad.madrid/educacion/atencion-preferente-necesidades-educativas-especiales
+    frequency: weekly
+    parser: preferred_support_html_v1
+    expected_content:
+      - autism
+      - hearing_disability
+      - motor_disability
+    licence: "Open Data CAM / Ley 19/2013 de Transparencia"
+
+  education_centres:
+    name: "Catálogo General de Centros Educativos de la Comunidad de Madrid"
+    authority: comunidad_madrid
+    type: ckan
+    url: https://datos.comunidad.madrid/catalogo/dataset/centros_educativos
+    frequency: weekly
+    parser: education_centres_ckan_v1
+    licence: "CC-BY 4.0 / Datos Abiertos CAM"
+
+  visual_guidance_team:
+    name: "Equipo Específico de Discapacidad Visual (EOEP)"
+    authority: comunidad_madrid
+    type: official_web
+    url: https://www.comunidad.madrid/servicios/educacion/equipos-orientacion-educativa-psicopedagogica-eoep
+    frequency: monthly
+    parser: official_resource_page_v1
+    licence: "Oficial CAM"
+
+  once_cre_madrid:
+    name: "CRE de la ONCE en Madrid (Centros de Recursos y Escuelas)"
+    authority: once
+    type: institutional_web
+    url: https://cremadrid.once.es/
+    frequency: monthly
+    parser: once_cre_v1
+    licence: "Institucional ONCE"
+
+  creacim:
+    name: "Sede Electrónica CREACIM / PEAC"
+    authority: comunidad_madrid
+    type: official_procedure
+    url: https://sede.comunidad.madrid/oferta-formativa/creacim-peac
+    frequency: daily
+    parser: creacim_procedure_v1
+    licence: "Sede Electrónica CAM"

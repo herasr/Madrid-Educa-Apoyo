@@ -1,0 +1,51 @@
+# Madrid Educa Apoyo · Reglas de Evidencia, Severidad y Conciliación
+
+evidence_rules:
+  labels:
+    preferred_support_confirmed:
+      code: "A1"
+      label: "Atención preferente confirmada"
+      condition: "Resolución BOCM vigente + catálogo oficial ratificado"
+
+    support_under_verification:
+      code: "A2"
+      label: "Confirmado por comprobar etapa o vigencia"
+      condition: "Centro en catálogo con apoyo pero expediente en comprobación de curso"
+
+    specialised_once_centre:
+      code: "A1"
+      label: "Centro especializado confirmado (ONCE)"
+      condition: "Código oficial + registro en CRE ONCE Madrid"
+
+    specialised_team:
+      code: "A1"
+      label: "Equipo especializado oficial"
+      condition: "EOEP específico publicado por la Consejería de Educación"
+
+change_severity:
+  low:
+    - phone_changed
+    - format_changed
+  medium:
+    - address_changed
+    - web_changed
+  high:
+    - stage_added
+    - stage_removed
+    - programme_site_added
+    - programme_site_removed
+  critical:
+    - support_removed
+    - resource_removed
+    - centre_code_changed
+    - specialisation_changed
+    - coordinates_displaced_over_500m
+
+reconciliation_priority:
+  centre_code: "Comunidad de Madrid (EDUCAbase)"
+  official_name: "Comunidad de Madrid"
+  visual_specialisation: "ONCE Madrid / EOEP Específico"
+  stages: "Comunidad de Madrid + ONCE"
+  services: "ONCE / Dirección del Centro"
+  address: "Comunidad de Madrid (contrastado con Registro)"
+  accessibility: "Ayuntamiento de Madrid / Ficha Municipal"

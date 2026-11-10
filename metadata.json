@@ -1,0 +1,8 @@
+{
+  "name": "educa simplificada",
+  "description": "Buscador educativo con evidencia oficial y filtros acumulativos para centros de atención preferente (TEA, auditiva, motora) y educación inclusiva en la Comunidad de Madrid.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
