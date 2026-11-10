@@ -1,35 +1,29 @@
 #!/usr/bin/env python3
 """
-Fase 1: Ingesta y Comprobación de Fuentes Oficiales (CAM, ONCE, Ayto)
+Pipeline de Ingesta — Madrid Educa Apoyo (Prototipo)
+Verifica disponibilidad de catálogo de datos abiertos de la Comunidad de Madrid.
 """
 
 import json
-import hashlib
 import time
 import os
 
 def ingest_sources():
-    print("[Pipeline - Ingest] Comprobando cabeceras HTTP y hashes de fuentes oficiales...")
+    print("[Pipeline - Ingest] Comprobando estructura de fuentes públicas (Prototipo)...")
     sources = [
         {"id": "preferred_support", "url": "https://www.comunidad.madrid/educacion/atencion-preferente-necesidades-educativas-especiales"},
-        {"id": "education_centres", "url": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos"},
-        {"id": "once_cre_madrid", "url": "https://cremadrid.once.es/"}
+        {"id": "education_centres", "url": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos"}
     ]
     
     os.makedirs("data/raw", exist_ok=True)
     results = []
     
     for s in sources:
-        mock_content = f"Fuente oficial {s['id']} - fecha {time.strftime('%Y-%m-%d')}".encode('utf-8')
-        sha256 = hashlib.sha256(mock_content).hexdigest()
-        
         snapshot = {
             "source_id": s["id"],
             "url": s["url"],
             "retrieved_at": time.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "http_status": 200,
-            "sha256": sha256,
-            "approved": True
+            "status": "PROTOTYPE_SIMULATION"
         }
         
         source_dir = os.path.join("data/raw", s["id"])
@@ -38,9 +32,10 @@ def ingest_sources():
             json.dump(snapshot, f, indent=2)
             
         results.append(snapshot)
-        print(f"  ✔ Fuente {s['id']}: Hash SHA256 {sha256[:12]}... [OK]")
+        print(f"  ℹ Fuente {s['id']}: Registrada estructura de prueba.")
         
     return results
 
 if __name__ == "__main__":
     ingest_sources()
+

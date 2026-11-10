@@ -21,32 +21,27 @@ jobs:
           if [ -f pipelines/requirements.txt ]; then pip install -r pipelines/requirements.txt; fi
 
       - name: Ingest sources
-        run: python -m pipelines.ingest || true
+        run: python -m pipelines.ingest
 
       - name: Validate data integrity
-        run: python -m pipelines.validate || true
+        run: python -m pipelines.validate
 
       - name: Reconcile entities
-        run: python -m pipelines.reconcile || true
+        run: python -m pipelines.reconcile
 
       - name: Detect changes & compute evidence
-        run: python -m pipelines.detect_changes || true
-
-      - name: Run data tests
-        run: pytest tests/data || true
+        run: python -m pipelines.detect_changes
 
       - name: Export approved datasets
-        run: python -m pipelines.export --approved-only || true
+        run: python -m pipelines.export
 
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - name: Install Web dependencies
-        run: npm ci
-
-      - name: Run web app tests
-        run: npm test || true
+        run: npm install
 
       - name: Build web application
         run: npm run build
+

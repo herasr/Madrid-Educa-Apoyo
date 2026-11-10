@@ -167,8 +167,8 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
                     {distanceKm} km aprox.
                   </span>
                   <span aria-hidden="true" className="text-slate-300">·</span>
-                  <span className="font-medium text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded" title="Tiempo estimado en transporte público colectivo (Bus EMT / Metro CRTM)">
-                    ⏱️ ~{estimateTransitMinutes(distanceKm)} min bus/metro
+                  <span className="font-medium text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded" title="Estimación aproximada basada en distancia en línea recta">
+                    ⏱️ ~{estimateTransitMinutes(distanceKm)} min (est. lineal)
                   </span>
                 </>
               )}
