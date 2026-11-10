@@ -1,10 +1,10 @@
 {
-  "dataset": "Madrid Educa Apoyo - Centros de Atención Preferente",
+  "dataset": "Madrid Educa Apoyo - Entidades de Demostración Técnica (DataMad)",
   "total_records": 4,
   "products": [
     {
       "path": "data_products/centros_apoyo.geojson",
-      "format": "GeoJSON",
+      "format": "GeoJSON (RFC 7946)",
       "features": 4
     },
     {
@@ -18,5 +18,7 @@
     }
   ],
   "licence": "Apache-2.0",
-  "status": "VALIDATED_PROTOTYPE_DATASET"
+  "rfc_7946_compliant": true,
+  "status": "TECHNICAL_DEMONSTRATION_ENVIRONMENT",
+  "data_notice": "Entorno de demostración técnica para evaluación de plataforma. Centros con códigos de la red CAM y asignaciones sintéticas."
 }

@@ -1,7 +1,8 @@
 {
   "url": "https://www.comunidad.madrid/servicios/educacion/atencion-diferencias-individuales",
-  "retrieved_at": "2026-11-10T15:48:15Z",
-  "sha256": "d37f0c521690d14345ae1d275eda4ac14ea04beb4454116fa47cbb41ade55169",
+  "retrieved_at": "2026-11-10T16:08:22Z",
+  "sha256": "8e9991028397559843f0d5ba1c5ab0db3219caedeca1054f01221e2fa0d9cd5d",
   "status": "OFFLINE_SAMPLE_FIXTURE",
-  "bytes": 836
+  "bytes": 329,
+  "data_mode": "TECHNICAL_DEMO_FIXTURE"
 }

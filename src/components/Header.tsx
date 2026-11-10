@@ -70,16 +70,26 @@ export const Header: React.FC<HeaderProps> = ({
     <>
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-          {/* Zona 1: Wordmark institucional */}
+          {/* Zona 1: Wordmark institucional Comunidad de Madrid */}
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => onSelectTab('search')}
-              className="text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded"
+              className="text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 rounded p-1"
             >
-              <div className="flex items-baseline gap-2">
-                <span className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-900 transition-colors whitespace-nowrap">
-                  Madrid Educa Apoyo
-                </span>
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center text-white font-black shadow-md text-base ring-2 ring-red-100">
+                  M
+                </div>
+                <div>
+                  <div className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-red-800 transition-colors whitespace-nowrap flex items-center gap-1.5">
+                    <span>Madrid</span>
+                    <span className="text-red-700 font-black">Educa</span>
+                    <span className="text-slate-700 font-semibold">Apoyo</span>
+                  </div>
+                  <div className="text-[10px] font-bold text-red-900/70 tracking-wider uppercase">
+                    Comunidad de Madrid · Portal Oficial
+                  </div>
+                </div>
               </div>
             </button>
           </div>
@@ -89,29 +99,29 @@ export const Header: React.FC<HeaderProps> = ({
             {/* 1. Buscar */}
             <button
               onClick={() => onSelectTab('search')}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-xl transition-all cursor-pointer inline-flex items-center gap-2 ${
                 currentTab === 'search'
-                  ? 'bg-blue-50 text-blue-900 font-bold'
+                  ? 'bg-red-50 text-red-900 font-bold shadow-xs border border-red-200/80'
                   : 'hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              <Search className="w-4 h-4 text-blue-700" />
+              <Search className={`w-4 h-4 ${currentTab === 'search' ? 'text-red-700' : 'text-slate-500'}`} />
               <span>Buscar</span>
             </button>
 
-            {/* 3. Comparador con contador visible (máximo 3) */}
+            {/* 2. Comparador con contador visible (máximo 3) */}
             <button
               onClick={() => onSelectTab('comparator')}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-xl transition-all cursor-pointer inline-flex items-center gap-2 ${
                 currentTab === 'comparator'
-                  ? 'bg-blue-50 text-blue-900 font-bold'
+                  ? 'bg-red-50 text-red-900 font-bold shadow-xs border border-red-200/80'
                   : 'hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              <GitCompare className="w-4 h-4 text-slate-500" />
+              <GitCompare className={`w-4 h-4 ${currentTab === 'comparator' ? 'text-red-700' : 'text-slate-500'}`} />
               <span>Comparar</span>
-              <span className={`text-[11px] font-mono px-1.5 py-0.2 rounded-full tabular-nums font-bold ${
-                comparedCount > 0 ? 'bg-blue-100 text-blue-900' : 'bg-slate-100 text-slate-500'
+              <span className={`text-[11px] font-mono px-2 py-0.5 rounded-full tabular-nums font-bold ${
+                comparedCount > 0 ? 'bg-red-100 text-red-900' : 'bg-slate-100 text-slate-500'
               }`}>
                 {comparedCount}/3
               </span>

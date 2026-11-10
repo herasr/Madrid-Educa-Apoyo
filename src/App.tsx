@@ -316,7 +316,7 @@ export default function App() {
               Prototipo Demo · DataMad
             </span>
             <span className="text-[11px] text-amber-900">
-              Centros y ubicaciones reales de la Comunidad de Madrid con asignaciones de recursos y resoluciones sintéticas para prueba de concepto.
+              Entorno de evaluación técnica: códigos de centro y municipios basados en la red educativa de la CAM; asignaciones de apoyo, aulas y resoluciones son sintéticas para evaluación de la plataforma.
             </span>
           </div>
           <a
@@ -634,25 +634,7 @@ export default function App() {
                 </button>
               </div>
 
-              <div>
-                <div className="font-semibold text-slate-700 mb-2">Leyenda de Símbolos</div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                  {[
-                    { tag: 'TEA', color: '#1d4ed8', label: 'TEA' },
-                    { tag: 'AUD', color: '#0284c7', label: 'Auditiva' },
-                    { tag: 'MOT', color: '#7c3aed', label: 'Motora' },
-                    { tag: 'VIS', color: '#2563eb', label: 'Visual' },
-                    { tag: 'AAC', color: '#9333ea', label: 'Altas Cap.' }
-                  ].map(item => (
-                    <div key={item.tag} className="flex items-center gap-2 text-[10px] text-slate-600">
-                      <div className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold text-white" style={{ backgroundColor: item.color }}>
-                        {item.tag}
-                      </div>
-                      <span>{item.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+
             </div>
           </div>
           

@@ -1,40 +1,55 @@
 {
   "ingestion_metadata": {
     "url": "https://www.comunidad.madrid/servicios/educacion/atencion-diferencias-individuales",
-    "retrieved_at": "2026-11-10T15:48:15Z",
-    "sha256": "d37f0c521690d14345ae1d275eda4ac14ea04beb4454116fa47cbb41ade55169",
+    "retrieved_at": "2026-11-10T16:08:22Z",
+    "sha256": "8e9991028397559843f0d5ba1c5ab0db3219caedeca1054f01221e2fa0d9cd5d",
     "status": "OFFLINE_SAMPLE_FIXTURE",
-    "bytes": 836
+    "bytes": 329,
+    "data_mode": "TECHNICAL_DEMO_FIXTURE"
   },
   "total_records": 4,
+  "is_demonstration_sample": true,
+  "disclaimer": "Registros de demostración técnica para evaluación de la plataforma (DataMad). No atribuir a resoluciones no comprobadas.",
   "rows": [
     {
       "codigo": "28020941",
       "nombre": "CEIP Escuelas Aguirre",
       "municipio": "Madrid",
       "necesidad": "TEA",
-      "fuente": "BOCM / Cat\u00e1logo Oficial CAM"
+      "latitud": 40.4218,
+      "longitud": -3.6828,
+      "fuente": "Muestra Técnica de Demostración (DataMad)",
+      "es_sintetico": true
     },
     {
       "codigo": "28020965",
       "nombre": "CEIP Portugal",
       "municipio": "Madrid",
       "necesidad": "Auditiva",
-      "fuente": "BOCM / Cat\u00e1logo Oficial CAM"
+      "latitud": 40.4095,
+      "longitud": -3.7315,
+      "fuente": "Muestra Técnica de Demostración (DataMad)",
+      "es_sintetico": true
     },
     {
       "codigo": "28060238",
-      "nombre": "CEIP Dulce Chac\u00f3n",
+      "nombre": "CEIP Dulce Chacón",
       "municipio": "Fuenlabrada",
       "necesidad": "Motora",
-      "fuente": "BOCM / Cat\u00e1logo Oficial CAM"
+      "latitud": 40.2865,
+      "longitud": -3.7915,
+      "fuente": "Muestra Técnica de Demostración (DataMad)",
+      "es_sintetico": true
     },
     {
       "codigo": "28021155",
       "nombre": "CEIP San Benito",
       "municipio": "Madrid",
       "necesidad": "Auditiva",
-      "fuente": "BOCM / Cat\u00e1logo Oficial CAM"
+      "latitud": 40.4312,
+      "longitud": -3.6334,
+      "fuente": "Muestra Técnica de Demostración (DataMad)",
+      "es_sintetico": true
     }
   ]
 }

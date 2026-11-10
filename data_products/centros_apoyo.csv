@@ -1,5 +1,5 @@
-codigo,nombre,municipio,direccion,tipo,titularidad,necesidad,latitud,longitud,fuente
-28020941,CEIP Escuelas Aguirre,Madrid,"C/ Alcalá, 62",CEIP,Público,TEA,40.4218,-3.6828,BOCM / Catálogo Oficial CAM
-28020965,CEIP Portugal,Madrid,"Paseo de Extremadura, 22",CEIP,Público,Auditiva,40.4095,-3.7315,BOCM / Catálogo Oficial CAM
-28060238,CEIP Dulce Chacón,Fuenlabrada,"C/ Extremadura, 12",CEIP,Público,Motora,40.2865,-3.7915,BOCM / Catálogo Oficial CAM
-28021155,CEIP San Benito,Madrid,"C/ Hermanos García Noblejas, 40",CEIP,Público,Auditiva,40.4312,-3.6334,BOCM / Catálogo Oficial CAM
+codigo,nombre,municipio,direccion,tipo,titularidad,necesidad,latitud,longitud,fuente,es_demostracion
+28020941,CEIP Escuelas Aguirre,Madrid,,CEIP,Público,TEA,40.4218,-3.6828,Muestra Técnica de Demostración (DataMad),True
+28020965,CEIP Portugal,Madrid,,CEIP,Público,Auditiva,40.4095,-3.7315,Muestra Técnica de Demostración (DataMad),True
+28060238,CEIP Dulce Chacón,Fuenlabrada,,CEIP,Público,Motora,40.2865,-3.7915,Muestra Técnica de Demostración (DataMad),True
+28021155,CEIP San Benito,Madrid,,CEIP,Público,Auditiva,40.4312,-3.6334,Muestra Técnica de Demostración (DataMad),True

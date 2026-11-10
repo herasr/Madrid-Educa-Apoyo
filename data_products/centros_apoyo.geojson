@@ -1,11 +1,5 @@
 {
   "type": "FeatureCollection",
-  "crs": {
-    "type": "name",
-    "properties": {
-      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
-    }
-  },
   "features": [
     {
       "type": "Feature",
@@ -20,11 +14,13 @@
         "codigo": "28020941",
         "nombre": "CEIP Escuelas Aguirre",
         "municipio": "Madrid",
-        "direccion": "C/ Alcalá, 62",
+        "direccion": "",
         "tipo": "CEIP",
         "titularidad": "Público",
         "necesidad_apoyo": "TEA",
-        "fuente_resolucion": "BOCM / Catálogo Oficial CAM"
+        "fuente": "Muestra Técnica de Demostración (DataMad)",
+        "coordenada_aproximada": false,
+        "es_demostracion": true
       }
     },
     {
@@ -40,11 +36,13 @@
         "codigo": "28020965",
         "nombre": "CEIP Portugal",
         "municipio": "Madrid",
-        "direccion": "Paseo de Extremadura, 22",
+        "direccion": "",
         "tipo": "CEIP",
         "titularidad": "Público",
         "necesidad_apoyo": "Auditiva",
-        "fuente_resolucion": "BOCM / Catálogo Oficial CAM"
+        "fuente": "Muestra Técnica de Demostración (DataMad)",
+        "coordenada_aproximada": false,
+        "es_demostracion": true
       }
     },
     {
@@ -60,11 +58,13 @@
         "codigo": "28060238",
         "nombre": "CEIP Dulce Chacón",
         "municipio": "Fuenlabrada",
-        "direccion": "C/ Extremadura, 12",
+        "direccion": "",
         "tipo": "CEIP",
         "titularidad": "Público",
         "necesidad_apoyo": "Motora",
-        "fuente_resolucion": "BOCM / Catálogo Oficial CAM"
+        "fuente": "Muestra Técnica de Demostración (DataMad)",
+        "coordenada_aproximada": false,
+        "es_demostracion": true
       }
     },
     {
@@ -80,11 +80,13 @@
         "codigo": "28021155",
         "nombre": "CEIP San Benito",
         "municipio": "Madrid",
-        "direccion": "C/ Hermanos García Noblejas, 40",
+        "direccion": "",
         "tipo": "CEIP",
         "titularidad": "Público",
         "necesidad_apoyo": "Auditiva",
-        "fuente_resolucion": "BOCM / Catálogo Oficial CAM"
+        "fuente": "Muestra Técnica de Demostración (DataMad)",
+        "coordenada_aproximada": false,
+        "es_demostracion": true
       }
     }
   ]

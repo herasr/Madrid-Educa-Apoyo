@@ -1,66 +1,65 @@
-# Pipeline de Actualización y Gobernanza de Datos · Madrid Educa Apoyo
+# Pipeline de Ingesta y Gobernanza de Datos · Madrid Educa Apoyo
 
-Este directorio contiene la arquitectura del **Pipeline de Ingesta, Conciliación, Validación y Publicación de Evidencia Oficial Educativa**.
-
----
-
-## 🏗️ Estructura de las Fases del Pipeline
-
-```
-Fuentes oficiales (CAM, ONCE, Ayto)
-        ↓
-1. Descarga y captura de instantáneas (data/raw/)
-        ↓
-2. Validación de integridad y hashes (sha256)
-        ↓
-3. Extracción y Normalización textual/etapas (Unicode NFC, mappings)
-        ↓
-4. Conciliación de entidades (Código oficial exacto, normalizado)
-        ↓
-5. Detección de cambios e incidencias (Baja, Media, Alta, Crítica)
-        ↓
-6. Cola de revisión de incidencias (Aprobación automática vs humana)
-        ↓
-7. Cálculo de evidencias oficiales (A1 Confirmado / A2 Por comprobar)
-        ↓
-8. Exportación de productos de datos (facts_resources.csv, derived_evidence.csv, JSON, GeoJSON)
-        ↓
-9. Pruebas de regresión y calidad (Vitest, axe-core, Lighthouse)
-        ↓
-10. Publicación estática de la aplicación sin regresiones
-```
+Este directorio contiene la arquitectura del **Pipeline de Ingesta, Detección de Cambios, Conciliación, Validación y Exportación de Datos Educativos**.
 
 ---
 
-## 📋 Regla Fundamental de Protección de Datos
+## ⚡ Estado de Implementación Técnica (100% Funcional)
+
+- **`ingest.py`**:
+  - Descarga de la fuente oficial (`comunidad.madrid`) o uso de fixture offline reproducible.
+  - Cálculo de suma de verificación criptográfica **SHA-256**.
+  - Respaldo de metadatos históricos (`metadata_previous.json`) para permitir comparación temporal.
+  - Integración transparente de registros de prueba técnica sin atribuir falsamente datos sintéticos al BOCM.
+
+- **`detect_changes.py`**:
+  - Comparación activa del hash SHA-256 de la captura actual frente a la instantánea previa.
+  - Reporte de delta de bytes y detección de modificaciones en la fuente oficial.
+  - Verificación de estabilidad del esquema de datos extraídos.
+
+- **`validate.py`**:
+  - Verificación de esquema y obligatoriedad de campos (`codigo`, `nombre`, `municipio`, `necesidad`, `latitud`, `longitud`).
+  - Validación del patrón oficial de códigos CAM (`28xxxxxx`).
+  - **Comprobación efectiva de delimitación geográfica**: verifica que todas las coordenadas se ubiquen estrictamente dentro del rectángulo delimitador oficial de la Comunidad de Madrid (EPSG:4326: `lat` [39.8, 41.2], `lng` [-4.6, -3.0]).
+
+- **`reconcile.py`**:
+  - Conciliación estricta contra el catálogo oficial completo de los **179 municipios de la Comunidad de Madrid** (INE Código 28).
+  - Normalización Unicode (eliminación de tildes y diacríticos, minúsculas, limpieza de blancos).
+  - Coincidencia exacta obligatoria (sin inclusiones parciales permisivas).
+
+- **`export.py`**:
+  - Exportación a **GeoJSON estricto conforme a RFC 7946** (WGS 84 implícito; omisión del miembro `crs` obsoleto prohibido por el estándar).
+  - Exportación tabular normalizada en **CSV** (`data_products/centros_apoyo.csv`).
+  - Metadatos de gobernanza y trazabilidad (`data_products/export-summary.json`).
+  - Señalización honesta del entorno de demostración técnica (`es_demostracion: True`).
+
+---
+
+## 🏗️ Flujo de Ejecución
+
+```bash
+python3 pipelines/ingest.py
+python3 pipelines/detect_changes.py
+python3 pipelines/validate.py
+python3 pipelines/reconcile.py
+python3 pipelines/export.py
+```
+
+---
+
+## 📋 Regla de Gobernanza de Recursos Educativos
 
 > **No encontrado en la nueva captura ≠ El recurso ha sido eliminado oficialmente ≠ El parser ha fallado**
 
-Ningún centro o recurso se retira automáticamente únicamente por desaparecer de una captura HTML/CKAN. La baja requiere:
-1. Fuente oficial explícita con boletín o acto administrativo.
-2. Confirmación cruzada en una segunda fuente oficial.
-3. O revisión humana supervisada.
+Ningún centro o recurso de apoyo se retira automáticamente únicamente por desaparecer de una captura HTML. La baja o modificación sustancial requiere:
+1. Publicación de acto administrativo o resolución en boletín oficial.
+2. Confirmación cruzada en una segunda fuente institucional.
+3. O revisión técnica humana supervisada.
 
 ---
 
----
+## 📁 Estructura de Directorios
 
-## ⚡ Estado de Implementación Técnica
-
-- **Módulos Activos y Verificados**:
-  - `ingest.py`: Descarga y cálculo SHA-256 con respaldo de fixture de prueba offline (`OFFLINE_SAMPLE_FIXTURE`).
-  - `validate.py`: Validación de campos requeridos y códigos CAM (`28xxxxxx`).
-  - `reconcile.py`: Validación de concordancia con municipios de la Comunidad de Madrid.
-  - `detect_changes.py`: Comprobación del hash de integridad de la captura.
-  - `export.py`: Generación efectiva de `data_products/centros_apoyo.geojson` (RFC 7946), `data_products/centros_apoyo.csv` y `export-summary.json`.
-- **Fases de Gobernanza en Roadmap de Producción**:
-  - Cola de aprobación supervisada por personal técnico para resolución de discrepancias en cambios de código o traslados.
-
----
-
-## 📁 Directorios de Datos
-
-- `data/raw/`: Instantáneas inmutables con `source_page.html` y `metadata.json` (incluye hash `sha256`).
-- `data/processed/`: Registros extraídos y parseados en formato estándar (`schools_extracted.json`).
-- `data_products/`: Archivos distribuidos para consumo externo (`centros_apoyo.geojson`, `centros_apoyo.csv`, `export-summary.json`).
-
+- `data/raw/educacion_cam/`: Instantáneas inmutables con `source_page.html`, `metadata.json` y `metadata_previous.json`.
+- `data/processed/`: Registros extraídos y parseados (`schools_extracted.json`).
+- `data_products/`: Productos de datos abiertos para consumo externo (`centros_apoyo.geojson`, `centros_apoyo.csv`, `export-summary.json`).

@@ -21,7 +21,8 @@ import {
   BookmarkCheck,
   Check,
   Building,
-  GraduationCap
+  GraduationCap,
+  Info
 } from 'lucide-react';
 import { LEGAL_DISCLAIMER } from '../data/disclaimerAndProcedures';
 import { SchoolMiniMap } from './SchoolMiniMap';
@@ -161,7 +162,13 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
         </div>
 
         {/* Contenido scrolleable */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1 text-sm text-slate-700">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1 text-sm text-slate-700">
+          {/* Advertencia orientativa visible y bien ubicada */}
+          <div className="bg-amber-50/90 border border-amber-200/80 rounded-xl px-3.5 py-2 text-xs text-amber-950 flex items-center gap-2">
+            <Info className="w-4 h-4 text-amber-700 shrink-0" />
+            <span className="font-medium">{LEGAL_DISCLAIMER}</span>
+          </div>
+
           {/* TAB 1: ¿POR QUÉ APARECE ESTE CENTRO? */}
           {activeTab === 'why' && (
             <div className="space-y-5">
@@ -429,43 +436,37 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
         </div>
 
         {/* Pie del modal con acciones */}
-        <div className="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between gap-3">
-          <div className="text-xs text-slate-500">
-            {LEGAL_DISCLAIMER}
-          </div>
+        <div className="p-3.5 sm:p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-end gap-2">
+          <button
+            onClick={() => onTogglePassport(school)}
+            className={`inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-colors cursor-pointer flex-1 sm:flex-none ${
+              isInPassport
+                ? 'bg-emerald-700 text-white border-emerald-800'
+                : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+            }`}
+          >
+            <BookmarkCheck className="w-4 h-4 shrink-0" />
+            <span className="truncate">{isInPassport ? 'En Pasaporte' : 'Pasaporte'}</span>
+          </button>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => onTogglePassport(school)}
-              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
-                isInPassport
-                  ? 'bg-emerald-700 text-white border-emerald-800'
-                  : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
-              }`}
-            >
-              <BookmarkCheck className="w-4 h-4" />
-              <span>{isInPassport ? 'En Pasaporte' : 'Guardar en Pasaporte'}</span>
-            </button>
+          <button
+            onClick={() => onToggleCompare(school)}
+            className={`inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-colors cursor-pointer flex-1 sm:flex-none ${
+              isCompared
+                ? 'bg-red-700 text-white border-red-800 shadow-xs'
+                : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+            }`}
+          >
+            <GitCompare className="w-4 h-4 shrink-0" />
+            <span className="truncate">{isCompared ? 'En Comparador' : 'Comparar'}</span>
+          </button>
 
-            <button
-              onClick={() => onToggleCompare(school)}
-              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
-                isCompared
-                  ? 'bg-blue-700 text-white border-blue-800'
-                  : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
-              }`}
-            >
-              <GitCompare className="w-4 h-4" />
-              <span>{isCompared ? 'En Comparador' : 'Comparar'}</span>
-            </button>
-
-            <button
-              onClick={onClose}
-              className="px-4 py-2 rounded-lg text-xs font-bold text-slate-700 bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer"
-            >
-              Cerrar
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-xl text-xs font-bold text-slate-700 bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer shrink-0"
+          >
+            Cerrar
+          </button>
         </div>
       </div>
     </div>

@@ -141,76 +141,68 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
   return (
     <article className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-300 hover:shadow-md transition-all flex flex-col justify-between">
       <div>
-        {/* Fila 1: Metadatos superiores concisos y Badge de Evidencia en Lenguaje Familiar */}
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <div className="flex-1 min-w-0">
-            {/* Metadatos técnicos discretos */}
-            <div className="flex items-center flex-wrap gap-1.5 text-xs text-slate-500 mb-1">
-              <span className="font-mono text-slate-600 font-semibold">Cód. {school.codigo}</span>
-              <span aria-hidden="true" className="text-slate-300">·</span>
-              <span>{school.titularidad === 'publico' ? 'Público' : 'Concertado'}</span>
-              <span aria-hidden="true" className="text-slate-300">·</span>
-              <span>{school.tipo}</span>
-            </div>
-
-            {/* Nombre del centro */}
-            <h3 className="text-lg font-bold text-slate-900 leading-tight">
-              <button
-                type="button"
-                onClick={() => onOpenDetail(school)}
-                className="text-left hover:text-blue-700 transition-colors cursor-pointer"
-              >
-                {school.nombre}
-              </button>
-            </h3>
-
-            {/* Ubicación y Distancia clara sin saltos excesivos */}
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-600 mt-1">
-              <span className="inline-flex items-center gap-1 font-medium text-slate-700">
-                <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>{school.municipio}{school.distrito ? ` (${school.distrito})` : ''}</span>
-              </span>
-              {distanceKm !== null && (
-                <span className="inline-flex items-center gap-1.5">
-                  <span aria-hidden="true" className="text-slate-300">·</span>
-                  <span className="font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded text-[11px] whitespace-nowrap">
-                    {distanceKm} km
-                  </span>
-                  <span
-                    className="font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 px-2 py-0.5 rounded text-[11px] whitespace-nowrap cursor-help transition-colors"
-                    title={`Tiempo estimado en línea recta: ~${estimateTransitMinutes(distanceKm)} min aprox.`}
-                  >
-                    ⏱️ ~{estimateTransitMinutes(distanceKm)} min
-                  </span>
-                </span>
-              )}
-            </div>
+        {/* Fila 1: Metadatos técnicos superiores y Sello de Evidencia */}
+        <div className="flex items-center justify-between gap-2 mb-1.5">
+          <div className="flex items-center flex-wrap gap-1.5 text-xs text-slate-500">
+            <span className="font-mono text-slate-700 font-semibold bg-slate-100 px-1.5 py-0.5 rounded">Cód. {school.codigo}</span>
+            <span className="text-slate-300">·</span>
+            <span>{school.titularidad === 'publico' ? 'Público' : 'Concertado'}</span>
+            <span className="text-slate-300">·</span>
+            <span>{school.tipo}</span>
           </div>
 
-          {/* Sello de Evidencia en Lenguaje Familiar */}
-          <div className="shrink-0 text-right">
+          {/* Sello de Evidencia compacto y claro */}
+          <div className="shrink-0">
             {isA1 ? (
               <span
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full"
                 title="Evidencia oficial A1 (Prototipo): Centro y etapa ratificados en resoluciones simuladas vigentes."
               >
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span className="hidden sm:inline">Confirmado para esta etapa</span>
-                <span className="sm:hidden">Confirmado</span>
-                <span className="text-[10px] text-emerald-600 font-mono opacity-80">(A1)</span>
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>Confirmado (A1)</span>
               </span>
             ) : (
               <span
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full"
                 title="Evidencia A2 (Prototipo): Centro con proyecto donde debe comprobarse la vigencia o etapa exacta."
               >
-                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                <span className="hidden sm:inline">Por comprobar etapa</span>
-                <span className="sm:hidden">Por comprobar</span>
-                <span className="text-[10px] text-amber-600 font-mono opacity-80">(A2)</span>
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <span>Por comprobar (A2)</span>
               </span>
             )}
           </div>
+        </div>
+
+        {/* Nombre del centro a ancho completo para evitar que se parta en 3 o 4 líneas */}
+        <h3 className="text-lg font-bold text-slate-900 leading-snug">
+          <button
+            type="button"
+            onClick={() => onOpenDetail(school)}
+            className="text-left hover:text-blue-700 transition-colors cursor-pointer w-full"
+          >
+            {school.nombre}
+          </button>
+        </h3>
+
+        {/* Ubicación y Distancia sin punto flotante suelto al saltar de línea */}
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600 mt-1.5">
+          <span className="inline-flex items-center gap-1 font-medium text-slate-700">
+            <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <span>{school.municipio}{school.distrito ? ` (${school.distrito})` : ''}</span>
+          </span>
+          {distanceKm !== null && (
+            <div className="inline-flex items-center gap-1.5">
+              <span className="font-bold text-blue-900 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded text-[11px] whitespace-nowrap">
+                {distanceKm} km
+              </span>
+              <span
+                className="font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 px-2 py-0.5 rounded text-[11px] whitespace-nowrap cursor-help transition-colors"
+                title={`Tiempo estimado en línea recta: ~${estimateTransitMinutes(distanceKm)} min aprox.`}
+              >
+                ⏱️ ~{estimateTransitMinutes(distanceKm)} min
+              </span>
+            </div>
+          )}
         </div>
 
         {/* 3 Puntos Clave Esenciales */}
