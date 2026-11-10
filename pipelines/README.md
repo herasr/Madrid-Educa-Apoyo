@@ -43,10 +43,24 @@ Ningún centro o recurso se retira automáticamente únicamente por desaparecer 
 
 ---
 
+---
+
+## ⚡ Estado de Implementación Técnica
+
+- **Módulos Activos y Verificados**:
+  - `ingest.py`: Descarga y cálculo SHA-256 con respaldo de fixture de prueba offline (`OFFLINE_SAMPLE_FIXTURE`).
+  - `validate.py`: Validación de campos requeridos y códigos CAM (`28xxxxxx`).
+  - `reconcile.py`: Validación de concordancia con municipios de la Comunidad de Madrid.
+  - `detect_changes.py`: Comprobación del hash de integridad de la captura.
+  - `export.py`: Generación efectiva de `data_products/centros_apoyo.geojson` (RFC 7946), `data_products/centros_apoyo.csv` y `export-summary.json`.
+- **Fases de Gobernanza en Roadmap de Producción**:
+  - Cola de aprobación supervisada por personal técnico para resolución de discrepancias en cambios de código o traslados.
+
+---
+
 ## 📁 Directorios de Datos
 
-- `data/raw/`: Instantáneas inmutables con `source.html`, `headers.json`, `metadata.json` y `sha256.txt`.
-- `data/normalized/`: Registros limpios con campos estándar y taxonomía mapeada.
-- `data/review/`: Incidencias bloqueadas por cambios de código, dirección >500m o especialidad.
-- `data/approved/`: Dataset validado listo para la compilación estática.
-- `data_products/`: Archivos distribuidos (`csv`, `json`, `geojson`, `metadata.json`).
+- `data/raw/`: Instantáneas inmutables con `source_page.html` y `metadata.json` (incluye hash `sha256`).
+- `data/processed/`: Registros extraídos y parseados en formato estándar (`schools_extracted.json`).
+- `data_products/`: Archivos distribuidos para consumo externo (`centros_apoyo.geojson`, `centros_apoyo.csv`, `export-summary.json`).
+

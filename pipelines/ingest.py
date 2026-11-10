@@ -34,12 +34,12 @@ def ingest_official_data():
             html_content = response.read().decode('utf-8', errors='ignore')
             print(f"  ✓ Descarga completada ({len(html_content)} bytes)")
     except Exception as e:
-        print(f"  ⚠ Aviso: Conexión externa limitada ({e}). Generando instantánea de respaldo oficial verificada.")
+        print(f"  ℹ Acceso a red restringido o endpoint no disponible ({e}). Utilizando muestra de prueba local (fixture sintética).")
         html_content = f"""
         <html>
-          <head><title>Comunidad de Madrid - Atención Preferente (Snapshot Oficial)</title></head>
+          <head><title>Muestra Local de Demostracion Tecnica - DataMad</title></head>
           <body>
-            <h1>Catálogo Oficial de Centros con Atención Preferente (Curso 2025/2026)</h1>
+            <h1>Muestra de Prueba para Validacion de Pipeline (Prototipo DataMad)</h1>
             <div class="center-row" data-codigo="28020941" data-nombre="CEIP Escuelas Aguirre" data-municipio="Madrid" data-necesidad="TEA"></div>
             <div class="center-row" data-codigo="28020965" data-nombre="CEIP Portugal" data-municipio="Madrid" data-necesidad="Auditiva"></div>
             <div class="center-row" data-codigo="28060238" data-nombre="CEIP Dulce Chacón" data-municipio="Fuenlabrada" data-necesidad="Motora"></div>
@@ -47,7 +47,7 @@ def ingest_official_data():
           </body>
         </html>
         """
-        status = "FALLBACK_VERIFIED_SNAPSHOT"
+        status = "OFFLINE_SAMPLE_FIXTURE"
 
     # Calcular SHA-256 del contenido guardado
     sha256_hash = hashlib.sha256(html_content.encode('utf-8')).hexdigest()

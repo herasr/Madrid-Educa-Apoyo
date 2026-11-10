@@ -57,15 +57,30 @@ npm run dev
 
 ---
 
-## 📊 Pipelines de Datos (Prototipo Python)
+## 📊 Pipelines de Datos y Trazabilidad (Python)
 
-El directorio `pipelines/` contiene los scripts de ingesta, conciliación y validación:
+El directorio `pipelines/` contiene los scripts del flujo de datos para ingesta y validación:
 
-- `pipelines/ingest.py`: Ingesta de fuentes oficiales.
-- `pipelines/validate.py`: Validación geográfica y estructural.
-- `pipelines/reconcile.py`: Conciliación nominal y códigos REG-PROV.
-- `pipelines/detect_changes.py`: Detección de cambios e inferencia de evidencia A1/A2.
-- `pipelines/export.py`: Exportación a formatos CSV, JSON y GeoJSON.
+- `pipelines/ingest.py`: Descarga y captura de fuentes con cálculo de hash SHA-256 e instantánea de respaldo offline (`OFFLINE_SAMPLE_FIXTURE`).
+- `pipelines/validate.py`: Validación de esquema de datos y verificación de códigos oficiales CAM (`28xxxxxx`).
+- `pipelines/reconcile.py`: Comprobación de concordancia frente al nomenclátor municipal oficial de la CAM.
+- `pipelines/detect_changes.py`: Inspección de hashes de integridad SHA-256 frente a la captura previa.
+- `pipelines/export.py`: Exportación a formatos abiertos: `data_products/centros_apoyo.geojson` (GeoJSON RFC 7946), `centros_apoyo.csv` y `export-summary.json`.
+
+Ejecución manual completa del pipeline:
+```bash
+python3 -m pipelines.ingest && python3 -m pipelines.validate && python3 -m pipelines.reconcile && python3 -m pipelines.detect_changes && python3 -m pipelines.export
+```
+
+---
+
+## 🧪 Pruebas Unitarias y Calidad
+
+El proyecto incluye tests unitarios para las funciones puras del motor de filtrado, ordenación y relajación de cero resultados:
+```bash
+# Ejecutar suite de pruebas con Vitest
+npm test
+```
 
 ---
 

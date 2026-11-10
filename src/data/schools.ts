@@ -1,8 +1,11 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- * Base de datos oficial de centros con evidencia de atención preferente
- * en la Comunidad de Madrid (Corte curso 2025/2026).
+ * Catálogo de Centros de Demostración Técnica — DataMad (Comunidad de Madrid).
+ * AVISO: Los centros, ubicaciones, coordenadas y códigos son reales de centros docentes
+ * de la Comunidad de Madrid. Las asignaciones específicas de recursos, nombres de aula y
+ * resoluciones simuladas son datos sintéticos con fines de evaluación técnica y prototipado.
+ * No constituyen oferta vinculante ni registro oficial de la Consejería de Educación.
  */
 
 import { School } from '../types';

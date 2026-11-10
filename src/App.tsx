@@ -308,6 +308,29 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col antialiased overflow-x-hidden w-full">
+      {/* Banner de Entorno de Demostración Técnica (DataMad) */}
+      <div className="bg-amber-50 border-b border-amber-200/80 text-amber-950 text-xs px-4 py-2 font-medium">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
+            <span className="font-bold uppercase tracking-wider bg-amber-200 text-amber-950 px-2 py-0.5 rounded text-[10px] shrink-0">
+              Prototipo Demo · DataMad
+            </span>
+            <span className="text-[11px] text-amber-900">
+              Centros y ubicaciones reales de la Comunidad de Madrid con asignaciones de recursos y resoluciones sintéticas para prueba de concepto.
+            </span>
+          </div>
+          <a
+            href="https://www.comunidad.madrid/servicios/educacion"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[11px] font-bold text-amber-900 hover:text-amber-950 underline shrink-0 inline-flex items-center gap-1"
+          >
+            <span>Registro Oficial CAM</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
+      </div>
+
       {/* 1. Encabezado Oficial con Menú "Más" y Notificación Legal Desescalada */}
       <Header
         currentTab={activeTab}

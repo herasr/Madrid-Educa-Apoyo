@@ -164,45 +164,49 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
               </button>
             </h3>
 
-            {/* Ubicación y Distancia clara */}
-            <div className="flex items-center gap-1.5 text-xs text-slate-600 mt-1">
-              <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <span>
-                {school.municipio}{school.distrito ? `, ${school.distrito}` : ''}
+            {/* Ubicación y Distancia clara sin saltos excesivos */}
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-600 mt-1">
+              <span className="inline-flex items-center gap-1 font-medium text-slate-700">
+                <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>{school.municipio}{school.distrito ? ` (${school.distrito})` : ''}</span>
               </span>
               {distanceKm !== null && (
-                <>
+                <span className="inline-flex items-center gap-1.5">
                   <span aria-hidden="true" className="text-slate-300">·</span>
-                  <span className="font-semibold text-blue-900 bg-blue-50 px-1.5 py-0.5 rounded">
-                    {distanceKm} km aprox.
+                  <span className="font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded text-[11px] whitespace-nowrap">
+                    {distanceKm} km
                   </span>
-                  <span aria-hidden="true" className="text-slate-300">·</span>
-                  <span className="font-medium text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded" title="Estimación aproximada basada en distancia en línea recta">
-                    ⏱️ ~{estimateTransitMinutes(distanceKm)} min (est. lineal)
+                  <span
+                    className="font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 px-2 py-0.5 rounded text-[11px] whitespace-nowrap cursor-help transition-colors"
+                    title={`Tiempo estimado en línea recta: ~${estimateTransitMinutes(distanceKm)} min aprox.`}
+                  >
+                    ⏱️ ~{estimateTransitMinutes(distanceKm)} min
                   </span>
-                </>
+                </span>
               )}
             </div>
           </div>
 
-          {/* Sello de Evidencia en Lenguaje Familiar (Reemplazo amigable de A1/A2) */}
+          {/* Sello de Evidencia en Lenguaje Familiar */}
           <div className="shrink-0 text-right">
             {isA1 ? (
               <span
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg"
-                title="Evidencia oficial A1: Centro y etapa confirmados en resoluciones oficiales vigentes de la Comunidad de Madrid."
+                title="Evidencia oficial A1 (Prototipo): Centro y etapa ratificados en resoluciones simuladas vigentes."
               >
                 <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Confirmado para esta etapa</span>
+                <span className="hidden sm:inline">Confirmado para esta etapa</span>
+                <span className="sm:hidden">Confirmado</span>
                 <span className="text-[10px] text-emerald-600 font-mono opacity-80">(A1)</span>
               </span>
             ) : (
               <span
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg"
-                title="Evidencia A2: Centro con apoyo, pero se debe comprobar en secretaría la vigencia o etapa exacta."
+                title="Evidencia A2 (Prototipo): Centro con proyecto donde debe comprobarse la vigencia o etapa exacta."
               >
                 <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>Por comprobar etapa o vigencia</span>
+                <span className="hidden sm:inline">Por comprobar etapa</span>
+                <span className="sm:hidden">Por comprobar</span>
                 <span className="text-[10px] text-amber-600 font-mono opacity-80">(A2)</span>
               </span>
             )}

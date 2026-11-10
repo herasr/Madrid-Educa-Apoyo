@@ -1,0 +1,22 @@
+{
+  "dataset": "Madrid Educa Apoyo - Centros de Atención Preferente",
+  "total_records": 4,
+  "products": [
+    {
+      "path": "data_products/centros_apoyo.geojson",
+      "format": "GeoJSON",
+      "features": 4
+    },
+    {
+      "path": "data_products/centros_apoyo.csv",
+      "format": "CSV",
+      "rows": 4
+    },
+    {
+      "path": "data/processed/schools_extracted.json",
+      "format": "JSON"
+    }
+  ],
+  "licence": "Apache-2.0",
+  "status": "VALIDATED_PROTOTYPE_DATASET"
+}
