@@ -17,6 +17,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20,
       ownership: [],
@@ -37,6 +39,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['eso'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20,
       ownership: [],
@@ -52,6 +56,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20,
       ownership: ['publico', 'concertado']
@@ -65,9 +71,11 @@ export const TEST_SCENARIOS: TestScenario[] = [
     esperado: 'Muestra los 10 centros oficiales de atención preferente TEA en Alcalá de Henares.',
     estadoPrueba: {
       need: 'tea',
-      stages: ['primaria'],
+      stages: [],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Alcala de Henares',
-      radiusKm: 15,
+      radiusKm: null,
       ownership: []
     }
   },
@@ -80,6 +88,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 10
     }
@@ -93,6 +103,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20,
       ownership: ['publico']
@@ -107,6 +119,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'auditiva',
       stages: ['primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20
     }
@@ -120,6 +134,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['infantil', 'primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20,
       ownership: []
@@ -130,12 +146,15 @@ export const TEST_SCENARIOS: TestScenario[] = [
     code: 'FIL-009',
     titulo: 'Recargar / URL Reproducible (Móstoles)',
     descripcion: 'Simula restaurar la consulta desde parámetros URL codificados.',
-    esperado: 'Restaura exactamente el estado acumulado para Móstoles sin exponer datos personales.',
+    esperado: 'Restaura exactamente el estado acumulado para Móstoles (9 centros en Primaria).',
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Mostoles',
-      radiusKm: 15
+      radiusKm: null,
+      ownership: []
     }
   },
   {
@@ -147,6 +166,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20
     }
@@ -160,6 +181,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria', 'eso'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20
     }
@@ -173,6 +196,8 @@ export const TEST_SCENARIOS: TestScenario[] = [
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
+      locationSource: 'municipality',
+      userCoordinates: null,
       municipality: 'Madrid',
       radiusKm: 20
     }

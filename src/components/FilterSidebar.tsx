@@ -253,7 +253,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                       <div className="text-[11px] text-slate-500">{item.desc}</div>
                     </div>
                     <span className="text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 bg-blue-100 text-blue-900 font-bold">
-                      336
+                      {dynamicCounts.needs['tea'] ?? 336}
                     </span>
                   </button>
                 );

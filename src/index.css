@@ -2,6 +2,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --breakpoint-xs: 360px;
   --color-cam-red: #1D4ED8;
   --color-cam-red-dark: #1E40AF;
   --color-cam-red-light: #EFF6FF;

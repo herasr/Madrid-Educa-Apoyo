@@ -85,7 +85,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <div className="text-base sm:text-xl font-extrabold tracking-tight text-slate-900 whitespace-nowrap">
                     Madrid Educa Apoyo
                   </div>
-                  <div className="text-[10px] font-semibold text-blue-700 tracking-tight leading-tight hidden xs:block truncate">
+                  <div className="text-[10px] font-semibold text-blue-700 tracking-tight leading-tight hidden sm:block truncate">
                     Proyecto DataMad 2026 · Datos Oficiales
                   </div>
                 </div>
