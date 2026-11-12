@@ -254,7 +254,12 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
           </h4>
 
           <div style="font-size: 11px; color: #475569; margin-bottom: 6px;">
-            📍 ${school.municipio}${school.distrito ? ` (${school.distrito})` : ''} · <strong>${distanceText}</strong>
+            📍 ${school.municipio}${school.distrito ? ` (${school.distrito})` : ''} · <strong>${school.ubicacionAproximada ? '≈ ' : ''}${distanceText}</strong>
+          </div>
+          <div style="font-size: 10px; margin-bottom: 6px; color: ${school.procedencia === 'oficial' ? '#065f46' : '#92400e'};">
+            ${school.procedencia === 'oficial'
+              ? 'Dato oficial · ubicación aproximada (el listado no publica la dirección)'
+              : 'Dato de demostración · no usar para decidir'}
           </div>
 
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 8px; font-size: 11px; margin-bottom: 8px;">

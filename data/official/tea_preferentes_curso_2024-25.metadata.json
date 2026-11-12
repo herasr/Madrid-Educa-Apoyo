@@ -1,0 +1,23 @@
+{
+  "dataset": "Centros de atención preferente para alumnado con TEA con plazas previsibles en el aula TEA",
+  "titulo_documento": "INFORMACIÓN: ESCOLARIZACIÓN EN CENTROS DE ATENCIÓN PREFERENTE PARA ALUMNADO CON NECESIDADES EDUCATIVAS ESPECIALES DERIVADAS DE TRASTORNO DEL ESPECTRO DEL AUTISMO PARA EL CURSO 2024/2025.",
+  "organismo": "Comunidad de Madrid · Consejería de Educación",
+  "url": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
+  "curso": "2024/2025",
+  "fecha_informacion": "2024-03-22",
+  "alcance": "El documento NO es el catálogo completo (la Comunidad declara 682 centros preferentes TEA y 855 aulas). Recoge los centros en los que el número de alumnos atendidos en el aula de apoyo extenso y especializado era menor de cinco a 22/03/2024, es decir, centros con plazas previsibles en el aula TEA para el proceso de admisión 2024/2025. Incluye también los centros y aulas nuevos previstos para ese curso.",
+  "advertencia_oficial": "La relación podrá experimentar modificaciones a lo largo del proceso de admisión. Las familias pueden incluir en su solicitud centros preferentes que no consten en el listado y consultar las opciones con el Servicio de Apoyo a la Escolarización (SAE).",
+  "listado_completo_oficial": "https://www.comunidad.madrid/servicios/educacion/atencion-preferente-necesidades-educativas-especiales",
+  "columnas": {
+    "dat": "Dirección de Área Territorial tal como aparece en el documento",
+    "distrito_o_localidad": "Distrito (DAT Capital) o localidad, tal como aparece en el documento (abreviaturas incluidas)",
+    "codigo_centro": "Código oficial de centro (8 dígitos)",
+    "centro": "Nombre del centro tal como aparece en el documento",
+    "tipo": "Tipo de centro según la leyenda del documento (CP INF-PRI, CP INF-PRI-SEC, CPR INF, CPR INF-PRI, CPR INF-PRI-SEC, IES). 'SIES' no figura en la leyenda. Una fila (28024071) no indica tipo.",
+    "etapa": "Etapa educativa indicada en el documento: PRIMARIA, SECUNDARIA, MIXTA o INFANTIL. El documento no define estos valores."
+  },
+  "filas": 336,
+  "filas_por_dat": {"DAT CAPITAL": 106, "DAT NORTE": 48, "DAT SUR": 95, "DAT ESTE": 52, "DAT OESTE": 35},
+  "metodo_extraccion": "Transcripción del PDF oficial sin normalizar los textos. Control de calidad: dos lecturas independientes del documento produjeron la misma secuencia de 336 códigos de centro, sin duplicados. En cada ejecución, pipelines/ingest.py vuelve a descargar el PDF, extrae sus códigos y los compara con este fichero; cualquier diferencia se envía a data/review/ para revisión humana.",
+  "licencia": "Información pública de la Comunidad de Madrid (reutilización conforme a la Ley 37/2007 sobre reutilización de la información del sector público). Se cita la fuente y la fecha de la información."
+}

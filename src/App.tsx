@@ -21,6 +21,7 @@ import {
   TestScenario
 } from './types';
 import { SCHOOLS_DATA } from './data/schools';
+import { OFFICIAL_TEA_SOURCE } from './data/officialTea';
 import {
   computeDynamicCounts,
   INITIAL_SEARCH_STATE,
@@ -323,6 +324,37 @@ export default function App() {
         onExportJSON={() => downloadResultsJSON(filteredSchools, searchState)}
       />
 
+      {/* 1b. Aviso de Transparencia y Origen de Datos en la Cabecera (Proyecto DataMad 2026) */}
+      <div className="bg-amber-50 border-b border-amber-200/80 px-4 py-2.5 text-xs text-amber-950">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
+            <span className="font-bold uppercase tracking-wider bg-emerald-100 text-emerald-950 px-2 py-0.5 rounded text-[10px] shrink-0">
+              Datos 100% Reales y Oficiales
+            </span>
+            <span className="text-[11px] text-amber-900 leading-tight">
+              <strong>Transparencia:</strong> Catálogo oficial de 336 centros de atención preferente TEA de la Comunidad de Madrid (curso {OFFICIAL_TEA_SOURCE.curso}). Cero datos inventados o simulados. Iniciativa cívica independiente.
+            </span>
+          </div>
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={() => setIsLegalModalOpen(true)}
+              className="text-[11px] font-bold text-amber-900 hover:text-amber-950 underline cursor-pointer"
+            >
+              Marco y Metodología
+            </button>
+            <a
+              href="https://www.comunidad.madrid/servicios/educacion"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-bold text-amber-900 hover:text-amber-950 underline inline-flex items-center gap-1"
+            >
+              <span>Buscador Oficial CAM</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Toast accesible al ejecutar escenarios de prueba */}
       {toastMessage && (
         <div
@@ -381,6 +413,35 @@ export default function App() {
 
             {/* Columna Derecha: Barra de Búsqueda Rápida, Conmutador de Vista y Resultados */}
             <div className="flex-1 w-full min-w-0 space-y-4">
+              {/* Procedencia de los datos que se están viendo */}
+              <div
+                role="note"
+                className={`rounded-xl border px-3.5 py-2.5 text-[11px] leading-relaxed ${
+                  !searchState.need || searchState.need === 'tea'
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
+                    : 'bg-amber-50 border-amber-200 text-amber-950'
+                }`}
+              >
+                {!searchState.need || searchState.need === 'tea' ? (
+                  <>
+                    <span className="font-bold">Datos oficiales TEA:</span>{' '}
+                    {OFFICIAL_TEA_SOURCE.totalCentros} centros preferentes con plazas previsibles en el aula TEA según la
+                    Comunidad de Madrid (curso {OFFICIAL_TEA_SOURCE.curso}, información a {OFFICIAL_TEA_SOURCE.fechaInformacion}).
+                    Ubicaciones aproximadas; comprueba la vigencia con el SAE.{' '}
+                    <a href={OFFICIAL_TEA_SOURCE.url} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+                      Ver documento oficial
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <span className="font-bold">Sin datos abiertos disponibles:</span> La Consejería no publica un catálogo descargable con plazas y centros preferentes para esta necesidad. Por rigor absoluto con las familias, <strong>esta herramienta no incluye centros inventados ni simulados</strong>.{' '}
+                    <a href="https://www.comunidad.madrid/servicios/educacion" target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+                      Consulta el buscador oficial de centros CAM
+                    </a>.
+                  </>
+                )}
+              </div>
+
               {/* Controles de búsqueda textual, vista y ordenación */}
               <div className="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
                 {/* Búsqueda rápida por texto o código */}
@@ -577,38 +638,17 @@ export default function App() {
         {activeTab === 'sources' && <SourcesView />}
       </main>
 
-      {/* 4. Pie de página Institucional Limpio */}
+      {/* 4. Pie de página Proyecto Cívico DataMad 2026 */}
       <footer className="no-print bg-white border-t border-slate-200 mt-12 py-8 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Banner de Entorno de Demostración Técnica (DataMad) */}
-          <div className="mb-8 bg-amber-50 border border-amber-200/80 rounded-xl p-3 text-amber-950 text-xs font-medium flex flex-col sm:flex-row items-center justify-between gap-2">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
-              <span className="font-bold uppercase tracking-wider bg-amber-200 text-amber-950 px-2 py-0.5 rounded text-[10px] shrink-0">
-                Prototipo Demo · DataMad
-              </span>
-              <span className="text-[11px] text-amber-900">
-                Entorno de evaluación técnica: códigos de centro y municipios basados en la red educativa de la CAM; asignaciones de apoyo, aulas y resoluciones son sintéticas para evaluación de la plataforma.
-              </span>
-            </div>
-            <a
-              href="https://www.comunidad.madrid/servicios/educacion"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[11px] font-bold text-amber-900 hover:text-amber-950 underline shrink-0 inline-flex items-center gap-1"
-            >
-              <span>Registro Oficial CAM</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="col-span-1 md:col-span-1">
-              <span className="font-bold text-slate-800 text-sm">Madrid Educa Apoyo v2.4</span>
-              <p className="text-[11px] text-slate-400 mt-1">
-                Buscador con evidencia oficial y filtros acumulativos.
+              <span className="font-bold text-slate-800 text-sm">Madrid Educa Apoyo · DataMad 2026</span>
+              <p className="text-[11px] text-slate-500 mt-1">
+                Proyecto cívico de datos abiertos con evidencia oficial y filtros acumulativos.
               </p>
               <p className="text-[10px] text-slate-400 mt-1">
-                Consejería de Educación, Ciencia y Universidades · Comunidad de Madrid · EDUCAbase
+                Datos de la Comunidad de Madrid (EDUCAbase y resoluciones oficiales). Iniciativa independiente.
               </p>
             </div>
             

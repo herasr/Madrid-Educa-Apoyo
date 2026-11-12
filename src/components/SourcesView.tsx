@@ -7,6 +7,7 @@
 import React from 'react';
 import { OFFICIAL_SOURCES_INFO, LEGAL_DISCLAIMER } from '../data/disclaimerAndProcedures';
 import { ShieldCheck, BookOpen, ExternalLink, Scale, AlertTriangle } from 'lucide-react';
+import { OFFICIAL_TEA_SOURCE } from '../data/officialTea';
 
 export const SourcesView: React.FC = () => {
   return (
@@ -35,6 +36,52 @@ export const SourcesView: React.FC = () => {
               y Psicopedagógica (EOEP) ni garantiza la concesión de plaza escolar en los procesos ordinarios o extraordinarios de admisión.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Datos realmente cargados en esta versión */}
+      <div className="bg-white border border-emerald-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-4">
+        <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+          <ShieldCheck className="w-5 h-5 text-emerald-700" />
+          <span>Datos cargados en esta versión</span>
+        </h3>
+
+        <div className="border border-emerald-200 bg-emerald-50/60 rounded-xl p-4 text-xs text-slate-700 space-y-2">
+          <div className="font-extrabold text-slate-900">
+            Oficial · {OFFICIAL_TEA_SOURCE.totalCentros} centros de atención preferente TEA
+          </div>
+          <p className="leading-relaxed">
+            {OFFICIAL_TEA_SOURCE.organismo}. «{OFFICIAL_TEA_SOURCE.titulo}», curso {OFFICIAL_TEA_SOURCE.curso},
+            información a {OFFICIAL_TEA_SOURCE.fechaInformacion}.
+          </p>
+          <p className="leading-relaxed">
+            <span className="font-semibold">Alcance:</span> no es el catálogo completo. El documento recoge los centros
+            preferentes TEA en los que el aula de apoyo atendía a menos de cinco alumnos en esa fecha, es decir, centros
+            con plazas previsibles para la admisión de ese curso. Por eso se muestran como «por comprobar vigencia» (A2).
+          </p>
+          <p className="leading-relaxed">
+            <span className="font-semibold">Ubicaciones aproximadas:</span> el documento no publica direcciones. Cada centro
+            se sitúa en el centro de su municipio (geometrías del Instituto Geográfico Nacional) o de su distrito de Madrid,
+            por lo que las distancias son orientativas.
+          </p>
+          <div className="flex flex-wrap gap-3 pt-1">
+            <a href={OFFICIAL_TEA_SOURCE.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-800 hover:underline inline-flex items-center gap-1">
+              Documento oficial (PDF) <ExternalLink className="w-3 h-3" />
+            </a>
+            <a href={OFFICIAL_TEA_SOURCE.listadoCompletoUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-800 hover:underline inline-flex items-center gap-1">
+              Listado completo en comunidad.madrid <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+        </div>
+
+        <div className="border border-slate-200 bg-slate-50/80 rounded-xl p-4 text-xs text-slate-700">
+          <div className="font-extrabold text-slate-900 mb-1">Compromiso de datos 100% reales y verificados</div>
+          <p className="leading-relaxed">
+            Esta herramienta aplica un principio deontológico estricto: <strong>cero datos inventados o simulados</strong>.
+            Actualmente incorpora los 336 centros de atención preferente TEA oficiales publicados por la Comunidad de Madrid.
+            Para el resto de necesidades educativas, dado que la administración educativa no ha liberado aún catálogos descargables
+            equivalentes, la aplicación no inventa centros sintéticos y redirige a las familias a los canales oficiales y EOEP.
+          </p>
         </div>
       </div>
 

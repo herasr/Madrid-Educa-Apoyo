@@ -64,10 +64,14 @@ export interface AdscripcionDestination {
   tieneMismoApoyo: boolean | 'no_verificado';
   detallesApoyo?: string;
   distanciaKm?: number;
+  /** Coordenadas del destino cuando proceden de datos reales (si faltan, no se dibuja en el mapa). */
+  lat?: number;
+  lng?: number;
 }
 
 export interface SchoolContinuity {
-  tipoContinuidad: 'mismo_centro' | 'ceipso_parcial' | 'adscripcion_unica' | 'adscripcion_multiple';
+  /** 'zona': la fuente no publica adscripción; se listan centros con el mismo apoyo en Secundaria en la zona. */
+  tipoContinuidad: 'mismo_centro' | 'ceipso_parcial' | 'adscripcion_unica' | 'adscripcion_multiple' | 'zona';
   descripcion: string;
   apoyoEnSecundariaVerificado: boolean | 'no_verificado';
   destinos: AdscripcionDestination[];
@@ -95,6 +99,15 @@ export interface School {
   accesibilidad: Record<AccessibilityId, boolean>;
   continuidad: SchoolContinuity;
   observacionesOficiales?: string;
+  /** 'oficial' = dato cargado de una fuente pública de la Comunidad de Madrid; 'demo' = dato sintético de demostración. */
+  procedencia?: 'oficial' | 'demo';
+  /** true cuando lat/lng son el centroide del municipio o distrito y no la dirección real. */
+  ubicacionAproximada?: boolean;
+  /** Documento oficial del que procede el registro. */
+  fuenteUrl?: string;
+  /** Nombre y tipo exactamente como figuran en la fuente oficial. */
+  nombreOficial?: string;
+  tipoOficial?: string;
 }
 
 export interface SearchState {

@@ -234,7 +234,8 @@ export const PassportView: React.FC<PassportViewProps> = ({
                         {sch.nombre}
                       </h3>
                       <div className="text-xs text-slate-600 mt-0.5">
-                        {sch.direccion} · {sch.municipio} {sch.distrito ? `(${sch.distrito})` : ''} · Tel. {sch.telefono}
+                        {sch.direccion ? `${sch.direccion} · ` : ''}{sch.municipio} {sch.distrito ? `(${sch.distrito})` : ''}{sch.telefono ? ` · Tel. ${sch.telefono}` : ''}
+                        {sch.procedencia === 'oficial' ? ' · Dato oficial (ubicación aproximada)' : ' · Dato de demostración'}
                       </div>
                     </div>
 
@@ -242,7 +243,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
                       <span className={`text-[11px] font-bold px-2 py-0.5 rounded border inline-block ${
                         isA1 ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200'
                       }`}>
-                        {isA1 ? 'A1: Oficial Vigente' : 'A2: En Comprobación'}
+                        {isA1 ? 'A1: Oficial Vigente' : sch.procedencia === 'oficial' ? 'A2: Oficial, comprobar vigencia' : 'A2: En Comprobación'}
                       </span>
                     </div>
                   </div>
@@ -250,7 +251,9 @@ export const PassportView: React.FC<PassportViewProps> = ({
                   {/* Proyecto y recursos */}
                   <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 text-xs mb-3">
                     <div className="font-bold text-slate-800 mb-1">
-                      {sup?.aulaNombre || 'Aula Específica'} (Resolución: {sup?.resolucionBOCM || 'BOCM'})
+                      {sch.procedencia === 'oficial'
+                        ? `Aula TEA · Fuente: ${sup?.fuenteOficial || 'Comunidad de Madrid'}`
+                        : `${sup?.aulaNombre || 'Aula Específica'} (Resolución: ${sup?.resolucionBOCM || 'BOCM'})`}
                     </div>
                     <ul className="text-slate-600 space-y-0.5">
                       {sup?.recursosOficiales.map((r, i) => (

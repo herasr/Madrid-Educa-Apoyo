@@ -1,24 +1,28 @@
 {
-  "dataset": "Madrid Educa Apoyo - Entidades de Demostración Técnica (DataMad)",
-  "total_records": 4,
+  "dataset": "Madrid Educa Apoyo - Centros de atención preferente TEA (datos oficiales)",
+  "total_records": 336,
   "products": [
     {
       "path": "data_products/centros_apoyo.geojson",
       "format": "GeoJSON (RFC 7946)",
-      "features": 4
+      "features": 336
     },
     {
       "path": "data_products/centros_apoyo.csv",
       "format": "CSV",
-      "rows": 4
+      "rows": 336
     },
     {
       "path": "data/processed/schools_extracted.json",
       "format": "JSON"
     }
   ],
-  "licence": "Apache-2.0",
-  "rfc_7946_compliant": true,
-  "status": "TECHNICAL_DEMONSTRATION_ENVIRONMENT",
-  "data_notice": "Entorno de demostración técnica para evaluación de plataforma. Centros con códigos de la red CAM y asignaciones sintéticas."
+  "fuente_url": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
+  "curso": "2024/2025",
+  "fecha_informacion": "2024-03-22",
+  "estado_verificacion": "SNAPSHOT_VERSIONADO",
+  "alcance": "El documento NO es el catálogo completo (la Comunidad declara 682 centros preferentes TEA y 855 aulas). Recoge los centros en los que el número de alumnos atendidos en el aula de apoyo extenso y especializado era menor de cinco a 22/03/2024, es decir, centros con plazas previsibles en el aula TEA para el proceso de admisión 2024/2025. Incluye también los centros y aulas nuevos previstos para ese curso.",
+  "ubicaciones": "Aproximadas (centroide del municipio o distrito). El documento oficial no publica direcciones.",
+  "licence": "Datos: información pública de la Comunidad de Madrid (Ley 37/2007). Código: Apache-2.0",
+  "rfc_7946_compliant": true
 }

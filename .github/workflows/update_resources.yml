@@ -35,12 +35,29 @@ jobs:
       - name: Export approved datasets
         run: python -m pipelines.export
 
+      - name: Generate web data module from official data
+        run: python scripts/build_app_data.py
+
+      - name: Upload review queue (if the official source changed)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: revision-y-productos-de-datos
+          path: |
+            data/review/
+            data_products/
+            data/raw/educacion_cam/metadata.json
+          if-no-files-found: ignore
+
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - name: Install Web dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
 
       - name: Build web application
         run: npm run build

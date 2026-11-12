@@ -1,0 +1,180 @@
+codigo_ine,municipio,lat,lng
+28001,La Acebeda,41.09311,-3.63478
+28002,Ajalvir,40.52509,-3.48081
+28003,Alameda del Valle,40.92139,-3.85123
+28004,El Álamo,40.23192,-3.98823
+28005,Alcalá de Henares,40.49435,-3.36923
+28006,Alcobendas,40.53491,-3.62958
+28007,Alcorcón,40.35931,-3.8371
+28008,Aldea del Fresno,40.30988,-4.22348
+28009,Algete,40.60786,-3.5307
+28010,Alpedrete,40.66153,-4.0218
+28011,Ambite,40.34028,-3.17643
+28012,Anchuelo,40.46543,-3.27518
+28013,Aranjuez,39.99378,-3.68016
+28014,Arganda del Rey,40.29135,-3.44481
+28015,Arroyomolinos,40.28202,-3.91504
+28016,El Atazar,40.93908,-3.46615
+28017,Batres,40.22051,-3.92619
+28018,Becerril de la Sierra,40.70656,-3.93483
+28019,Belmonte de Tajo,40.13694,-3.33343
+28020,Berzosa del Lozoya,40.97326,-3.526
+28021,El Berrueco,40.88287,-3.55644
+28022,Boadilla del Monte,40.42144,-3.89209
+28023,El Boalo,40.70896,-3.92239
+28024,Braojos,41.06021,-3.66
+28025,Brea de Tajo,40.24002,-3.12062
+28026,Brunete,40.39797,-3.99483
+28027,Buitrago del Lozoya,40.98804,-3.62811
+28028,Bustarviejo,40.84199,-3.72791
+28029,Cabanillas de la Sierra,40.82564,-3.63586
+28030,La Cabrera,40.86392,-3.61314
+28031,Cadalso de los Vidrios,40.29904,-4.43317
+28032,Camarma de Esteruelas,40.5624,-3.37616
+28033,Campo Real,40.32284,-3.37312
+28034,Canencia,40.89288,-3.7608
+28035,Carabaña,40.25568,-3.24601
+28036,Casarrubuelos,40.17284,-3.83428
+28037,Cenicientos,40.24388,-4.50801
+28038,Cercedilla,40.75651,-4.06033
+28039,Cervera de Buitrago,40.91765,-3.52478
+28040,Ciempozuelos,40.15077,-3.60715
+28041,Cobeña,40.56827,-3.50967
+28042,Colmenar del Arroyo,40.40555,-4.19335
+28043,Colmenar de Oreja,40.08089,-3.45257
+28044,Colmenarejo,40.53761,-4.01882
+28045,Colmenar Viejo,40.66442,-3.74552
+28046,Collado Mediano,40.69416,-4.03104
+28047,Collado Villalba,40.64282,-3.98896
+28048,Corpa,40.41871,-3.24948
+28049,Coslada,40.42736,-3.55289
+28050,Cubas de la Sagra,40.19091,-3.84004
+28051,Chapinería,40.37109,-4.21159
+28052,Chinchón,40.16184,-3.47654
+28053,Daganzo de Arriba,40.55983,-3.44385
+28054,El Escorial,40.58586,-4.09472
+28055,Estremera,40.14637,-3.10964
+28056,Fresnedillas de la Oliva,40.47848,-4.18323
+28057,Fresno de Torote,40.61002,-3.40898
+28058,Fuenlabrada,40.2838,-3.79644
+28059,Fuente el Saz de Jarama,40.64239,-3.52414
+28060,Fuentidueña de Tajo,40.11015,-3.15945
+28061,Galapagar,40.57587,-3.98566
+28062,Garganta de los Montes,40.92816,-3.68505
+28063,Gargantilla del Lozoya y Pinilla de Buitrago,40.96675,-3.7034
+28064,Gascones,41.03624,-3.67426
+28065,Getafe,40.29946,-3.67362
+28066,Griñón,40.21792,-3.84318
+28067,Guadalix de la Sierra,40.76887,-3.68263
+28068,Guadarrama,40.67651,-4.10712
+28069,La Hiruela,41.06729,-3.45575
+28070,Horcajo de la Sierra-Aoslos,41.07972,-3.58188
+28071,Horcajuelo de la Sierra,41.09317,-3.54358
+28072,Hoyo de Manzanares,40.61454,-3.89344
+28073,Humanes de Madrid,40.25191,-3.82688
+28074,Leganés,40.33101,-3.77065
+28075,Loeches,40.38291,-3.41899
+28076,Lozoya,40.96193,-3.78489
+28078,Madarcos,41.04315,-3.57198
+28079,Madrid,40.46513,-3.69627
+28080,Majadahonda,40.46956,-3.89474
+28082,Manzanares el Real,40.7508,-3.87768
+28083,Meco,40.55598,-3.32245
+28084,Mejorada del Campo,40.4013,-3.47573
+28085,Miraflores de la Sierra,40.7968,-3.77692
+28086,El Molar,40.70108,-3.57194
+28087,Los Molinos,40.72103,-4.09196
+28088,Montejo de la Sierra,41.09376,-3.51055
+28089,Moraleja de Enmedio,40.25702,-3.882
+28090,Moralzarzal,40.66605,-3.94719
+28091,Morata de Tajuña,40.22999,-3.44818
+28092,Móstoles,40.31956,-3.88949
+28093,Navacerrada,40.74722,-4.00622
+28094,Navalafuente,40.81736,-3.67771
+28095,Navalagamella,40.43857,-4.12962
+28096,Navalcarnero,40.28878,-4.01292
+28097,Navarredonda y San Mamés,41.0053,-3.7289
+28099,Navas del Rey,40.38296,-4.27052
+28100,Nuevo Baztán,40.37576,-3.25119
+28101,Olmeda de las Fuentes,40.36828,-3.20595
+28102,Orusco de Tajuña,40.28994,-3.20853
+28104,Paracuellos de Jarama,40.51419,-3.52448
+28106,Parla,40.22947,-3.76803
+28107,Patones,40.88156,-3.48653
+28108,Pedrezuela,40.74141,-3.62531
+28109,Pelayos de la Presa,40.3607,-4.32617
+28110,Perales de Tajuña,40.22575,-3.35239
+28111,Pezuela de las Torres,40.40802,-3.17786
+28112,Pinilla del Valle,40.93661,-3.83027
+28113,Pinto,40.24682,-3.68602
+28114,Piñuécar-Gandullas,41.02938,-3.59909
+28115,Pozuelo de Alarcón,40.42808,-3.81532
+28116,Pozuelo del Rey,40.36049,-3.30807
+28117,Prádena del Rincón,41.03895,-3.51278
+28118,Puebla de la Sierra,41.00288,-3.45205
+28119,Quijorna,40.41785,-4.06074
+28120,Rascafría,40.86378,-3.89581
+28121,Redueña,40.81601,-3.59392
+28122,Ribatejada,40.66225,-3.41254
+28123,Rivas-Vaciamadrid,40.34091,-3.52689
+28124,Robledillo de la Jara,40.94787,-3.52008
+28125,Robledo de Chavela,40.48202,-4.2405
+28126,Robregordo,41.12338,-3.60524
+28127,Las Rozas de Madrid,40.52266,-3.89204
+28128,Rozas de Puerto Real,40.30264,-4.51708
+28129,San Agustín del Guadalix,40.68611,-3.63207
+28130,San Fernando de Henares,40.4362,-3.48586
+28131,San Lorenzo de El Escorial,40.6181,-4.13222
+28132,San Martín de la Vega,40.243,-3.56128
+28133,San Martín de Valdeiglesias,40.36223,-4.36442
+28134,San Sebastián de los Reyes,40.57458,-3.60097
+28135,Santa María de la Alameda,40.59505,-4.24426
+28136,Santorcaz,40.4709,-3.22198
+28137,Los Santos de la Humosa,40.51314,-3.25459
+28138,La Serna del Monte,41.03542,-3.62351
+28140,Serranillos del Valle,40.20825,-3.8899
+28141,Sevilla la Nueva,40.35383,-4.04155
+28143,Somosierra,41.1423,-3.5692
+28144,Soto del Real,40.74702,-3.78747
+28145,Talamanca de Jarama,40.73711,-3.48959
+28146,Tielmes,40.23471,-3.30187
+28147,Titulcia,40.14725,-3.55839
+28148,Torrejón de Ardoz,40.47111,-3.45991
+28149,Torrejón de la Calzada,40.19957,-3.80152
+28150,Torrejón de Velasco,40.17374,-3.7479
+28151,Torrelaguna,40.82343,-3.54591
+28152,Torrelodones,40.57576,-3.92645
+28153,Torremocha de Jarama,40.83515,-3.50047
+28154,Torres de la Alameda,40.40941,-3.3657
+28155,Valdaracete,40.1987,-3.1993
+28156,Valdeavero,40.62393,-3.35065
+28157,Valdelaguna,40.17548,-3.37228
+28158,Valdemanco,40.86346,-3.66536
+28159,Valdemaqueda,40.5075,-4.29854
+28160,Valdemorillo,40.50345,-4.06853
+28161,Valdemoro,40.18361,-3.65751
+28162,Valdeolmos-Alalpardo,40.63622,-3.46258
+28163,Valdepiélagos,40.76557,-3.47297
+28164,Valdetorres de Jarama,40.6916,-3.50998
+28165,Valdilecha,40.29559,-3.30342
+28166,Valverde de Alcalá,40.40503,-3.29945
+28167,Velilla de San Antonio,40.36486,-3.47532
+28168,El Vellón,40.76925,-3.56021
+28169,Venturada,40.79764,-3.61986
+28170,Villaconejos,40.11217,-3.50004
+28171,Villa del Prado,40.2744,-4.30573
+28172,Villalbilla,40.44334,-3.32887
+28173,Villamanrique de Tajo,40.07651,-3.24844
+28174,Villamanta,40.29246,-4.12111
+28175,Villamantilla,40.34269,-4.14277
+28176,Villanueva de la Cañada,40.44775,-3.98345
+28177,Villanueva del Pardillo,40.49083,-3.96831
+28178,Villanueva de Perales,40.37324,-4.08974
+28179,Villar del Olmo,40.33166,-3.24206
+28180,Villarejo de Salvanés,40.13007,-3.26848
+28181,Villaviciosa de Odón,40.36175,-3.938
+28182,Villavieja del Lozoya,41.0293,-3.70422
+28183,Zarzalejo,40.54519,-4.17881
+28901,Lozoyuela-Navas-Sieteiglesias,40.91697,-3.62178
+28902,Puentes Viejas,40.97831,-3.56062
+28903,Tres Cantos,40.61223,-3.72756

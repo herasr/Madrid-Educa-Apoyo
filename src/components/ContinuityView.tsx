@@ -161,6 +161,8 @@ export const ContinuityView: React.FC<ContinuityViewProps> = ({
                     }`}>
                       {school.continuidad.apoyoEnSecundariaVerificado === true
                         ? 'Apoyo verificado en ESO'
+                        : school.continuidad.tipoContinuidad === 'zona'
+                        ? 'Adscripción no publicada'
                         : 'Continuidad no verificada'}
                     </span>
                   </div>

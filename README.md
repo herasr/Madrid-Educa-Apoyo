@@ -4,15 +4,29 @@
 > *Comunidad de Madrid — Atención Educativa Especializada*
 
 [![Licencia](https://img.shields.io/badge/licencia-Apache--2.0-blue.svg)](LICENSE)
-[![Estado](https://img.shields.io/badge/estado-prototipo--demo-amber.svg)](#aviso-legal)
+[![Estado](https://img.shields.io/badge/datos-TEA%20oficiales%20%2B%20demo-green.svg)](#-qué-datos-son-reales-y-cuáles-no)
 
 ---
 
-## ⚠️ Aviso de Prototipo de Demostración
+## 📊 Qué datos son reales y cuáles no
 
-Los datos de centros y resoluciones incluidos en este repositorio son **simulaciones técnicas sintéticas** diseñadas exclusivamente para la prueba de concepto y evaluación de arquitectura/interfaz. **No constituyen el registro ni la oferta oficial de la Consejería de Educación de la Comunidad de Madrid.**
+| Necesidad | Datos | Fuente |
+|---|---|---|
+| **TEA** (autismo) | **Oficiales: 336 centros de atención preferente** | Comunidad de Madrid, [relación de centros preferentes TEA con plazas previsibles en el aula TEA](https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf), curso 2024/2025, información a 22/03/2024 |
+| Auditiva, motora, visual, altas capacidades, CEE y demás | Demostración (sintéticos) | Pendientes de cargar sus listados oficiales |
 
-Para trámites de escolarización oficial, consulte siempre los portales institucionales de la [Comunidad de Madrid](https://www.comunidad.madrid/servicios/educacion).
+**Alcance del dato oficial.** El documento no es el catálogo completo (la Comunidad declara 682 centros preferentes TEA): recoge los centros cuya aula TEA atendía a menos de cinco alumnos en esa fecha, es decir, los que tenían plazas previsibles para la admisión de ese curso. Como es un dato de un curso anterior, la aplicación lo muestra como **A2 · oficial, por comprobar vigencia**.
+
+**Lo que la fuente no publica y la aplicación no inventa:** direcciones, teléfonos, servicios, accesibilidad, nombre del aula, personal asignado e instituto de adscripción. Cada centro se sitúa en el **centroide de su municipio** (geometrías del IGN) **o de su distrito** de Madrid, y la interfaz marca la ubicación como aproximada.
+
+Cada ficha indica su procedencia con la etiqueta **«Dato oficial»** o **«Demostración»**. Para trámites de escolarización consulte siempre la [Comunidad de Madrid](https://www.comunidad.madrid/servicios/educacion/atencion-preferente-necesidades-educativas-especiales) y el Servicio de Apoyo a la Escolarización (SAE).
+
+### Ficheros de datos
+
+- `data/official/tea_preferentes_curso_2024-25.csv` — transcripción literal del documento oficial (336 filas), con su `.metadata.json` (fuente, fecha, alcance, método de extracción).
+- `data/reference/` — centroides de los 179 municipios (IGN) y de los 21 distritos de Madrid, generados con `scripts/build_geo_reference.py`.
+- `data_products/` — los mismos datos en CSV y GeoJSON (RFC 7946) para reutilizarlos.
+- `src/data/officialTea.ts` — módulo que usa la web, generado con `scripts/build_app_data.py`.
 
 ---
 
@@ -57,20 +71,22 @@ npm run dev
 
 ---
 
-## 📊 Pipelines de Datos y Trazabilidad (Python)
+## 📊 Pipeline de datos (Python)
 
-El directorio `pipelines/` contiene los scripts del flujo de datos para ingesta y validación:
-
-- `pipelines/ingest.py`: Descarga y captura de fuentes con cálculo de hash SHA-256 e instantánea de respaldo offline (`OFFLINE_SAMPLE_FIXTURE`).
-- `pipelines/validate.py`: Validación de esquema de datos y verificación de códigos oficiales CAM (`28xxxxxx`).
-- `pipelines/reconcile.py`: Comprobación de concordancia frente al nomenclátor municipal oficial de la CAM.
-- `pipelines/detect_changes.py`: Inspección de hashes de integridad SHA-256 frente a la captura previa.
-- `pipelines/export.py`: Exportación a formatos abiertos: `data_products/centros_apoyo.geojson` (GeoJSON RFC 7946), `centros_apoyo.csv` y `export-summary.json`.
-
-Ejecución manual completa del pipeline:
 ```bash
-python3 -m pipelines.ingest && python3 -m pipelines.validate && python3 -m pipelines.reconcile && python3 -m pipelines.detect_changes && python3 -m pipelines.export
+pip install -r pipelines/requirements.txt
+python3 -m pipelines.ingest && python3 -m pipelines.validate && python3 -m pipelines.reconcile \
+  && python3 -m pipelines.detect_changes && python3 -m pipelines.export && python3 scripts/build_app_data.py
 ```
+
+- `ingest.py`: lee la instantánea oficial versionada, **descarga el PDF de la Comunidad de Madrid, extrae sus códigos de centro y los compara** con la instantánea. Si coinciden, el estado es `PDF_OFICIAL_VERIFICADO`; si difieren, escribe `data/review/tea_diferencias.json` para revisión humana; sin red, usa la instantánea (`SNAPSHOT_VERSIONADO`). Después normaliza municipio, distrito, titularidad, tipo y etapas.
+- `validate.py`: campos obligatorios, códigos `28xxxxxx` únicos y coordenadas dentro de la Comunidad de Madrid.
+- `reconcile.py`: cada municipio debe coincidir exactamente con uno de los 179 del nomenclátor INE.
+- `detect_changes.py`: compara el hash SHA-256 de los datos usados con la ejecución anterior.
+- `export.py`: CSV y GeoJSON con fuente, fecha y aviso de ubicación aproximada en cada registro.
+- `scripts/build_app_data.py`: genera `src/data/officialTea.ts` para la web.
+
+La tarea programada de GitHub (`.github/workflows/update_resources.yml`) ejecuta todo cada lunes, pasa los tests, compila la web y guarda la cola de revisión como artefacto.
 
 ---
 

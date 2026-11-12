@@ -3,16 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Madrid Educa Apoyo · Buscador con Evidencia Oficial</title>
-    <meta name="description" content="Buscador educativo con evidencia oficial y filtros acumulativos para centros de atención preferente (TEA, auditiva, motora) y educación inclusiva en la Comunidad de Madrid." />
-    <meta property="og:title" content="Madrid Educa Apoyo · Buscador con Evidencia Oficial" />
-    <meta property="og:description" content="Buscador educativo con evidencia oficial y filtros acumulativos para centros de atención preferente (TEA, auditiva, motora) y educación inclusiva en la Comunidad de Madrid." />
+    <title>Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales (DataMad 2026)</title>
+    <meta name="description" content="Buscador cívico de educación inclusiva y centros de atención preferente TEA con datos abiertos y evidencia oficial de la Comunidad de Madrid (Proyecto DataMad 2026)." />
+    <meta name="theme-color" content="#1D4ED8" />
+    <meta property="og:title" content="Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales (DataMad 2026)" />
+    <meta property="og:description" content="Buscador cívico de educación inclusiva y centros de atención preferente TEA con datos abiertos y evidencia oficial de la Comunidad de Madrid (Proyecto DataMad 2026)." />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Madrid Educa Apoyo · DataMad 2026" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales" />
+    <meta name="twitter:description" content="Datos abiertos oficiales de 336 centros de atención preferente TEA de la Comunidad de Madrid. Proyecto DataMad 2026." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Madrid Educa Apoyo",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "All",
+          "description": "Buscador cívico de educación inclusiva y centros de atención preferente TEA con datos abiertos y evidencia oficial de la Comunidad de Madrid.",
+          "author": {
+            "@type": "Organization",
+            "name": "Proyecto DataMad 2026"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          }
+        },
+        {
+          "@type": "Dataset",
+          "name": "Centros de Atención Preferente TEA en la Comunidad de Madrid",
+          "description": "Relación oficial de 336 centros educativos de atención preferente para alumnado con Trastorno del Espectro Autista (TEA) con previsión de plazas.",
+          "license": "https://creativecommons.org/licenses/by/4.0/",
+          "isAccessibleForFree": true,
+          "keywords": ["Educación Inclusiva", "TEA", "Comunidad de Madrid", "Datos Abiertos", "DataMad 2026", "Centros Educativos"],
+          "publisher": {
+            "@type": "Organization",
+            "name": "Comunidad de Madrid · Consejería de Educación"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

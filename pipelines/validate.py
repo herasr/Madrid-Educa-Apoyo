@@ -32,6 +32,14 @@ def validate_data():
     errors = []
     geo_validated = 0
 
+    # 0. Códigos de centro únicos
+    seen = set()
+    for idx, row in enumerate(rows):
+        code = str(row.get("codigo", ""))
+        if code in seen:
+            errors.append(f"Fila {idx}: Código '{code}' duplicado.")
+        seen.add(code)
+
     for idx, row in enumerate(rows):
         # 1. Campos obligatorios
         for field in ["codigo", "nombre", "municipio", "necesidad"]:

@@ -2,10 +2,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-cam-red: #A50034;
-  --color-cam-red-dark: #800028;
-  --color-cam-red-light: #FFF0F3;
-  --color-cam-red-border: #F7D0D9;
+  --color-cam-red: #1D4ED8;
+  --color-cam-red-dark: #1E40AF;
+  --color-cam-red-light: #EFF6FF;
+  --color-cam-red-border: #BFDBFE;
 }
 
 @layer base {
@@ -16,30 +16,30 @@
   }
 }
 
-/* Clases utilitarias institucionales Comunidad de Madrid (#A50034) */
+/* Clases utilitarias cívicas e independientes (Proyecto DataMad 2026 · Azul Cívico #1D4ED8) */
 .bg-cam-red {
-  background-color: #A50034;
+  background-color: #1D4ED8;
 }
 .bg-cam-red-dark {
-  background-color: #800028;
+  background-color: #1E40AF;
 }
 .bg-cam-red-light {
-  background-color: #FFF0F3;
+  background-color: #EFF6FF;
 }
 .text-cam-red {
-  color: #A50034;
+  color: #1D4ED8;
 }
 .text-cam-red-dark {
-  color: #800028;
+  color: #1E40AF;
 }
 .border-cam-red {
-  border-color: #A50034;
+  border-color: #1D4ED8;
 }
 .border-cam-red-border {
-  border-color: #F7D0D9;
+  border-color: #BFDBFE;
 }
 .ring-cam-red {
-  --tw-ring-color: #A50034;
+  --tw-ring-color: #1D4ED8;
 }
 
 @media print {

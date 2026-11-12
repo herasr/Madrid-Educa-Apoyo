@@ -2,6 +2,18 @@
 # Configuración de Ingesta y Periodicidades
 
 sources:
+  tea_preferentes_plazas:
+    name: "Centros de atención preferente TEA con plazas previsibles en el aula TEA (curso 2024/2025)"
+    authority: comunidad_madrid
+    type: official_pdf
+    url: https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf
+    snapshot: data/official/tea_preferentes_curso_2024-25.csv
+    information_date: "2024-03-22"
+    frequency: weekly
+    parser: tea_pdf_codes_v1
+    status: loaded
+    licence: "Información pública CAM (Ley 37/2007)"
+
   preferred_support:
     name: "Centros con Atención Preferente (TEA, Auditiva, Motora)"
     authority: comunidad_madrid

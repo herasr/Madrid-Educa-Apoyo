@@ -210,7 +210,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
               1. Necesidad Educativa
             </div>
             <div className="text-[11px] text-slate-500">
@@ -251,7 +251,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     onClick={() => handleSelectNeed(item.id)}
                     className={`w-full text-left px-3 py-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                       isSelected
-                        ? 'bg-red-50 border-red-600 text-red-950 font-semibold ring-1 ring-red-600/20'
+                        ? 'bg-blue-50 border-blue-600 text-blue-950 font-semibold ring-1 ring-blue-600/20'
                         : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700'
                     }`}
                   >
@@ -261,7 +261,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     </div>
                     <span
                       className={`text-xs tabular-nums px-2 py-0.5 rounded-md font-mono ${
-                        isSelected ? 'bg-red-200 text-red-950 font-bold' : 'bg-slate-100 text-slate-600'
+                        isSelected ? 'bg-blue-200 text-blue-950 font-bold' : 'bg-slate-100 text-slate-600'
                       }`}
                     >
                       {count}
@@ -286,7 +286,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
               2. Etapa Educativa
             </div>
             <div className="text-[11px] text-slate-500">
@@ -385,7 +385,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
               3. Ubicación y Radio
             </div>
             <div className="text-[11px] text-slate-500">
@@ -548,7 +548,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
               4. Titularidad del Centro
             </div>
             <div className="text-[11px] text-slate-500">
@@ -610,7 +610,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
               5. Servicios del Centro
             </div>
             <div className="text-[11px] text-slate-500">
@@ -699,7 +699,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-red-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
               6. Nivel de Evidencia Oficial
             </div>
             <div className="text-[11px] text-slate-500">

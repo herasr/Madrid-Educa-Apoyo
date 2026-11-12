@@ -62,6 +62,7 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
 
   const formatText = (text: string) => isEasyReadMode ? simplifyText(text) : text;
   const isA1 = currentSupport?.evidencia === 'A1';
+  const isOfficial = school.procedencia === 'oficial';
 
   // Nombre amigable de la necesidad
   const needLabel = 
@@ -112,7 +113,12 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
 
   // Continuidad simplificada
   const continuityIsSameCentre = school.continuidad.tipoContinuidad === 'mismo_centro' || school.tipo === 'CEIPSO';
-  const continuityText = continuityIsSameCentre
+  const zoneDestinations = school.continuidad.destinos.length;
+  const continuityText = school.continuidad.tipoContinuidad === 'zona'
+    ? zoneDestinations > 0
+      ? 'Hay centros TEA con ESO en la zona (adscripción no publicada)'
+      : 'Sin centros TEA con ESO en la zona del listado'
+    : continuityIsSameCentre
     ? 'Imparte Primaria y ESO en el propio centro'
     : school.continuidad.apoyoEnSecundariaVerificado === true
     ? 'Confirmada en centro adscrito con apoyo'
@@ -136,7 +142,9 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
     servicesSummary.push('transporte no localizado');
   }
 
-  const singleLineServices = `${servicesSummary.join('. ')}.`;
+  const singleLineServices = isOfficial
+    ? 'Servicios y accesibilidad: sin datos en la fuente oficial.'
+    : `${servicesSummary.join('. ')}.`;
 
   return (
     <article className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-300 hover:shadow-md transition-all flex flex-col justify-between">
@@ -149,6 +157,21 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
             <span>{school.titularidad === 'publico' ? 'Público' : 'Concertado'}</span>
             <span className="text-slate-300">·</span>
             <span>{school.tipo}</span>
+            {isOfficial ? (
+              <span
+                className="text-[10px] font-bold uppercase tracking-wide text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded"
+                title="Registro cargado del listado oficial de la Comunidad de Madrid"
+              >
+                Dato oficial
+              </span>
+            ) : (
+              <span
+                className="text-[10px] font-bold uppercase tracking-wide text-amber-900 bg-amber-100 border border-amber-200 px-1.5 py-0.5 rounded"
+                title="Registro sintético de demostración: no usar para decidir"
+              >
+                Demostración
+              </span>
+            )}
           </div>
 
           {/* Sello de Evidencia compacto y claro */}
@@ -156,7 +179,7 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
             {isA1 ? (
               <span
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full"
-                title="Evidencia oficial A1 (Prototipo): Centro y etapa ratificados en resoluciones simuladas vigentes."
+                title="Evidencia oficial A1: Centro y etapa ratificados en resoluciones oficiales vigentes de la Comunidad de Madrid."
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Confirmado (A1)</span>
@@ -164,7 +187,7 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
             ) : (
               <span
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full"
-                title="Evidencia A2 (Prototipo): Centro con proyecto donde debe comprobarse la vigencia o etapa exacta."
+                title="Figura en el listado oficial de la Comunidad de Madrid (curso 2024/2025): comprueba la vigencia actual y las plazas con el Servicio de Apoyo a la Escolarización (SAE)."
               >
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                 <span>Por comprobar (A2)</span>
@@ -192,8 +215,13 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
           </span>
           {distanceKm !== null && (
             <div className="inline-flex items-center gap-1.5">
-              <span className="font-bold text-blue-900 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded text-[11px] whitespace-nowrap">
-                {distanceKm} km
+              <span
+                className="font-bold text-blue-900 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded text-[11px] whitespace-nowrap"
+                title={school.ubicacionAproximada
+                  ? 'Distancia aproximada: el listado oficial no publica la dirección y se usa el centro del municipio o distrito.'
+                  : undefined}
+              >
+                {school.ubicacionAproximada ? '≈ ' : ''}{distanceKm} km
               </span>
               <span
                 className="font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 px-2 py-0.5 rounded text-[11px] whitespace-nowrap cursor-help transition-colors"
@@ -219,7 +247,8 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
           <div className="flex items-start gap-2">
             <span className="text-emerald-700 font-bold shrink-0 mt-0.5">✓</span>
             <span className="text-slate-700">
-              Confirmado para: <span className="font-semibold text-slate-900">{stageLabels}</span>
+              {isOfficial ? 'Etapa en el listado oficial: ' : 'Confirmado para: '}
+              <span className="font-semibold text-slate-900">{stageLabels}</span>
             </span>
           </div>
 

@@ -6,6 +6,7 @@
  */
 
 import { MunicipalityOption } from '../types';
+import { OFFICIAL_MUNICIPALITIES } from './officialTea';
 
 export const MADRID_DISTRICTS = [
   'Arganzuela',
@@ -24,14 +25,14 @@ export const MADRID_DISTRICTS = [
   'Retiro',
   'Salamanca',
   'San Blas-Canillejas',
-  'Tetúan',
+  'Tetuán',
   'Usera',
   'Vicálvaro',
   'Villa de Vallecas',
   'Villaverde'
 ];
 
-export const MUNICIPALITIES: MunicipalityOption[] = [
+const BASE_MUNICIPALITIES: MunicipalityOption[] = [
   {
     id: 'Madrid',
     nombre: 'Madrid (Capital)',
@@ -184,6 +185,29 @@ export const MUNICIPALITIES: MunicipalityOption[] = [
     lng: -3.6025
   }
 ];
+
+/** Normaliza nombres para compararlos sin tildes ni mayúsculas ("Alcalá" = "alcala"). */
+export function normalizeName(text: string): string {
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
+/**
+ * Municipios seleccionables: la lista base más los municipios que aparecen en los
+ * datos oficiales (coordenadas: centroide IGN del término municipal).
+ */
+export const MUNICIPALITIES: MunicipalityOption[] = [
+  ...BASE_MUNICIPALITIES,
+  ...OFFICIAL_MUNICIPALITIES.filter(
+    om => !BASE_MUNICIPALITIES.some(b => normalizeName(b.nombre) === normalizeName(om.nombre))
+  )
+].sort((a, b) => (a.id === 'Madrid' ? -1 : b.id === 'Madrid' ? 1 : a.nombre.localeCompare(b.nombre, 'es')));
+
+/** Busca un municipio por id o nombre, sin distinguir tildes ni mayúsculas. */
+export function findMunicipality(nameOrId: string | null | undefined): MunicipalityOption | undefined {
+  if (!nameOrId) return undefined;
+  const key = normalizeName(nameOrId);
+  return MUNICIPALITIES.find(m => normalizeName(m.id) === key || normalizeName(m.nombre) === key);
+}
 
 /**
  * Cálculo de distancia Haversine en kilómetros entre dos coordenadas geográficas.

@@ -387,7 +387,9 @@ describe('filterEngine - analyzeZeroResults', () => {
       municipality: 'Madrid',
       radiusKm: 1, // 1 km radius - no schools within 1km of Madrid center
       requiredServices: ['comedor'],
-      evidence: ['A1']
+      // Los centros oficiales TEA son A2 y la fuente no publica servicios:
+      // exigir comedor deja 0 resultados y retirarlo debe proponerse como relajación.
+      evidence: ['A2']
     };
 
     // Confirm that 0 schools match this restrictive state against full dataset

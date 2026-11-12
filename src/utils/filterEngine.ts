@@ -19,7 +19,7 @@ import {
   StageId,
   ZeroResultsAnalysis
 } from '../types';
-import { calculateHaversineDistance, MUNICIPALITIES } from '../data/municipalities';
+import { calculateHaversineDistance, findMunicipality, normalizeName } from '../data/municipalities';
 
 export const INITIAL_SEARCH_STATE: SearchState = {
   need: 'tea', // Predeterminado en flujo normal según especificación
@@ -82,13 +82,11 @@ export function matchesCentre(centre: School, state: SearchState): boolean {
       if (distance > state.radiusKm) return false;
     }
   } else if (state.municipality) {
-    const munObj = MUNICIPALITIES.find(
-      m => m.id.toLowerCase() === state.municipality?.toLowerCase() || m.nombre.toLowerCase() === state.municipality?.toLowerCase()
-    );
+    const munObj = findMunicipality(state.municipality);
 
     // Si es Madrid capital y hay distrito seleccionado, filtrar por distrito
     if (state.district && centre.distrito) {
-      if (centre.distrito.toLowerCase() !== state.district.toLowerCase()) {
+      if (normalizeName(centre.distrito) !== normalizeName(state.district)) {
         return false;
       }
     }
@@ -98,8 +96,9 @@ export function matchesCentre(centre: School, state: SearchState): boolean {
       if (distance > state.radiusKm) return false;
     } else if (!state.district) {
       // Coincidencia estricta de municipio si no hay radio ni distrito
-      const munMatches = centre.municipio.toLowerCase().includes(state.municipality.toLowerCase()) ||
-                         state.municipality.toLowerCase().includes(centre.municipio.toLowerCase());
+      const centreMun = normalizeName(centre.municipio);
+      const wantedMun = normalizeName(munObj?.nombre || state.municipality);
+      const munMatches = centreMun === wantedMun || centreMun.includes(wantedMun) || wantedMun.includes(centreMun);
       if (!munMatches) return false;
     }
   }
@@ -158,11 +157,7 @@ export function matchesCentre(centre: School, state: SearchState): boolean {
  * Ordenación de resultados
  */
 export function sortCentres(centres: School[], state: SearchState): School[] {
-  const munObj = state.municipality
-    ? MUNICIPALITIES.find(
-        m => m.id.toLowerCase() === state.municipality?.toLowerCase() || m.nombre.toLowerCase() === state.municipality?.toLowerCase()
-      )
-    : null;
+  const munObj = findMunicipality(state.municipality) || null;
 
   const refCoords = (state.locationSource === 'browser' && state.userCoordinates)
     ? { lat: state.userCoordinates.lat, lng: state.userCoordinates.lng }
@@ -578,7 +573,9 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
     'Transporte_Adaptado',
     'Enfermeria',
     'Latitud',
-    'Longitud'
+    'Longitud',
+    'Procedencia',
+    'Ubicacion_Aproximada'
   ];
 
   const rows = schools.map(s => {
@@ -593,16 +590,18 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
       `"${s.tipo}"`,
       `"${s.municipio}"`,
       `"${s.distrito || ''}"`,
-      `"${s.direccion.replace(/"/g, '""')}"`,
+      `"${(s.direccion || (s.ubicacionAproximada ? 'Sin dirección en fuente oficial (ubicación aproximada)' : '')).replace(/"/g, '""')}"`,
       `"${s.etapas.join(', ')}"`,
       `"${s.apoyos.map(a => a.needId).join(', ')}"`,
       `"${currentSupport?.evidencia || 'A1'}"`,
       `"${currentSupport?.fuenteOficial || 'Resolución BOCM'}"`,
-      `"${s.servicios.comedor ? 'Sí' : 'No'}"`,
-      `"${s.servicios.transporte ? 'Sí' : 'No'}"`,
-      `"${s.servicios.enfermeria ? 'Sí' : 'No'}"`,
+      `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.comedor ? 'Sí' : 'No'}"`,
+      `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.transporte ? 'Sí' : 'No'}"`,
+      `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.enfermeria ? 'Sí' : 'No'}"`,
       s.lat,
-      s.lng
+      s.lng,
+      `"${s.procedencia === 'oficial' ? 'Oficial' : 'Demostración'}"`,
+      `"${s.ubicacionAproximada ? 'Sí' : 'No'}"`
     ].join(';');
   });
 
@@ -623,8 +622,11 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
 export function downloadResultsJSON(schools: School[], state: SearchState) {
   const exportData = {
     metadata: {
-      fuente: "Madrid Educa Apoyo · Evidencia Oficial BOCM / Consejería de Educación CAM",
-      licencia: "Datos Abiertos Comunidad de Madrid (EDUCAbase)",
+      fuente: "Madrid Educa Apoyo",
+      fuentesDatos: {
+        oficial: "Comunidad de Madrid · Centros de atención preferente TEA (curso 2024/2025, información a 22/03/2024)",
+        demostracion: "Registros sintéticos para necesidades sin listado oficial cargado (procedencia = 'demo')"
+      },
       fechaExportacion: new Date().toISOString(),
       criteriosFiltro: {
         necesidad: state.need,
@@ -644,10 +646,12 @@ export function downloadResultsJSON(schools: School[], state: SearchState) {
       tipo: s.tipo,
       municipio: s.municipio,
       distrito: s.distrito || null,
-      direccion: s.direccion,
+      direccion: s.direccion || (s.ubicacionAproximada ? 'Sin dirección en fuente oficial (ubicación aproximada)' : null),
       telefono: s.telefono,
       web: s.web || null,
-      coordenadas: { lat: s.lat, lng: s.lng },
+      coordenadas: { lat: s.lat, lng: s.lng, aproximadas: Boolean(s.ubicacionAproximada) },
+      procedencia: s.procedencia || 'demo',
+      fuenteUrl: s.fuenteUrl || null,
       etapasImpartidas: s.etapas,
       apoyosOficiales: s.apoyos,
       servicios: s.servicios,

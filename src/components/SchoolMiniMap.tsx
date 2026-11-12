@@ -69,7 +69,7 @@ export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
     });
 
     const marker = L.marker([school.lat, school.lng], { icon: mainIcon })
-      .bindPopup(`<b>${school.nombre}</b><br>${school.direccion}`)
+      .bindPopup(`<b>${school.nombre}</b><br>${school.ubicacionAproximada ? 'Ubicación aproximada (centro del municipio o distrito)' : school.direccion}`)
       .addTo(map);
 
     const bounds = L.latLngBounds([[school.lat, school.lng], [school.lat, school.lng]]);
@@ -78,8 +78,8 @@ export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
     if (school.continuidad && school.continuidad.destinos.length > 0) {
       school.continuidad.destinos.forEach((dest, i) => {
         // Coordenadas calculadas aproximadamente cerca del centro si no son exactas
-        const offsetLat = school.lat + (i === 0 ? 0.012 : -0.011);
-        const offsetLng = school.lng + (i === 0 ? 0.015 : -0.013);
+        const offsetLat = dest.lat ?? school.lat + (i === 0 ? 0.012 : -0.011);
+        const offsetLng = dest.lng ?? school.lng + (i === 0 ? 0.015 : -0.013);
 
         const destIcon = L.divIcon({
           className: 'adscripcion-dest-pin',

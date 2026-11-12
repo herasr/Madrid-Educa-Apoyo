@@ -229,7 +229,7 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
                 const sup = sch.apoyos[0];
                 return (
                   <td key={sch.id} className="p-4 border-l border-slate-100">
-                    <div className="font-bold text-slate-900 text-xs">{sup?.aulaNombre || 'Aula Específica'}</div>
+                    <div className="font-bold text-slate-900 text-xs">{sup?.aulaNombre || (sch.procedencia === 'oficial' ? 'Aula TEA (nombre no publicado)' : 'Aula Específica')}</div>
                     <div className="text-slate-500 text-[11px] mt-0.5">Etapas con apoyo: {sup?.etapasConApoyo.join(', ')}</div>
                   </td>
                 );
@@ -263,7 +263,7 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
                     </span>
                   ) : (
                     <span className="text-slate-400 flex items-center gap-1">
-                      <Minus className="w-4 h-4" /> No localizado
+                      <Minus className="w-4 h-4" /> {sch.procedencia === 'oficial' ? 'Sin datos en la fuente' : 'No localizado'}
                     </span>
                   )}
                 </td>
@@ -281,7 +281,7 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
                     </span>
                   ) : (
                     <span className="text-slate-400 flex items-center gap-1">
-                      <Minus className="w-4 h-4" /> No localizado
+                      <Minus className="w-4 h-4" /> {sch.procedencia === 'oficial' ? 'Sin datos en la fuente' : 'No localizado'}
                     </span>
                   )}
                 </td>
@@ -299,7 +299,7 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
                     </span>
                   ) : (
                     <span className="text-slate-400 flex items-center gap-1">
-                      <Minus className="w-4 h-4" /> No localizada
+                      <Minus className="w-4 h-4" /> {sch.procedencia === 'oficial' ? 'Sin datos en la fuente' : 'No localizada'}
                     </span>
                   )}
                 </td>
@@ -312,7 +312,11 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
               {comparedSchools.map(sch => (
                 <td key={sch.id} className="p-4 border-l border-slate-100 text-[11px]">
                   <div className="font-semibold text-slate-900 mb-0.5">
-                    {sch.continuidad.tipoContinuidad === 'mismo_centro' ? 'En el propio centro (CEIPSO)' : 'Vía IES adscrito'}
+                    {sch.continuidad.tipoContinuidad === 'mismo_centro'
+                      ? 'En el propio centro'
+                      : sch.continuidad.tipoContinuidad === 'zona'
+                      ? 'Adscripción no publicada'
+                      : 'Vía IES adscrito'}
                   </div>
                   <p className="text-slate-600 leading-snug">{sch.continuidad.descripcion}</p>
                 </td>

@@ -1,6 +1,6 @@
 {
   "name": "madrid-educa-apoyo",
-  "description": "Buscador educativo inclusivo con filtros acumulativos para centros de atención preferente y educación especial en la Comunidad de Madrid (Prototipo de Demostración con Datos Simulados).",
+  "description": "Buscador cívico de educación inclusiva y centros de atención preferente TEA con datos abiertos y evidencia oficial de la Comunidad de Madrid (Proyecto DataMad 2026).",
   "requestFramePermissions": [],
   "majorCapabilities": []
 }

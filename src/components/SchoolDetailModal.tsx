@@ -77,6 +77,8 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
     : school.apoyos[0];
 
   const evidenceLevel = currentSupport?.evidencia || 'A1';
+  const isOfficial = school.procedencia === 'oficial';
+  const OFFICIAL_SEARCH_URL = 'https://www.comunidad.madrid/educacion/buscador-centros-educativos';
   const formatText = (text: string) => isEasyReadMode ? simplifyText(text) : text;
 
   return (
@@ -106,8 +108,25 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
             <div className="flex items-center gap-2 text-xs text-slate-600 mt-1">
               <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               <span>
-                {school.direccion}, {school.codigoPostal} · {school.municipio} {school.distrito ? `(${school.distrito})` : ''}
+                {school.direccion
+                  ? `${school.direccion}, ${school.codigoPostal} · `
+                  : ''}
+                {school.municipio} {school.distrito ? `(${school.distrito})` : ''}
+                {!school.direccion && (
+                  <span className="text-slate-500"> · dirección no publicada en el listado oficial</span>
+                )}
               </span>
+            </div>
+            <div className="mt-1.5">
+              {isOfficial ? (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                  Dato oficial · Comunidad de Madrid
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-amber-900 bg-amber-100 border border-amber-200 px-1.5 py-0.5 rounded">
+                  Dato de demostración · no usar para decidir
+                </span>
+              )}
             </div>
           </div>
 
@@ -183,7 +202,7 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                     ) : (
                       <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-white px-2 py-0.5 rounded border border-amber-300">
                         <AlertTriangle className="w-4 h-4 text-amber-600" />
-                        Evidencia A2: En Comprobación Administrativa
+                        {isOfficial ? 'Evidencia A2: Oficial, por comprobar vigencia' : 'Evidencia A2: En Comprobación Administrativa'}
                       </span>
                     )}
                   </div>
@@ -211,13 +230,24 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                   </div>
 
                   <div>
-                    <dt className="text-slate-400 font-medium">Resolución Oficial:</dt>
-                    <dd className="font-semibold text-slate-800 mt-0.5">{currentSupport?.resolucionBOCM || 'Catálogo General CAM'}</dd>
+                    <dt className="text-slate-400 font-medium">{isOfficial ? 'Documento oficial:' : 'Resolución Oficial:'}</dt>
+                    <dd className="font-semibold text-slate-800 mt-0.5">
+                      {isOfficial && school.fuenteUrl ? (
+                        <a href={school.fuenteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-800 hover:underline inline-flex items-center gap-1">
+                          Listado de centros preferentes TEA (PDF)
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      ) : (
+                        currentSupport?.resolucionBOCM || 'Catálogo General CAM'
+                      )}
+                    </dd>
                   </div>
 
                   <div>
                     <dt className="text-slate-400 font-medium">Unidad / Aula de Apoyo:</dt>
-                    <dd className="font-semibold text-slate-800 mt-0.5">{currentSupport?.aulaNombre}</dd>
+                    <dd className="font-semibold text-slate-800 mt-0.5">
+                      {currentSupport?.aulaNombre || (isOfficial ? 'Aula TEA (la fuente no publica su nombre)' : '—')}
+                    </dd>
                   </div>
 
                   <div>
@@ -234,6 +264,12 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Dotación de Personal Especializado Asignado
                 </h4>
+                {currentSupport && currentSupport.recursosOficiales.length === 0 && (
+                  <p className="text-xs text-slate-600">
+                    La fuente oficial no detalla el personal asignado al aula. Con carácter general, las aulas TEA
+                    atienden a un máximo de cinco alumnos.
+                  </p>
+                )}
                 <ul className="space-y-1.5 text-xs text-slate-700">
                   {currentSupport?.recursosOficiales.map((rec, i) => (
                     <li key={i} className="flex items-start gap-2">
@@ -262,7 +298,7 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
               {/* Etapas autorizadas */}
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  Etapas Educativas Impartidas
+                  {isOfficial ? 'Etapas con apoyo TEA según el listado oficial' : 'Etapas Educativas Impartidas'}
                 </h4>
                 <div className="flex flex-wrap gap-2 text-xs">
                   {school.etapas.map(st => (
@@ -276,7 +312,19 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                 </div>
               </div>
 
+              {isOfficial && (
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed">
+                  El listado oficial no publica servicios, accesibilidad ni datos de contacto de los centros.
+                  Puedes consultarlos en el{' '}
+                  <a href={OFFICIAL_SEARCH_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-800 hover:underline">
+                    buscador oficial de centros educativos
+                  </a>{' '}
+                  con el código {school.codigo}.
+                </div>
+              )}
+
               {/* Servicios */}
+              {!isOfficial && (
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Servicios Complementarios
@@ -298,8 +346,10 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                   ))}
                 </div>
               </div>
+              )}
 
               {/* Accesibilidad Física */}
+              {!isOfficial && (
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Accesibilidad Arquitectónica y Sensorial
@@ -321,23 +371,25 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                   ))}
                 </div>
               </div>
+              )}
 
               {/* Datos de Contacto */}
+              {!isOfficial && (
               <div className="border-t border-slate-200 pt-4">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Datos de Contacto del Centro
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <div className="flex items-center gap-2 text-slate-700">
-                    <Phone className="w-4 h-4 text-slate-400" />
-                    <span>{school.telefono}</span>
+                  <div className="flex items-center gap-2 text-slate-700 min-w-0">
+                    <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                    <span className="whitespace-nowrap">{school.telefono}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-700">
-                    <Mail className="w-4 h-4 text-slate-400" />
+                  <div className="flex items-center gap-2 text-slate-700 min-w-0">
+                    <Mail className="w-4 h-4 text-slate-400 shrink-0" />
                     <span className="truncate">{school.email}</span>
                   </div>
                   {school.web && (
-                    <div className="flex items-center gap-2 col-span-2 text-blue-900 font-medium">
+                    <div className="flex items-center gap-2 sm:col-span-2 min-w-0 text-blue-900 font-medium">
                       <ExternalLink className="w-4 h-4 text-blue-700" />
                       <a href={school.web} target="_blank" rel="noreferrer" className="hover:underline truncate">
                         {school.web}
@@ -346,11 +398,12 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                   )}
                 </div>
               </div>
+              )}
 
               {/* Ubicación y Mapa Georreferenciado */}
               <div className="border-t border-slate-200 pt-4">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  Ubicación Georreferenciada (OpenStreetMap)
+                  {school.ubicacionAproximada ? 'Ubicación aproximada (centro del municipio o distrito)' : 'Ubicación Georreferenciada (OpenStreetMap)'}
                 </h4>
                 <SchoolMiniMap school={school} height="200px" />
               </div>
@@ -376,7 +429,7 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                       : 'text-amber-700'
                   }`}>
                     {school.continuidad.apoyoEnSecundariaVerificado === true
-                      ? 'Continuidad de apoyo específica verificada en catálogo'
+                      ? (isOfficial ? 'Apoyo TEA en Secundaria según el listado oficial' : 'Continuidad de apoyo específica verificada en catálogo')
                       : 'Continuidad no verificada documentalmente (nunca inexistencia afirmada)'}
                   </span>
                 </div>
@@ -386,7 +439,9 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
               {school.continuidad.destinos.length > 0 ? (
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                    Institutos de Educación Secundaria (IES) de Adscripción
+                    {school.continuidad.tipoContinuidad === 'zona'
+                      ? 'Centros preferentes TEA con Secundaria en la misma zona (no es adscripción)'
+                      : 'Institutos de Educación Secundaria (IES) de Adscripción'}
                   </h4>
                   <div className="space-y-2">
                     {school.continuidad.destinos.map((dest, i) => (

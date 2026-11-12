@@ -1,8 +1,13 @@
 {
-  "url": "https://www.comunidad.madrid/servicios/educacion/atencion-diferencias-individuales",
-  "retrieved_at": "2026-11-10T16:08:22Z",
-  "sha256": "8e9991028397559843f0d5ba1c5ab0db3219caedeca1054f01221e2fa0d9cd5d",
-  "status": "OFFLINE_SAMPLE_FIXTURE",
-  "bytes": 329,
-  "data_mode": "TECHNICAL_DEMO_FIXTURE"
+  "url": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
+  "retrieved_at": "2026-11-12T08:51:53Z",
+  "sha256": "cc3b376bf924defe74c5abacf69e2574c74dcb53abb38668fbc0d29049f6a7c6",
+  "sha256_de": "data/official/tea_preferentes_curso_2024-25.csv",
+  "pdf_sha256": null,
+  "pdf_codigos_extraidos": null,
+  "status": "SNAPSHOT_VERSIONADO",
+  "bytes": 23294,
+  "data_mode": "OFFICIAL_DATA",
+  "fecha_informacion": "2024-03-22",
+  "curso": "2024/2025"
 }

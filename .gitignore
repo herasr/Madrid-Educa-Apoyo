@@ -7,3 +7,7 @@ coverage/
 .env*
 !.env.example
 .aistudio/
+
+# PDF oficial descargado por el pipeline (se guarda su hash en metadata.json)
+data/raw/**/*.pdf
+__pycache__/
