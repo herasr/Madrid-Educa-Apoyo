@@ -149,7 +149,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
 
             <div className="text-right">
               <span className="inline-block text-xs font-bold text-slate-800 bg-slate-100 border border-slate-200 px-3 py-1 rounded">
-                Catálogo Oficial v2.4 (Curso 2025/2026)
+                Catálogo Oficial TEA (Curso 2024/2025)
               </span>
             </div>
           </div>
@@ -381,8 +381,8 @@ export const PassportView: React.FC<PassportViewProps> = ({
 
         {/* Pie con Fuentes Oficiales */}
         <div className="border-t border-slate-200 pt-4 text-[11px] text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>Fuente: Comunidad de Madrid (Resoluciones Oficiales) y Geodatos Madrid Capital.</span>
-          <span>Madrid Educa Apoyo v2.4</span>
+          <span>Fuente: Comunidad de Madrid (relación oficial de centros preferentes TEA, curso 2024/25) y centroides IGN.</span>
+          <span>Proyecto DataMad 2026 · Madrid Educa Apoyo</span>
         </div>
       </div>
     </div>

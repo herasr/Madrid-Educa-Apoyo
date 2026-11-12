@@ -1,7 +1,7 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- * Batería de Pruebas oficiales N.10 del Prompt Maestro v2.4.
+ * Batería de Pruebas técnicas oficial para demostración (Proyecto DataMad 2026).
  * Permite ejecutar y verificar cada uno de los 12 escenarios de prueba con un solo clic.
  */
 
@@ -13,7 +13,7 @@ export const TEST_SCENARIOS: TestScenario[] = [
     code: 'FIL-001',
     titulo: 'TEA + Primaria + Madrid',
     descripcion: 'Búsqueda inicial acumulando necesidad (TEA), etapa (Primaria) y territorio (Madrid).',
-    esperado: 'Muestra únicamente centros de atención preferente TEA con etapa Primaria en el ámbito de Madrid.',
+    esperado: 'Muestra únicamente centros oficiales de atención preferente TEA con etapa Primaria en Madrid.',
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
@@ -31,15 +31,16 @@ export const TEST_SCENARIOS: TestScenario[] = [
   {
     id: 'FIL-002',
     code: 'FIL-002',
-    titulo: 'Añadir Comedor',
-    descripcion: 'Añade comedor escolar obligatorio a la consulta anterior.',
-    esperado: 'Conserva TEA + Primaria + Madrid y estrecha los resultados a centros con comedor verificado.',
+    titulo: 'Filtrar por Etapa Secundaria (ESO)',
+    descripcion: 'Cambia la etapa a Secundaria (ESO) conservando la necesidad TEA en Madrid.',
+    esperado: 'Filtra la lista a centros preferentes TEA que imparten Secundaria en la zona.',
     estadoPrueba: {
       need: 'tea',
-      stages: ['primaria'],
+      stages: ['eso'],
       municipality: 'Madrid',
       radiusKm: 20,
-      requiredServices: ['comedor']
+      ownership: [],
+      requiredServices: []
     }
   },
   {
@@ -59,23 +60,23 @@ export const TEST_SCENARIOS: TestScenario[] = [
   {
     id: 'FIL-004',
     code: 'FIL-004',
-    titulo: 'Comedor + Transporte Obligatorios (AND)',
-    descripcion: 'Marca simultáneamente comedor escolar y transporte como servicios obligatorios.',
-    esperado: 'Aplica operador AND estricto: el centro DEBE disponer de ambos servicios a la vez.',
+    titulo: 'Búsqueda de Municipio (Alcalá de Henares)',
+    descripcion: 'Selecciona un municipio con normalización de tildes y denominación oficial INE.',
+    esperado: 'Muestra los 10 centros oficiales de atención preferente TEA en Alcalá de Henares.',
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
-      municipality: 'Madrid',
-      radiusKm: 25,
-      requiredServices: ['comedor', 'transporte']
+      municipality: 'Alcala de Henares',
+      radiusKm: 15,
+      ownership: []
     }
   },
   {
     id: 'FIL-005',
     code: 'FIL-005',
-    titulo: 'Cambiar Radio',
+    titulo: 'Cambiar Radio Geodésico (10 km)',
     descripcion: 'Modifica el radio geodésico a 10 km conservando necesidad y etapa.',
-    esperado: 'Conserva necesidad (TEA) y etapa (Primaria); actualiza el recuento territorial.',
+    esperado: 'Conserva necesidad (TEA) y etapa (Primaria); actualiza la lista al nuevo radio.',
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
@@ -86,60 +87,55 @@ export const TEST_SCENARIOS: TestScenario[] = [
   {
     id: 'FIL-006',
     code: 'FIL-006',
-    titulo: 'Volver desde Ficha',
-    descripcion: 'Simula la apertura de la ficha detallada de un centro y el retorno a la lista.',
-    esperado: 'Conserva todos los filtros intactos, la posición de ordenación y el listado de resultados.',
+    titulo: 'Filtrar solo Centros Públicos',
+    descripcion: 'Restringe la búsqueda exclusivamente a la red pública de la Consejería de Educación.',
+    esperado: 'Muestra los CEIP, IES y CEIPSO públicos con apoyo TEA en la zona.',
     estadoPrueba: {
       need: 'tea',
       stages: ['primaria'],
       municipality: 'Madrid',
       radiusKm: 20,
-      requiredServices: ['comedor']
+      ownership: ['publico']
     }
   },
   {
     id: 'FIL-007',
     code: 'FIL-007',
-    titulo: 'Cero Resultados (No borrado automático)',
-    descripcion: 'Combina criterios altamente restrictivos que producen 0 resultados (ej. Discapacidad auditiva + Bachillerato + Radio 5 km).',
-    esperado: 'NO elimina filtros automáticamente. Muestra la combinación exacta fallida y botones de relajación asistida.',
+    titulo: 'Cero Resultados (Gestión Asistida)',
+    descripcion: 'Selecciona una necesidad pendiente de incorporar (Discapacidad Auditiva).',
+    esperado: 'NO elimina filtros. Explica que la necesidad está pendiente y ofrece volver a TEA con 1 clic.',
     estadoPrueba: {
       need: 'auditiva',
-      stages: ['bachillerato'],
-      municipality: 'Alcala de Henares',
-      radiusKm: 5,
-      requiredServices: ['transporte', 'enfermeria'],
-      evidence: ['A1']
+      stages: ['primaria'],
+      municipality: 'Madrid',
+      radiusKm: 20
     }
   },
   {
     id: 'FIL-008',
     code: 'FIL-008',
-    titulo: 'Quitar un Chip individual',
-    descripcion: 'Elimina únicamente el filtro correspondiente al chip seleccionado (p. ej. retirar comedor).',
-    esperado: 'Conserva todos los demás filtros y recalcula el recuento al instante.',
+    titulo: 'Combinar Etapas (Infantil + Primaria)',
+    descripcion: 'Selecciona múltiples etapas simultáneamente dentro del catálogo oficial.',
+    esperado: 'Conserva ambas etapas y actualiza dinámicamente los recuentos.',
     estadoPrueba: {
       need: 'tea',
-      stages: ['primaria', 'eso'],
+      stages: ['infantil', 'primaria'],
       municipality: 'Madrid',
       radiusKm: 20,
-      ownership: ['publico'],
-      requiredServices: ['comedor']
+      ownership: []
     }
   },
   {
     id: 'FIL-009',
     code: 'FIL-009',
-    titulo: 'Recargar / URL Reproducible',
+    titulo: 'Recargar / URL Reproducible (Móstoles)',
     descripcion: 'Simula restaurar la consulta desde parámetros URL codificados.',
-    esperado: 'Restaura exactamente el estado acumulado sin exponer datos de menores ni diagnósticos libres.',
+    esperado: 'Restaura exactamente el estado acumulado para Móstoles sin exponer datos personales.',
     estadoPrueba: {
-      need: 'motora',
+      need: 'tea',
       stages: ['primaria'],
-      municipality: 'Fuenlabrada',
-      radiusKm: 20,
-      requiredServices: ['transporte'],
-      evidence: ['A1', 'A2']
+      municipality: 'Mostoles',
+      radiusKm: 15
     }
   },
   {

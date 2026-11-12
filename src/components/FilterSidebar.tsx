@@ -230,20 +230,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <div className="mt-3.5 space-y-3">
             {/* 1.1 NECESIDAD EDUCATIVA Y MODALIDAD */}
             <div className="space-y-1.5" role="radiogroup" aria-label="Necesidad Educativa">
-              {[
-                { id: 'tea' as NeedId, label: 'Atención preferente TEA', desc: 'Trastorno del Espectro Autista' },
-                { id: 'auditiva' as NeedId, label: 'Discapacidad Auditiva', desc: 'Bilingüismo LSE y logopedia' },
-                { id: 'motora' as NeedId, label: 'Discapacidad Motora', desc: 'Fisioterapia y motórica' },
-                { id: 'visual' as NeedId, label: 'Discapacidad Visual', desc: 'Apoyo tiflotécnico y convenio ONCE' },
-                { id: 'altas_capacidades' as NeedId, label: 'Altas Capacidades', desc: 'Sedes PEAC y Bachillerato Excelencia' },
-                { id: 'educacion_especial' as NeedId, label: 'Educación Especial (CEE)', desc: 'Colegios de Educación Especial' },
-                { id: 'tdah' as NeedId, label: 'TDAH y Trastornos de Conducta', desc: 'Apoyo conductual y adaptación metodológica' },
-                { id: 'tel_lenguaje' as NeedId, label: 'Trastorno del Lenguaje (TDL/TEL)', desc: 'Intervención intensiva en comunicación' },
-                { id: 'salud_hospitalaria' as NeedId, label: 'Atención Hospitalaria / Domiciliaria', desc: 'Unidades de hospitalización y convalecencia' },
-                { id: 'compensatoria' as NeedId, label: 'Compensación Educativa', desc: 'Aulas de Enlace y desfavorecidos' }
-              ].map(item => {
+              {[{ id: 'tea' as NeedId, label: 'Atención preferente TEA', desc: 'Trastorno del Espectro Autista' }].map(item => {
                 const isSelected = state.need === item.id;
-                const count = dynamicCounts.needs[item.id] ?? 0;
                 return (
                   <button
                     key={item.id}
@@ -256,19 +244,57 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     }`}
                   >
                     <div>
-                      <div className="text-xs font-bold leading-snug">{item.label}</div>
+                      <div className="text-xs font-bold leading-snug flex items-center gap-1.5 flex-wrap">
+                        <span>{item.label}</span>
+                        <span className="text-[9px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
+                          Oficial
+                        </span>
+                      </div>
                       <div className="text-[11px] text-slate-500">{item.desc}</div>
                     </div>
-                    <span
-                      className={`text-xs tabular-nums px-2 py-0.5 rounded-md font-mono ${
-                        isSelected ? 'bg-blue-200 text-blue-950 font-bold' : 'bg-slate-100 text-slate-600'
-                      }`}
-                    >
-                      {count}
+                    <span className="text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 bg-blue-100 text-blue-900 font-bold">
+                      336
                     </span>
                   </button>
                 );
               })}
+            </div>
+
+            {/* Otras necesidades Próximamente */}
+            <div className="pt-2.5 border-t border-slate-100 space-y-1.5">
+              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                Otras necesidades (Próximamente):
+              </div>
+              {[
+                { id: 'auditiva', label: 'Discapacidad Auditiva', desc: 'Bilingüismo LSE y logopedia' },
+                { id: 'motora', label: 'Discapacidad Motora', desc: 'Fisioterapia y motórica' },
+                { id: 'visual', label: 'Discapacidad Visual', desc: 'Apoyo tiflotécnico y convenio ONCE' },
+                { id: 'altas_capacidades', label: 'Altas Capacidades', desc: 'Sedes PEAC y Bachillerato Excelencia' },
+                { id: 'educacion_especial', label: 'Educación Especial (CEE)', desc: 'Colegios de Educación Especial' },
+                { id: 'tdah', label: 'TDAH y Trastornos de Conducta', desc: 'Apoyo conductual y adaptación metodológica' },
+                { id: 'tel_lenguaje', label: 'Trastorno del Lenguaje (TDL/TEL)', desc: 'Intervención intensiva en comunicación' },
+                { id: 'salud_hospitalaria', label: 'Atención Hospitalaria / Domiciliaria', desc: 'Unidades de hospitalización y convalecencia' },
+                { id: 'compensatoria', label: 'Compensación Educativa', desc: 'Aulas de Enlace y desfavorecidos' }
+              ].map(item => (
+                <div
+                  key={item.id}
+                  className="w-full text-left px-3 py-2 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-400 flex items-center justify-between cursor-not-allowed opacity-80"
+                  title="Listado oficial pendiente de incorporar en este prototipo"
+                >
+                  <div>
+                    <div className="text-xs font-semibold leading-snug flex items-center gap-1.5 flex-wrap">
+                      <span className="text-slate-500">{item.label}</span>
+                      <span className="text-[9px] font-semibold text-slate-500 bg-slate-200/80 border border-slate-300 px-1 py-0.2 rounded">
+                        Próximamente
+                      </span>
+                    </div>
+                    <div className="text-[10px] text-slate-400">{item.desc}</div>
+                  </div>
+                  <span className="text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 bg-slate-200/60 text-slate-500">
+                    0
+                  </span>
+                </div>
+              ))}
             </div>
 
 
@@ -628,6 +654,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
         {openSections.services && (
           <div className="mt-3.5 space-y-2">
+            <div className="p-2 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 leading-tight">
+              <strong>Limitación de la fuente oficial:</strong> El listado de centros TEA de la Comunidad de Madrid no publica datos de servicios complementarios (comedor, transporte, enfermería). Los filtros de servicios aparecen inactivos para evitar búsquedas sin resultados.
+            </div>
             {[
               { id: 'comedor' as ServiceId, label: 'Comedor escolar' },
               { id: 'transporte' as ServiceId, label: 'Transporte escolar adaptado' },
@@ -638,33 +667,40 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               const isRequired = state.requiredServices.includes(srv.id);
               const isPreferred = state.preferredServices.includes(srv.id);
               const countReq = dynamicCounts.requiredServices[srv.id] ?? 0;
+              const isDisabled = countReq === 0;
 
               return (
                 <div
                   key={srv.id}
                   className={`p-2.5 rounded-xl border text-xs transition-colors ${
-                    isRequired
-                      ? 'bg-cam-red-light border-cam-red-border'
+                    isDisabled
+                      ? 'bg-slate-100/80 border-slate-200 opacity-60 cursor-not-allowed'
+                      : isRequired
+                      ? 'bg-blue-50/80 border-blue-200'
                       : isPreferred
                       ? 'bg-amber-50/70 border-amber-200'
                       : 'bg-slate-50/70 border-slate-200'
                   }`}
+                  title={isDisabled ? "La fuente oficial no publica datos de este servicio" : undefined}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="font-semibold text-slate-800">{srv.label}</span>
                     <span className="font-mono text-[11px] text-slate-500 tabular-nums">
-                      ({countReq})
+                      (0 disponibles)
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
-                      onClick={() => handleToggleService(srv.id, true)}
-                      className={`flex-1 py-1 px-2 rounded-lg text-[11px] font-semibold border text-center transition-colors cursor-pointer ${
-                        isRequired
-                          ? 'bg-cam-red text-white border-cam-red-dark'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
+                      disabled={isDisabled}
+                      onClick={() => !isDisabled && handleToggleService(srv.id, true)}
+                      className={`flex-1 py-1 px-2 rounded-lg text-[11px] font-semibold border text-center transition-colors ${
+                        isDisabled
+                          ? 'bg-slate-200 text-slate-400 border-slate-300 cursor-not-allowed'
+                          : isRequired
+                          ? 'bg-blue-700 text-white border-blue-800 cursor-pointer'
+                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100 cursor-pointer'
                       }`}
                     >
                       Obligatorio
@@ -672,11 +708,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
                     <button
                       type="button"
-                      onClick={() => handleToggleService(srv.id, false)}
-                      className={`flex-1 py-1 px-2 rounded-lg text-[11px] font-semibold border text-center transition-colors cursor-pointer ${
-                        isPreferred
-                          ? 'bg-amber-600 text-white border-amber-700'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
+                      disabled={isDisabled}
+                      onClick={() => !isDisabled && handleToggleService(srv.id, false)}
+                      className={`flex-1 py-1 px-2 rounded-lg text-[11px] font-semibold border text-center transition-colors ${
+                        isDisabled
+                          ? 'bg-slate-200 text-slate-400 border-slate-300 cursor-not-allowed'
+                          : isPreferred
+                          ? 'bg-amber-600 text-white border-amber-700 cursor-pointer'
+                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100 cursor-pointer'
                       }`}
                     >
                       Preferido
@@ -717,39 +756,43 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
         {openSections.evidence && (
           <div className="mt-3.5 space-y-2">
-            <label className="flex items-start gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer">
+            <div className="p-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 leading-tight mb-2">
+              <strong>Nota de la fuente:</strong> Todos los 336 centros TEA del documento (curso 2024/2025) figuran como A2 (por comprobar vigencia actual con el SAE).
+            </div>
+            <label className="flex items-start gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-100 opacity-60 cursor-not-allowed" title="0 centros con evidencia A1 en la fuente oficial actual">
               <input
                 type="checkbox"
-                checked={state.evidence.includes('A1')}
-                onChange={() => handleToggleEvidence('A1')}
-                className="mt-0.5 rounded border-slate-300 text-cam-red focus:ring-cam-red cursor-pointer"
+                disabled={true}
+                checked={false}
+                onChange={() => {}}
+                className="mt-0.5 rounded border-slate-300 text-slate-400 cursor-not-allowed"
               />
               <div>
-                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <div className="text-xs font-bold text-slate-500 flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
                   <span>Confirmado para esta etapa (A1)</span>
-                  <span className="font-mono text-[10px] text-slate-500">({dynamicCounts.evidence['A1'] ?? 0})</span>
+                  <span className="font-mono text-[10px] text-slate-400">(0 disponibles)</span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">
-                  Resolución oficial vigente publicada por la Consejería de Educación.
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  No disponible en el listado oficial actual (todos son A2 por comprobar vigencia).
                 </p>
               </div>
             </label>
 
-            <label className="flex items-start gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer">
+            <label className="flex items-start gap-2.5 p-2.5 rounded-xl border border-blue-200 bg-blue-50/60 cursor-pointer">
               <input
                 type="checkbox"
                 checked={state.evidence.includes('A2')}
                 onChange={() => handleToggleEvidence('A2')}
-                className="mt-0.5 rounded border-slate-300 text-cam-red focus:ring-cam-red cursor-pointer"
+                className="mt-0.5 rounded border-blue-300 text-blue-700 focus:ring-blue-600 cursor-pointer"
               />
               <div>
                 <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
                   <span>Por comprobar etapa o vigencia (A2)</span>
-                  <span className="font-mono text-[10px] text-slate-500">({dynamicCounts.evidence['A2'] ?? 0})</span>
+                  <span className="font-mono text-[10px] text-slate-700 font-bold">({dynamicCounts.evidence['A2'] ?? 336})</span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">
-                  Centro catalogado con apoyo, pero con expediente de vigencia por ratificar.
+                <p className="text-[11px] text-slate-600 mt-0.5">
+                  Centros oficiales con apoyo (curso 2024/25); se recomienda verificar con el SAE.
                 </p>
               </div>
             </label>

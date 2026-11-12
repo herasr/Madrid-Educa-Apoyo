@@ -304,10 +304,49 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
   const munName = state.municipality || 'la Comunidad de Madrid';
   const radiusText = state.radiusKm ? ` en ${state.radiusKm} km de ${munName}` : ` en ${munName}`;
 
-  let reason = `No hay centros que cumplan simultáneamente todos los criterios activos para ${needName}${radiusText}`;
-  if (state.requiredServices.length > 0) {
-    const srvNames = state.requiredServices.map(s => s === 'comedor' ? 'comedor' : s === 'transporte' ? 'transporte escolar' : s).join(' y ');
-    reason = `No hay centros ${state.evidence.join('/')} de ${needName} que cumplan ${srvNames}${radiusText}.`;
+  let reason = `No hay centros que cumplan simultáneamente todos los criterios activos para ${needName}${radiusText}.`;
+
+  // Caso A: Necesidad no incorporada aún en este prototipo
+  if (state.need && state.need !== 'tea') {
+    reason = `El listado oficial para ${needName} está pendiente de incorporar en este prototipo. Por rigor deontológico, no mostramos centros sintéticos.`;
+    const teaCount = schools.filter(s => matchesCentre(s, { ...state, need: 'tea' })).length;
+    relaxations.push({
+      id: 'switch_to_tea',
+      label: "Ver centros de Atención Preferente TEA (datos oficiales)",
+      description: `Muestra ${teaCount > 0 ? teaCount : 336} centro(s) oficiales TEA.`,
+      actionType: 'remove_filter',
+      resultingCount: teaCount > 0 ? teaCount : 336,
+      apply: (prev) => ({ ...prev, need: 'tea' })
+    });
+    return { reason, failingConditions, relaxations };
+  }
+
+  // Caso B: Servicios o Nivel A1 no contemplados en la fuente oficial
+  if (state.requiredServices.length > 0 || state.accessibilityRequired.length > 0 || (state.evidence.length === 1 && state.evidence[0] === 'A1')) {
+    reason = `El listado oficial publicado por la Consejería de Educación para centros TEA no incluye datos sobre comedor, transporte o accesibilidad, y todos los registros figuran como A2 (por comprobar vigencia actual).`;
+    
+    const stateCleanSrv: SearchState = {
+      ...state,
+      requiredServices: [],
+      accessibilityRequired: [],
+      evidence: ['A1', 'A2']
+    };
+    const countClean = schools.filter(s => matchesCentre(s, stateCleanSrv)).length;
+    if (countClean > 0) {
+      relaxations.push({
+        id: 'clear_unsupported_filters',
+        label: "Retirar exenciones de servicios y evidencia A1",
+        description: `Muestra los ${countClean} centros oficiales TEA en tu zona.`,
+        actionType: 'remove_filter',
+        resultingCount: countClean,
+        apply: (prev) => ({
+          ...prev,
+          requiredServices: [],
+          accessibilityRequired: [],
+          evidence: ['A1', 'A2']
+        })
+      });
+    }
   }
 
   // 1. Probar relajación de cada servicio obligatorio
@@ -590,11 +629,11 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
       `"${s.tipo}"`,
       `"${s.municipio}"`,
       `"${s.distrito || ''}"`,
-      `"${(s.direccion || (s.ubicacionAproximada ? 'Sin dirección en fuente oficial (ubicación aproximada)' : '')).replace(/"/g, '""')}"`,
+      `"${(s.direccion || '').replace(/"/g, '""')}"`,
       `"${s.etapas.join(', ')}"`,
       `"${s.apoyos.map(a => a.needId).join(', ')}"`,
-      `"${currentSupport?.evidencia || 'A1'}"`,
-      `"${currentSupport?.fuenteOficial || 'Resolución BOCM'}"`,
+      `"${currentSupport?.evidencia || 'A2'}"`,
+      `"${currentSupport?.fuenteOficial || 'Comunidad de Madrid · Centros TEA 2024/25'}"`,
       `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.comedor ? 'Sí' : 'No'}"`,
       `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.transporte ? 'Sí' : 'No'}"`,
       `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.enfermeria ? 'Sí' : 'No'}"`,
@@ -622,10 +661,9 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
 export function downloadResultsJSON(schools: School[], state: SearchState) {
   const exportData = {
     metadata: {
-      fuente: "Madrid Educa Apoyo",
+      proyecto: "Madrid Educa Apoyo (Proyecto DataMad 2026)",
       fuentesDatos: {
-        oficial: "Comunidad de Madrid · Centros de atención preferente TEA (curso 2024/2025, información a 22/03/2024)",
-        demostracion: "Registros sintéticos para necesidades sin listado oficial cargado (procedencia = 'demo')"
+        oficial: "Comunidad de Madrid · Centros de atención preferente TEA (curso 2024/2025, información a 22/03/2024)"
       },
       fechaExportacion: new Date().toISOString(),
       criteriosFiltro: {
@@ -646,11 +684,11 @@ export function downloadResultsJSON(schools: School[], state: SearchState) {
       tipo: s.tipo,
       municipio: s.municipio,
       distrito: s.distrito || null,
-      direccion: s.direccion || (s.ubicacionAproximada ? 'Sin dirección en fuente oficial (ubicación aproximada)' : null),
-      telefono: s.telefono,
+      direccion: s.direccion || "",
+      telefono: s.telefono || "",
       web: s.web || null,
       coordenadas: { lat: s.lat, lng: s.lng, aproximadas: Boolean(s.ubicacionAproximada) },
-      procedencia: s.procedencia || 'demo',
+      procedencia: s.procedencia || 'oficial',
       fuenteUrl: s.fuenteUrl || null,
       etapasImpartidas: s.etapas,
       apoyosOficiales: s.apoyos,

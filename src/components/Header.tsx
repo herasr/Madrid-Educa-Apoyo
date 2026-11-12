@@ -81,12 +81,12 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 flex items-center justify-center text-white font-bold shadow-md text-base ring-2 ring-blue-100">
                   <GraduationCap className="w-5 h-5 text-white" />
                 </div>
-                <div>
-                  <div className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 whitespace-nowrap">
+                <div className="min-w-0">
+                  <div className="text-base sm:text-xl font-extrabold tracking-tight text-slate-900 whitespace-nowrap">
                     Madrid Educa Apoyo
                   </div>
-                  <div className="text-[10px] font-semibold text-blue-700 tracking-wider">
-                    Proyecto DataMad 2026 · Datos de la Comunidad de Madrid
+                  <div className="text-[10px] font-semibold text-blue-700 tracking-tight leading-tight hidden xs:block truncate">
+                    Proyecto DataMad 2026 · Datos Oficiales
                   </div>
                 </div>
               </div>

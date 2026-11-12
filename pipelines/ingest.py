@@ -293,7 +293,7 @@ def normalise_rows(snapshot_rows, meta):
             "dat": r["dat"].strip(),
             "municipio": municipio,
             "distrito": distrito,
-            "direccion": f"Ubicación aproximada en {distrito or municipio} (sin dirección en fuente oficial)",
+            "direccion": "",
             "necesidad": "TEA",
             "etapa_oficial": r["etapa"].strip(),
             "etapas_con_apoyo": stages_with_support(r["etapa"].strip(), tipo_doc),

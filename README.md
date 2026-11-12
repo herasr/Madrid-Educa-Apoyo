@@ -4,22 +4,22 @@
 > *Comunidad de Madrid — Atención Educativa Especializada*
 
 [![Licencia](https://img.shields.io/badge/licencia-Apache--2.0-blue.svg)](LICENSE)
-[![Estado](https://img.shields.io/badge/datos-TEA%20oficiales%20%2B%20demo-green.svg)](#-qué-datos-son-reales-y-cuáles-no)
+[![Estado](https://img.shields.io/badge/datos-TEA%20100%25%20oficiales-emerald.svg)](#-datos-cargados-y-procedencia)
 
 ---
 
-## 📊 Qué datos son reales y cuáles no
+## 📊 Datos cargados y procedencia
 
 | Necesidad | Datos | Fuente |
 |---|---|---|
-| **TEA** (autismo) | **Oficiales: 336 centros de atención preferente** | Comunidad de Madrid, [relación de centros preferentes TEA con plazas previsibles en el aula TEA](https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf), curso 2024/2025, información a 22/03/2024 |
-| Auditiva, motora, visual, altas capacidades, CEE y demás | Demostración (sintéticos) | Pendientes de cargar sus listados oficiales |
+| **TEA** (autismo) | **Oficiales: 336 centros de atención preferente** | Comunidad de Madrid, [relación oficial de centros preferentes TEA con plazas previsibles](https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf), curso 2024/2025, información a 22/03/2024 |
+| Otras necesidades | Listados pendientes de incorporar | Por rigor deontológico, no se muestran centros sintéticos ni simulados |
 
-**Alcance del dato oficial.** El documento no es el catálogo completo (la Comunidad declara 682 centros preferentes TEA): recoge los centros cuya aula TEA atendía a menos de cinco alumnos en esa fecha, es decir, los que tenían plazas previsibles para la admisión de ese curso. Como es un dato de un curso anterior, la aplicación lo muestra como **A2 · oficial, por comprobar vigencia**.
+**Alcance del dato oficial.** El documento recoge los 336 centros preferentes TEA en los que el aula TEA atendía a menos de cinco alumnos en esa fecha, es decir, con plazas previsibles para la admisión de ese curso. Como es un dato de un curso anterior, la aplicación lo muestra como **A2 · oficial, por comprobar vigencia con el SAE**.
 
-**Lo que la fuente no publica y la aplicación no inventa:** direcciones, teléfonos, servicios, accesibilidad, nombre del aula, personal asignado e instituto de adscripción. Cada centro se sitúa en el **centroide de su municipio** (geometrías del IGN) **o de su distrito** de Madrid, y la interfaz marca la ubicación como aproximada.
+**Lo que la fuente no publica y la aplicación no inventa:** la fuente oficial no incluye direcciones postales ni servicios complementarios individuales. Cada centro se sitúa en el **centroide de su municipio** (geometrías oficiales del IGN) **o de su distrito** de Madrid, y la interfaz marca la ubicación como aproximada.
 
-Cada ficha indica su procedencia con la etiqueta **«Dato oficial»** o **«Demostración»**. Para trámites de escolarización consulte siempre la [Comunidad de Madrid](https://www.comunidad.madrid/servicios/educacion/atencion-preferente-necesidades-educativas-especiales) y el Servicio de Apoyo a la Escolarización (SAE).
+Cada ficha indica su procedencia con la etiqueta **«Dato oficial»**. Para trámites de escolarización consulte siempre la [Comunidad de Madrid](https://www.comunidad.madrid/servicios/educacion/atencion-preferente-necesidades-educativas-especiales) y el Servicio de Apoyo a la Escolarización (SAE).
 
 ### Ficheros de datos
 

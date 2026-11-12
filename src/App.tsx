@@ -328,11 +328,11 @@ export default function App() {
       <div className="bg-amber-50 border-b border-amber-200/80 px-4 py-2.5 text-xs text-amber-950">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
-            <span className="font-bold uppercase tracking-wider bg-emerald-100 text-emerald-950 px-2 py-0.5 rounded text-[10px] shrink-0">
-              Datos 100% Reales y Oficiales
+            <span className="font-bold uppercase tracking-wider bg-blue-100 text-blue-950 px-2 py-0.5 rounded text-[10px] shrink-0">
+              Datos oficiales · Curso 2024/25 · Ubicaciones aproximadas
             </span>
             <span className="text-[11px] text-amber-900 leading-tight">
-              <strong>Transparencia:</strong> Catálogo oficial de 336 centros de atención preferente TEA de la Comunidad de Madrid (curso {OFFICIAL_TEA_SOURCE.curso}). Cero datos inventados o simulados. Iniciativa cívica independiente.
+              <strong>Transparencia:</strong> Catálogo de 336 centros de atención preferente TEA de la Comunidad de Madrid (curso {OFFICIAL_TEA_SOURCE.curso}). Ubicaciones calculadas por centroide municipal o de distrito. Proyecto DataMad 2026.
             </span>
           </div>
           <div className="flex items-center gap-3 shrink-0">
@@ -427,14 +427,14 @@ export default function App() {
                     <span className="font-bold">Datos oficiales TEA:</span>{' '}
                     {OFFICIAL_TEA_SOURCE.totalCentros} centros preferentes con plazas previsibles en el aula TEA según la
                     Comunidad de Madrid (curso {OFFICIAL_TEA_SOURCE.curso}, información a {OFFICIAL_TEA_SOURCE.fechaInformacion}).
-                    Ubicaciones aproximadas; comprueba la vigencia con el SAE.{' '}
+                    Ubicaciones aproximadas por centroide; comprueba la vigencia con el SAE.{' '}
                     <a href={OFFICIAL_TEA_SOURCE.url} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
                       Ver documento oficial
                     </a>
                   </>
                 ) : (
                   <>
-                    <span className="font-bold">Sin datos abiertos disponibles:</span> La Consejería no publica un catálogo descargable con plazas y centros preferentes para esta necesidad. Por rigor absoluto con las familias, <strong>esta herramienta no incluye centros inventados ni simulados</strong>.{' '}
+                    <span className="font-bold">Listado pendiente de incorporar:</span> Todavía no hemos incorporado el listado oficial de la Comunidad de Madrid para esta necesidad en este prototipo. Por rigor absoluto, no mostramos centros sintéticos.{' '}
                     <a href="https://www.comunidad.madrid/servicios/educacion" target="_blank" rel="noopener noreferrer" className="font-semibold underline">
                       Consulta el buscador oficial de centros CAM
                     </a>.
@@ -648,7 +648,7 @@ export default function App() {
                 Proyecto cívico de datos abiertos con evidencia oficial y filtros acumulativos.
               </p>
               <p className="text-[10px] text-slate-400 mt-1">
-                Datos de la Comunidad de Madrid (EDUCAbase y resoluciones oficiales). Iniciativa independiente.
+                Datos oficiales de la Comunidad de Madrid (relación de centros preferentes). Iniciativa cívica independiente.
               </p>
             </div>
             

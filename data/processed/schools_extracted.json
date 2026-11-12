@@ -1,7 +1,7 @@
 {
   "ingestion_metadata": {
     "url": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
-    "retrieved_at": "2026-11-12T08:51:53Z",
+    "retrieved_at": "2026-11-12T16:39:48Z",
     "sha256": "cc3b376bf924defe74c5abacf69e2574c74dcb53abb38668fbc0d29049f6a7c6",
     "sha256_de": "data/official/tea_preferentes_curso_2024-25.csv",
     "pdf_sha256": null,
@@ -27,7 +27,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Arganzuela",
-      "direccion": "Ubicación aproximada en Arganzuela (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -55,7 +55,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Arganzuela",
-      "direccion": "Ubicación aproximada en Arganzuela (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -83,7 +83,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Arganzuela",
-      "direccion": "Ubicación aproximada en Arganzuela (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -111,7 +111,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Barajas",
-      "direccion": "Ubicación aproximada en Barajas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -139,7 +139,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -167,7 +167,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -195,7 +195,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -223,7 +223,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -251,7 +251,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -279,7 +279,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -307,7 +307,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -335,7 +335,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -363,7 +363,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -391,7 +391,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Carabanchel",
-      "direccion": "Ubicación aproximada en Carabanchel (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -419,7 +419,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Centro",
-      "direccion": "Ubicación aproximada en Centro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -447,7 +447,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Centro",
-      "direccion": "Ubicación aproximada en Centro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -475,7 +475,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Centro",
-      "direccion": "Ubicación aproximada en Centro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -503,7 +503,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Chamartín",
-      "direccion": "Ubicación aproximada en Chamartín (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -532,7 +532,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Chamartín",
-      "direccion": "Ubicación aproximada en Chamartín (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -560,7 +560,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Chamberí",
-      "direccion": "Ubicación aproximada en Chamberí (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -588,7 +588,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Chamberí",
-      "direccion": "Ubicación aproximada en Chamberí (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -616,7 +616,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Chamberí",
-      "direccion": "Ubicación aproximada en Chamberí (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -644,7 +644,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Chamberí",
-      "direccion": "Ubicación aproximada en Chamberí (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -672,7 +672,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Ciudad Lineal",
-      "direccion": "Ubicación aproximada en Ciudad Lineal (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -700,7 +700,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Ciudad Lineal",
-      "direccion": "Ubicación aproximada en Ciudad Lineal (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -728,7 +728,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Ciudad Lineal",
-      "direccion": "Ubicación aproximada en Ciudad Lineal (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -756,7 +756,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Ciudad Lineal",
-      "direccion": "Ubicación aproximada en Ciudad Lineal (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "INFANTIL",
       "etapas_con_apoyo": [
@@ -784,7 +784,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Ciudad Lineal",
-      "direccion": "Ubicación aproximada en Ciudad Lineal (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -813,7 +813,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Ciudad Lineal",
-      "direccion": "Ubicación aproximada en Ciudad Lineal (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -841,7 +841,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Fuencarral-El Pardo",
-      "direccion": "Ubicación aproximada en Fuencarral-El Pardo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -869,7 +869,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Fuencarral-El Pardo",
-      "direccion": "Ubicación aproximada en Fuencarral-El Pardo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -897,7 +897,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Fuencarral-El Pardo",
-      "direccion": "Ubicación aproximada en Fuencarral-El Pardo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "INFANTIL",
       "etapas_con_apoyo": [
@@ -925,7 +925,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Fuencarral-El Pardo",
-      "direccion": "Ubicación aproximada en Fuencarral-El Pardo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -953,7 +953,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Fuencarral-El Pardo",
-      "direccion": "Ubicación aproximada en Fuencarral-El Pardo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -981,7 +981,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Fuencarral-El Pardo",
-      "direccion": "Ubicación aproximada en Fuencarral-El Pardo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -1009,7 +1009,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Fuencarral-El Pardo",
-      "direccion": "Ubicación aproximada en Fuencarral-El Pardo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -1037,7 +1037,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Hortaleza",
-      "direccion": "Ubicación aproximada en Hortaleza (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1065,7 +1065,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Hortaleza",
-      "direccion": "Ubicación aproximada en Hortaleza (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1093,7 +1093,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Hortaleza",
-      "direccion": "Ubicación aproximada en Hortaleza (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1121,7 +1121,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Hortaleza",
-      "direccion": "Ubicación aproximada en Hortaleza (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -1150,7 +1150,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1178,7 +1178,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1206,7 +1206,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1234,7 +1234,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1262,7 +1262,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1290,7 +1290,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1318,7 +1318,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1346,7 +1346,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "INFANTIL",
       "etapas_con_apoyo": [
@@ -1374,7 +1374,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1402,7 +1402,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -1431,7 +1431,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -1460,7 +1460,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -1489,7 +1489,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -1517,7 +1517,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Latina",
-      "direccion": "Ubicación aproximada en Latina (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -1545,7 +1545,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Moncloa-Aravaca",
-      "direccion": "Ubicación aproximada en Moncloa-Aravaca (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1573,7 +1573,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Moratalaz",
-      "direccion": "Ubicación aproximada en Moratalaz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1601,7 +1601,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Moratalaz",
-      "direccion": "Ubicación aproximada en Moratalaz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1629,7 +1629,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Moratalaz",
-      "direccion": "Ubicación aproximada en Moratalaz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -1657,7 +1657,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1685,7 +1685,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1713,7 +1713,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1741,7 +1741,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1769,7 +1769,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1797,7 +1797,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1825,7 +1825,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1853,7 +1853,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1881,7 +1881,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1909,7 +1909,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -1937,7 +1937,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -1966,7 +1966,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Puente de Vallecas",
-      "direccion": "Ubicación aproximada en Puente de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -1994,7 +1994,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Retiro",
-      "direccion": "Ubicación aproximada en Retiro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -2023,7 +2023,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Salamanca",
-      "direccion": "Ubicación aproximada en Salamanca (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2051,7 +2051,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Salamanca",
-      "direccion": "Ubicación aproximada en Salamanca (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -2079,7 +2079,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Salamanca",
-      "direccion": "Ubicación aproximada en Salamanca (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2107,7 +2107,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "San Blas-Canillejas",
-      "direccion": "Ubicación aproximada en San Blas-Canillejas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2135,7 +2135,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "San Blas-Canillejas",
-      "direccion": "Ubicación aproximada en San Blas-Canillejas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2163,7 +2163,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "San Blas-Canillejas",
-      "direccion": "Ubicación aproximada en San Blas-Canillejas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2191,7 +2191,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "San Blas-Canillejas",
-      "direccion": "Ubicación aproximada en San Blas-Canillejas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2219,7 +2219,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "San Blas-Canillejas",
-      "direccion": "Ubicación aproximada en San Blas-Canillejas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2247,7 +2247,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "San Blas-Canillejas",
-      "direccion": "Ubicación aproximada en San Blas-Canillejas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -2275,7 +2275,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Tetuán",
-      "direccion": "Ubicación aproximada en Tetuán (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2303,7 +2303,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Tetuán",
-      "direccion": "Ubicación aproximada en Tetuán (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2331,7 +2331,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Tetuán",
-      "direccion": "Ubicación aproximada en Tetuán (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -2359,7 +2359,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Usera",
-      "direccion": "Ubicación aproximada en Usera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2387,7 +2387,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Usera",
-      "direccion": "Ubicación aproximada en Usera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2415,7 +2415,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Usera",
-      "direccion": "Ubicación aproximada en Usera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2443,7 +2443,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Usera",
-      "direccion": "Ubicación aproximada en Usera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -2472,7 +2472,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Usera",
-      "direccion": "Ubicación aproximada en Usera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -2501,7 +2501,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Usera",
-      "direccion": "Ubicación aproximada en Usera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2529,7 +2529,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Usera",
-      "direccion": "Ubicación aproximada en Usera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -2557,7 +2557,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Usera",
-      "direccion": "Ubicación aproximada en Usera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -2585,7 +2585,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Vicálvaro",
-      "direccion": "Ubicación aproximada en Vicálvaro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2613,7 +2613,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Vicálvaro",
-      "direccion": "Ubicación aproximada en Vicálvaro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2641,7 +2641,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villa de Vallecas",
-      "direccion": "Ubicación aproximada en Villa de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2669,7 +2669,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villa de Vallecas",
-      "direccion": "Ubicación aproximada en Villa de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2697,7 +2697,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villa de Vallecas",
-      "direccion": "Ubicación aproximada en Villa de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2725,7 +2725,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villa de Vallecas",
-      "direccion": "Ubicación aproximada en Villa de Vallecas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -2753,7 +2753,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2781,7 +2781,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2809,7 +2809,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2837,7 +2837,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2865,7 +2865,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2893,7 +2893,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2921,7 +2921,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -2949,7 +2949,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -2977,7 +2977,7 @@
       "dat": "DAT CAPITAL",
       "municipio": "Madrid",
       "distrito": "Villaverde",
-      "direccion": "Ubicación aproximada en Villaverde (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3005,7 +3005,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3033,7 +3033,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3061,7 +3061,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3089,7 +3089,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3117,7 +3117,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3145,7 +3145,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3173,7 +3173,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3201,7 +3201,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -3230,7 +3230,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3258,7 +3258,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3286,7 +3286,7 @@
       "dat": "DAT NORTE",
       "municipio": "Alcobendas",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcobendas (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3314,7 +3314,7 @@
       "dat": "DAT NORTE",
       "municipio": "Algete",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Algete (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3342,7 +3342,7 @@
       "dat": "DAT NORTE",
       "municipio": "Algete",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Algete (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3370,7 +3370,7 @@
       "dat": "DAT NORTE",
       "municipio": "Algete",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Algete (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3398,7 +3398,7 @@
       "dat": "DAT NORTE",
       "municipio": "Algete",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Algete (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3426,7 +3426,7 @@
       "dat": "DAT NORTE",
       "municipio": "La Cabrera",
       "distrito": null,
-      "direccion": "Ubicación aproximada en La Cabrera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3454,7 +3454,7 @@
       "dat": "DAT NORTE",
       "municipio": "La Cabrera",
       "distrito": null,
-      "direccion": "Ubicación aproximada en La Cabrera (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3482,7 +3482,7 @@
       "dat": "DAT NORTE",
       "municipio": "Cobeña",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Cobeña (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -3511,7 +3511,7 @@
       "dat": "DAT NORTE",
       "municipio": "Colmenar Viejo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Colmenar Viejo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3539,7 +3539,7 @@
       "dat": "DAT NORTE",
       "municipio": "Colmenar Viejo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Colmenar Viejo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3567,7 +3567,7 @@
       "dat": "DAT NORTE",
       "municipio": "Colmenar Viejo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Colmenar Viejo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3595,7 +3595,7 @@
       "dat": "DAT NORTE",
       "municipio": "Colmenar Viejo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Colmenar Viejo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3623,7 +3623,7 @@
       "dat": "DAT NORTE",
       "municipio": "Colmenar Viejo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Colmenar Viejo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3651,7 +3651,7 @@
       "dat": "DAT NORTE",
       "municipio": "Fuente el Saz de Jarama",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuente el Saz de Jarama (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -3680,7 +3680,7 @@
       "dat": "DAT NORTE",
       "municipio": "Guadalix de la Sierra",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Guadalix de la Sierra (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3708,7 +3708,7 @@
       "dat": "DAT NORTE",
       "municipio": "Guadalix de la Sierra",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Guadalix de la Sierra (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3736,7 +3736,7 @@
       "dat": "DAT NORTE",
       "municipio": "Manzanares el Real",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Manzanares el Real (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3764,7 +3764,7 @@
       "dat": "DAT NORTE",
       "municipio": "Miraflores de la Sierra",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Miraflores de la Sierra (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -3793,7 +3793,7 @@
       "dat": "DAT NORTE",
       "municipio": "El Molar",
       "distrito": null,
-      "direccion": "Ubicación aproximada en El Molar (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3821,7 +3821,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Agustín del Guadalix",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Agustín del Guadalix (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3849,7 +3849,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Agustín del Guadalix",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Agustín del Guadalix (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -3877,7 +3877,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3905,7 +3905,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3933,7 +3933,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3961,7 +3961,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -3989,7 +3989,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4017,7 +4017,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4045,7 +4045,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4073,7 +4073,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4101,7 +4101,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -4129,7 +4129,7 @@
       "dat": "DAT NORTE",
       "municipio": "San Sebastián de los Reyes",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Sebastián de los Reyes (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -4157,7 +4157,7 @@
       "dat": "DAT NORTE",
       "municipio": "Talamanca de Jarama",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Talamanca de Jarama (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4185,7 +4185,7 @@
       "dat": "DAT NORTE",
       "municipio": "Tres Cantos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Tres Cantos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4213,7 +4213,7 @@
       "dat": "DAT NORTE",
       "municipio": "Tres Cantos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Tres Cantos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4241,7 +4241,7 @@
       "dat": "DAT NORTE",
       "municipio": "Tres Cantos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Tres Cantos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4269,7 +4269,7 @@
       "dat": "DAT NORTE",
       "municipio": "Tres Cantos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Tres Cantos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -4297,7 +4297,7 @@
       "dat": "DAT NORTE",
       "municipio": "Valdeolmos-Alalpardo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Valdeolmos-Alalpardo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4325,7 +4325,7 @@
       "dat": "DAT NORTE",
       "municipio": "El Vellón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en El Vellón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4353,7 +4353,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4381,7 +4381,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4409,7 +4409,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4437,7 +4437,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4465,7 +4465,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4493,7 +4493,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4521,7 +4521,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4549,7 +4549,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4577,7 +4577,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -4605,7 +4605,7 @@
       "dat": "DAT SUR",
       "municipio": "Alcorcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcorcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -4633,7 +4633,7 @@
       "dat": "DAT SUR",
       "municipio": "Aranjuez",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Aranjuez (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4661,7 +4661,7 @@
       "dat": "DAT SUR",
       "municipio": "Aranjuez",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Aranjuez (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4689,7 +4689,7 @@
       "dat": "DAT SUR",
       "municipio": "Aranjuez",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Aranjuez (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -4718,7 +4718,7 @@
       "dat": "DAT SUR",
       "municipio": "Aranjuez",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Aranjuez (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -4746,7 +4746,7 @@
       "dat": "DAT SUR",
       "municipio": "Arroyomolinos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arroyomolinos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4774,7 +4774,7 @@
       "dat": "DAT SUR",
       "municipio": "Arroyomolinos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arroyomolinos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4802,7 +4802,7 @@
       "dat": "DAT SUR",
       "municipio": "Arroyomolinos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arroyomolinos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -4830,7 +4830,7 @@
       "dat": "DAT SUR",
       "municipio": "Ciempozuelos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Ciempozuelos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4858,7 +4858,7 @@
       "dat": "DAT SUR",
       "municipio": "Ciempozuelos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Ciempozuelos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4886,7 +4886,7 @@
       "dat": "DAT SUR",
       "municipio": "Ciempozuelos",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Ciempozuelos (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -4914,7 +4914,7 @@
       "dat": "DAT SUR",
       "municipio": "El Álamo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en El Álamo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4942,7 +4942,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4970,7 +4970,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -4998,7 +4998,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5026,7 +5026,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5054,7 +5054,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5082,7 +5082,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5110,7 +5110,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5138,7 +5138,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5166,7 +5166,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5194,7 +5194,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -5223,7 +5223,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -5252,7 +5252,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5280,7 +5280,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5308,7 +5308,7 @@
       "dat": "DAT SUR",
       "municipio": "Fuenlabrada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuenlabrada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5336,7 +5336,7 @@
       "dat": "DAT SUR",
       "municipio": "Getafe",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Getafe (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5364,7 +5364,7 @@
       "dat": "DAT SUR",
       "municipio": "Getafe",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Getafe (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5392,7 +5392,7 @@
       "dat": "DAT SUR",
       "municipio": "Getafe",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Getafe (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5420,7 +5420,7 @@
       "dat": "DAT SUR",
       "municipio": "Getafe",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Getafe (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5448,7 +5448,7 @@
       "dat": "DAT SUR",
       "municipio": "Getafe",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Getafe (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5476,7 +5476,7 @@
       "dat": "DAT SUR",
       "municipio": "Getafe",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Getafe (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5504,7 +5504,7 @@
       "dat": "DAT SUR",
       "municipio": "Getafe",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Getafe (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5532,7 +5532,7 @@
       "dat": "DAT SUR",
       "municipio": "Griñón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Griñón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5560,7 +5560,7 @@
       "dat": "DAT SUR",
       "municipio": "Humanes de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Humanes de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5588,7 +5588,7 @@
       "dat": "DAT SUR",
       "municipio": "Humanes de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Humanes de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5616,7 +5616,7 @@
       "dat": "DAT SUR",
       "municipio": "Humanes de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Humanes de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5644,7 +5644,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5672,7 +5672,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5700,7 +5700,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5728,7 +5728,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5756,7 +5756,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5784,7 +5784,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5812,7 +5812,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5840,7 +5840,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5868,7 +5868,7 @@
       "dat": "DAT SUR",
       "municipio": "Leganés",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Leganés (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -5896,7 +5896,7 @@
       "dat": "DAT SUR",
       "municipio": "Moraleja de Enmedio",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Moraleja de Enmedio (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5924,7 +5924,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5952,7 +5952,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -5980,7 +5980,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6008,7 +6008,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6036,7 +6036,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6064,7 +6064,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6092,7 +6092,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6120,7 +6120,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6148,7 +6148,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6176,7 +6176,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6204,7 +6204,7 @@
       "dat": "DAT SUR",
       "municipio": "Móstoles",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Móstoles (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6232,7 +6232,7 @@
       "dat": "DAT SUR",
       "municipio": "Navalcarnero",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Navalcarnero (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6260,7 +6260,7 @@
       "dat": "DAT SUR",
       "municipio": "Navalcarnero",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Navalcarnero (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -6289,7 +6289,7 @@
       "dat": "DAT SUR",
       "municipio": "Navalcarnero",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Navalcarnero (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -6318,7 +6318,7 @@
       "dat": "DAT SUR",
       "municipio": "Navalcarnero",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Navalcarnero (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6346,7 +6346,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6374,7 +6374,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6402,7 +6402,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6430,7 +6430,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6458,7 +6458,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6486,7 +6486,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6514,7 +6514,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6542,7 +6542,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6570,7 +6570,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6598,7 +6598,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6626,7 +6626,7 @@
       "dat": "DAT SUR",
       "municipio": "Parla",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Parla (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6654,7 +6654,7 @@
       "dat": "DAT SUR",
       "municipio": "Pelayos de la Presa",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pelayos de la Presa (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6682,7 +6682,7 @@
       "dat": "DAT SUR",
       "municipio": "Pinto",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pinto (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6710,7 +6710,7 @@
       "dat": "DAT SUR",
       "municipio": "Pinto",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pinto (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6738,7 +6738,7 @@
       "dat": "DAT SUR",
       "municipio": "Pinto",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pinto (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -6767,7 +6767,7 @@
       "dat": "DAT SUR",
       "municipio": "Pinto",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pinto (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6795,7 +6795,7 @@
       "dat": "DAT SUR",
       "municipio": "Pinto",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pinto (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6823,7 +6823,7 @@
       "dat": "DAT SUR",
       "municipio": "Serranillos del Valle",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Serranillos del Valle (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6851,7 +6851,7 @@
       "dat": "DAT SUR",
       "municipio": "Valdemoro",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Valdemoro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6879,7 +6879,7 @@
       "dat": "DAT SUR",
       "municipio": "Valdemoro",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Valdemoro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6907,7 +6907,7 @@
       "dat": "DAT SUR",
       "municipio": "Valdemoro",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Valdemoro (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6935,7 +6935,7 @@
       "dat": "DAT SUR",
       "municipio": "Villa del Prado",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Villa del Prado (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -6963,7 +6963,7 @@
       "dat": "DAT SUR",
       "municipio": "Villaviciosa de Odón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Villaviciosa de Odón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -6991,7 +6991,7 @@
       "dat": "DAT SUR",
       "municipio": "Villaviciosa de Odón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Villaviciosa de Odón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7019,7 +7019,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7047,7 +7047,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7075,7 +7075,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7103,7 +7103,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7132,7 +7132,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7161,7 +7161,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7190,7 +7190,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7218,7 +7218,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -7246,7 +7246,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -7274,7 +7274,7 @@
       "dat": "DAT ESTE",
       "municipio": "Alcalá de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alcalá de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -7302,7 +7302,7 @@
       "dat": "DAT ESTE",
       "municipio": "Arganda del Rey",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arganda del Rey (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7330,7 +7330,7 @@
       "dat": "DAT ESTE",
       "municipio": "Arganda del Rey",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arganda del Rey (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7358,7 +7358,7 @@
       "dat": "DAT ESTE",
       "municipio": "Arganda del Rey",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arganda del Rey (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7386,7 +7386,7 @@
       "dat": "DAT ESTE",
       "municipio": "Arganda del Rey",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arganda del Rey (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7414,7 +7414,7 @@
       "dat": "DAT ESTE",
       "municipio": "Arganda del Rey",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arganda del Rey (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7443,7 +7443,7 @@
       "dat": "DAT ESTE",
       "municipio": "Arganda del Rey",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Arganda del Rey (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -7471,7 +7471,7 @@
       "dat": "DAT ESTE",
       "municipio": "Campo Real",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Campo Real (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7499,7 +7499,7 @@
       "dat": "DAT ESTE",
       "municipio": "Campo Real",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Campo Real (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -7529,7 +7529,7 @@
       "dat": "DAT ESTE",
       "municipio": "Coslada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Coslada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7557,7 +7557,7 @@
       "dat": "DAT ESTE",
       "municipio": "Coslada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Coslada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -7585,7 +7585,7 @@
       "dat": "DAT ESTE",
       "municipio": "Daganzo de Arriba",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Daganzo de Arriba (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7613,7 +7613,7 @@
       "dat": "DAT ESTE",
       "municipio": "Daganzo de Arriba",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Daganzo de Arriba (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -7641,7 +7641,7 @@
       "dat": "DAT ESTE",
       "municipio": "Fuentidueña de Tajo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Fuentidueña de Tajo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7669,7 +7669,7 @@
       "dat": "DAT ESTE",
       "municipio": "Loeches",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Loeches (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7697,7 +7697,7 @@
       "dat": "DAT ESTE",
       "municipio": "Meco",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Meco (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7726,7 +7726,7 @@
       "dat": "DAT ESTE",
       "municipio": "Mejorada del Campo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Mejorada del Campo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7754,7 +7754,7 @@
       "dat": "DAT ESTE",
       "municipio": "Morata de Tajuña",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Morata de Tajuña (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7782,7 +7782,7 @@
       "dat": "DAT ESTE",
       "municipio": "Nuevo Baztán",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Nuevo Baztán (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7811,7 +7811,7 @@
       "dat": "DAT ESTE",
       "municipio": "Paracuellos de Jarama",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Paracuellos de Jarama (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7840,7 +7840,7 @@
       "dat": "DAT ESTE",
       "municipio": "Rivas-Vaciamadrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Rivas-Vaciamadrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7868,7 +7868,7 @@
       "dat": "DAT ESTE",
       "municipio": "Rivas-Vaciamadrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Rivas-Vaciamadrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -7896,7 +7896,7 @@
       "dat": "DAT ESTE",
       "municipio": "Rivas-Vaciamadrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Rivas-Vaciamadrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7925,7 +7925,7 @@
       "dat": "DAT ESTE",
       "municipio": "Rivas-Vaciamadrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Rivas-Vaciamadrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -7954,7 +7954,7 @@
       "dat": "DAT ESTE",
       "municipio": "Rivas-Vaciamadrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Rivas-Vaciamadrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -7982,7 +7982,7 @@
       "dat": "DAT ESTE",
       "municipio": "Rivas-Vaciamadrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Rivas-Vaciamadrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -8010,7 +8010,7 @@
       "dat": "DAT ESTE",
       "municipio": "San Fernando de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Fernando de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8038,7 +8038,7 @@
       "dat": "DAT ESTE",
       "municipio": "San Fernando de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Fernando de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8066,7 +8066,7 @@
       "dat": "DAT ESTE",
       "municipio": "San Fernando de Henares",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Fernando de Henares (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -8094,7 +8094,7 @@
       "dat": "DAT ESTE",
       "municipio": "San Martín de la Vega",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Martín de la Vega (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8122,7 +8122,7 @@
       "dat": "DAT ESTE",
       "municipio": "San Martín de la Vega",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Martín de la Vega (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -8151,7 +8151,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8179,7 +8179,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8207,7 +8207,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8235,7 +8235,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8263,7 +8263,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8291,7 +8291,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8319,7 +8319,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8347,7 +8347,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -8375,7 +8375,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -8403,7 +8403,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torrejón de Ardoz",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrejón de Ardoz (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -8431,7 +8431,7 @@
       "dat": "DAT ESTE",
       "municipio": "Torres de la Alameda",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torres de la Alameda (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8459,7 +8459,7 @@
       "dat": "DAT ESTE",
       "municipio": "Velilla de San Antonio",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Velilla de San Antonio (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8487,7 +8487,7 @@
       "dat": "DAT OESTE",
       "municipio": "Alpedrete",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alpedrete (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8515,7 +8515,7 @@
       "dat": "DAT OESTE",
       "municipio": "Alpedrete",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alpedrete (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8543,7 +8543,7 @@
       "dat": "DAT OESTE",
       "municipio": "Alpedrete",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alpedrete (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8571,7 +8571,7 @@
       "dat": "DAT OESTE",
       "municipio": "Alpedrete",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Alpedrete (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -8599,7 +8599,7 @@
       "dat": "DAT OESTE",
       "municipio": "Boadilla del Monte",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Boadilla del Monte (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8627,7 +8627,7 @@
       "dat": "DAT OESTE",
       "municipio": "Boadilla del Monte",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Boadilla del Monte (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -8655,7 +8655,7 @@
       "dat": "DAT OESTE",
       "municipio": "El Boalo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en El Boalo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8683,7 +8683,7 @@
       "dat": "DAT OESTE",
       "municipio": "Collado Villalba",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Collado Villalba (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8711,7 +8711,7 @@
       "dat": "DAT OESTE",
       "municipio": "Collado Villalba",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Collado Villalba (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8739,7 +8739,7 @@
       "dat": "DAT OESTE",
       "municipio": "Colmenarejo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Colmenarejo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8767,7 +8767,7 @@
       "dat": "DAT OESTE",
       "municipio": "Galapagar",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Galapagar (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8795,7 +8795,7 @@
       "dat": "DAT OESTE",
       "municipio": "Galapagar",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Galapagar (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8823,7 +8823,7 @@
       "dat": "DAT OESTE",
       "municipio": "Las Rozas de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Las Rozas de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8851,7 +8851,7 @@
       "dat": "DAT OESTE",
       "municipio": "Las Rozas de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Las Rozas de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8879,7 +8879,7 @@
       "dat": "DAT OESTE",
       "municipio": "Las Rozas de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Las Rozas de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8907,7 +8907,7 @@
       "dat": "DAT OESTE",
       "municipio": "Las Rozas de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Las Rozas de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -8935,7 +8935,7 @@
       "dat": "DAT OESTE",
       "municipio": "Las Rozas de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Las Rozas de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -8964,7 +8964,7 @@
       "dat": "DAT OESTE",
       "municipio": "Las Rozas de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Las Rozas de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -8992,7 +8992,7 @@
       "dat": "DAT OESTE",
       "municipio": "Las Rozas de Madrid",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Las Rozas de Madrid (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -9020,7 +9020,7 @@
       "dat": "DAT OESTE",
       "municipio": "Majadahonda",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Majadahonda (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -9048,7 +9048,7 @@
       "dat": "DAT OESTE",
       "municipio": "Majadahonda",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Majadahonda (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -9077,7 +9077,7 @@
       "dat": "DAT OESTE",
       "municipio": "Majadahonda",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Majadahonda (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -9106,7 +9106,7 @@
       "dat": "DAT OESTE",
       "municipio": "Majadahonda",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Majadahonda (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [
@@ -9134,7 +9134,7 @@
       "dat": "DAT OESTE",
       "municipio": "Pozuelo de Alarcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pozuelo de Alarcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -9162,7 +9162,7 @@
       "dat": "DAT OESTE",
       "municipio": "Pozuelo de Alarcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pozuelo de Alarcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -9190,7 +9190,7 @@
       "dat": "DAT OESTE",
       "municipio": "Pozuelo de Alarcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pozuelo de Alarcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -9219,7 +9219,7 @@
       "dat": "DAT OESTE",
       "municipio": "Pozuelo de Alarcón",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Pozuelo de Alarcón (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -9247,7 +9247,7 @@
       "dat": "DAT OESTE",
       "municipio": "Robledo de Chavela",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Robledo de Chavela (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -9277,7 +9277,7 @@
       "dat": "DAT OESTE",
       "municipio": "San Lorenzo de El Escorial",
       "distrito": null,
-      "direccion": "Ubicación aproximada en San Lorenzo de El Escorial (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -9306,7 +9306,7 @@
       "dat": "DAT OESTE",
       "municipio": "Torrelodones",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Torrelodones (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -9335,7 +9335,7 @@
       "dat": "DAT OESTE",
       "municipio": "Villanueva de la Cañada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Villanueva de la Cañada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -9363,7 +9363,7 @@
       "dat": "DAT OESTE",
       "municipio": "Villanueva de la Cañada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Villanueva de la Cañada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -9391,7 +9391,7 @@
       "dat": "DAT OESTE",
       "municipio": "Villanueva de la Cañada",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Villanueva de la Cañada (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "MIXTA",
       "etapas_con_apoyo": [
@@ -9420,7 +9420,7 @@
       "dat": "DAT OESTE",
       "municipio": "Villanueva del Pardillo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Villanueva del Pardillo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "PRIMARIA",
       "etapas_con_apoyo": [
@@ -9448,7 +9448,7 @@
       "dat": "DAT OESTE",
       "municipio": "Villanueva del Pardillo",
       "distrito": null,
-      "direccion": "Ubicación aproximada en Villanueva del Pardillo (sin dirección en fuente oficial)",
+      "direccion": "",
       "necesidad": "TEA",
       "etapa_oficial": "SECUNDARIA",
       "etapas_con_apoyo": [

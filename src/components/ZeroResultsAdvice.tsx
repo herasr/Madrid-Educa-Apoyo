@@ -38,7 +38,9 @@ export const ZeroResultsAdvice: React.FC<ZeroResultsAdviceProps> = ({
             No se han encontrado centros con la combinación actual
           </h3>
           <p className="text-sm text-slate-600 mt-1">
-            Los filtros activos son muy restrictivos para la zona o servicios indicados.
+            {state.need && state.need !== 'tea'
+              ? 'El listado oficial para esta necesidad educativa está pendiente de incorporar en este prototipo.'
+              : 'Los filtros activos son muy restrictivos para la zona o servicios indicados.'}
           </p>
         </div>
       </div>

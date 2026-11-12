@@ -11,21 +11,15 @@ export const LEGAL_DISCLAIMER =
 export const OFFICIAL_SOURCES_INFO = [
   {
     prioridad: 1,
-    organismo: "Comunidad de Madrid",
-    descripcion: "Especialización nominal de centros, etapas autorizadas, modalidades publicadas en BOCM y resoluciones anuales de admisión.",
-    ambito: "Oficial vinculante (Resoluciones D.G. de Educación Infantil, Primaria y Especial)."
+    organismo: "Comunidad de Madrid · Consejería de Educación",
+    descripcion: "Relaciones oficiales de centros de atención preferente (listados de plazas y resoluciones de admisión).",
+    ambito: "Oficial vinculante (Comunidad de Madrid)."
   },
   {
     prioridad: 2,
-    organismo: "Ayuntamiento de Madrid",
-    descripcion: "Datos prácticos, geoposición de equipamientos públicos y privados concertados, accesibilidad de accesos en vía pública y datos de distrito.",
-    ambito: "Geodatos Madrid (Madrid Capital)."
-  },
-  {
-    prioridad: 3,
-    organismo: "EDUCAbase (Ministerio de Educación)",
-    descripcion: "Estructura taxonómica, códigos nacionales oficiales de centro (RCEE) y contexto agregado de etapas educativas.",
-    ambito: "Taxonomía oficial; nunca especialización nominal directa."
+    organismo: "Nomenclátor INE / IGN",
+    descripcion: "Coordenadas de centroides y delimitación territorial para los 179 municipios de la región y distritos de la capital.",
+    ambito: "Geodesia y delimitaciones territoriales oficiales."
   }
 ];
 
