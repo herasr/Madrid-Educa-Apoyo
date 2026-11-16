@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  * Modal de Ficha Completa y Desglose Oficial:
  * "¿Por qué aparece este centro?"
- * Con desglose de BOCM, código oficial de 8 dígitos, etapas, recursos y adscripción.
+ * Con desglose de fuente oficial, código de 8 dígitos, datos de contacto (Datos Abiertos CAM),
+ * etapas, recursos y continuidad Primaria-ESO.
  */
 
 import React from 'react';
@@ -12,21 +13,20 @@ import {
   X,
   ShieldCheck,
   AlertTriangle,
-  FileText,
   MapPin,
   Phone,
   Mail,
   ExternalLink,
   GitCompare,
   BookmarkCheck,
-  Check,
   Building,
   GraduationCap,
   Info
 } from 'lucide-react';
 import { LEGAL_DISCLAIMER } from '../data/disclaimerAndProcedures';
 import { SchoolMiniMap } from './SchoolMiniMap';
-import { simplifyText } from '../utils/textSimplifier';
+import { simplifySchoolTitle, simplifyText } from '../utils/textSimplifier';
+import { useModalFocusTrap } from '../utils/useModalFocusTrap';
 
 interface SchoolDetailModalProps {
   school: School | null;
@@ -54,21 +54,13 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
   onTogglePassport
 }) => {
   const [activeTab, setActiveTab] = React.useState<'why' | 'details' | 'continuity'>(initialTab);
+  const modalRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     setActiveTab(initialTab);
   }, [initialTab, school]);
 
-  // Manejo de tecla Escape para accesibilidad
-  React.useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  useModalFocusTrap(isOpen && Boolean(school), modalRef, onClose);
 
   if (!isOpen || !school) return null;
 
@@ -76,16 +68,35 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
     ? school.apoyos.find(a => a.needId === state.need) || school.apoyos[0]
     : school.apoyos[0];
 
-  const evidenceLevel = currentSupport?.evidencia || 'A1';
+  const evidenceLevel = currentSupport?.evidencia || 'A2';
+  const needId = currentSupport?.needId || 'tea';
   const isOfficial = school.procedencia === 'oficial';
   const OFFICIAL_SEARCH_URL = 'https://www.comunidad.madrid/educacion/buscador-centros-educativos';
-  const formatText = (text: string) => isEasyReadMode ? simplifyText(text) : text;
+  const formatText = (text: string) => (isEasyReadMode ? simplifyText(text) : text);
+  const displayName = isEasyReadMode ? simplifySchoolTitle(school.nombre) : school.nombre;
+  const normalizedWebUrl = school.web
+    ? school.web.startsWith('http://') || school.web.startsWith('https://')
+      ? school.web
+      : `https://${school.web}`
+    : '';
+  const hasContactData = Boolean(school.telefono || school.email || normalizedWebUrl);
+  const ownershipLabel =
+    school.titularidad === 'publico'
+      ? 'Centro Público'
+      : school.titularidad === 'concertado'
+      ? 'Privado Concertado'
+      : 'Centro Privado';
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+      onClick={onClose}
+    >
       <div
-        tabIndex={0}
-        className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-600"
+        ref={modalRef}
+        tabIndex={-1}
+        onClick={e => e.stopPropagation()}
+        className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-700"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-school-title"
@@ -93,38 +104,52 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
         {/* Cabecera del Modal */}
         <div className="p-6 border-b border-slate-200 bg-slate-50/70 flex items-start justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
-              <span className="font-mono text-slate-700 font-bold">Cód. Oficial: {school.codigo}</span>
-              <span>·</span>
-              <span className="capitalize">{school.titularidad === 'publico' ? 'Centro Público' : 'Privado Concertado'}</span>
-              <span>·</span>
-              <span>{school.tipo}</span>
+            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-700 mb-1">
+              <span className="font-mono text-slate-900 font-bold">Cód. Oficial: {school.codigo}</span>
+              <span aria-hidden="true">·</span>
+              <span>{ownershipLabel}</span>
+              <span aria-hidden="true">·</span>
+              <span>{formatText(school.tipo)}</span>
+              {school.situacionOficial && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span className="font-mono text-slate-800 font-semibold">{school.situacionOficial}</span>
+                </>
+              )}
             </div>
 
             <h2 id="modal-school-title" className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">
-              {school.nombre}
+              {displayName}
             </h2>
 
-            <div className="flex items-center gap-2 text-xs text-slate-600 mt-1">
-              <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <div className="flex items-start gap-2 text-xs text-slate-700 mt-1.5">
+              <MapPin className="w-4 h-4 text-slate-600 shrink-0 mt-0.5" aria-hidden="true" />
               <span>
                 {school.direccion
-                  ? `${school.direccion}, ${school.codigoPostal} · `
+                  ? `${school.direccion}${school.codigoPostal ? `, ${school.codigoPostal}` : ''} · `
                   : ''}
-                {school.municipio} {school.distrito ? `(${school.distrito})` : ''}
+                {school.municipio}
+                {school.distrito ? ` (${school.distrito}${school.barrio ? ` · ${school.barrio}` : ''})` : ''}
                 {!school.direccion && (
-                  <span className="text-slate-500"> · dirección no publicada en el listado oficial</span>
+                  <span className="text-slate-600"> · dirección postal no disponible en el catálogo</span>
                 )}
               </span>
             </div>
-            <div className="mt-1.5">
-              {isOfficial ? (
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
-                  Dato oficial · Comunidad de Madrid
+
+            <div className="mt-2 flex flex-wrap gap-2">
+              {isOfficial && (
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-900 bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded">
+                  Dato oficial · Consejería de Educación CAM
                 </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-amber-900 bg-amber-100 border border-amber-200 px-1.5 py-0.5 rounded">
-                  Dato de demostración · no usar para decidir
+              )}
+              {school.fuenteDatosAbiertos && (
+                <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-900 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
+                  Datos Abiertos CAM (CC BY 4.0)
+                </span>
+              )}
+              {school.fuenteAyuntamiento && (
+                <span className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-900 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded">
+                  Ayto. de Madrid (datos.madrid.es)
                 </span>
               )}
             </div>
@@ -132,8 +157,9 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
 
           <div className="flex items-center gap-2">
             <button
+              type="button"
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition-colors cursor-pointer"
+              className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 rounded-lg transition-colors cursor-pointer"
               aria-label="Cerrar ventana"
             >
               <X className="w-5 h-5" />
@@ -142,49 +168,58 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
         </div>
 
         {/* Pestañas de navegación interna del modal */}
-        <div className="flex items-center px-4 sm:px-6 border-b border-slate-200 bg-white gap-3 sm:gap-6 text-xs font-semibold overflow-x-auto">
+        <div className="flex items-center px-4 sm:px-6 border-b border-slate-200 bg-white gap-3 sm:gap-6 text-xs font-semibold overflow-x-auto" role="tablist">
           <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === 'why'}
             onClick={() => setActiveTab('why')}
             className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'why'
                 ? 'border-blue-700 text-blue-900 font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                : 'border-transparent text-slate-600 hover:text-slate-900'
             }`}
           >
-            <ShieldCheck className="w-4 h-4 text-blue-700 shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-blue-700 shrink-0" aria-hidden="true" />
             <span>Evidencia (¿Por qué?)</span>
           </button>
 
           <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === 'details'}
             onClick={() => setActiveTab('details')}
             className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'details'
                 ? 'border-blue-700 text-blue-900 font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                : 'border-transparent text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Building className="w-4 h-4 text-slate-500 shrink-0" />
-            <span>Ficha y Servicios</span>
+            <Building className="w-4 h-4 text-slate-600 shrink-0" aria-hidden="true" />
+            <span>Ficha y Contacto</span>
           </button>
 
           <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === 'continuity'}
             onClick={() => setActiveTab('continuity')}
             className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'continuity'
                 ? 'border-blue-700 text-blue-900 font-bold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                : 'border-transparent text-slate-600 hover:text-slate-900'
             }`}
           >
-            <GraduationCap className="w-4 h-4 text-slate-500 shrink-0" />
-            <span>Continuidad ESO</span>
+            <GraduationCap className="w-4 h-4 text-slate-600 shrink-0" aria-hidden="true" />
+            <span>{needId === 'tea' ? 'Continuidad ESO' : 'Trayectoria Escolar'}</span>
           </button>
         </div>
 
         {/* Contenido scrolleable */}
-        <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1 text-sm text-slate-700">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1 text-sm text-slate-800">
           {/* Advertencia orientativa visible y bien ubicada */}
-          <div className="bg-amber-50/90 border border-amber-200/80 rounded-xl px-3.5 py-2 text-xs text-amber-950 flex items-center gap-2">
-            <Info className="w-4 h-4 text-amber-700 shrink-0" />
+          <div className="bg-amber-50 border border-amber-300 rounded-xl px-3.5 py-2.5 text-xs text-amber-950 flex items-center gap-2">
+            <Info className="w-4 h-4 text-amber-800 shrink-0" aria-hidden="true" />
             <span className="font-medium">{LEGAL_DISCLAIMER}</span>
           </div>
 
@@ -192,117 +227,183 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
           {activeTab === 'why' && (
             <div className="space-y-5">
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                   <div className="flex items-center gap-2">
                     {evidenceLevel === 'A1' ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 bg-white px-2 py-0.5 rounded border border-emerald-300">
-                        <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                        Evidencia A1: Confirmado Oficial Vigente
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-900 bg-white px-2 py-0.5 rounded border border-emerald-300">
+                        <ShieldCheck className="w-4 h-4 text-emerald-700" aria-hidden="true" />
+                        Confirmado Oficial Vigente (A1)
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-white px-2 py-0.5 rounded border border-amber-300">
-                        <AlertTriangle className="w-4 h-4 text-amber-600" />
-                        {isOfficial ? 'Evidencia A2: Oficial, por comprobar vigencia' : 'Evidencia A2: En Comprobación Administrativa'}
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-950 bg-white px-2 py-0.5 rounded border border-amber-300">
+                        <AlertTriangle className="w-4 h-4 text-amber-700" aria-hidden="true" />
+                        {isOfficial ? 'Oficial · por comprobar vigencia (A2)' : 'Por comprobar vigencia (A2)'}
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-slate-500 font-mono">Corte: {currentSupport?.fechaCorte}</span>
+                  <span className="text-xs text-slate-700 font-mono">Corte: {currentSupport?.fechaCorte}</span>
                 </div>
 
-                <h4 className="text-sm font-bold text-slate-900 mb-1">
-                  {formatText('Justificación de Inclusión en el Buscador Oficial')}
-                </h4>
-                <p className="text-xs text-slate-700 leading-relaxed">
+                <h3 className="text-sm font-bold text-slate-900 mb-1">
+                  {formatText('Por qué aparece este centro')}
+                </h3>
+                <p className="text-xs text-slate-800 leading-relaxed">
                   {formatText(currentSupport?.detallesResolucion || '')}
                 </p>
               </div>
 
               {/* Datos de publicación oficial */}
               <div className="border border-slate-200 rounded-xl p-4 space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
                   Fuente y Soporte Documental
-                </h4>
+                </h3>
 
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                   <div>
-                    <dt className="text-slate-400 font-medium">Organismo Emisor:</dt>
-                    <dd className="font-semibold text-slate-800 mt-0.5">{currentSupport?.fuenteOficial}</dd>
+                    <dt className="text-slate-600 font-medium">Organismo Emisor:</dt>
+                    <dd className="font-semibold text-slate-900 mt-0.5">{currentSupport?.fuenteOficial}</dd>
                   </div>
 
                   <div>
-                    <dt className="text-slate-400 font-medium">{isOfficial ? 'Documento oficial:' : 'Resolución Oficial:'}</dt>
-                    <dd className="font-semibold text-slate-800 mt-0.5">
-                      {isOfficial && school.fuenteUrl ? (
-                        <a href={school.fuenteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-800 hover:underline inline-flex items-center gap-1">
-                          Listado de centros preferentes TEA (PDF)
-                          <ExternalLink className="w-3 h-3" />
+                    <dt className="text-slate-600 font-medium">Documento o Catálogo Oficial:</dt>
+                    <dd className="font-semibold text-slate-900 mt-0.5">
+                      {school.fuenteUrl ? (
+                        <a href={school.fuenteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-900 hover:underline inline-flex items-center gap-1">
+                          {needId === 'tea'
+                            ? 'Relación de centros preferentes TEA (PDF 2024/25)'
+                            : 'Portal de Datos Abiertos CAM (centros_educativos)'}
+                          <ExternalLink className="w-3 h-3" aria-hidden="true" />
                         </a>
                       ) : (
-                        currentSupport?.resolucionBOCM || 'Catálogo General CAM'
+                        'Catálogo oficial CAM'
                       )}
                     </dd>
                   </div>
 
                   <div>
-                    <dt className="text-slate-400 font-medium">Unidad / Aula de Apoyo:</dt>
-                    <dd className="font-semibold text-slate-800 mt-0.5">
-                      {currentSupport?.aulaNombre || (isOfficial ? 'Aula TEA (la fuente no publica su nombre)' : '—')}
+                    <dt className="text-slate-600 font-medium">Geolocalización y Contacto:</dt>
+                    <dd className="font-semibold text-slate-900 mt-0.5">
+                      {school.ubicacionAproximada ? (
+                        'Centroide municipal de referencia (coordenadas UTM no disponibles en CKAN)'
+                      ) : school.fuenteDatosAbiertos ? (
+                        <a
+                          href="https://datos.comunidad.madrid/catalogo/dataset/centros_educativos"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-900 hover:underline inline-flex items-center gap-1"
+                        >
+                          Portal de Datos Abiertos CAM (CC BY 4.0)
+                          <ExternalLink className="w-3 h-3" aria-hidden="true" />
+                        </a>
+                      ) : (
+                        'Referencia geográfica municipal/distrito'
+                      )}
                     </dd>
                   </div>
 
                   <div>
-                    <dt className="text-slate-400 font-medium">Etapas con Apoyo Dotado:</dt>
-                    <dd className="font-semibold text-blue-900 mt-0.5 uppercase">
+                    <dt className="text-slate-600 font-medium">
+                      {needId === 'tea' ? 'Etapas con Apoyo TEA (listado oficial):' : 'Etapas oficiales incluidas:'}
+                    </dt>
+                    <dd className="font-semibold text-blue-950 mt-0.5 uppercase">
                       {currentSupport?.etapasConApoyo.join(', ')}
                     </dd>
                   </div>
+
+                  {school.fuenteAyuntamiento && (
+                    <div className="sm:col-span-2">
+                      <dt className="text-slate-600 font-medium">Fuente municipal complementaria (Madrid capital):</dt>
+                      <dd className="font-semibold text-slate-900 mt-0.5">
+                        <a
+                          href="https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=b33290e5b4e4d410VgnVCM2000000c205a0aRCRD"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-900 hover:underline inline-flex items-center gap-1"
+                        >
+                          {school.fuenteAyuntamiento}
+                          <ExternalLink className="w-3 h-3" aria-hidden="true" />
+                        </a>
+                      </dd>
+                    </div>
+                  )}
                 </dl>
               </div>
 
               {/* Dotación de Recursos Profesionales */}
               <div className="border border-slate-200 rounded-xl p-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  Dotación de Personal Especializado Asignado
-                </h4>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  Dotación de Personal Especializado
+                </h3>
                 {currentSupport && currentSupport.recursosOficiales.length === 0 && (
-                  <p className="text-xs text-slate-600">
-                    La fuente oficial no detalla el personal asignado al aula. Con carácter general, las aulas TEA
-                    atienden a un máximo de cinco alumnos.
+                  <p className="text-xs text-slate-700 leading-relaxed">
+                    {formatText(
+                      needId === 'educacion_especial'
+                        ? 'Los Centros de Educación Especial (CEE) cuentan con equipos multiprofesionales estables de Pedagogía Terapéutica (PT), Audición y Lenguaje (AL), Fisioterapia, Enfermería (DUE) y Técnicos Especialistas según la ordenación autonómica.'
+                        : needId === 'salud_hospitalaria'
+                        ? 'Las Aulas Hospitalarias están atendidas por profesorado especializado de la Consejería de Educación en coordinación con el centro educativo de origen del alumnado hospitalizado.'
+                        : needId === 'visual'
+                        ? 'Atención prestada mediante convenio CAM–ONCE: profesorado itinerante especialista en tiflotecnología, braille y accesibilidad visual, además de recursos específicos en el C.R.E. «Antonio Vicente Mosquete».'
+                        : needId === 'altas_capacidades'
+                        ? 'Equipos de orientación especializados, evaluación psicopedagógica y talleres de enriquecimiento científico, artístico y lógico los sábados (Programa PEAC) sin alterar la matrícula en el centro ordinario.'
+                        : needId === 'auditiva'
+                        ? 'Equipo público regional especializado en discapacidad auditiva: evalúa necesidades auditivas, orienta adaptaciones de acceso y coordina recursos de LSE, audición y lenguaje y equipos FM.'
+                        : needId === 'motora'
+                        ? 'Equipo público regional especializado en discapacidad motora: valora adaptaciones de acceso físico, movilidad, fisioterapia y dotación de auxiliares técnicos educativos (ATU).'
+                        : needId === 'tdah' || needId === 'tel_lenguaje'
+                        ? 'Equipo técnico regional de orientación que asesora a orientadores y centros ordinarios en evaluación e intervención educativa para TDAH, trastornos del lenguaje (TDL/TEL) y dificultades de aprendizaje.'
+                        : 'El listado oficial no detalla el personal concreto de cada aula. Con carácter general en la Comunidad de Madrid, las aulas de atención preferente TEA atienden a un máximo de cinco alumnos con apoyo de profesorado PT, AL e integrador social (TIS).'
+                    )}
                   </p>
                 )}
-                <ul className="space-y-1.5 text-xs text-slate-700">
-                  {currentSupport?.recursosOficiales.map((rec, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="text-blue-700 font-bold shrink-0 mt-0.5">✓</span>
-                      <span>{rec}</span>
-                    </li>
-                  ))}
-                </ul>
+                {currentSupport && currentSupport.recursosOficiales.length > 0 && (
+                  <ul className="space-y-1.5 text-xs text-slate-800">
+                    {currentSupport.recursosOficiales.map((rec, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-blue-800 font-bold shrink-0 mt-0.5">✓</span>
+                        <span>{formatText(rec)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
               {/* Recordatorio de procedimiento */}
-              <div className="bg-slate-50 rounded-xl p-4 text-xs text-slate-600 border border-slate-200">
-                <h5 className="font-bold text-slate-900 mb-1">Requisitos para la Asignación de Plaza</h5>
+              <div className="bg-slate-50 rounded-xl p-4 text-xs text-slate-700 border border-slate-200">
+                <h4 className="font-bold text-slate-900 mb-1">Requisitos para la Asignación de Plaza</h4>
                 <p className="leading-relaxed">
-                  Para acceder a los recursos de aula de apoyo de este centro es preceptivo disponer del Dictamen de Escolarización 
-                  emitido por el Equipo de Orientación Educativa y Psicopedagógica (EOEP) o Departamento de Orientación competente, 
-                  con la propuesta de centro de atención preferente validada en el proceso de admisión oficial de la Comunidad de Madrid.
+                  {formatText(
+                    needId === 'salud_hospitalaria'
+                      ? 'La incorporación al Aula Hospitalaria es automática durante el periodo de convalecencia médica en el hospital correspondiente, coordinándose directamente con el centro de matrícula del alumno.'
+                      : needId === 'visual'
+                      ? 'La atención visual se activa tras valoración oftalmológica y dictamen o informe del EOEP de sector, coordinándose entre el EOEP Específico Visual (CAM) y la ONCE para apoyar al alumno en su centro ordinario o en el C.R.E. de Moratalaz.'
+                      : needId === 'altas_capacidades'
+                      ? 'El acceso al Programa PEAC requiere detección e informe psicopedagógico del EOEP o Departamento de Orientación del centro ordinario y propuesta oficial de incorporación. El CREACIM atiende consultas técnicas de centros y familias.'
+                      : needId === 'auditiva'
+                      ? 'Este EOEP Específico (código 28700741) evalúa y orienta de forma regional; la asignación de plaza en centro preferente auditivo se tramita mediante dictamen de escolarización y el SAE de tu Dirección de Área Territorial (DAT).'
+                      : needId === 'motora'
+                      ? 'Este EOEP Específico (código 28700763) valora necesidades de acceso, fisioterapia y personal ATU para orientar la escolarización en centro ordinario o preferente motórico ante la DAT / SAE correspondiente.'
+                      : needId === 'tdah' || needId === 'tel_lenguaje'
+                      ? 'Equipo técnico regional de orientación (código 28701214). La atención directa al alumnado se presta en el centro ordinario mediante el EOEP de sector, Departamento de Orientación y profesorado especialista en PT y AL.'
+                      : 'Para acceder a los recursos de atención preferente TEA o a un Centro de Educación Especial (CEE) es necesario disponer del Dictamen de Escolarización emitido por el EOEP o Departamento de Orientación competente, validado ante el SAE o la DAT correspondiente.'
+                  )}
                 </p>
               </div>
             </div>
           )}
 
-          {/* TAB 2: DETALLES, SERVICIOS Y ACCESIBILIDAD */}
+          {/* TAB 2: FICHA, CONTACTO Y MAPA */}
           {activeTab === 'details' && (
             <div className="space-y-5">
               {/* Etapas autorizadas */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  {isOfficial ? 'Etapas con apoyo TEA según el listado oficial' : 'Etapas Educativas Impartidas'}
-                </h4>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  {needId === 'tea'
+                    ? 'Etapas con apoyo TEA en el listado oficial (curso 2024/25)'
+                    : 'Etapas y ámbito educativo registrado'}
+                </h3>
                 <div className="flex flex-wrap gap-2 text-xs">
                   {school.etapas.map(st => (
-                    <span key={st} className="bg-slate-100 text-slate-800 font-medium px-2.5 py-1 rounded-md border border-slate-200">
+                    <span key={st} className="bg-slate-100 text-slate-900 font-semibold px-2.5 py-1 rounded-md border border-slate-300">
                       {st === 'infantil' ? 'Educación Infantil' :
                        st === 'primaria' ? 'Educación Primaria' :
                        st === 'eso' ? 'E.S.O.' :
@@ -310,101 +411,142 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                     </span>
                   ))}
                 </div>
+                {school.tipoGeneralOficial && (
+                  <p className="text-xs text-slate-700 mt-2 leading-relaxed">
+                    <span className="font-semibold text-slate-900">Denominación oficial en Datos Abiertos:</span>{' '}
+                    {formatText(school.tipoGeneralOficial)}.
+                    {needId === 'tea'
+                      ? ' Los colegios públicos de Infantil y Primaria (CEIP) escolarizan también segundo ciclo de Infantil, aunque el listado de vacantes TEA suela consignar «Primaria».'
+                      : ''}
+                  </p>
+                )}
               </div>
+
+              {/* Datos de Contacto Oficiales (Datos Abiertos CAM) */}
+              {hasContactData && (
+                <div className="border-t border-slate-200 pt-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2.5">
+                    Datos de Contacto Oficiales (Portal de Datos Abiertos CAM)
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                    {school.telefono && (
+                      <div className="flex items-center gap-2 text-slate-800 min-w-0">
+                        <Phone className="w-4 h-4 text-slate-600 shrink-0" aria-hidden="true" />
+                        <a href={`tel:${school.telefono.replace(/\s+/g, '')}`} className="font-semibold text-blue-900 hover:underline whitespace-nowrap">
+                          {school.telefono}
+                        </a>
+                      </div>
+                    )}
+                    {school.email && (
+                      <div className="flex items-center gap-2 text-slate-800 min-w-0">
+                        <Mail className="w-4 h-4 text-slate-600 shrink-0" aria-hidden="true" />
+                        <a href={`mailto:${school.email}`} className="text-blue-900 hover:underline truncate">
+                          {school.email}
+                        </a>
+                      </div>
+                    )}
+                    {normalizedWebUrl && (
+                      <div className="flex items-center gap-2 sm:col-span-2 min-w-0 text-blue-900 font-semibold">
+                        <ExternalLink className="w-4 h-4 text-blue-800 shrink-0" aria-hidden="true" />
+                        <a href={normalizedWebUrl} target="_blank" rel="noopener noreferrer" className="hover:underline truncate">
+                          {normalizedWebUrl}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Datos municipales verificados en Ayuntamiento de Madrid (datos.madrid.es) */}
+              {(school.fuenteAyuntamiento || school.transportePublico || school.serviciosConfirmadosAyto || school.accesibilidadConfirmadaAyto) && (
+                <div className="border-t border-slate-200 pt-4 space-y-2.5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                    Transporte Público, Equipamiento y Accesibilidad (Ayuntamiento de Madrid · datos.madrid.es)
+                  </h3>
+                  <div className="bg-blue-50/60 border border-blue-200 rounded-xl p-3.5 text-xs text-slate-800 space-y-2">
+                    {school.transportePublico && (
+                      <div>
+                        <span className="font-bold text-slate-900">Transporte público cercano: </span>
+                        <span>{school.transportePublico}</span>
+                      </div>
+                    )}
+                    {school.serviciosConfirmadosAyto && (
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="font-bold text-slate-900 mr-1">Equipamiento declarado:</span>
+                        {school.servicios.comedor && (
+                          <span className="bg-white border border-blue-300 text-blue-950 font-semibold px-2 py-0.5 rounded">
+                            Comedor escolar
+                          </span>
+                        )}
+                        {school.servicios.aula_matinal && (
+                          <span className="bg-white border border-blue-300 text-blue-950 font-semibold px-2 py-0.5 rounded">
+                            Horario ampliado / Aula matinal
+                          </span>
+                        )}
+                        {school.servicios.transporte && (
+                          <span className="bg-white border border-blue-300 text-blue-950 font-semibold px-2 py-0.5 rounded">
+                            Transporte escolar
+                          </span>
+                        )}
+                        {!school.servicios.comedor && !school.servicios.aula_matinal && !school.servicios.transporte && (
+                          <span className="text-slate-700">Sin comedor/transporte/horario ampliado declarado en la ficha municipal.</span>
+                        )}
+                      </div>
+                    )}
+                    <div>
+                      <span className="font-bold text-slate-900">Accesibilidad física declarada: </span>
+                      <span>
+                        {school.accesibilidadConfirmadaAyto
+                          ? 'Instalación accesible para movilidad reducida (indicador oficial ACCESIBILIDAD = 1 en datos.madrid.es).'
+                          : 'No consta el indicador oficial de accesibilidad física en la ficha municipal.'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {isOfficial && (
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed">
-                  El listado oficial no publica servicios, accesibilidad ni datos de contacto de los centros.
-                  Puedes consultarlos en el{' '}
-                  <a href={OFFICIAL_SEARCH_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-800 hover:underline">
-                    buscador oficial de centros educativos
-                  </a>{' '}
-                  con el código {school.codigo}.
-                </div>
-              )}
-
-              {/* Servicios */}
-              {!isOfficial && (
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  Servicios Complementarios
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  {[
-                    { label: 'Comedor escolar', active: school.servicios.comedor },
-                    { label: 'Transporte escolar adaptado', active: school.servicios.transporte },
-                    { label: 'Enfermería escolar jornada completa', active: school.servicios.enfermeria },
-                    { label: 'Aula matinal / Primeros del cole', active: school.servicios.aula_matinal },
-                    { label: 'Actividades extraescolares adaptadas', active: school.servicios.actividades_extraescolares }
-                  ].map((srv, i) => (
-                    <div key={i} className="flex items-center justify-between p-2 rounded-lg border border-slate-200 bg-slate-50/50">
-                      <span className="text-slate-800">{srv.label}</span>
-                      <span className={`font-semibold ${srv.active ? 'text-emerald-700' : 'text-slate-400'}`}>
-                        {srv.active ? 'Disponible' : 'No disponible'}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              )}
-
-              {/* Accesibilidad Física */}
-              {!isOfficial && (
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  Accesibilidad Arquitectónica y Sensorial
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  {[
-                    { label: 'Acceso a cota cero / Rampa reglamentaria', active: school.accesibilidad.acceso_fisico },
-                    { label: 'Ascensor adaptado a silla de ruedas', active: school.accesibilidad.ascensor },
-                    { label: 'Aseos higiénicos accesibles', active: school.accesibilidad.bano_adaptado },
-                    { label: 'Bucle de inducción magnética', active: school.accesibilidad.bucle_magnetico },
-                    { label: 'Itinerarios y planos podotáctiles', active: school.accesibilidad.plano_podotactil }
-                  ].map((acc, i) => (
-                    <div key={i} className="flex items-center justify-between p-2 rounded-lg border border-slate-200 bg-slate-50/50">
-                      <span className="text-slate-800">{acc.label}</span>
-                      <span className={`font-semibold ${acc.active ? 'text-emerald-700' : 'text-slate-400'}`}>
-                        {acc.active ? 'Verificado' : 'No acreditado'}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              )}
-
-              {/* Datos de Contacto */}
-              {!isOfficial && (
-              <div className="border-t border-slate-200 pt-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  Datos de Contacto del Centro
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <div className="flex items-center gap-2 text-slate-700 min-w-0">
-                    <Phone className="w-4 h-4 text-slate-400 shrink-0" />
-                    <span className="whitespace-nowrap">{school.telefono}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-700 min-w-0">
-                    <Mail className="w-4 h-4 text-slate-400 shrink-0" />
-                    <span className="truncate">{school.email}</span>
-                  </div>
-                  {school.web && (
-                    <div className="flex items-center gap-2 sm:col-span-2 min-w-0 text-blue-900 font-medium">
-                      <ExternalLink className="w-4 h-4 text-blue-700" />
-                      <a href={school.web} target="_blank" rel="noreferrer" className="hover:underline truncate">
-                        {school.web}
-                      </a>
-                    </div>
+                  La dirección postal, teléfono, correo, web y coordenadas proceden del catálogo{' '}
+                  <a
+                    href="https://datos.comunidad.madrid/catalogo/dataset/centros_educativos"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-blue-900 hover:underline"
+                  >
+                    Centros educativos de la Comunidad de Madrid (Datos Abiertos CAM)
+                  </a>
+                  {school.fuenteAyuntamiento
+                    ? ', complementados con transporte público y equipamiento publicados por datos.madrid.es.'
+                    : '. Los servicios complementarios (comedor, transporte, enfermería) y la accesibilidad física no figuran en las fuentes abiertas fuera de Madrid capital; consulta el '}
+                  {!school.fuenteAyuntamiento && (
+                    <>
+                      <a href={OFFICIAL_SEARCH_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-900 hover:underline">
+                        buscador oficial de centros
+                      </a>{' '}
+                      con el código <span className="font-mono font-bold">{school.codigo}</span>.
+                    </>
                   )}
                 </div>
-              </div>
+              )}
+
+              {school.observacionesOficiales && (
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-xs text-blue-950 flex items-start gap-2 leading-relaxed">
+                  <Info className="w-4 h-4 text-blue-800 shrink-0 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <span className="font-bold">Nota del documento oficial: </span>
+                    <span>{formatText(school.observacionesOficiales)}</span>
+                  </div>
+                </div>
               )}
 
               {/* Ubicación y Mapa Georreferenciado */}
               <div className="border-t border-slate-200 pt-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  {school.ubicacionAproximada ? 'Ubicación aproximada (centro del municipio o distrito)' : 'Ubicación Georreferenciada (OpenStreetMap)'}
-                </h4>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  {school.ubicacionAproximada
+                    ? 'Ubicación aproximada (centro del municipio)'
+                    : 'Ubicación Oficial Georreferenciada (Datos Abiertos CAM · OpenStreetMap)'}
+                </h3>
                 <SchoolMiniMap school={school} height="200px" />
               </div>
             </div>
@@ -414,62 +556,76 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
           {activeTab === 'continuity' && (
             <div className="space-y-4">
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                <h4 className="text-sm font-bold text-slate-900 mb-1">
-                  Transición Escolar y Continuidad del Apoyo
-                </h4>
-                <p className="text-xs text-slate-700 leading-relaxed mb-3">
-                  {school.continuidad.descripcion}
+                <h3 className="text-sm font-bold text-slate-900 mb-1">
+                  {needId === 'tea'
+                    ? 'Transición Escolar y Continuidad del Apoyo'
+                    : 'Trayectoria Educativa y Modalidad'}
+                </h3>
+                <p className="text-xs text-slate-800 leading-relaxed mb-3">
+                  {formatText(school.continuidad.descripcion)}
                 </p>
 
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="text-slate-500 font-medium">Evaluación oficial:</span>
+                <div className="flex flex-wrap items-center gap-2 text-xs">
+                  <span className="text-slate-700 font-medium">Evaluación oficial:</span>
                   <span className={`font-bold ${
                     school.continuidad.apoyoEnSecundariaVerificado === true
-                      ? 'text-emerald-700'
-                      : 'text-amber-700'
+                      ? 'text-emerald-800'
+                      : 'text-amber-900'
                   }`}>
-                    {school.continuidad.apoyoEnSecundariaVerificado === true
-                      ? (isOfficial ? 'Apoyo TEA en Secundaria según el listado oficial' : 'Continuidad de apoyo específica verificada en catálogo')
+                    {needId === 'educacion_especial'
+                      ? 'Escolarización específica continuada (Infantil Especial, EBO y PTVA hasta los 21 años)'
+                      : needId === 'salud_hospitalaria'
+                      ? 'Coordinación académica directa con el centro de matrícula'
+                      : needId === 'visual'
+                      ? 'Apoyo itinerante CAM–ONCE en centro ordinario o escolarización en C.R.E. Moratalaz'
+                      : needId === 'altas_capacidades'
+                      ? 'Continuidad en centro ordinario complementada con Programa PEAC (Primaria, ESO y Bachillerato)'
+                      : needId === 'auditiva' || needId === 'motora' || needId === 'tdah' || needId === 'tel_lenguaje'
+                      ? 'Asesoramiento técnico y valoración regional a través de todas las etapas escolares'
+                      : school.continuidad.apoyoEnSecundariaVerificado === true
+                      ? 'Apoyo TEA en Secundaria según el listado oficial'
                       : 'Continuidad no verificada documentalmente (nunca inexistencia afirmada)'}
                   </span>
                 </div>
               </div>
 
-              {/* Centros de destino adscritos */}
+              {/* Centros de destino adscritos o de la misma zona */}
               {school.continuidad.destinos.length > 0 ? (
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
                     {school.continuidad.tipoContinuidad === 'zona'
                       ? 'Centros preferentes TEA con Secundaria en la misma zona (no es adscripción)'
                       : 'Institutos de Educación Secundaria (IES) de Adscripción'}
-                  </h4>
+                  </h3>
                   <div className="space-y-2">
                     {school.continuidad.destinos.map((dest, i) => (
                       <div key={i} className="border border-slate-200 rounded-xl p-3.5 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                          <div className="flex items-center gap-2 text-xs text-slate-500">
-                            <span className="font-mono text-slate-700 font-semibold">Cód. {dest.codigo}</span>
-                            <span>·</span>
+                          <div className="flex items-center gap-2 text-xs text-slate-700">
+                            <span className="font-mono text-slate-900 font-semibold">Cód. {dest.codigo}</span>
+                            <span aria-hidden="true">·</span>
                             <span>{dest.etapa}</span>
-                            {dest.distanciaKm && (
+                            {dest.distanciaKm !== undefined && (
                               <>
-                                <span>·</span>
-                                <span className="font-mono text-blue-900 font-medium">{dest.distanciaKm} km</span>
+                                <span aria-hidden="true">·</span>
+                                <span className="font-mono text-blue-950 font-semibold">{dest.distanciaKm} km</span>
                               </>
                             )}
                           </div>
-                          <div className="text-sm font-bold text-slate-900 mt-0.5">{dest.nombre}</div>
-                          <p className="text-xs text-slate-600 mt-1">{dest.detallesApoyo}</p>
+                          <div className="text-sm font-bold text-slate-900 mt-0.5">
+                            {isEasyReadMode ? simplifySchoolTitle(dest.nombre) : dest.nombre}
+                          </div>
+                          <p className="text-xs text-slate-700 mt-1">{formatText(dest.detallesApoyo || '')}</p>
                         </div>
 
                         <div className="shrink-0">
                           {dest.tieneMismoApoyo === true ? (
-                            <span className="inline-block text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
-                              Apoyo TEA/Apoyo Específico
+                            <span className="inline-block text-xs font-bold text-emerald-900 bg-emerald-50 border border-emerald-300 px-2.5 py-1 rounded">
+                              Apoyo TEA específico
                             </span>
                           ) : (
-                            <span className="inline-block text-xs font-medium text-slate-600 bg-slate-100 border border-slate-200 px-2 py-1 rounded">
-                              Apoyo Ordinario D.O.
+                            <span className="inline-block text-xs font-medium text-slate-700 bg-slate-100 border border-slate-300 px-2 py-1 rounded">
+                              Apoyo ordinario
                             </span>
                           )}
                         </div>
@@ -479,10 +635,33 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                 </div>
               ) : (
                 <div className="p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl text-xs text-emerald-950">
-                  <div className="font-bold mb-1">Centro Integrado (CEIPSO o Colegio con Secundaria):</div>
+                  <div className="font-bold mb-1">
+                    {needId === 'educacion_especial'
+                      ? 'Continuidad en el propio Centro de Educación Especial:'
+                      : needId === 'salud_hospitalaria'
+                      ? 'Reincorporación al centro ordinario o de referencia:'
+                      : needId === 'visual'
+                      ? 'Seguimiento en centro ordinario o recurso específico:'
+                      : needId === 'altas_capacidades'
+                      ? 'Compatibilidad con el centro ordinario:'
+                      : needId === 'auditiva' || needId === 'motora' || needId === 'tdah' || needId === 'tel_lenguaje'
+                      ? 'Cobertura regional en todas las etapas:'
+                      : 'Centro con Primaria y Secundaria (o etapa ESO directa):'}
+                  </div>
                   <p>
-                    El alumno no precisa cambiar de centro al finalizar Primaria; puede cursar la etapa de Educación Secundaria Obligatoria 
-                    dentro del mismo recinto escolar manteniendo su equipo de apoyo.
+                    {formatText(
+                      needId === 'educacion_especial'
+                        ? 'Los CEE escolarizan todo el itinerario específico desde Infantil Especial hasta los Programas de Transición a la Vida Adulta (PTVA).'
+                        : needId === 'salud_hospitalaria'
+                        ? 'Al recibir el alta hospitalaria, el alumnado retoma la docencia en su centro educativo de matrícula habitual (o solicita atención educativa domiciliaria si procede).'
+                        : needId === 'visual'
+                        ? 'El EOEP Específico y los equipos CAM–ONCE acompañan al alumnado durante todas las etapas obligatorias en su centro ordinario, o en el C.R.E. «Antonio Vicente Mosquete».'
+                        : needId === 'altas_capacidades'
+                        ? 'Las actividades del programa PEAC se celebran los sábados por la mañana para que el alumnado mantenga su escolarización habitual de lunes a viernes en su centro ordinario.'
+                        : needId === 'auditiva' || needId === 'motora' || needId === 'tdah' || needId === 'tel_lenguaje'
+                        ? 'Los EOEP Específicos operan con ámbito regional: no escolarizan alumnado directamente, sino que orientan a los centros ordinarios, preferentes y familias en toda la Comunidad de Madrid.'
+                        : 'El alumnado puede cursar la etapa de Educación Secundaria Obligatoria en el propio recinto escolar sin cambiar de centro.'
+                    )}
                   </p>
                 </div>
               )}
@@ -493,32 +672,35 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
         {/* Pie del modal con acciones */}
         <div className="p-3.5 sm:p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-end gap-2">
           <button
+            type="button"
             onClick={() => onTogglePassport(school)}
             className={`inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-colors cursor-pointer flex-1 sm:flex-none ${
               isInPassport
                 ? 'bg-emerald-700 text-white border-emerald-800'
-                : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100'
             }`}
           >
-            <BookmarkCheck className="w-4 h-4 shrink-0" />
+            <BookmarkCheck className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span className="truncate">{isInPassport ? 'En Pasaporte' : 'Pasaporte'}</span>
           </button>
 
           <button
+            type="button"
             onClick={() => onToggleCompare(school)}
             className={`inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-colors cursor-pointer flex-1 sm:flex-none ${
               isCompared
                 ? 'bg-red-700 text-white border-red-800 shadow-xs'
-                : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100'
             }`}
           >
-            <GitCompare className="w-4 h-4 shrink-0" />
+            <GitCompare className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span className="truncate">{isCompared ? 'En Comparador' : 'Comparar'}</span>
           </button>
 
           <button
+            type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-xs font-bold text-slate-700 bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer shrink-0"
+            className="px-4 py-2 rounded-xl text-xs font-bold text-slate-800 bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer shrink-0"
           >
             Cerrar
           </button>

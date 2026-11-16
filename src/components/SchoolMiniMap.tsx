@@ -15,12 +15,22 @@ interface SchoolMiniMapProps {
   height?: string;
 }
 
+const escapeHtml = (unsafe: string) =>
+  unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
 export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
   school,
   height = '240px'
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
+
+  const isZoneContinuity = school.continuidad?.tipoContinuidad === 'zona';
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -59,25 +69,31 @@ export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
           justify-content: center;
           color: white;
           font-weight: 800;
-          font-size: 11px;
+          font-size: 10px;
+          font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         ">
-          🏫
+          C
         </div>
       `,
       iconSize: [28, 28],
       iconAnchor: [14, 14]
     });
 
-    const marker = L.marker([school.lat, school.lng], { icon: mainIcon })
-      .bindPopup(`<b>${school.nombre}</b><br>${school.ubicacionAproximada ? 'Ubicación aproximada (centro del municipio o distrito)' : school.direccion}`)
+    L.marker([school.lat, school.lng], { icon: mainIcon })
+      .bindPopup(
+        `<b>${escapeHtml(school.nombre)}</b><br>${
+          school.ubicacionAproximada
+            ? 'Ubicación aproximada (centro del municipio o distrito)'
+            : `${escapeHtml(school.direccion || school.municipio)}${school.codigoPostal ? ` (${escapeHtml(school.codigoPostal)})` : ''}`
+        }`
+      )
       .addTo(map);
 
     const bounds = L.latLngBounds([[school.lat, school.lng], [school.lat, school.lng]]);
 
-    // Centros adscritos si existen
+    // Centros de destino si existen
     if (school.continuidad && school.continuidad.destinos.length > 0) {
       school.continuidad.destinos.forEach((dest, i) => {
-        // Coordenadas calculadas aproximadamente cerca del centro si no son exactas
         const offsetLat = dest.lat ?? school.lat + (i === 0 ? 0.012 : -0.011);
         const offsetLng = dest.lng ?? school.lng + (i === 0 ? 0.015 : -0.013);
 
@@ -87,7 +103,7 @@ export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
             <div style="
               width: 24px;
               height: 24px;
-              background: ${dest.tieneMismoApoyo === true ? '#059669' : '#64748b'};
+              background: ${dest.tieneMismoApoyo === true ? '#059669' : '#475569'};
               border: 2px solid white;
               border-radius: 50%;
               box-shadow: 0 2px 6px rgba(0,0,0,0.3);
@@ -96,9 +112,10 @@ export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
               justify-content: center;
               color: white;
               font-weight: 800;
-              font-size: 10px;
+              font-size: 9px;
+              font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
             ">
-              🎓
+              ESO
             </div>
           `,
           iconSize: [24, 24],
@@ -106,12 +123,13 @@ export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
         });
 
         L.marker([offsetLat, offsetLng], { icon: destIcon })
-          .bindPopup(`<b>${dest.nombre}</b><br>Etapa: ${dest.etapa}<br>${dest.detallesApoyo || ''}`)
+          .bindPopup(
+            `<b>${escapeHtml(dest.nombre)}</b><br>Etapa: ${escapeHtml(dest.etapa)}<br>${escapeHtml(dest.detallesApoyo || '')}`
+          )
           .addTo(map);
 
-        // Línea de conexión de adscripción
         L.polyline([[school.lat, school.lng], [offsetLat, offsetLng]], {
-          color: dest.tieneMismoApoyo === true ? '#059669' : '#94a3b8',
+          color: dest.tieneMismoApoyo === true ? '#059669' : '#64748b',
           weight: 2,
           dashArray: '4, 6'
         }).addTo(map);
@@ -124,11 +142,12 @@ export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
       map.setView([school.lat, school.lng], 15);
     }
 
-    setTimeout(() => {
+    const resizeTimer = window.setTimeout(() => {
       map.invalidateSize();
     }, 150);
 
     return () => {
+      window.clearTimeout(resizeTimer);
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
@@ -139,8 +158,14 @@ export const SchoolMiniMap: React.FC<SchoolMiniMapProps> = ({
   return (
     <div className="rounded-xl overflow-hidden border border-slate-200">
       <div ref={containerRef} style={{ height }} className="w-full z-10" />
-      <div className="p-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-medium">
-        <span>🏫 Centro principal · 🎓 Instituto adscrito (verde: apoyo específico verificado)</span>
+      <div className="p-2.5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-700 font-medium">
+        <span>
+          <strong className="text-blue-800">C</strong> Centro principal ·{' '}
+          <strong className="text-emerald-800">ESO</strong>{' '}
+          {isZoneContinuity
+            ? 'Centros TEA con Secundaria en la misma zona (no es adscripción)'
+            : 'Instituto adscrito (verde: apoyo específico verificado)'}
+        </span>
         <span>OpenStreetMap</span>
       </div>
     </div>

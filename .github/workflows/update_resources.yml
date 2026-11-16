@@ -1,6 +1,9 @@
 name: Update educational resources
 
 on:
+  push:
+    branches: [main, master]
+  pull_request:
   schedule:
     - cron: "15 4 * * 1"
   workflow_dispatch:
@@ -20,7 +23,7 @@ jobs:
         run: |
           if [ -f pipelines/requirements.txt ]; then pip install -r pipelines/requirements.txt; fi
 
-      - name: Ingest sources
+      - name: Ingest sources (PDF TEA + Portal de Datos Abiertos CAM)
         run: python -m pipelines.ingest
 
       - name: Validate data integrity
@@ -38,7 +41,7 @@ jobs:
       - name: Generate web data module from official data
         run: python scripts/build_app_data.py
 
-      - name: Upload review queue (if the official source changed)
+      - name: Upload review queue & open data artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -52,11 +55,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: "npm"
 
       - name: Install Web dependencies
         run: npm ci
 
-      - name: Run tests
+      - name: TypeScript typecheck (lint)
+        run: npm run lint
+
+      - name: Run unit tests
         run: npm test
 
       - name: Build web application

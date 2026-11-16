@@ -2,11 +2,10 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  * Panel Lateral de Filtros Acumulativos
- * - Secciones plegables en acordeón (las 3 primeras abiertas, las 3 secundarias plegadas)
- * - Separación nítida: Necesidad Educativa vs Modalidad Educativa vs Orientación y Programas
- * - Tarjetas destacadas y compactas para Discapacidad Visual y Altas Capacidades
- * - Claridad total en etapas: recuentos comprensibles y conmutador OR / AND
- * - Ubicación de referencia transparente: Usar mi ubicación vs Municipio con aviso geodésico
+ * - Secciones plegables en acordeón (1 abierta por defecto; 2-6 compactas)
+ * - Etapas TEA depuradas (sin Bachillerato/FP Básica al tener 0 centros) con aclaración sobre Infantil
+ * - Privacidad estricta: solo solicita geolocalización tras clic explícito y sin suplantar ubicación si se deniega
+ * - Tipografía mínima 12px (text-xs) y contraste WCAG AA
  */
 
 import React, { useState } from 'react';
@@ -25,30 +24,111 @@ import {
   ChevronDown,
   ChevronRight,
   Info,
-  MapPin,
   Compass,
-  Sparkles,
-  Eye,
-  HelpCircle,
   ShieldCheck,
   Building,
-  RotateCcw
+  AlertCircle,
+  ExternalLink
 } from 'lucide-react';
+
+import { ProcedureTopic } from '../data/disclaimerAndProcedures';
 
 interface FilterSidebarProps {
   state: SearchState;
   dynamicCounts: DynamicCounts;
   onUpdateState: (updater: (prev: SearchState) => SearchState) => void;
-  onOpenProcedureModal: (topic: 'visual' | 'altas_capacidades' | 'educacion_especial') => void;
+  onOpenProcedureModal?: (topic: ProcedureTopic) => void;
   onClearFilters?: () => void;
 }
+
+const ACTIVE_NEED_OPTIONS: Array<{
+  id: NeedId;
+  label: string;
+  desc: string;
+  sourceTag: string;
+}> = [
+  {
+    id: 'tea',
+    label: 'Atención preferente TEA',
+    desc: 'Aulas de apoyo TEA en centros ordinarios (curso 2024/25)',
+    sourceTag: 'Listado CAM · A2'
+  },
+  {
+    id: 'educacion_especial',
+    label: 'Educación Especial (CEE)',
+    desc: 'Colegios específicos en situación ALTA (CAM + RCD Ministerio)',
+    sourceTag: 'Datos Abiertos · A1'
+  },
+  {
+    id: 'salud_hospitalaria',
+    label: 'Atención Hospitalaria',
+    desc: 'Aulas hospitalarias en centros sanitarios públicos (CAM)',
+    sourceTag: 'Datos Abiertos CAM'
+  },
+  {
+    id: 'visual',
+    label: 'Discapacidad Visual',
+    desc: 'EOEP regional itinerante y C.R.E. ONCE (sin red de preferentes)',
+    sourceTag: 'CAM + ONCE · A1'
+  },
+  {
+    id: 'altas_capacidades',
+    label: 'Altas Capacidades',
+    desc: 'CREACIM, EOEP y 8 sedes IES del PEAC (sábados)',
+    sourceTag: 'CAM + PEAC'
+  }
+];
+
+const REGIONAL_EOEP_NEED_OPTIONS: Array<{
+  id: NeedId;
+  label: string;
+  desc: string;
+  sourceTag: string;
+}> = [
+  {
+    id: 'auditiva',
+    label: 'Discapacidad Auditiva',
+    desc: 'EOEP Específico regional (sin CSV abierto de preferentes)',
+    sourceTag: 'EOEP CAM · A1'
+  },
+  {
+    id: 'motora',
+    label: 'Discapacidad Motora',
+    desc: 'EOEP Específico regional (sin CSV abierto de preferentes)',
+    sourceTag: 'EOEP CAM · A1'
+  },
+  {
+    id: 'tdah',
+    label: 'TDAH y Dificultades',
+    desc: 'EOEP Específico regional en centro ordinario',
+    sourceTag: 'EOEP CAM · A1'
+  },
+  {
+    id: 'tel_lenguaje',
+    label: 'Trastorno del Lenguaje',
+    desc: 'EOEP Específico Lenguaje y TDAH (TDL/TEL)',
+    sourceTag: 'EOEP CAM · A1'
+  }
+];
+
+const NEED_LABELS: Record<NeedId, string> = {
+  tea: 'Atención TEA',
+  educacion_especial: 'Educación Especial (CEE)',
+  salud_hospitalaria: 'Atención Hospitalaria',
+  auditiva: 'Discapacidad Auditiva',
+  motora: 'Discapacidad Motora',
+  visual: 'Discapacidad Visual',
+  altas_capacidades: 'Altas Capacidades',
+  tdah: 'TDAH y Conducta',
+  tel_lenguaje: 'Trastorno del Lenguaje',
+  compensatoria: 'Escuelas de Bienvenida'
+};
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   state,
   dynamicCounts,
   onUpdateState,
-  onOpenProcedureModal,
-  onClearFilters
+  onOpenProcedureModal
 }) => {
   // Secciones plegables: 1 abierta por defecto; 2 a 6 encogidas inicialmente
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -70,23 +150,17 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     }));
   };
 
-  // 1. Necesidad Educativa (TEA, Auditiva, Motora)
-  const handleSelectNeed = (needId: NeedId) => {
+  // 1. Necesidad Educativa
+  const handleSelectNeed = (needId: NeedId | null) => {
     onUpdateState(prev => ({
       ...prev,
-      need: prev.need === needId ? null : needId
+      need: needId === null ? null : prev.need === needId ? null : needId,
+      // Restablecer evidencia a ambas si venía restringida para evitar bloqueos entre catálogos A1/A2
+      evidence: ['A1', 'A2']
     }));
   };
 
-  // 2. Modalidad Educativa Especial
-  const handleToggleSpecialEducation = () => {
-    onUpdateState(prev => ({
-      ...prev,
-      need: prev.need === 'educacion_especial' ? null : 'educacion_especial'
-    }));
-  };
-
-  // 3. Etapas
+  // 2. Etapas
   const handleToggleStage = (stageId: StageId) => {
     onUpdateState(prev => {
       const exists = prev.stages.includes(stageId);
@@ -108,7 +182,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     });
   };
 
-  // 5. Servicios (Obligatorio AND vs Preferido)
+  // 5a. Servicios (Ayuntamiento de Madrid para Madrid capital)
   const handleToggleService = (srvId: ServiceId, asMandatory: boolean) => {
     onUpdateState(prev => {
       if (asMandatory) {
@@ -129,11 +203,27 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     });
   };
 
-  // 6. Evidencia
+  // 5b. Accesibilidad física (Ayuntamiento de Madrid para Madrid capital)
+  const handleToggleAccessibility = (accId: AccessibilityId) => {
+    onUpdateState(prev => {
+      const exists = prev.accessibilityRequired.includes(accId);
+      const next = exists
+        ? prev.accessibilityRequired.filter(a => a !== accId)
+        : [...prev.accessibilityRequired, accId];
+      return { ...prev, accessibilityRequired: next };
+    });
+  };
+
+  // 6. Evidencia (solo alterna si la otra opción tiene centros o está activa)
   const handleToggleEvidence = (evId: EvidenceId) => {
+    const otherEv: EvidenceId = evId === 'A1' ? 'A2' : 'A1';
+    const otherCount = dynamicCounts.evidence[otherEv] ?? 0;
+
     onUpdateState(prev => {
       const exists = prev.evidence.includes(evId);
-      if (exists && prev.evidence.length === 1) return prev; // Mantener al menos una
+      if (exists && (prev.evidence.length === 1 || otherCount === 0)) {
+        return prev;
+      }
       const newEv = exists
         ? prev.evidence.filter(e => e !== evId)
         : [...prev.evidence, evId];
@@ -141,49 +231,47 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     });
   };
 
-  // Georreferenciación del navegador
+  // Georreferenciación del navegador: solo bajo petición explícita y sin inventar Puerta del Sol si falla
   const handleUseBrowserLocation = () => {
-    setGeoLoading(true);
     setGeoError(null);
 
-    // Activación inmediata del modo 'browser'
-    onUpdateState(prev => ({
-      ...prev,
-      locationSource: 'browser',
-      userCoordinates: prev.userCoordinates || {
-        lat: 40.4168,
-        lng: -3.7038,
-        label: 'Tu ubicación actual'
-      },
-      radiusKm: prev.radiusKm ?? 20
-    }));
-
-    if (typeof navigator !== 'undefined' && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          setGeoLoading(false);
-          const lat = Number(pos.coords.latitude.toFixed(4));
-          const lng = Number(pos.coords.longitude.toFixed(4));
-          onUpdateState(prev => ({
-            ...prev,
-            locationSource: 'browser',
-            userCoordinates: {
-              lat,
-              lng,
-              label: 'Tu ubicación actual'
-            }
-          }));
-        },
-        err => {
-          setGeoLoading(false);
-          // NUNCA revertir a municipality. Mantener modo browser activo con coordenadas aproximadas.
-          console.info('GPS del navegador restringido o denegado:', err.message);
-        },
-        { timeout: 6000, enableHighAccuracy: false }
-      );
-    } else {
-      setGeoLoading(false);
+    if (typeof navigator === 'undefined' || !navigator.geolocation) {
+      setGeoError('Tu navegador no admite geolocalización. Usa la selección por municipio.');
+      return;
     }
+
+    setGeoLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        setGeoLoading(false);
+        const lat = Number(pos.coords.latitude.toFixed(3));
+        const lng = Number(pos.coords.longitude.toFixed(3));
+        onUpdateState(prev => ({
+          ...prev,
+          locationSource: 'browser',
+          municipality: null,
+          district: null,
+          userCoordinates: {
+            lat,
+            lng,
+            label: 'Tu ubicación aproximada'
+          },
+          radiusKm: prev.radiusKm ?? 20
+        }));
+      },
+      err => {
+        setGeoLoading(false);
+        console.info('GPS del navegador restringido o denegado:', err.message);
+        setGeoError('Permiso denegado o ubicación no disponible. Mantenemos la búsqueda por municipio.');
+        onUpdateState(prev => ({
+          ...prev,
+          locationSource: 'municipality',
+          municipality: prev.municipality || 'Madrid',
+          userCoordinates: null
+        }));
+      },
+      { timeout: 6000, enableHighAccuracy: false }
+    );
   };
 
   const handleUseMunicipality = () => {
@@ -192,147 +280,235 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       ...prev,
       locationSource: 'municipality',
       municipality: prev.municipality || 'Madrid',
-      district: (prev.municipality === 'Madrid' || !prev.municipality) ? prev.district : null,
+      district: prev.municipality === 'Madrid' || !prev.municipality ? prev.district : null,
       userCoordinates: null,
       radiusKm: prev.radiusKm ?? 20
     }));
   };
 
+  const serviceItems: Array<{ id: ServiceId; label: string }> = [
+    { id: 'comedor', label: 'Comedor escolar' },
+    { id: 'aula_matinal', label: 'Horario ampliado / Aula matinal' },
+    { id: 'transporte', label: 'Transporte escolar' },
+    { id: 'enfermeria', label: 'Enfermería escolar' },
+    { id: 'actividades_extraescolares', label: 'Actividades extraescolares' }
+  ];
+
+  const anyServiceAvailable = serviceItems.some(
+    s => (dynamicCounts.requiredServices[s.id] ?? 0) > 0
+  );
+  const accPhysicalCount = dynamicCounts.accessibility['acceso_fisico'] ?? 0;
+  const isAccPhysicalChecked = state.accessibilityRequired.includes('acceso_fisico');
+  const isAccPhysicalDisabled = accPhysicalCount === 0 && !isAccPhysicalChecked;
+
+  const a1Count = dynamicCounts.evidence['A1'] ?? 0;
+  const a2Count = dynamicCounts.evidence['A2'] ?? 0;
+
   return (
-    <aside className="w-full bg-white divide-y divide-slate-200 text-sm text-slate-800">
+    <aside className="w-full bg-white divide-y divide-slate-200 text-sm text-slate-800" aria-label="Filtros de búsqueda">
       {/* ========================================================
-          1. NECESIDAD EDUCATIVA Y MODALIDADES
+          1. NECESIDAD EDUCATIVA (3 CATÁLOGOS OFICIALES ACTIVOS)
          ======================================================== */}
       <div className="p-4 sm:p-5">
         <button
           type="button"
           onClick={() => toggleSection('needs')}
+          aria-expanded={openSections.needs}
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-800 group-hover:text-blue-900 transition-colors">
               1. Necesidad Educativa
             </div>
-            <div className="text-[11px] text-slate-500">
+            <div className="text-xs text-slate-600">
               {state.need
-                ? `Seleccionado: ${state.need.toUpperCase()}`
-                : 'Cualquier necesidad'}
+                ? NEED_LABELS[state.need]
+                : 'Todo el catálogo oficial (TEA, CEE, Hosp., Visual, AACC y EOEP)'}
             </div>
           </div>
           {openSections.needs ? (
-            <ChevronDown className="w-4 h-4 text-slate-400" />
+            <ChevronDown className="w-4 h-4 text-slate-600" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-600" />
           )}
         </button>
 
         {openSections.needs && (
           <div className="mt-3.5 space-y-3">
-            {/* 1.1 NECESIDAD EDUCATIVA Y MODALIDAD */}
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-xs font-semibold text-slate-700">
+                Catálogos oficiales cargados:
+              </span>
+              {state.need !== null && (
+                <button
+                  type="button"
+                  onClick={() => handleSelectNeed(null)}
+                  className="text-xs font-bold text-blue-900 hover:underline cursor-pointer"
+                >
+                  Ver todos
+                </button>
+              )}
+            </div>
+
             <div className="space-y-1.5" role="radiogroup" aria-label="Necesidad Educativa">
-              {[{ id: 'tea' as NeedId, label: 'Atención preferente TEA', desc: 'Trastorno del Espectro Autista' }].map(item => {
+              {ACTIVE_NEED_OPTIONS.map(item => {
                 const isSelected = state.need === item.id;
+                const count = dynamicCounts.needs[item.id] ?? 0;
                 return (
                   <button
                     key={item.id}
                     type="button"
+                    role="radio"
+                    aria-checked={isSelected}
                     onClick={() => handleSelectNeed(item.id)}
-                    className={`w-full text-left px-3 py-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                    className={`w-full text-left px-3 py-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                       isSelected
                         ? 'bg-blue-50 border-blue-600 text-blue-950 font-semibold ring-1 ring-blue-600/20'
-                        : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700'
+                        : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800'
                     }`}
                   >
-                    <div>
+                    <div className="min-w-0">
                       <div className="text-xs font-bold leading-snug flex items-center gap-1.5 flex-wrap">
                         <span>{item.label}</span>
-                        <span className="text-[9px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
-                          Oficial
+                        <span className="text-xs font-semibold text-emerald-900 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                          {item.sourceTag}
                         </span>
                       </div>
-                      <div className="text-[11px] text-slate-500">{item.desc}</div>
+                      <div className="text-xs text-slate-600 mt-0.5">{item.desc}</div>
                     </div>
-                    <span className="text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 bg-blue-100 text-blue-900 font-bold">
-                      {dynamicCounts.needs['tea'] ?? 336}
+                    <span
+                      className={`text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 font-bold ${
+                        isSelected ? 'bg-blue-100 text-blue-950' : 'bg-slate-100 text-slate-800'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+
+              <div className="pt-2 pb-0.5">
+                <div className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Equipos regionales específicos (EOEP CAM):
+                </div>
+                <p className="text-xs text-slate-600 leading-snug mt-0.5">
+                  Sin CSV autonómico de colegios preferentes; mostramos el equipo público específico oficial que orienta en toda la región.
+                </p>
+              </div>
+
+              {REGIONAL_EOEP_NEED_OPTIONS.map(item => {
+                const isSelected = state.need === item.id;
+                const count = dynamicCounts.needs[item.id] ?? 0;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={isSelected}
+                    onClick={() => handleSelectNeed(item.id)}
+                    className={`w-full text-left px-3 py-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                      isSelected
+                        ? 'bg-blue-50 border-blue-600 text-blue-950 font-semibold ring-1 ring-blue-600/20'
+                        : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800'
+                    }`}
+                  >
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold leading-snug flex items-center gap-1.5 flex-wrap">
+                        <span>{item.label}</span>
+                        <span className="text-xs font-semibold text-emerald-900 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                          {item.sourceTag}
+                        </span>
+                      </div>
+                      <div className="text-xs text-slate-600 mt-0.5">{item.desc}</div>
+                    </div>
+                    <span
+                      className={`text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 font-bold ${
+                        isSelected ? 'bg-blue-100 text-blue-950' : 'bg-slate-100 text-slate-800'
+                      }`}
+                    >
+                      {count}
                     </span>
                   </button>
                 );
               })}
             </div>
 
-            {/* Otras necesidades Próximamente */}
-            <div className="pt-2.5 border-t border-slate-100 space-y-1.5">
-              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
-                Otras necesidades (Próximamente):
-              </div>
-              {[
-                { id: 'auditiva', label: 'Discapacidad Auditiva', desc: 'Bilingüismo LSE y logopedia' },
-                { id: 'motora', label: 'Discapacidad Motora', desc: 'Fisioterapia y motórica' },
-                { id: 'visual', label: 'Discapacidad Visual', desc: 'Apoyo tiflotécnico y convenio ONCE' },
-                { id: 'altas_capacidades', label: 'Altas Capacidades', desc: 'Sedes PEAC y Bachillerato Excelencia' },
-                { id: 'educacion_especial', label: 'Educación Especial (CEE)', desc: 'Colegios de Educación Especial' },
-                { id: 'tdah', label: 'TDAH y Trastornos de Conducta', desc: 'Apoyo conductual y adaptación metodológica' },
-                { id: 'tel_lenguaje', label: 'Trastorno del Lenguaje (TDL/TEL)', desc: 'Intervención intensiva en comunicación' },
-                { id: 'salud_hospitalaria', label: 'Atención Hospitalaria / Domiciliaria', desc: 'Unidades de hospitalización y convalecencia' },
-                { id: 'compensatoria', label: 'Compensación Educativa', desc: 'Aulas de Enlace y desfavorecidos' }
-              ].map(item => (
-                <div
-                  key={item.id}
-                  className="w-full text-left px-3 py-2 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-400 flex items-center justify-between cursor-not-allowed opacity-80"
-                  title="Listado oficial pendiente de incorporar en este prototipo"
+            {state.need && state.need !== 'tea' && state.need !== 'salud_hospitalaria' && onOpenProcedureModal && (
+              <button
+                type="button"
+                onClick={() => onOpenProcedureModal(state.need as ProcedureTopic)}
+                className="w-full text-left px-3 py-2 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-50 text-xs text-emerald-950 font-semibold flex items-center justify-between gap-2 cursor-pointer transition-colors"
+              >
+                <span>
+                  {state.need === 'educacion_especial'
+                    ? '¿Cómo se solicita plaza en un CEE?'
+                    : state.need === 'visual'
+                    ? '¿Cómo funciona el EOEP Visual y el C.R.E. ONCE?'
+                    : state.need === 'altas_capacidades'
+                    ? '¿Cómo funcionan el CREACIM y las sedes PEAC?'
+                    : state.need === 'auditiva'
+                    ? '¿Cómo consultar centros preferentes auditivos / EOEP?'
+                    : state.need === 'motora'
+                    ? '¿Cómo tramitar plaza preferente motora y fisioterapia?'
+                    : state.need === 'tdah'
+                    ? '¿Cómo apoya el EOEP de TDAH en centros ordinarios?'
+                    : state.need === 'tel_lenguaje'
+                    ? '¿Cómo funciona el apoyo de Lenguaje (TDL/TEL) y AL?'
+                    : '¿Cómo funcionan las Aulas de Enlace (DAT)?'}
+                </span>
+                <ExternalLink className="w-3.5 h-3.5 text-emerald-800 shrink-0" aria-hidden="true" />
+              </button>
+            )}
+
+            {/* Escuelas de Bienvenida */}
+            <div className="pt-2.5 border-t border-slate-100">
+              {onOpenProcedureModal && (
+                <button
+                  type="button"
+                  onClick={() => onOpenProcedureModal('compensatoria')}
+                  className="w-full text-left p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs text-slate-800 font-semibold flex items-center justify-between gap-2 cursor-pointer transition-colors"
                 >
                   <div>
-                    <div className="text-xs font-semibold leading-snug flex items-center gap-1.5 flex-wrap">
-                      <span className="text-slate-500">{item.label}</span>
-                      <span className="text-[9px] font-semibold text-slate-500 bg-slate-200/80 border border-slate-300 px-1 py-0.2 rounded">
-                        Próximamente
-                      </span>
-                    </div>
-                    <div className="text-[10px] text-slate-400">{item.desc}</div>
+                    <div className="text-slate-900 font-bold">Escuelas de Bienvenida / Aulas de Enlace</div>
+                    <div className="text-xs text-slate-600 font-normal">Gestión descentralizada por DAT / SAE</div>
                   </div>
-                  <span className="text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 bg-slate-200/60 text-slate-500">
-                    0
-                  </span>
-                </div>
-              ))}
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-700 shrink-0" aria-hidden="true" />
+                </button>
+              )}
             </div>
-
-
           </div>
         )}
       </div>
 
       {/* ========================================================
-          2. ETAPA EDUCATIVA CON CONMUTADOR Y EXPLICACIÓN DE RECUENTOS
+          2. ETAPA EDUCATIVA
          ======================================================== */}
       <div className="p-4 sm:p-5">
         <button
           type="button"
           onClick={() => toggleSection('stages')}
+          aria-expanded={openSections.stages}
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-800 group-hover:text-blue-900 transition-colors">
               2. Etapa Educativa
             </div>
-            <div className="text-[11px] text-slate-500">
+            <div className="text-xs text-slate-600">
               {state.stages.length === 0
                 ? 'Todas las etapas'
-                : `${state.stages.length} seleccionada(s) (${state.stageMatchMode === 'all' ? 'impartir todas' : 'cualquiera'})`}
+                : `${state.stages.length} seleccionada(s) (${state.stageMatchMode === 'all' ? 'todas' : 'cualquiera'})`}
             </div>
           </div>
           {openSections.stages ? (
-            <ChevronDown className="w-4 h-4 text-slate-400" />
+            <ChevronDown className="w-4 h-4 text-slate-600" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-600" />
           )}
         </button>
 
         {openSections.stages && (
           <div className="mt-3.5 space-y-2.5">
-
-
-            {/* Selector de modo OR vs AND si hay más de 1 etapa seleccionada */}
             {state.stages.length > 1 && (
               <div className="bg-slate-100 p-1 rounded-lg flex items-center text-xs">
                 <button
@@ -341,7 +517,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   className={`flex-1 py-1 px-2 rounded-md font-semibold text-center transition-colors cursor-pointer ${
                     state.stageMatchMode !== 'all'
                       ? 'bg-white text-slate-900 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
+                      : 'text-slate-700 hover:text-slate-900'
                   }`}
                 >
                   Cualquiera
@@ -352,98 +528,122 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   className={`flex-1 py-1 px-2 rounded-md font-semibold text-center transition-colors cursor-pointer ${
                     state.stageMatchMode === 'all'
                       ? 'bg-white text-slate-900 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
+                      : 'text-slate-700 hover:text-slate-900'
                   }`}
-                  title="Sólo centros que impartan simultáneamente todas las etapas marcadas"
+                  title="Sólo centros que figuren en todas las etapas marcadas"
                 >
-                  Debe impartir todas
+                  Todas
                 </button>
               </div>
             )}
 
-            {/* Listado de etapas */}
             <div className="space-y-1">
               {[
-                { id: 'infantil' as StageId, label: 'Educación Infantil (3-6 años)' },
-                { id: 'primaria' as StageId, label: 'Educación Primaria (6-12 años)' },
-                { id: 'eso' as StageId, label: 'Secundaria Obligatoria (E.S.O.)' },
-                { id: 'bachillerato' as StageId, label: 'Bachillerato' },
-                { id: 'fp_basica' as StageId, label: 'Formación Profesional Básica' }
-              ].map(st => {
-                const isChecked = state.stages.includes(st.id);
-                const count = dynamicCounts.stages[st.id] ?? 0;
-                return (
-                  <label
-                    key={st.id}
-                    className={`flex items-center justify-between px-3 py-2 rounded-xl border cursor-pointer transition-colors ${
-                      isChecked
-                        ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold'
-                        : 'bg-white border-transparent hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={() => handleToggleStage(st.id)}
-                        className="rounded border-slate-300 text-cam-red focus:ring-cam-red cursor-pointer"
-                      />
-                      <span className="text-xs">{st.label}</span>
-                    </div>
-                    <span className="text-xs font-mono text-slate-500 tabular-nums">
-                      ({count})
-                    </span>
-                  </label>
-                );
-              })}
+                { id: 'infantil' as StageId, label: 'Educación Infantil (3-6 años)', always: true },
+                { id: 'primaria' as StageId, label: 'Educación Primaria (6-12 años)', always: true },
+                { id: 'eso' as StageId, label: 'Secundaria Obligatoria (E.S.O.)', always: true },
+                { id: 'bachillerato' as StageId, label: 'Bachillerato (PEAC)', always: false }
+              ]
+                .filter(st => st.always || (dynamicCounts.stages[st.id] ?? 0) > 0 || state.stages.includes(st.id))
+                .map(st => {
+                  const isChecked = state.stages.includes(st.id);
+                  const count = dynamicCounts.stages[st.id] ?? 0;
+                  return (
+                    <label
+                      key={st.id}
+                      className={`flex items-center justify-between px-3 py-2 rounded-xl border cursor-pointer transition-colors ${
+                        isChecked
+                          ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold'
+                          : 'bg-white border-transparent hover:bg-slate-50 text-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => handleToggleStage(st.id)}
+                          className="rounded border-slate-400 text-cam-red focus:ring-cam-red cursor-pointer"
+                        />
+                        <span className="text-xs">{st.label}</span>
+                      </div>
+                      <span className="text-xs font-mono text-slate-700 tabular-nums">
+                        ({count})
+                      </span>
+                    </label>
+                  );
+                })}
+            </div>
+
+            <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 leading-snug">
+              {state.need === 'educacion_especial' ? (
+                <>
+                  <strong>Modalidad CEE:</strong> Los Colegios de Educación Especial escolarizan Infantil Especial, Educación Básica Obligatoria (EBO, 6-16 años) y Programas de Transición a la Vida Adulta (PTVA).
+                </>
+              ) : state.need === 'salud_hospitalaria' ? (
+                <>
+                  <strong>Atención Hospitalaria:</strong> Las unidades escolares hospitalarias cubren toda la escolarización obligatoria (Infantil, Primaria y ESO) mientras dura el ingreso.
+                </>
+              ) : state.need === 'visual' ? (
+                <>
+                  <strong>Discapacidad Visual:</strong> El EOEP Visual atiende de forma itinerante desde Infantil a ESO en cualquier centro ordinario; el C.R.E. ONCE de Moratalaz cubre CEE, Primaria y ESO.
+                </>
+              ) : state.need === 'altas_capacidades' ? (
+                <>
+                  <strong>Altas Capacidades:</strong> El alumnado permanece en su colegio o instituto ordinario; el programa PEAC ofrece talleres los sábados en Primaria, ESO y Bachillerato.
+                </>
+              ) : (
+                <>
+                  <strong>Sobre Infantil y Primaria:</strong> En el listado oficial TEA 2024/25 solo 3 escuelas privadas figuran con etapa «Infantil». La mayoría de los CEIP imparten Infantil, aunque el PDF solo marca «Primaria» para el aula TEA.
+                </>
+              )}
             </div>
           </div>
         )}
       </div>
 
       {/* ========================================================
-          3. UBICACIÓN DE REFERENCIA Y RADIO (CON TRANSPARENCIA DE ORIGEN)
+          3. UBICACIÓN DE REFERENCIA Y RADIO
          ======================================================== */}
       <div className="p-4 sm:p-5">
         <button
           type="button"
           onClick={() => toggleSection('location')}
+          aria-expanded={openSections.location}
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-800 group-hover:text-blue-900 transition-colors">
               3. Ubicación y Radio
             </div>
-            <div className="text-[11px] text-slate-500">
+            <div className="text-xs text-slate-600">
               {state.locationSource === 'browser'
-                ? 'Ubicación del navegador'
+                ? 'Tu ubicación aproximada'
                 : state.municipality
-                ? `${state.municipality} (${state.radiusKm ? `${state.radiusKm} km` : 'municipio'})`
+                ? `${state.municipality}${state.district ? ` (${state.district})` : ''} · ${state.radiusKm ? `${state.radiusKm} km` : 'solo municipio'}`
                 : 'Toda la Comunidad de Madrid'}
             </div>
           </div>
           {openSections.location ? (
-            <ChevronDown className="w-4 h-4 text-slate-400" />
+            <ChevronDown className="w-4 h-4 text-slate-600" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-600" />
           )}
         </button>
 
         {openSections.location && (
           <div className="mt-3.5 space-y-3">
-            {/* Conmutador de origen de ubicación con diseño de pestañas segmentadas limpio y claro */}
             <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs">
               <button
                 type="button"
                 onClick={handleUseMunicipality}
                 className={`flex-1 py-1.5 px-3 rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                  state.locationSource === 'municipality'
+                  state.locationSource !== 'browser'
                     ? 'bg-cam-red text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-200/50'
                 }`}
               >
-                <Building className={`w-3.5 h-3.5 ${state.locationSource === 'municipality' ? 'text-white' : 'text-slate-500'}`} />
-                <span>Elegir municipio</span>
+                <Building className={`w-3.5 h-3.5 ${state.locationSource !== 'browser' ? 'text-white' : 'text-slate-600'}`} />
+                <span>Municipio</span>
               </button>
 
               <button
@@ -453,7 +653,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 className={`flex-1 py-1.5 px-3 rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                   state.locationSource === 'browser'
                     ? 'bg-blue-700 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-200/50'
                 }`}
               >
                 <Compass className={`w-3.5 h-3.5 ${state.locationSource === 'browser' ? 'text-white' : 'text-blue-700'}`} />
@@ -461,29 +661,38 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               </button>
             </div>
 
-            {/* Selectores de Municipio y Distrito (deshabilitados cuando se activa Cerca de mí) */}
+            {geoError && (
+              <div role="alert" className="p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950 flex items-start gap-1.5 leading-snug">
+                <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                <span>{geoError}</span>
+              </div>
+            )}
+
             <div className="space-y-2.5">
               <div>
-                <label htmlFor="municipality-select" className="block text-[11px] font-semibold text-slate-600 mb-1">
+                <label htmlFor="municipality-select" className="block text-xs font-semibold text-slate-700 mb-1">
                   Municipio de referencia:
                 </label>
                 <select
                   id="municipality-select"
                   disabled={state.locationSource === 'browser'}
-                  value={state.municipality || 'Madrid'}
+                  value={state.locationSource === 'browser' ? '' : (state.municipality ?? '')}
                   onChange={e => {
                     const val = e.target.value || null;
+                    setGeoError(null);
                     onUpdateState(prev => ({
                       ...prev,
                       locationSource: 'municipality',
+                      userCoordinates: null,
                       municipality: val,
-                      district: val === 'Madrid' ? prev.district : null
+                      district: val === 'Madrid' ? prev.district : null,
+                      radiusKm: val ? (prev.radiusKm ?? 20) : null
                     }));
                   }}
                   className={`w-full text-xs rounded-lg px-2.5 py-1.5 transition-colors ${
                     state.locationSource === 'browser'
-                      ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-60'
-                      : 'bg-white border border-slate-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-cam-red cursor-pointer'
+                      ? 'bg-slate-100 text-slate-600 border border-slate-200 cursor-not-allowed'
+                      : 'bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-cam-red cursor-pointer'
                   }`}
                 >
                   <option value="">Toda la Comunidad de Madrid</option>
@@ -495,25 +704,19 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 </select>
               </div>
 
-              {/* Distrito para Madrid capital */}
-              {(state.municipality === 'Madrid' || state.locationSource === 'browser') && (
+              {state.locationSource !== 'browser' && state.municipality === 'Madrid' && (
                 <div>
-                  <label htmlFor="district-select" className="block text-[11px] font-semibold text-slate-600 mb-1">
+                  <label htmlFor="district-select" className="block text-xs font-semibold text-slate-700 mb-1">
                     Distrito (Madrid capital):
                   </label>
                   <select
                     id="district-select"
-                    disabled={state.locationSource === 'browser'}
                     value={state.district || ''}
                     onChange={e => {
                       const val = e.target.value || null;
                       onUpdateState(prev => ({ ...prev, district: val }));
                     }}
-                    className={`w-full text-xs rounded-lg px-2.5 py-1.5 transition-colors ${
-                      state.locationSource === 'browser'
-                        ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-60'
-                        : 'bg-white border border-slate-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-cam-red cursor-pointer'
-                    }`}
+                    className="w-full text-xs rounded-lg px-2.5 py-1.5 transition-colors bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-cam-red cursor-pointer"
                   >
                     <option value="">Cualquier distrito</option>
                     {MADRID_DISTRICTS.map(d => (
@@ -525,68 +728,108 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 </div>
               )}
 
-              {/* Aviso sobre el centro municipal cuando se usa selección manual */}
-              {state.locationSource === 'municipality' && state.municipality && (
-                <div className="text-[11px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-2 leading-snug">
-                  ℹ️ <span className="font-semibold text-slate-800">Centro municipal: </span>
-                  La distancia en km se mide desde el centro geográfico del municipio seleccionado ({state.municipality}), no desde tu domicilio particular.
+              {state.locationSource !== 'browser' && state.municipality && (
+                <div className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg p-2 leading-snug flex items-start gap-1.5">
+                  <Info className="w-3.5 h-3.5 text-blue-700 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold text-slate-900">Referencia municipal: </span>
+                    {state.district
+                      ? `Mostrando exclusivamente los centros ubicados en el distrito de ${state.district}.`
+                      : `La distancia en km se calcula desde el centro de ${state.municipality} hasta la ubicación oficial de cada centro.`}
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Slider de Radio geodésico */}
-            <div>
-              <div className="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
-                <span>Radio geodésico:</span>
-                <span className="font-mono text-cam-red font-bold tabular-nums">
-                  {state.radiusKm ? `${state.radiusKm} km` : 'Solo municipio'}
-                </span>
-              </div>
-              <input
-                type="range"
-                min="5"
-                max="40"
-                step="5"
-                value={state.radiusKm ?? 20}
-                onChange={e => {
-                  const val = Number(e.target.value);
-                  onUpdateState(prev => ({ ...prev, radiusKm: val }));
-                }}
-                className="w-full accent-cam-red cursor-pointer"
-              />
-              <div className="flex justify-between text-[10px] text-slate-400 font-mono">
-                <span>5 km</span>
-                <span>20 km</span>
-                <span>40 km</span>
-              </div>
+            <div className="space-y-2">
+              {state.locationSource !== 'browser' && state.municipality && !state.district && (
+                <div className="bg-slate-100 p-1 rounded-lg flex items-center text-xs">
+                  <button
+                    type="button"
+                    onClick={() => onUpdateState(prev => ({ ...prev, radiusKm: null }))}
+                    className={`flex-1 py-1 px-2 rounded-md font-semibold text-center transition-colors cursor-pointer ${
+                      state.radiusKm === null
+                        ? 'bg-white text-slate-900 shadow-xs'
+                        : 'text-slate-700 hover:text-slate-900'
+                    }`}
+                  >
+                    Solo municipio
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onUpdateState(prev => ({ ...prev, radiusKm: prev.radiusKm ?? 20 }))}
+                    className={`flex-1 py-1 px-2 rounded-md font-semibold text-center transition-colors cursor-pointer ${
+                      state.radiusKm !== null
+                        ? 'bg-white text-slate-900 shadow-xs'
+                        : 'text-slate-700 hover:text-slate-900'
+                    }`}
+                  >
+                    Ampliar por radio
+                  </button>
+                </div>
+              )}
+
+              {state.locationSource !== 'browser' && !state.municipality ? (
+                <div className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg p-2">
+                  Mostrando los centros de <strong>toda la Comunidad de Madrid</strong> sin restricción de radio.
+                </div>
+              ) : state.district ? null : (
+                <div className={state.locationSource !== 'browser' && state.radiusKm === null ? 'opacity-60' : ''}>
+                  <div className="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
+                    <span>Radio geodésico:</span>
+                    <span className="font-mono text-cam-red font-bold tabular-nums">
+                      {state.radiusKm ? `${state.radiusKm} km` : 'Solo municipio'}
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5"
+                    max="40"
+                    step="5"
+                    aria-label="Radio geodésico en kilómetros"
+                    value={state.radiusKm ?? 20}
+                    onChange={e => {
+                      const val = Number(e.target.value);
+                      onUpdateState(prev => ({ ...prev, radiusKm: val }));
+                    }}
+                    className="w-full accent-cam-red cursor-pointer"
+                  />
+                  <div className="flex justify-between text-xs text-slate-600 font-mono">
+                    <span>5 km</span>
+                    <span>20 km</span>
+                    <span>40 km</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
 
       {/* ========================================================
-          4. TITULARIDAD DEL CENTRO (PLEGABLE)
+          4. TITULARIDAD DEL CENTRO
          ======================================================== */}
       <div className="p-4 sm:p-5">
         <button
           type="button"
           onClick={() => toggleSection('ownership')}
+          aria-expanded={openSections.ownership}
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-800 group-hover:text-blue-900 transition-colors">
               4. Titularidad del Centro
             </div>
-            <div className="text-[11px] text-slate-500">
+            <div className="text-xs text-slate-600">
               {state.ownership.length === 0
-                ? 'Público y concertado'
+                ? 'Cualquier titularidad'
                 : `${state.ownership.length} seleccionada(s)`}
             </div>
           </div>
           {openSections.ownership ? (
-            <ChevronDown className="w-4 h-4 text-slate-400" />
+            <ChevronDown className="w-4 h-4 text-slate-600" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-600" />
           )}
         </button>
 
@@ -594,29 +837,36 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <div className="mt-3.5 space-y-1">
             {[
               { id: 'publico' as OwnershipId, label: 'Centros Públicos (CEIP, CEIPSO, IES, CEE)' },
-              { id: 'concertado' as OwnershipId, label: 'Privados Concertados' }
+              { id: 'concertado' as OwnershipId, label: 'Privados Concertados' },
+              { id: 'privado' as OwnershipId, label: 'Privados (no concertados)' }
             ].map(own => {
               const isChecked = state.ownership.includes(own.id);
               const count = dynamicCounts.ownership[own.id] ?? 0;
+              const isDisabled = count === 0 && !isChecked;
               return (
                 <label
                   key={own.id}
-                  className={`flex items-center justify-between px-3 py-2 rounded-xl border cursor-pointer transition-colors ${
-                    isChecked
-                      ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold'
-                      : 'bg-white border-transparent hover:bg-slate-50 text-slate-700'
+                  className={`flex items-center justify-between px-3 py-2 rounded-xl border transition-colors ${
+                    isDisabled
+                      ? 'bg-slate-50 border-slate-200 text-slate-600 cursor-not-allowed'
+                      : isChecked
+                      ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold cursor-pointer'
+                      : 'bg-white border-transparent hover:bg-slate-50 text-slate-800 cursor-pointer'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
                     <input
                       type="checkbox"
+                      disabled={isDisabled}
                       checked={isChecked}
-                      onChange={() => handleToggleOwnership(own.id)}
-                      className="rounded border-slate-300 text-cam-red focus:ring-cam-red cursor-pointer"
+                      onChange={() => !isDisabled && handleToggleOwnership(own.id)}
+                      className={`rounded border-slate-400 text-cam-red focus:ring-cam-red ${
+                        isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
+                      }`}
                     />
                     <span className="text-xs">{own.label}</span>
                   </div>
-                  <span className="text-xs font-mono text-slate-500 tabular-nums">
+                  <span className="text-xs font-mono text-slate-700 tabular-nums">
                     ({count})
                   </span>
                 </label>
@@ -627,80 +877,91 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       </div>
 
       {/* ========================================================
-          5. SERVICIOS DEL CENTRO (PLEGABLE)
+          5. SERVICIOS Y ACCESIBILIDAD (AYUNTAMIENTO DE MADRID)
          ======================================================== */}
       <div className="p-4 sm:p-5">
         <button
           type="button"
           onClick={() => toggleSection('services')}
+          aria-expanded={openSections.services}
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
-              5. Servicios del Centro
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-800 group-hover:text-blue-900 transition-colors">
+              5. Servicios y Accesibilidad
             </div>
-            <div className="text-[11px] text-slate-500">
-              {state.requiredServices.length > 0 || state.preferredServices.length > 0
-                ? `${state.requiredServices.length} obligatorios · ${state.preferredServices.length} preferidos`
-                : 'Sin exigencia de servicios'}
+            <div className="text-xs text-slate-600">
+              {state.requiredServices.length > 0 ||
+              state.preferredServices.length > 0 ||
+              state.accessibilityRequired.length > 0
+                ? `${state.requiredServices.length + state.accessibilityRequired.length} obligatorios · ${state.preferredServices.length} preferidos`
+                : anyServiceAvailable || accPhysicalCount > 0
+                ? 'Datos Ayto. Madrid disponibles'
+                : 'Sin datos públicos en esta zona'}
             </div>
           </div>
           {openSections.services ? (
-            <ChevronDown className="w-4 h-4 text-slate-400" />
+            <ChevronDown className="w-4 h-4 text-slate-600" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-600" />
           )}
         </button>
 
         {openSections.services && (
           <div className="mt-3.5 space-y-2">
-            <div className="p-2 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 leading-tight">
-              <strong>Limitación de la fuente oficial:</strong> El listado de centros TEA de la Comunidad de Madrid no publica datos de servicios complementarios (comedor, transporte, enfermería). Los filtros de servicios aparecen inactivos para evitar búsquedas sin resultados.
+            <div
+              className={`p-2.5 rounded-xl border text-xs leading-snug ${
+                anyServiceAvailable || accPhysicalCount > 0
+                  ? 'bg-blue-50 border-blue-200 text-blue-950'
+                  : 'bg-amber-50 border-amber-200 text-amber-950'
+              }`}
+            >
+              <strong>Cobertura de la fuente abierta municipal:</strong> El portal del Ayuntamiento de Madrid (<span className="font-mono">datos.madrid.es</span>) publica equipamiento y accesibilidad física <strong>exclusivamente para centros de Madrid capital</strong>. Los otros 178 municipios no disponen de este conjunto abierto y se muestran inactivos para evitar falsos ceros.
             </div>
-            {[
-              { id: 'comedor' as ServiceId, label: 'Comedor escolar' },
-              { id: 'transporte' as ServiceId, label: 'Transporte escolar adaptado' },
-              { id: 'enfermeria' as ServiceId, label: 'Enfermería escolar' },
-              { id: 'aula_matinal' as ServiceId, label: 'Aula matinal / Primeros del cole' },
-              { id: 'actividades_extraescolares' as ServiceId, label: 'Actividades extraescolares' }
-            ].map(srv => {
+
+            {serviceItems.map(srv => {
               const isRequired = state.requiredServices.includes(srv.id);
               const isPreferred = state.preferredServices.includes(srv.id);
               const countReq = dynamicCounts.requiredServices[srv.id] ?? 0;
-              const isDisabled = countReq === 0;
+              const countPref = dynamicCounts.preferredServices[srv.id] ?? 0;
+              const isAllDisabled = countReq === 0 && !isRequired && !isPreferred;
 
               return (
                 <div
                   key={srv.id}
                   className={`p-2.5 rounded-xl border text-xs transition-colors ${
-                    isDisabled
-                      ? 'bg-slate-100/80 border-slate-200 opacity-60 cursor-not-allowed'
+                    isAllDisabled
+                      ? 'bg-slate-100 border-slate-200'
                       : isRequired
-                      ? 'bg-blue-50/80 border-blue-200'
+                      ? 'bg-blue-50 border-blue-200'
                       : isPreferred
-                      ? 'bg-amber-50/70 border-amber-200'
-                      : 'bg-slate-50/70 border-slate-200'
+                      ? 'bg-amber-50 border-amber-200'
+                      : 'bg-slate-50 border-slate-200'
                   }`}
-                  title={isDisabled ? "La fuente oficial no publica datos de este servicio" : undefined}
+                  title={
+                    isAllDisabled
+                      ? 'No hay centros coincidentes con datos publicados para este servicio en la selección actual'
+                      : undefined
+                  }
                 >
-                  <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center justify-between mb-1.5 gap-2">
                     <span className="font-semibold text-slate-800">{srv.label}</span>
-                    <span className="font-mono text-[11px] text-slate-500 tabular-nums">
-                      (0 disponibles)
+                    <span className="font-mono text-xs text-slate-700 whitespace-nowrap font-semibold tabular-nums">
+                      {countReq > 0 ? `(${countReq})` : 'Sin datos'}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
-                      disabled={isDisabled}
-                      onClick={() => !isDisabled && handleToggleService(srv.id, true)}
-                      className={`flex-1 py-1 px-2 rounded-lg text-[11px] font-semibold border text-center transition-colors ${
-                        isDisabled
-                          ? 'bg-slate-200 text-slate-400 border-slate-300 cursor-not-allowed'
+                      disabled={countReq === 0 && !isRequired}
+                      onClick={() => handleToggleService(srv.id, true)}
+                      className={`flex-1 py-1 px-2 rounded-lg text-xs font-semibold border text-center transition-colors ${
+                        countReq === 0 && !isRequired
+                          ? 'bg-slate-200 text-slate-600 border-slate-300 cursor-not-allowed'
                           : isRequired
                           ? 'bg-blue-700 text-white border-blue-800 cursor-pointer'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100 cursor-pointer'
+                          : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer'
                       }`}
                     >
                       Obligatorio
@@ -708,14 +969,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
                     <button
                       type="button"
-                      disabled={isDisabled}
-                      onClick={() => !isDisabled && handleToggleService(srv.id, false)}
-                      className={`flex-1 py-1 px-2 rounded-lg text-[11px] font-semibold border text-center transition-colors ${
-                        isDisabled
-                          ? 'bg-slate-200 text-slate-400 border-slate-300 cursor-not-allowed'
+                      disabled={countPref === 0 && !isPreferred}
+                      onClick={() => handleToggleService(srv.id, false)}
+                      className={`flex-1 py-1 px-2 rounded-lg text-xs font-semibold border text-center transition-colors ${
+                        countPref === 0 && !isPreferred
+                          ? 'bg-slate-200 text-slate-600 border-slate-300 cursor-not-allowed'
                           : isPreferred
                           ? 'bg-amber-600 text-white border-amber-700 cursor-pointer'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100 cursor-pointer'
+                          : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer'
                       }`}
                     >
                       Preferido
@@ -724,75 +985,142 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 </div>
               );
             })}
+
+            {/* Accesibilidad física verificada por Ayuntamiento de Madrid */}
+            <div className="pt-2 border-t border-slate-200">
+              <div className="text-xs font-bold text-slate-700 mb-1.5">
+                Accesibilidad física declarada:
+              </div>
+              <label
+                className={`flex items-center justify-between px-3 py-2.5 rounded-xl border text-xs transition-colors ${
+                  isAccPhysicalDisabled
+                    ? 'bg-slate-100 border-slate-200 text-slate-600 cursor-not-allowed'
+                    : isAccPhysicalChecked
+                    ? 'bg-blue-50 border-blue-300 text-blue-950 font-semibold cursor-pointer'
+                    : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-800 cursor-pointer'
+                }`}
+                title={
+                  isAccPhysicalDisabled
+                    ? 'Sin centros con indicador oficial de accesibilidad física en la selección actual'
+                    : 'Centros con etiqueta oficial ACCESIBILIDAD = 1 en datos.madrid.es'
+                }
+              >
+                <div className="flex items-center gap-2.5">
+                  <input
+                    type="checkbox"
+                    disabled={isAccPhysicalDisabled}
+                    checked={isAccPhysicalChecked}
+                    onChange={() => !isAccPhysicalDisabled && handleToggleAccessibility('acceso_fisico')}
+                    className={`rounded border-slate-400 text-blue-700 focus:ring-blue-600 ${
+                      isAccPhysicalDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
+                    }`}
+                  />
+                  <span>Acceso físico sin barreras (Ayto. Madrid)</span>
+                </div>
+                <span className="font-mono text-xs text-slate-700 tabular-nums shrink-0 font-semibold">
+                  {accPhysicalCount > 0 ? `(${accPhysicalCount})` : 'Sin datos'}
+                </span>
+              </label>
+            </div>
           </div>
         )}
       </div>
 
       {/* ========================================================
-          6. EVIDENCIA Y VIGENCIA OFICIAL (PLEGABLE)
+          6. EVIDENCIA Y VIGENCIA OFICIAL
          ======================================================== */}
       <div className="p-4 sm:p-5">
         <button
           type="button"
           onClick={() => toggleSection('evidence')}
+          aria-expanded={openSections.evidence}
           className="w-full flex items-center justify-between text-left cursor-pointer group"
         >
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-700 group-hover:text-blue-900 transition-colors">
-              6. Nivel de Evidencia Oficial
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-800 group-hover:text-blue-900 transition-colors">
+              6. Nivel de Evidencia
             </div>
-            <div className="text-[11px] text-slate-500">
+            <div className="text-xs text-slate-600">
               {state.evidence.length === 2
-                ? 'Confirmados y en comprobación'
-                : `Sólo ${state.evidence[0] === 'A1' ? 'Confirmados (A1)' : 'En comprobación (A2)'}`}
+                ? 'Confirmados (A1) y en comprobación (A2)'
+                : `Sólo ${state.evidence[0] === 'A1' ? 'Confirmados (A1)' : 'Por comprobar (A2)'}`}
             </div>
           </div>
           {openSections.evidence ? (
-            <ChevronDown className="w-4 h-4 text-slate-400" />
+            <ChevronDown className="w-4 h-4 text-slate-600" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-600" />
           )}
         </button>
 
         {openSections.evidence && (
           <div className="mt-3.5 space-y-2">
-            <div className="p-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 leading-tight mb-2">
-              <strong>Nota de la fuente:</strong> Todos los 336 centros TEA del documento (curso 2024/2025) figuran como A2 (por comprobar vigencia actual con el SAE).
+            <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 leading-snug mb-2">
+              <strong>Criterio documental:</strong> Cuentan con vigencia confirmada (<strong>A1</strong>) los centros en situación <span className="font-mono">ALTA</span> (CEE, Hospitalarias activas, EOEP Visual, CRE ONCE, CREACIM y EOEP Altas Capacidades). Figuran en <strong>A2</strong> el listado TEA 2024/25, las aulas hospitalarias en trámite y las 8 sedes IES del programa PEAC.
             </div>
-            <label className="flex items-start gap-2.5 p-2.5 rounded-xl border border-slate-200 bg-slate-100 opacity-60 cursor-not-allowed" title="0 centros con evidencia A1 en la fuente oficial actual">
+
+            <label
+              className={`flex items-start gap-2.5 p-2.5 rounded-xl border transition-colors ${
+                a1Count === 0
+                  ? 'border-slate-200 bg-slate-100 cursor-not-allowed'
+                  : 'border-emerald-200 bg-emerald-50/70 cursor-pointer'
+              }`}
+              title={
+                a1Count === 0
+                  ? 'No hay registros A1 en la necesidad o zona seleccionada (el listado TEA actual es A2)'
+                  : undefined
+              }
+            >
               <input
                 type="checkbox"
-                disabled={true}
-                checked={false}
-                onChange={() => {}}
-                className="mt-0.5 rounded border-slate-300 text-slate-400 cursor-not-allowed"
+                disabled={a1Count === 0 || (a2Count === 0 && state.evidence.includes('A1'))}
+                checked={a1Count > 0 && state.evidence.includes('A1')}
+                onChange={() => a1Count > 0 && handleToggleEvidence('A1')}
+                className={`mt-0.5 rounded border-slate-400 text-emerald-700 focus:ring-emerald-600 ${
+                  a1Count === 0 ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}
               />
               <div>
-                <div className="text-xs font-bold text-slate-500 flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Confirmado para esta etapa (A1)</span>
-                  <span className="font-mono text-[10px] text-slate-400">(0 disponibles)</span>
+                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5 flex-wrap">
+                  <ShieldCheck
+                    className={`w-3.5 h-3.5 ${a1Count > 0 ? 'text-emerald-700' : 'text-slate-600'}`}
+                  />
+                  <span>Confirmado vigente (A1)</span>
+                  <span className="font-mono text-xs text-slate-800 font-bold tabular-nums">({a1Count})</span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  No disponible en el listado oficial actual (todos son A2 por comprobar vigencia).
+                <p className="text-xs text-slate-600 mt-0.5">
+                  {a1Count > 0
+                    ? 'CEE, aulas hospitalarias ALTA, EOEP Visual, CRE ONCE, CREACIM y EOEP Altas Capacidades.'
+                    : 'Sin registros A1 coincidentes con la necesidad o filtros actuales.'}
                 </p>
               </div>
             </label>
 
-            <label className="flex items-start gap-2.5 p-2.5 rounded-xl border border-blue-200 bg-blue-50/60 cursor-pointer">
+            <label
+              className={`flex items-start gap-2.5 p-2.5 rounded-xl border transition-colors ${
+                a2Count === 0
+                  ? 'border-slate-200 bg-slate-100 cursor-not-allowed'
+                  : 'border-blue-200 bg-blue-50/70 cursor-pointer'
+              }`}
+            >
               <input
                 type="checkbox"
-                checked={state.evidence.includes('A2')}
-                onChange={() => handleToggleEvidence('A2')}
-                className="mt-0.5 rounded border-blue-300 text-blue-700 focus:ring-blue-600 cursor-pointer"
+                disabled={a2Count === 0 || (a1Count === 0 && state.evidence.includes('A2'))}
+                checked={a2Count > 0 && state.evidence.includes('A2')}
+                onChange={() => a2Count > 0 && handleToggleEvidence('A2')}
+                className={`mt-0.5 rounded border-blue-400 text-blue-700 focus:ring-blue-600 ${
+                  a2Count === 0 ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}
               />
               <div>
-                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <span>Por comprobar etapa o vigencia (A2)</span>
-                  <span className="font-mono text-[10px] text-slate-700 font-bold">({dynamicCounts.evidence['A2'] ?? 336})</span>
+                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5 flex-wrap">
+                  <span>Oficial por comprobar vigencia (A2)</span>
+                  <span className="font-mono text-xs text-slate-800 font-bold tabular-nums">({a2Count})</span>
                 </div>
-                <p className="text-[11px] text-slate-600 mt-0.5">
-                  Centros oficiales con apoyo (curso 2024/25); se recomienda verificar con el SAE.
+                <p className="text-xs text-slate-700 mt-0.5">
+                  {a2Count > 0
+                    ? 'Centros TEA (2024/25), aulas en trámite o sedes PEAC por convocatoria anual.'
+                    : 'Sin registros A2 en la necesidad o filtros actuales.'}
                 </p>
               </div>
             </label>

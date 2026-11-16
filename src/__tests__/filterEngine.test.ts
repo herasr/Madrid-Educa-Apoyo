@@ -11,6 +11,7 @@ import {
   matchesCentre,
   sortCentres,
   analyzeZeroResults,
+  computeDynamicCounts,
   INITIAL_SEARCH_STATE
 } from '../utils/filterEngine';
 import { School, SearchState } from '../types';
@@ -272,7 +273,7 @@ describe('filterEngine - matchesCentre', () => {
       expect(matchesCentre(mockSchools[2], state)).toBe(false); // ~30 km away (Alcalá)
     });
 
-    it('filters by district when municipality is Madrid', () => {
+    it('filters strictly by district when municipality is Madrid and excludes other municipalities', () => {
       const state: SearchState = {
         ...INITIAL_SEARCH_STATE,
         need: null,
@@ -280,11 +281,12 @@ describe('filterEngine - matchesCentre', () => {
         locationSource: 'municipality',
         municipality: 'Madrid',
         district: 'Retiro',
-        radiusKm: null
+        radiusKm: 50
       };
 
-      expect(matchesCentre(mockSchools[0], state)).toBe(true);  // Retiro
-      expect(matchesCentre(mockSchools[1], state)).toBe(false); // Centro
+      expect(matchesCentre(mockSchools[0], state)).toBe(true);  // Madrid + Retiro
+      expect(matchesCentre(mockSchools[1], state)).toBe(false); // Madrid + Centro
+      expect(matchesCentre(mockSchools[2], state)).toBe(false); // Alcala de Henares (no district)
     });
   });
 
@@ -349,6 +351,21 @@ describe('filterEngine - matchesCentre', () => {
 
       expect(matchesCentre(mockSchools[1], stateByStreet)).toBe(true);
     });
+
+    it('matches text queries regardless of diacritics / accents', () => {
+      const stateAlcalaNoAccent: SearchState = {
+        ...INITIAL_SEARCH_STATE,
+        need: null,
+        stages: [],
+        municipality: null,
+        radiusKm: null,
+        searchQuery: 'Alcala'
+      };
+      // mockSchools[0] has 'Calle Alcalá, 1' and mockSchools[2] has 'Alcala de Henares'
+      expect(matchesCentre(mockSchools[0], stateAlcalaNoAccent)).toBe(true);
+      expect(matchesCentre(mockSchools[1], stateAlcalaNoAccent)).toBe(false);
+      expect(matchesCentre(mockSchools[2], stateAlcalaNoAccent)).toBe(true);
+    });
   });
 });
 
@@ -378,21 +395,18 @@ describe('filterEngine - sortCentres', () => {
   });
 });
 
-describe('filterEngine - analyzeZeroResults', () => {
-  it('returns appropriate analysis and non-empty relaxations when zero schools match', () => {
+describe('filterEngine - analyzeZeroResults & multi-source dynamicCounts', () => {
+  it('returns appropriate analysis and non-empty relaxations when zero schools match outside Madrid capital with services filter', () => {
     const restrictiveState: SearchState = {
       ...INITIAL_SEARCH_STATE,
       need: 'tea',
       stages: ['primaria'],
-      municipality: 'Madrid',
-      radiusKm: 1, // 1 km radius - no schools within 1km of Madrid center
+      municipality: 'Alcalá de Henares',
+      radiusKm: null,
       requiredServices: ['comedor'],
-      // Los centros oficiales TEA son A2 y la fuente no publica servicios:
-      // exigir comedor deja 0 resultados y retirarlo debe proponerse como relajación.
       evidence: ['A2']
     };
 
-    // Confirm that 0 schools match this restrictive state against full dataset
     const matchesCount = SCHOOLS_DATA.filter(s => matchesCentre(s, restrictiveState)).length;
     expect(matchesCount).toBe(0);
 
@@ -404,15 +418,103 @@ describe('filterEngine - analyzeZeroResults', () => {
     expect(Array.isArray(analysis.relaxations)).toBe(true);
     expect(analysis.relaxations.length).toBeGreaterThan(0);
 
-    // Check that each relaxation option produces a non-negative resultingCount
     analysis.relaxations.forEach(opt => {
       expect(typeof opt.label).toBe('string');
       expect(typeof opt.resultingCount).toBe('number');
       expect(typeof opt.apply).toBe('function');
 
-      // Test applying the relaxation option to SearchState
       const newState = opt.apply(restrictiveState);
       expect(newState).toBeDefined();
     });
+  });
+
+  it('calculates dynamic evidence and Ayuntamiento Madrid service counts accurately per need and municipality', () => {
+    const teaMadridCounts = computeDynamicCounts(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      need: 'tea',
+      stages: [],
+      municipality: 'Madrid',
+      radiusKm: null
+    });
+    expect(teaMadridCounts.evidence.A1).toBe(0);
+    expect(teaMadridCounts.evidence.A2).toBeGreaterThan(100);
+    expect(teaMadridCounts.requiredServices.comedor).toBeGreaterThan(50);
+    expect(teaMadridCounts.accessibility.acceso_fisico).toBeGreaterThan(5);
+
+    const ceeCounts = computeDynamicCounts(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      need: 'educacion_especial',
+      stages: [],
+      municipality: null,
+      radiusKm: null
+    });
+    expect(ceeCounts.evidence.A1).toBe(69);
+    expect(ceeCounts.evidence.A2).toBe(0);
+    expect(ceeCounts.ownership.privado).toBe(2);
+
+    const hospCounts = computeDynamicCounts(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      need: 'salud_hospitalaria',
+      stages: [],
+      municipality: null,
+      radiusKm: null
+    });
+    expect(hospCounts.evidence.A1).toBe(4);
+    expect(hospCounts.evidence.A2).toBe(10);
+
+    const visualCounts = computeDynamicCounts(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      need: 'visual',
+      stages: [],
+      municipality: null,
+      radiusKm: null
+    });
+    expect(visualCounts.evidence.A1).toBe(3);
+    expect(visualCounts.evidence.A2).toBe(0);
+
+    const aaccCounts = computeDynamicCounts(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      need: 'altas_capacidades',
+      stages: [],
+      municipality: null,
+      radiusKm: null
+    });
+    expect(aaccCounts.evidence.A1).toBe(2);
+    expect(aaccCounts.evidence.A2).toBe(8);
+
+    for (const eoepNeed of ['auditiva', 'motora', 'tdah', 'tel_lenguaje'] as const) {
+      const eoepCounts = computeDynamicCounts(SCHOOLS_DATA, {
+        ...INITIAL_SEARCH_STATE,
+        need: eoepNeed,
+        stages: [],
+        municipality: null,
+        radiusKm: null
+      });
+      expect(eoepCounts.evidence.A1).toBe(1);
+      expect(eoepCounts.evidence.A2).toBe(0);
+    }
+
+    const alcalaCounts = computeDynamicCounts(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      need: 'tea',
+      stages: [],
+      municipality: 'Alcalá de Henares',
+      radiusKm: null
+    });
+    expect(alcalaCounts.requiredServices.comedor).toBe(0);
+    expect(alcalaCounts.accessibility.acceso_fisico).toBe(0);
+  });
+
+  it('offers both TEA and CEE relaxations when an uncatalogued need is selected', () => {
+    const analysis = analyzeZeroResults(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      need: 'compensatoria',
+      stages: [],
+      municipality: 'Madrid',
+      radiusKm: null
+    });
+    expect(analysis.reason).toContain('conjunto abierto regional descargable');
+    expect(analysis.relaxations.some(r => r.id === 'switch_to_tea')).toBe(true);
+    expect(analysis.relaxations.some(r => r.id === 'switch_to_cee')).toBe(true);
   });
 });

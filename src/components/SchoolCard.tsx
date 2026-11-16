@@ -2,25 +2,14 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  * Tarjeta de Centro Educativo Simplificada para Familias
- * Responde de inmediato a 4 preguntas esenciales:
- * 1. ¿Por qué aparece este centro?
- * 2. ¿Para qué etapa está confirmado?
- * 3. ¿A qué distancia está?
- * 4. ¿Qué continuidad tiene?
- *
- * Utiliza lenguaje familiar:
- * - "Confirmado para esta etapa" (Evidencia A1)
- * - "Confirmado, pero debe comprobarse etapa o vigencia" (Evidencia A2)
- *
- * Jerarquía de acciones clara:
- * - [Ficha completa] (botón principal)
- * - [Comparar] (botón secundario con límite 3)
- * - ¿Por qué aparece? (enlace explicativo con evidencia oficial)
+ * - Dirección real y geolocalización oficial de Datos Abiertos CAM (sin tiempos de trayecto estimados)
+ * - Modo Lectura Fácil real sobre nombre, etapa, evidencia, continuidad y aviso de servicios
+ * - Tipografía mínima 12px (text-xs) y contraste WCAG AA
  */
 
 import React from 'react';
 import { School, SearchState } from '../types';
-import { calculateHaversineDistance, estimateTransitMinutes, MUNICIPALITIES } from '../data/municipalities';
+import { calculateHaversineDistance, MUNICIPALITIES } from '../data/municipalities';
 import {
   FileText,
   MapPin,
@@ -29,10 +18,9 @@ import {
   ArrowRight,
   ShieldCheck,
   AlertTriangle,
-  GitCompare,
   ArrowUpRight
 } from 'lucide-react';
-import { simplifyText } from '../utils/textSimplifier';
+import { simplifyText, simplifySchoolTitle } from '../utils/textSimplifier';
 
 interface SchoolCardProps {
   school: School;
@@ -55,33 +43,65 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
   onOpenWhyAppears,
   onOpenContinuity
 }) => {
-  // Soporte correspondiente a la necesidad activa o el primer apoyo registrado
   const currentSupport = state.need
     ? school.apoyos.find(a => a.needId === state.need) || school.apoyos[0]
     : school.apoyos[0];
 
-  const formatText = (text: string) => isEasyReadMode ? simplifyText(text) : text;
+  const formatText = (text: string) => (isEasyReadMode ? simplifyText(text) : text);
+  const displayName = isEasyReadMode ? simplifySchoolTitle(school.nombre) : school.nombre;
   const isA1 = currentSupport?.evidencia === 'A1';
   const isOfficial = school.procedencia === 'oficial';
+  const needId = currentSupport?.needId || 'tea';
 
-  // Nombre amigable de la necesidad
-  const needLabel = 
-    currentSupport?.needId === 'tea' ? 'Atención preferente TEA' :
-    currentSupport?.needId === 'auditiva' ? 'Atención discapacidad auditiva' :
-    currentSupport?.needId === 'motora' ? 'Atención discapacidad motora' :
-    currentSupport?.needId === 'visual' ? 'Atención discapacidad visual (ONCE / EOEP)' :
-    currentSupport?.needId === 'altas_capacidades' ? 'Altas Capacidades (PEAC / Excelencia)' :
-    currentSupport?.needId === 'tdah' ? 'Atención TDAH y Trastornos de Conducta' :
-    currentSupport?.needId === 'tel_lenguaje' ? 'Trastorno del Lenguaje y Comunicación (TDL/TEL)' :
-    currentSupport?.needId === 'salud_hospitalaria' ? 'Atención Educativa Hospitalaria y Domiciliaria' :
-    currentSupport?.needId === 'compensatoria' ? 'Compensación Educativa y Aulas de Enlace' :
-    currentSupport?.needId === 'educacion_especial' || school.modalidad === 'especial' ? 'Educación Especial (CEE)' :
-    'Atención educativa especializada';
+  const needLabel = isEasyReadMode
+    ? needId === 'tea'
+      ? 'Tiene Aula de Apoyo para Autismo (TEA)'
+      : needId === 'educacion_especial'
+      ? 'Es un Colegio de Educación Especial (apoyo intensivo)'
+      : needId === 'salud_hospitalaria'
+      ? 'Tiene Aula Hospitalaria mientras dura el ingreso médico'
+      : needId === 'visual'
+      ? 'Apoyo especializado para ceguera o baja visión (EOEP / ONCE)'
+      : needId === 'altas_capacidades'
+      ? 'Apoyo o taller los sábados para Altas Capacidades (PEAC / CREACIM)'
+      : needId === 'auditiva'
+      ? 'Equipo público experto que ayuda en colegios para sordera o pérdida auditiva'
+      : needId === 'motora'
+      ? 'Equipo público experto que valora ayudas físicas y motoras en los colegios'
+      : needId === 'tdah'
+      ? 'Equipo público experto que asesora sobre TDAH y dificultades de aprendizaje'
+      : needId === 'tel_lenguaje'
+      ? 'Equipo público experto que asesora sobre trastornos del lenguaje'
+      : 'Tiene apoyo educativo específico'
+    : needId === 'tea'
+    ? 'Atención preferente TEA'
+    : needId === 'educacion_especial'
+    ? 'Educación Especial (CEE)'
+    : needId === 'salud_hospitalaria'
+    ? 'Atención Hospitalaria'
+    : needId === 'visual'
+    ? 'Discapacidad Visual (EOEP / CRE ONCE)'
+    : needId === 'altas_capacidades'
+    ? 'Altas Capacidades (CREACIM / PEAC)'
+    : needId === 'auditiva'
+    ? 'Discapacidad Auditiva (EOEP Específico)'
+    : needId === 'motora'
+    ? 'Discapacidad Motora (EOEP Específico)'
+    : needId === 'tdah'
+    ? 'TDAH y Dificultades (EOEP Específico)'
+    : needId === 'tel_lenguaje'
+    ? 'Trastorno del Lenguaje (EOEP Específico)'
+    : 'Atención educativa especializada';
 
-  // Cálculo de distancia respecto al origen activo (GPS del navegador o municipio)
+  const ownershipLabel =
+    school.titularidad === 'publico'
+      ? 'Público'
+      : school.titularidad === 'concertado'
+      ? 'Concertado'
+      : 'Privado';
+
+  // Distancia geodésica desde ubicación elegida o centro municipal
   let distanceKm: number | null = null;
-  let originLabel = 'Madrid';
-
   if (state.locationSource === 'browser' && state.userCoordinates) {
     distanceKm = calculateHaversineDistance(
       state.userCoordinates.lat,
@@ -89,214 +109,290 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
       school.lat,
       school.lng
     );
-    originLabel = 'tu ubicación';
   } else if (state.municipality) {
     const munObj = MUNICIPALITIES.find(
-      m => m.id.toLowerCase() === state.municipality?.toLowerCase() ||
-           m.nombre.toLowerCase() === state.municipality?.toLowerCase()
+      m =>
+        m.id.toLowerCase() === state.municipality?.toLowerCase() ||
+        m.nombre.toLowerCase() === state.municipality?.toLowerCase()
     );
     if (munObj) {
       distanceKm = calculateHaversineDistance(munObj.lat, munObj.lng, school.lat, school.lng);
-      originLabel = munObj.nombre;
     }
   }
 
-  // Etapas confirmadas para este apoyo específico
+  const formattedDistance =
+    distanceKm === null
+      ? null
+      : school.ubicacionAproximada
+      ? `≈ ${Math.round(distanceKm)} km`
+      : `${distanceKm >= 10 ? Math.round(distanceKm) : distanceKm} km`;
+
   const confirmedStages = currentSupport?.etapasConApoyo || school.etapas;
-  const stageLabels = confirmedStages.map(s => {
-    if (s === 'infantil') return 'Infantil';
-    if (s === 'primaria') return 'Primaria';
-    if (s === 'eso') return 'Secundaria (ESO)';
-    if (s === 'bachillerato') return 'Bachillerato';
-    return 'FP Básica';
-  }).join(', ');
+  const stageLabels = confirmedStages
+    .map(s => {
+      if (s === 'infantil') return isEasyReadMode ? 'Infantil (3 a 6 años)' : 'Infantil';
+      if (s === 'primaria') return isEasyReadMode ? 'Primaria (6 a 12 años)' : 'Primaria';
+      if (s === 'eso') return isEasyReadMode ? 'Secundaria / ESO (12 a 16 años)' : 'Secundaria (ESO)';
+      if (s === 'bachillerato') return 'Bachillerato';
+      return 'FP Básica';
+    })
+    .join(', ');
 
-  // Continuidad simplificada
-  const continuityIsSameCentre = school.continuidad.tipoContinuidad === 'mismo_centro' || school.tipo === 'CEIPSO';
+  const continuityIsSameCentre =
+    school.continuidad.tipoContinuidad === 'mismo_centro' || school.tipo === 'CEIPSO';
   const zoneDestinations = school.continuidad.destinos.length;
-  const continuityText = school.continuidad.tipoContinuidad === 'zona'
-    ? zoneDestinations > 0
-      ? 'Hay centros TEA con ESO en la zona (adscripción no publicada)'
-      : 'Sin centros TEA con ESO en la zona del listado'
-    : continuityIsSameCentre
-    ? 'Imparte Primaria y ESO en el propio centro'
-    : school.continuidad.apoyoEnSecundariaVerificado === true
-    ? 'Confirmada en centro adscrito con apoyo'
-    : 'Adscripción a IES (comprobar vacantes)';
 
-  // Resumen de servicios en una sola línea tranquila
-  const servicesSummary: string[] = [];
-  if (school.servicios.comedor && school.servicios.enfermeria) {
-    servicesSummary.push('Comedor y enfermería publicados');
-  } else if (school.servicios.comedor) {
-    servicesSummary.push('Comedor publicado');
-  } else if (school.servicios.enfermeria) {
-    servicesSummary.push('Enfermería escolar publicada');
+  let continuityText = '';
+  if (needId === 'educacion_especial') {
+    continuityText = isEasyReadMode
+      ? 'El alumno puede seguir en este mismo colegio especial desde Infantil hasta los 18-21 años (PTVA).'
+      : 'EBO (6-16 años) y PTVA hasta los 21 años en el propio centro';
+  } else if (needId === 'salud_hospitalaria') {
+    continuityText = isEasyReadMode
+      ? 'Atención durante el ingreso hospitalario; después vuelve a su colegio habitual.'
+      : 'Unidad transitoria coordinada con el centro ordinario de origen';
+  } else if (needId === 'visual') {
+    continuityText = isEasyReadMode
+      ? 'Apoyo especializado itinerante en tu colegio o en el centro ONCE de Moratalaz.'
+      : 'Apoyo itinerante CAM–ONCE en centro ordinario o sede C.R.E. Moratalaz';
+  } else if (needId === 'altas_capacidades') {
+    continuityText = isEasyReadMode
+      ? 'El alumno sigue en su colegio normal y acude al taller los sábados o recibe apoyo experto.'
+      : 'Talleres quincenales los sábados (PEAC) o asesoramiento regional sin cambiar de centro';
+  } else if (needId === 'auditiva' || needId === 'motora' || needId === 'tdah' || needId === 'tel_lenguaje') {
+    continuityText = isEasyReadMode
+      ? 'Equipo regional que orienta y asesora en todas las etapas escolares sin matricular directamente.'
+      : 'Equipo público de ámbito regional: evalúa y orienta en todas las etapas (no escolariza directamente)';
+  } else if (school.continuidad.tipoContinuidad === 'zona') {
+    continuityText =
+      zoneDestinations > 0
+        ? isEasyReadMode
+          ? `Al terminar Primaria tendrás que pedir plaza en otro instituto. En esta zona hay ${zoneDestinations} institutos con apoyo para autismo.`
+          : 'Hay centros TEA con ESO en la zona (adscripción no publicada)'
+        : isEasyReadMode
+        ? 'No aparecen institutos con aula TEA en tu zona en la lista de 2024/25. Pregunta al Servicio de Escolarización (SAE).'
+        : 'Sin centros TEA con ESO en la zona del listado';
+  } else if (continuityIsSameCentre) {
+    continuityText = isEasyReadMode
+      ? 'El alumno puede seguir en el mismo centro cuando pase a Secundaria (ESO).'
+      : 'Imparte Primaria y ESO en el propio centro';
   } else {
-    servicesSummary.push('Sin comedor publicado');
+    continuityText =
+      school.continuidad.apoyoEnSecundariaVerificado === true
+        ? 'Confirmada en centro adscrito con apoyo'
+        : 'Adscripción a IES (comprobar vacantes)';
   }
 
-  if (school.servicios.transporte) {
-    servicesSummary.push('transporte adaptado disponible');
-  } else {
-    servicesSummary.push('transporte no localizado');
-  }
+  const evidenceLabel = isA1
+    ? 'Confirmado (A1)'
+    : isEasyReadMode
+    ? needId === 'salud_hospitalaria'
+      ? 'En trámite oficial: llama al centro o hospital'
+      : 'Lista oficial 2024/25: llama al centro o al SAE'
+    : 'Por comprobar (A2)';
 
-  const singleLineServices = isOfficial
-    ? 'Servicios y accesibilidad: sin datos en la fuente oficial.'
-    : `${servicesSummary.join('. ')}.`;
+  const locationDisplay = school.direccion
+    ? `${school.direccion} · ${school.municipio}${school.distrito ? ` (${school.distrito})` : ''}`
+    : `${school.municipio}${school.distrito ? ` (${school.distrito})` : ''}`;
+
+  const verifiedBadges: string[] = [];
+  if (school.servicios.comedor) verifiedBadges.push('Comedor');
+  if (school.servicios.aula_matinal) verifiedBadges.push('Horario ampliado');
+  if (school.servicios.transporte) verifiedBadges.push('Transporte');
+  if (school.accesibilidad.acceso_fisico) verifiedBadges.push('Acceso físico');
 
   return (
-    <article className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-300 hover:shadow-md transition-all flex flex-col justify-between">
+    <article
+      className={`bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-300 hover:shadow-md transition-all flex flex-col justify-between ${
+        isEasyReadMode ? 'text-sm leading-relaxed' : ''
+      }`}
+    >
       <div>
-        {/* Fila 1: Metadatos técnicos superiores y Sello de Evidencia */}
-        <div className="flex items-center justify-between gap-2 mb-1.5">
-          <div className="flex items-center flex-wrap gap-1.5 text-xs text-slate-500">
-            <span className="font-mono text-slate-700 font-semibold bg-slate-100 px-1.5 py-0.5 rounded">Cód. {school.codigo}</span>
-            <span className="text-slate-300">·</span>
-            <span>{school.titularidad === 'publico' ? 'Público' : 'Concertado'}</span>
-            <span className="text-slate-300">·</span>
-            <span>{school.tipo}</span>
-            {isOfficial ? (
+        {/* Fila 1: Metadatos técnicos y Sello de Evidencia */}
+        <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
+          <div className="flex items-center flex-wrap gap-1.5 text-xs text-slate-700">
+            <span className="font-mono text-slate-900 font-semibold bg-slate-100 px-1.5 py-0.5 rounded">
+              Cód. {school.codigo}
+            </span>
+            <span className="text-slate-500" aria-hidden="true">·</span>
+            <span>{ownershipLabel}</span>
+            {!isEasyReadMode && (
+              <>
+                <span className="text-slate-500" aria-hidden="true">·</span>
+                <span>{school.tipo}</span>
+              </>
+            )}
+            {isOfficial && (
               <span
-                className="text-[10px] font-bold uppercase tracking-wide text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded"
-                title="Registro cargado del listado oficial de la Comunidad de Madrid"
+                className="text-xs font-bold text-emerald-900 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded"
+                title="Registro oficial de la Comunidad de Madrid y Portal de Datos Abiertos CAM"
               >
-                Dato oficial
-              </span>
-            ) : (
-              <span
-                className="text-[10px] font-bold uppercase tracking-wide text-amber-900 bg-amber-100 border border-amber-200 px-1.5 py-0.5 rounded"
-                title="Registro sintético de demostración: no usar para decidir"
-              >
-                Demostración
+                Oficial
               </span>
             )}
           </div>
 
-          {/* Sello de Evidencia compacto y claro */}
           <div className="shrink-0">
             {isA1 ? (
               <span
-                className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full"
-                title="Evidencia oficial A1: Centro y etapa ratificados en resoluciones oficiales vigentes de la Comunidad de Madrid."
+                className="inline-flex items-center gap-1 text-xs font-bold text-emerald-900 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full"
+                title="Centro en situación ALTA en el Portal de Datos Abiertos CAM"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>Confirmado (A1)</span>
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                <span>{evidenceLabel}</span>
               </span>
             ) : (
               <span
-                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full"
-                title="Figura en el listado oficial de la Comunidad de Madrid (curso 2024/2025): comprueba la vigencia actual y las plazas con el Servicio de Apoyo a la Escolarización (SAE)."
+                className="inline-flex items-center gap-1 text-xs font-bold text-amber-900 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full"
+                title="Listado oficial CAM (curso 2024/2025 o en trámite): confirmar situación actual ante el SAE."
               >
-                <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                <span>Por comprobar (A2)</span>
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                <span>{evidenceLabel}</span>
               </span>
             )}
           </div>
         </div>
 
-        {/* Nombre del centro a ancho completo para evitar que se parta en 3 o 4 líneas */}
+        {/* Nombre del centro */}
         <h3 className="text-lg font-bold text-slate-900 leading-snug">
           <button
             type="button"
             onClick={() => onOpenDetail(school)}
-            className="text-left hover:text-blue-700 transition-colors cursor-pointer w-full"
+            className="text-left hover:text-blue-800 transition-colors cursor-pointer w-full"
           >
-            {school.nombre}
+            {displayName}
           </button>
         </h3>
 
-        {/* Ubicación y Distancia sin punto flotante suelto al saltar de línea */}
-        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600 mt-1.5">
-          <span className="inline-flex items-center gap-1 font-medium text-slate-700">
-            <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span>{school.municipio}{school.distrito ? ` (${school.distrito})` : ''}</span>
+        {/* Ubicación oficial real y distancia */}
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-700 mt-1.5">
+          <span className="inline-flex items-center gap-1 font-medium text-slate-800">
+            <MapPin className="w-3.5 h-3.5 text-blue-700 shrink-0" />
+            <span>{locationDisplay}</span>
           </span>
-          {distanceKm !== null && (
-            <div className="inline-flex items-center gap-1.5">
-              <span
-                className="font-bold text-blue-900 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded text-[11px] whitespace-nowrap"
-                title={school.ubicacionAproximada
-                  ? 'Distancia aproximada: el listado oficial no publica la dirección y se usa el centro del municipio o distrito.'
-                  : undefined}
-              >
-                {school.ubicacionAproximada ? '≈ ' : ''}{distanceKm} km
-              </span>
-              <span
-                className="font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 px-2 py-0.5 rounded text-[11px] whitespace-nowrap cursor-help transition-colors"
-                title={`Tiempo estimado en línea recta: ~${estimateTransitMinutes(distanceKm)} min aprox.`}
-              >
-                ⏱️ ~{estimateTransitMinutes(distanceKm)} min
-              </span>
-            </div>
+          {formattedDistance !== null && (
+            <span
+              className="font-bold text-blue-900 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded text-xs whitespace-nowrap"
+              title={
+                school.ubicacionAproximada
+                  ? 'Distancia aproximada al centro del municipio o distrito.'
+                  : 'Distancia en línea recta desde la referencia elegida a la ubicación oficial del centro.'
+              }
+            >
+              {formattedDistance}
+            </span>
           )}
         </div>
 
-        {/* 3 Puntos Clave Esenciales */}
-        <div className="mt-3.5 space-y-2 bg-slate-50/70 border border-slate-200/80 rounded-xl p-3.5 text-xs">
-          {/* Criterios confirmados */}
+        {/* 3 Puntos Clave */}
+        <div className={`mt-3.5 space-y-2 bg-slate-50 border border-slate-200 rounded-xl p-3.5 ${isEasyReadMode ? 'text-sm' : 'text-xs'}`}>
           <div className="flex items-start gap-2">
-            <span className="text-emerald-700 font-bold shrink-0 mt-0.5">✓</span>
-            <span className="font-semibold text-slate-800">
-              {needLabel}
-              {currentSupport?.aulaNombre ? `: ${currentSupport.aulaNombre}` : ''}
-            </span>
+            <span className="text-emerald-800 font-bold shrink-0 mt-0.5" aria-hidden="true">✓</span>
+            <span className="font-semibold text-slate-900">{needLabel}</span>
           </div>
 
           <div className="flex items-start gap-2">
-            <span className="text-emerald-700 font-bold shrink-0 mt-0.5">✓</span>
+            <span className="text-emerald-800 font-bold shrink-0 mt-0.5" aria-hidden="true">✓</span>
             <span className="text-slate-700">
-              {isOfficial ? 'Etapa en el listado oficial: ' : 'Confirmado para: '}
+              {isEasyReadMode
+                ? 'Etapa con plaza de apoyo: '
+                : needId === 'tea'
+                ? 'Etapa en el listado TEA: '
+                : 'Etapas oficiales: '}
               <span className="font-semibold text-slate-900">{stageLabels}</span>
             </span>
           </div>
 
-          {/* Bloque resumido de Continuidad a ESO */}
           <div className="pt-2 border-t border-slate-200 flex items-center justify-between gap-2">
-            <div className="text-[11px] text-slate-600">
-              <span className="font-bold text-slate-800">Continuidad ESO: </span>
+            <div className="text-xs text-slate-700">
+              <span className="font-bold text-slate-900">
+                {isEasyReadMode
+                  ? 'Continuidad: '
+                  : needId === 'tea'
+                  ? 'Continuidad ESO: '
+                  : 'Trayectoria: '}
+              </span>
               <span>{continuityText}</span>
             </div>
-            <button
-              type="button"
-              onClick={() => onOpenContinuity ? onOpenContinuity(school) : onOpenDetail(school)}
-              className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-700 hover:text-blue-900 hover:underline shrink-0 cursor-pointer"
-            >
-              <span>Destinos</span>
-              <ArrowUpRight className="w-3 h-3" />
-            </button>
+            {needId === 'tea' && (
+              <button
+                type="button"
+                onClick={() => (onOpenContinuity ? onOpenContinuity(school) : onOpenDetail(school))}
+                className="inline-flex items-center gap-1 text-xs font-bold text-blue-800 hover:text-blue-950 hover:underline shrink-0 cursor-pointer"
+              >
+                <span>Destinos</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Resumen de servicios en una sola línea tipográfica tranquila */}
-        <div className="text-[11px] text-slate-500 mt-2.5 mb-3 px-1 leading-relaxed">
-          {singleLineServices}
+        {/* Servicios confirmados por Ayuntamiento de Madrid / Transporte público / Teléfono */}
+        {(verifiedBadges.length > 0 || school.transportePublico) && (
+          <div className="mt-2.5 px-1 space-y-1.5">
+            {verifiedBadges.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5">
+                {verifiedBadges.map(badge => (
+                  <span
+                    key={badge}
+                    className="text-xs font-semibold text-blue-900 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md"
+                    title="Dato procedente del Portal de Datos Abiertos del Ayuntamiento de Madrid (datos.madrid.es)"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            )}
+            {school.transportePublico && (
+              <div className="text-xs text-slate-700 leading-snug line-clamp-2" title={school.transportePublico}>
+                <strong className="text-slate-900">Transporte público:</strong> {school.transportePublico}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Contacto rápido oficial / nota de servicios */}
+        <div className="text-xs text-slate-700 mt-2 mb-3 px-1 leading-relaxed">
+          {school.telefono ? (
+            isEasyReadMode ? (
+              `Teléfono oficial: ${school.telefono}.${
+                verifiedBadges.length === 0 ? ' Comedor y autobús escolar: debes preguntar en el colegio.' : ''
+              }`
+            ) : school.serviciosConfirmadosAyto ? (
+              `Tel. ${school.telefono} · Fuente municipal: datos.madrid.es`
+            ) : (
+              `Tel. ${school.telefono} · Servicios fuera de Madrid capital: sin datos en las fuentes oficiales.`
+            )
+          ) : (
+            formatText(
+              school.serviciosConfirmadosAyto
+                ? 'Equipamiento consultado en datos.madrid.es.'
+                : 'Servicios y accesibilidad: sin datos en las fuentes oficiales.'
+            )
+          )}
         </div>
       </div>
 
-      {/* Botonera de Acciones con Jerarquía Clara:
-          [Ficha completa] (Primaria - Rojo CAM) | [Comparar] (Secundaria - Azul) | ¿Por qué aparece? (Enlace) */}
-      <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+      {/* Botonera de Acciones */}
+      <div className="pt-3 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <button
           type="button"
           onClick={() => onOpenWhyAppears(school)}
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-900 hover:text-blue-950 hover:underline cursor-pointer"
-          title="Ver resolución oficial, fecha de corte y dotación del BOCM"
+          title="Ver origen oficial, fecha de corte y detalle del recurso"
         >
           <FileText className="w-3.5 h-3.5 text-blue-700" />
           <span>¿Por qué aparece?</span>
         </button>
 
         <div className="flex items-center gap-2">
-          {/* Botón secundario: Comparar (Azul) */}
           <button
             type="button"
             onClick={() => onToggleCompare(school)}
-            className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
+            className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
               isCompared
-                ? 'bg-blue-50 text-blue-900 border-blue-300 font-semibold'
-                : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50 hover:border-slate-400'
+                ? 'bg-blue-50 text-blue-900 border-blue-300'
+                : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-50'
             }`}
             title={isCompared ? 'Quitar del comparador' : 'Añadir al comparador (máximo 3 centros)'}
           >
@@ -307,13 +403,12 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
               </>
             ) : (
               <>
-                <Plus className="w-3.5 h-3.5 text-slate-500" />
+                <Plus className="w-3.5 h-3.5 text-slate-600" />
                 <span>Comparar</span>
               </>
             )}
           </button>
 
-          {/* Botón principal destacado: Ficha completa (Rojo Carmesí CAM) */}
           <button
             type="button"
             onClick={() => onOpenDetail(school)}

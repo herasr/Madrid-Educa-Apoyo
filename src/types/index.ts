@@ -23,7 +23,7 @@ export type StageId =
   | 'bachillerato' 
   | 'fp_basica';
 
-export type OwnershipId = 'publico' | 'concertado';
+export type OwnershipId = 'publico' | 'concertado' | 'privado';
 
 export type ModalityId = 'preferente' | 'especial' | 'ordinaria';
 
@@ -82,10 +82,11 @@ export interface School {
   codigo: string; // 8 dígitos CAM (ej. 28020941)
   nombre: string;
   titularidad: OwnershipId;
-  tipo: 'CEIP' | 'CEIPSO' | 'IES' | 'CEE' | 'Colegio Concertado';
+  tipo: 'CEIP' | 'CEIPSO' | 'IES' | 'CEE' | 'Aula Hospitalaria' | 'EOEP Específico' | 'CREACIM' | 'CRE ONCE' | 'IES (Sede PEAC)' | 'Colegio Concertado' | 'Centro Privado';
   modalidad: ModalityId;
   municipio: string;
   distrito?: string;
+  barrio?: string;
   codigoPostal: string;
   direccion: string;
   telefono: string;
@@ -99,15 +100,29 @@ export interface School {
   accesibilidad: Record<AccessibilityId, boolean>;
   continuidad: SchoolContinuity;
   observacionesOficiales?: string;
-  /** 'oficial' = dato cargado de una fuente pública de la Comunidad de Madrid; 'demo' = dato sintético de demostración. */
+  /** 'oficial' = dato cargado de una fuente pública verificada; 'demo' = dato sintético de demostración. */
   procedencia?: 'oficial' | 'demo';
   /** true cuando lat/lng son el centroide del municipio o distrito y no la dirección real. */
   ubicacionAproximada?: boolean;
   /** Documento oficial del que procede el registro. */
   fuenteUrl?: string;
+  /** Fuente del Portal de Datos Abiertos CAM usada para enriquecer dirección y coordenadas. */
+  fuenteDatosAbiertos?: string;
+  /** Transporte público cercano (Metro/Bus EMT/Cercanías) publicado por el Ayuntamiento de Madrid. */
+  transportePublico?: string;
+  /** Fuente municipal externa cuando el centro pertenece a Madrid capital y se cruza con datos.madrid.es. */
+  fuenteAyuntamiento?: string;
+  /** true cuando el registro del Ayuntamiento incluye bloque EQUIPAMIENTO verificando servicios. */
+  serviciosConfirmadosAyto?: boolean;
+  /** true cuando el registro del Ayuntamiento confirma ACCESIBILIDAD=1 (instalación accesible). */
+  accesibilidadConfirmadaAyto?: boolean;
+  /** Situación administrativa en el catálogo oficial CAM (ALTA / EN TRÁMITE). */
+  situacionOficial?: string;
   /** Nombre y tipo exactamente como figuran en la fuente oficial. */
   nombreOficial?: string;
   tipoOficial?: string;
+  /** Denominación extendida oficial del tipo de centro en Datos Abiertos CAM. */
+  tipoGeneralOficial?: string;
 }
 
 export interface SearchState {

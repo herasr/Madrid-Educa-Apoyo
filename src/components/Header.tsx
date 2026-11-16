@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * Encabezado Institucional Madrid Educa Apoyo (v2.4)
  * Estructura limpia y desaturada:
- * - 4 Secciones principales: Buscar | Continuidad | Comparador (X/3) | Pasaporte
- * - Menú secundario "Más": Fuentes, Metodología, Glosario, Pruebas FIL
- * - Banner legal desescalado a botón/modal accesible para no competir visualmente
+ * - Menú superior simplificado: Buscar, Comparar, Lectura Fácil, Exportar y Más
  */
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -14,17 +12,15 @@ import {
   GitCompare,
   Search,
   ChevronDown,
-  Info,
-  FileSpreadsheet,
   BookOpen,
-  Sparkles,
   ShieldCheck,
-  X,
   Share2,
   Download,
-  GraduationCap
+  GraduationCap,
+  Database,
+  PlayCircle
 } from 'lucide-react';
-import { LEGAL_DISCLAIMER } from '../data/disclaimerAndProcedures';
+import { ProcedureTopic } from '../data/disclaimerAndProcedures';
 
 interface HeaderProps {
   currentTab: 'search' | 'continuity' | 'comparator' | 'passport' | 'sources';
@@ -54,13 +50,18 @@ export const Header: React.FC<HeaderProps> = ({
   onExportJSON
 }) => {
   const [isShareExportOpen, setIsShareExportOpen] = useState(false);
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
   const shareExportMenuRef = useRef<HTMLDivElement>(null);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
 
   // Cerrar menús al hacer clic fuera
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (shareExportMenuRef.current && !shareExportMenuRef.current.contains(event.target as Node)) {
         setIsShareExportOpen(false);
+      }
+      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
+        setIsMoreMenuOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -70,22 +71,23 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2 lg:gap-4">
           {/* Zona 1: Identidad Cívica DataMad */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2.5 shrink-0">
             <button
+              type="button"
               onClick={() => onSelectTab('search')}
               className="text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded p-1"
             >
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 flex items-center justify-center text-white font-bold shadow-md text-base ring-2 ring-blue-100">
-                  <GraduationCap className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 flex items-center justify-center text-white font-bold shadow-md text-base ring-2 ring-blue-100 shrink-0">
+                  <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-base sm:text-xl font-extrabold tracking-tight text-slate-900 whitespace-nowrap">
+                  <div className="text-base sm:text-lg lg:text-xl font-extrabold tracking-tight text-slate-900 whitespace-nowrap">
                     Madrid Educa Apoyo
                   </div>
-                  <div className="text-[10px] font-semibold text-blue-700 tracking-tight leading-tight hidden sm:block truncate">
+                  <div className="text-xs font-semibold text-blue-800 tracking-tight leading-tight hidden sm:block truncate">
                     Proyecto DataMad 2026 · Datos Oficiales
                   </div>
                 </div>
@@ -93,113 +95,218 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {/* Zona 2: Navegación principal limpia (4 destinos clave + Menú Más) */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium text-slate-600" aria-label="Navegación principal">
+          {/* Zona 2: Navegación superior simplificada */}
+          <nav className="hidden md:flex items-center gap-1 lg:gap-2 text-xs lg:text-sm font-medium text-slate-700" aria-label="Navegación principal">
             {/* 1. Buscar */}
             <button
+              type="button"
               onClick={() => onSelectTab('search')}
-              className={`px-3.5 py-2 rounded-xl transition-all cursor-pointer inline-flex items-center gap-2 ${
+              className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                 currentTab === 'search'
                   ? 'bg-blue-50 text-blue-900 font-bold shadow-xs border border-blue-200/80'
                   : 'hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              <Search className={`w-4 h-4 ${currentTab === 'search' ? 'text-blue-700' : 'text-slate-500'}`} />
+              <Search className={`w-4 h-4 shrink-0 ${currentTab === 'search' ? 'text-blue-700' : 'text-slate-600'}`} />
               <span>Buscar</span>
             </button>
 
-            {/* 2. Comparador */}
+            {/* 2. Comparar */}
             <button
+              type="button"
               onClick={() => onSelectTab('comparator')}
-              className={`px-3.5 py-2 rounded-xl transition-all cursor-pointer inline-flex items-center gap-2 ${
+              className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                 currentTab === 'comparator'
                   ? 'bg-blue-50 text-blue-900 font-bold shadow-xs border border-blue-200/80'
                   : 'hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              <GitCompare className={`w-4 h-4 ${currentTab === 'comparator' ? 'text-blue-700' : 'text-slate-500'}`} />
+              <GitCompare className={`w-4 h-4 shrink-0 ${currentTab === 'comparator' ? 'text-blue-700' : 'text-slate-600'}`} />
               <span>Comparar</span>
-              <span className={`text-[11px] font-mono px-2 py-0.5 rounded-full tabular-nums font-bold ${
-                comparedCount > 0 ? 'bg-blue-100 text-blue-900' : 'bg-slate-100 text-slate-500'
+              <span className={`text-xs font-mono px-1.5 py-0.5 rounded-full tabular-nums font-bold ${
+                comparedCount > 0 ? 'bg-blue-100 text-blue-900' : 'bg-slate-100 text-slate-700'
               }`}>
                 {comparedCount}/3
               </span>
             </button>
 
-            {/* Nuevo Botón Modo Lectura Fácil */}
+            {/* 3. Lectura Fácil */}
             <button
+              type="button"
               onClick={onToggleEasyRead}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-xl transition-colors cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                 isEasyReadMode
                   ? 'bg-indigo-100 text-indigo-900 font-bold'
                   : 'hover:text-slate-900 hover:bg-slate-50'
               }`}
               title={isEasyReadMode ? 'Desactivar modo simplificado' : 'Activar modo Lectura Fácil'}
+              aria-pressed={isEasyReadMode}
             >
-              <BookOpen className={`w-4 h-4 ${isEasyReadMode ? 'text-indigo-700' : 'text-slate-500'}`} />
-              <span className="hidden lg:inline">Lectura Fácil</span>
+              <BookOpen className={`w-4 h-4 shrink-0 ${isEasyReadMode ? 'text-indigo-800' : 'text-slate-600'}`} />
+              <span>Lectura Fácil</span>
             </button>
 
-            {/* 3. Menú Desplegable "Compartir / Exportar" */}
+            {/* 4. Exportar (Dropdown) */}
             <div className="relative" ref={shareExportMenuRef}>
               <button
                 type="button"
                 onClick={() => setIsShareExportOpen(!isShareExportOpen)}
-                className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded-xl transition-colors cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isShareExportOpen
                     ? 'bg-blue-50 text-blue-900 font-bold'
                     : 'hover:text-slate-900 hover:bg-slate-50'
                 }`}
                 aria-expanded={isShareExportOpen}
               >
-                <Share2 className="w-4 h-4 text-blue-700" />
-                <span>Compartir / Exportar</span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                <Share2 className="w-4 h-4 text-blue-700 shrink-0" />
+                <span>Exportar</span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-600 shrink-0" />
               </button>
 
               {isShareExportOpen && (
                 <div className="absolute right-0 mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 z-50 text-xs">
                   <button
+                    type="button"
                     onClick={() => {
                       onShareLink();
                       setIsShareExportOpen(false);
                     }}
-                    className="w-full text-left px-3.5 py-2.5 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium"
+                    className="w-full text-left px-3.5 py-2.5 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium cursor-pointer"
                   >
                     <Share2 className="w-4 h-4 text-blue-700 shrink-0" />
                     <div>
                       <div className="font-semibold text-slate-900">Copiar enlace compartible</div>
-                      <div className="text-[11px] text-slate-400">Guarda todos los filtros y ubicación actuales</div>
+                      <div className="text-xs text-slate-600">Guarda tus filtros de búsqueda</div>
                     </div>
                   </button>
 
                   <div className="my-1 border-t border-slate-100" />
 
                   <button
+                    type="button"
                     onClick={() => {
                       onExportCSV();
                       setIsShareExportOpen(false);
                     }}
-                    className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium"
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium cursor-pointer"
                   >
                     <Download className="w-4 h-4 text-emerald-700 shrink-0" />
                     <div>
-                      <div className="font-semibold text-slate-900">Descargar Resultados CSV</div>
-                      <div className="text-[11px] text-slate-400">Tabla estructurada con procedencia BOCM</div>
+                      <div className="font-semibold text-slate-900">Descargar CSV</div>
+                      <div className="text-xs text-slate-600">Tabla con fuentes oficiales</div>
                     </div>
                   </button>
 
                   <button
+                    type="button"
                     onClick={() => {
                       onExportJSON();
                       setIsShareExportOpen(false);
                     }}
-                    className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium"
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium cursor-pointer"
                   >
                     <Download className="w-4 h-4 text-blue-700 shrink-0" />
                     <div>
-                      <div className="font-semibold text-slate-900">Descargar Resultados JSON</div>
-                      <div className="text-[11px] text-slate-400">Datos abiertos con metadata oficial</div>
+                      <div className="font-semibold text-slate-900">Descargar JSON</div>
+                      <div className="text-xs text-slate-600">Datos estructurados</div>
+                    </div>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* 5. Más (Dropdown) */}
+            <div className="relative" ref={moreMenuRef}>
+              <button
+                type="button"
+                onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+                className={`px-3 py-1.5 rounded-xl transition-colors cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                  isMoreMenuOpen
+                    ? 'bg-blue-50 text-blue-900 font-bold'
+                    : 'hover:text-slate-900 hover:bg-slate-50'
+                }`}
+                aria-expanded={isMoreMenuOpen}
+              >
+                <span>Más</span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-600 shrink-0" />
+              </button>
+
+              {isMoreMenuOpen && (
+                <div className="absolute right-0 mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 z-50 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onSelectTab('continuity');
+                      setIsMoreMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3.5 py-2.5 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium cursor-pointer"
+                  >
+                    <GraduationCap className="w-4 h-4 text-blue-700 shrink-0" />
+                    <div>
+                      <div className="font-semibold text-slate-900">Continuidad Educativa</div>
+                      <div className="text-xs text-slate-600">Transición de Primaria a ESO</div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onSelectTab('passport');
+                      setIsMoreMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3.5 py-2.5 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium cursor-pointer"
+                  >
+                    <BookmarkCheck className="w-4 h-4 text-emerald-700 shrink-0" />
+                    <div>
+                      <div className="font-semibold text-slate-900">Pasaporte Local {passportCount > 0 ? `(${passportCount})` : ''}</div>
+                      <div className="text-xs text-slate-600">Dossier familiar imprimible</div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onSelectTab('sources');
+                      setIsMoreMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3.5 py-2.5 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium cursor-pointer"
+                  >
+                    <Database className="w-4 h-4 text-indigo-700 shrink-0" />
+                    <div>
+                      <div className="font-semibold text-slate-900">Fuentes Oficiales</div>
+                      <div className="text-xs text-slate-600">Trazabilidad y CKAN de la CAM</div>
+                    </div>
+                  </button>
+
+                  <div className="my-1 border-t border-slate-100" />
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onOpenLegalModal();
+                      setIsMoreMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium cursor-pointer"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-slate-600 shrink-0" />
+                    <div>
+                      <div className="font-semibold text-slate-900">Aviso Legal y Privacidad</div>
+                      <div className="text-xs text-slate-600">Criterios A1/A2 y protección de datos</div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onOpenTestModal();
+                      setIsMoreMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 font-medium cursor-pointer"
+                  >
+                    <PlayCircle className="w-4 h-4 text-blue-700 shrink-0" />
+                    <div>
+                      <div className="font-semibold text-slate-900">Pruebas Técnicas (FIL-001/012)</div>
+                      <div className="text-xs text-slate-600">Batería de validación del motor</div>
                     </div>
                   </button>
                 </div>
@@ -209,54 +316,78 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Sub-barra de navegación móvil compacta */}
-        <div className="md:hidden flex items-center overflow-x-auto px-4 py-2 bg-slate-50 border-t border-slate-200 text-xs gap-2">
+        <div className="md:hidden flex items-center overflow-x-auto px-3 py-1.5 bg-slate-50 border-t border-slate-200 text-xs gap-1.5">
           <button
+            type="button"
             onClick={() => onSelectTab('search')}
-            className={`whitespace-nowrap px-3 py-1 rounded-lg font-medium cursor-pointer ${
+            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
               currentTab === 'search' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
             }`}
           >
             Buscar
           </button>
           <button
+            type="button"
             onClick={() => onSelectTab('comparator')}
-            className={`whitespace-nowrap px-3 py-1 rounded-lg font-medium cursor-pointer ${
+            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
               currentTab === 'comparator' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
             }`}
           >
             Comparar ({comparedCount}/3)
           </button>
           <button
+            type="button"
+            onClick={onToggleEasyRead}
+            aria-pressed={isEasyReadMode}
+            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
+              isEasyReadMode ? 'bg-indigo-100 text-indigo-900 font-bold' : 'text-slate-600'
+            }`}
+          >
+            Lectura Fácil
+          </button>
+          <button
+            type="button"
+            onClick={() => onSelectTab('continuity')}
+            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
+              currentTab === 'continuity' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
+            }`}
+          >
+            Continuidad
+          </button>
+          <button
+            type="button"
             onClick={() => onSelectTab('passport')}
-            className={`whitespace-nowrap px-3 py-1 rounded-lg font-medium cursor-pointer ${
+            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
               currentTab === 'passport' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
             }`}
           >
             Pasaporte ({passportCount})
           </button>
           <button
+            type="button"
             onClick={() => onSelectTab('sources')}
-            className={`whitespace-nowrap px-3 py-1 rounded-lg font-medium cursor-pointer ${
+            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
               currentTab === 'sources' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
             }`}
           >
             Fuentes
           </button>
           <button
+            type="button"
             onClick={onOpenLegalModal}
-            className="whitespace-nowrap px-3 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900 cursor-pointer"
+            className="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900 cursor-pointer"
           >
             Aviso Legal
           </button>
           <button
+            type="button"
             onClick={onOpenTestModal}
-            className="whitespace-nowrap px-3 py-1 rounded-lg font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 cursor-pointer"
+            className="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 cursor-pointer"
           >
             Pruebas FIL
           </button>
         </div>
       </header>
-
     </>
   );
 };

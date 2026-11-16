@@ -11,44 +11,133 @@ export const LEGAL_DISCLAIMER =
 export const OFFICIAL_SOURCES_INFO = [
   {
     prioridad: 1,
-    organismo: "Comunidad de Madrid · Consejería de Educación",
-    descripcion: "Relaciones oficiales de centros de atención preferente (listados de plazas y resoluciones de admisión).",
-    ambito: "Oficial vinculante (Comunidad de Madrid)."
+    organismo: "Portal de Datos Abiertos CAM · Centros educativos",
+    descripcion: "Conjunto abierto oficial 'Centros educativos de la Comunidad de Madrid' (CC BY 4.0). Aporta los 69 Centros de Educación Especial (ALTA), 14 Aulas Hospitalarias, 3 recursos de Discapacidad Visual (EOEP + C.R.E. ONCE), 10 recursos/sedes de Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC) y los EOEP Específicos regionales en situación ALTA para Auditivas (28700741), Motóricas (28700763) y Dificultades de Aprendizaje, Lenguaje y TDAH (28701214), con dirección postal, teléfono, correo, web, distrito y coordenadas UTM (ETRS89) cruzadas por código oficial.",
+    ambito: "Datos Abiertos CAM (CC BY 4.0)."
   },
   {
     prioridad: 2,
+    organismo: "Comunidad de Madrid · Consejería de Educación (TEA, PEAC y Equipos Específicos)",
+    descripcion: "Relación oficial de centros de atención preferente TEA con plazas previsibles (curso 2024/2025, 336 centros), junto con la red regional del Programa de Enriquecimiento Educativo (PEAC, 8 sedes IES), CREACIM y los 5 EOEP Específicos regionales.",
+    ambito: "Información pública CAM (Ley 37/2007)."
+  },
+  {
+    prioridad: 3,
+    organismo: "Ayuntamiento de Madrid · Portal de Datos Abiertos (datos.madrid.es)",
+    descripcion: "Conjunto 'Centros educativos en Madrid' (300614-0): aporta líneas de Metro, EMT y Cercanías, barrio, accesibilidad física certificada y servicios confirmados (comedor, horario ampliado, transporte) exclusivamente para centros situados en Madrid capital.",
+    ambito: "Datos Abiertos Ayto. Madrid (solo capital)."
+  },
+  {
+    prioridad: 4,
+    organismo: "Ministerio de Educación (RCD) y Convenio CAM–ONCE",
+    descripcion: "Referencia institucional estatal (RCD) que respalda la codificación oficial de CEE y aulas hospitalarias, junto con el C.R.E. «Antonio Vicente Mosquete» de la ONCE para el apoyo a la discapacidad visual.",
+    ambito: "Información pública estatal y ONCE."
+  },
+  {
+    prioridad: 5,
     organismo: "Nomenclátor INE / IGN",
-    descripcion: "Coordenadas de centroides y delimitación territorial para los 179 municipios de la región y distritos de la capital.",
-    ambito: "Geodesia y delimitaciones territoriales oficiales."
+    descripcion: "Coordenadas municipales de respaldo y normalización toponímica para los 179 municipios de la región.",
+    ambito: "Geodesia y nomenclátor oficial."
   }
 ];
 
 export const SPECIAL_PROCEDURES = {
   visual: {
-    titulo: "Discapacidad Visual: Equipo Específico (EOEP) y Convenio CAM-ONCE",
-    subtitulo: "Medidas inclusivas sin red de centros preferentes nominales fijos",
-    resumen: "En la Comunidad de Madrid, la atención al alumnado con discapacidad visual no se organiza en una red de centros preferentes cerrados, sino a través del Equipo de Orientación Educativa y Psicopedagógica Específico de Discapacidad Visual (EOEP Visual), con sede central y ámbito regional, en estrecha colaboración con la ONCE.",
+    titulo: "Discapacidad Visual: Equipo Específico (EOEP) y C.R.E. ONCE",
+    subtitulo: "Atención itinerante en cualquier centro ordinario + sede específica CRE ONCE (sin red de preferentes)",
+    resumen: "En la Comunidad de Madrid, el alumnado con discapacidad visual puede escolarizarse en cualquier centro ordinario apoyado por el Equipo Específico de Deficiencias Visuales (convenio CAM–ONCE) o en los centros de recursos del C.R.E. «Antonio Vicente Mosquete» de la ONCE en Moratalaz (código 28021070 para CEE y 28067501 para Primaria/ESO).",
     comoFunciona: [
-      "El menor puede escolarizarse en cualquier centro ordinario de la Comunidad de Madrid.",
-      "El EOEP Específico de Discapacidad Visual evalúa las necesidades y asigna maestros itinerantes de apoyo especializado (profesorado de la CAM y de la ONCE).",
-      "Se dota al centro y al alumno de tiflotecnología, adaptación de libros de texto a braille o caracteres ampliados y formación al claustro docente.",
-      "Para solicitar esta atención es preceptiva la valoración oftalmológica y la tramitación del dictamen de escolarización por el EOEP de sector o DO."
+      "El menor puede escolarizarse en cualquier centro ordinario de la Comunidad de Madrid sin depender de un listado de colegios preferentes.",
+      "El EOEP Específico de Deficiencias Visuales (Avda. de Canillejas a Vicálvaro, 82) evalúa las necesidades y asigna maestros itinerantes de apoyo (profesorado de la CAM y de la ONCE).",
+      "Se dota al centro y al alumnado de tiflotecnología, adaptación de materiales a braille o caracteres ampliados y asesoramiento al equipo docente.",
+      "El C.R.E. «Antonio Vicente Mosquete» (ONCE) funciona además como centro educativo específico y de recursos en Moratalaz."
     ],
-    tramiteEnlace: "https://www.comunidad.madrid/servicios/educacion/atencion-diferencias-individuales",
-    contacto: "Equipo Específico Discapacidad Visual CAM: C/ Paseo de la Habana 140, Madrid."
+    tramiteEnlace: "https://www.once.es/servicios-sociales/educacion-inclusiva",
+    tramiteEtiqueta: "Ver programa educativo inclusivo en portal oficial ONCE",
+    contacto: "EOEP Específico de Deficiencias Visuales CAM: Avda. de Canillejas a Vicálvaro, 82, 28022 Madrid (Tel. 91 350 62 88) · C.R.E. «Antonio Vicente Mosquete» ONCE: Avda. del Doctor García Tapia, 210, 28030 Moratalaz (Tel. 91 353 56 28)."
   },
   altas_capacidades: {
-    titulo: "Altas Capacidades: Programa PEAC, CREACIM y Medidas Oficiales",
-    subtitulo: "Programa extracurricular y adaptaciones curriculares en centros ordinarios",
-    resumen: "El alumnado con Altas Capacidades Intelectuales no acude a centros preferentes cerrados. Permanece escolarizado en su centro ordinario, donde se aplican adaptaciones curriculares de enriquecimiento o flexibilización de curso, y tiene acceso al Programa de Enriquecimiento Educativo de la Comunidad de Madrid (PEAC).",
+    titulo: "Altas Capacidades: CREACIM, EOEP Específico y Red de 8 Sedes PEAC",
+    subtitulo: "Escolarización ordinaria complementada con evaluación regional y talleres de los sábados (PEAC)",
+    resumen: "El alumnado con Altas Capacidades Intelectuales permanece escolarizado en su centro ordinario con medidas de enriquecimiento o flexibilización curricular. Esta aplicación muestra los 10 recursos y sedes oficiales verificadas en Datos Abiertos CAM: el centro regional CREACIM, el EOEP Específico y las 8 sedes IES comarcales del Programa PEAC (sábados).",
     comoFunciona: [
-      "Detección y Evaluación Psicopedagógica: Realizada por el Equipo de Orientación (EOEP) o el Departamento de Orientación del propio centro.",
-      "Propuesta al PEAC: El centro tramita la incorporación a través de la Dirección General de Educación Infantil, Primaria y Especial.",
-      "Actividades en sedes los sábados: El PEAC se imparte quincenalmente en centros sede comarcales de la Comunidad de Madrid (Madrid Capital, Alcalá, Las Rozas, Móstoles, Leganés).",
-      "CREACIM: El Centro Regional para la Evaluación e Innovación de las Altas Capacidades asesora técnica y metodológicamente a los equipos docentes."
+      "Detección y evaluación psicopedagógica: realizada por el EOEP de sector o Departamento de Orientación, con asesoramiento del EOEP Específico de Altas Capacidades.",
+      "Propuesta al Programa PEAC: el centro escolar solicita la incorporación tras la evaluación psicopedagógica y el visto bueno familiar.",
+      "Asistencia los sábados (quincenal, Primaria/ESO/Bachillerato): en 8 institutos sede oficiales (Madrid Centro/Arganzuela, Salamanca, Alcalá de Henares, Leganés, Móstoles, Las Rozas, Pozuelo y San Sebastián de los Reyes).",
+      "CREACIM (Complejo Educativo El Sol): centro regional público especializado en evaluación, asesoramiento e innovación educativa para Altas Capacidades."
     ],
     tramiteEnlace: "https://www.comunidad.madrid/servicios/educacion/programa-enriquecimiento-educativo-alumnos-altas-capacidades",
-    contacto: "Unidad Técnica de Orientación y Atención a la Diversidad CAM."
+    tramiteEtiqueta: "Ver trámite en portal oficial Comunidad de Madrid",
+    contacto: "CREACIM y EOEP Específico de Altas Capacidades: Avda. de Canillejas a Vicálvaro, 82 (Complejo Educativo El Sol), 28022 Madrid."
+  },
+  auditiva: {
+    titulo: "Discapacidad Auditiva: EOEP Específico y Centros Preferentes",
+    subtitulo: "Equipo público regional en Datos Abiertos CAM (cód. 28700741); red de preferentes sujeta a consulta por DAT/SAE",
+    resumen: "La Comunidad de Madrid no publica todavía un CSV abierto descargable con el listado nominativo actualizado de centros preferentes para alumnado sordo o con hipoacusia. En el catálogo oficial CKAN (ALTA) sí figura el EOEP Específico de Deficiencias Auditivas (código 28700741), que cubre toda la región.",
+    comoFunciona: [
+      "El EOEP de sector o EAT inicia la valoración psicopedagógica en coordinación con el EOEP Específico de Deficiencias Auditivas.",
+      "El equipo específico orienta sobre el código de comunicación idóneo (lengua oral, Lengua de Signos Española - LSE o bilingüe) y ayudas técnicas (emisoras FM / bucle).",
+      "Si el dictamen propone escolarización preferente en sordera, el Servicio de Apoyo a la Escolarización (SAE) o el buscador oficial de centros CAM asignan plaza según DAT.",
+      "Por rigor deontológico, la web no carga listas parciales o desactualizadas; puedes contactar directamente con el EOEP Auditivas o consultar el buscador web CAM."
+    ],
+    tramiteEnlace: "https://www.comunidad.madrid/servicios/educacion/atencion-preferente-necesidades-educativas-especiales",
+    tramiteEtiqueta: "Ver atención preferente en portal oficial CAM",
+    contacto: "EOEP Específico de Deficiencias Auditivas (cód. 28700741): Avda. de Canillejas a Vicálvaro, 82, 28022 Madrid · Tel. 91 760 15 21 · eoep.auditivas.madrid@educa.madrid.org."
+  },
+  motora: {
+    titulo: "Discapacidad Motora: EOEP Específico, Fisioterapia y Personal ATU",
+    subtitulo: "Equipo público regional en Datos Abiertos CAM (cód. 28700763); centros preferentes consultables vía DAT/SAE",
+    resumen: "La Consejería no publica aún un fichero abierto autonómico descargable con todos los colegios e institutos preferentes de discapacidad motora. El catálogo oficial CAM (CC BY 4.0) sí registra en situación ALTA el EOEP Específico de Deficiencias Motóricas (código 28700763) de ámbito regional.",
+    comoFunciona: [
+      "Valoración conjunta del EOEP de sector / EAT y del EOEP Específico de Deficiencias Motóricas sobre necesidades de desplazamiento, postura y comunicación.",
+      "El dictamen de escolarización determina si requiere centro preferente motórico con dotación de fisioterapeuta, auxiliar técnico educativo (ATU) y ascensor/baño adaptado.",
+      "La solicitud de plaza con recursos motóricos se canaliza ante la Dirección de Área Territorial (DAT) y el Servicio de Apoyo a la Escolarización (SAE) de cada zona.",
+      "En centros situados en Madrid capital puedes activar además el filtro 'Acceso a cota cero' procedente de datos.madrid.es cuando selecciones otras líneas."
+    ],
+    tramiteEnlace: "https://www.comunidad.madrid/servicios/educacion/atencion-preferente-necesidades-educativas-especiales",
+    tramiteEtiqueta: "Ver centros de integración preferente en portal CAM",
+    contacto: "EOEP Específico de Deficiencias Motóricas (cód. 28700763): Avda. de Canillejas a Vicálvaro, 82, 28022 Madrid · Tel. 91 306 07 30 · eoep.motoricas.madrid@educa.madrid.org."
+  },
+  tdah: {
+    titulo: "TDAH y Dificultades de Aprendizaje: EOEP Específico Regional",
+    subtitulo: "Atención en cualquier centro ordinario + asesoramiento del EOEP Específico (cód. 28701214)",
+    resumen: "En la Comunidad de Madrid no existe una red separada de centros preferentes para TDAH o dislexia: las medidas metodológicas, adaptaciones de acceso y apoyo específico se aplican en cualquier colegio o instituto ordinario, con asesoramiento técnico del EOEP Específico regional (código 28701214).",
+    comoFunciona: [
+      "El tutor y el EOEP de sector o Departamento de Orientación del centro ordinario evalúan las necesidades de apoyo educativo y diseñan medidas organizativas y curriculares.",
+      "Para alumnado con necesidades específicas derivadas de TDAH o dificultades de aprendizaje, el equipo docente puede requerir asesoramiento técnico al EOEP Específico (28701214).",
+      "El alumnado tiene derecho a adaptaciones metodológicas y de evaluación (tiempo adicional, formato accesible) durante Primaria, ESO y Bachillerato / EvAU.",
+      "Las familias mantienen la escolarización ordinaria habitual sin necesidad de traslado a centros específicos."
+    ],
+    tramiteEnlace: "https://www.educa2.madrid.org/web/eoep.tdah.madrid",
+    tramiteEtiqueta: "Visitar web oficial del EOEP Dificultades y TDAH",
+    contacto: "EOEP Específico de Dificultades de Aprendizaje, Trastornos del Lenguaje y TDAH (cód. 28701214): Avda. de Canillejas a Vicálvaro, 82, 28022 Madrid · eoep.tdah.madrid@educa.madrid.org."
+  },
+  tel_lenguaje: {
+    titulo: "Trastornos del Lenguaje (TDL/TEL): EOEP Específico y Especialista AL",
+    subtitulo: "Atención en centro ordinario + orientación del EOEP Específico de Lenguaje y TDAH (cód. 28701214)",
+    resumen: "Los Trastornos del Desarrollo del Lenguaje (TDL/TEL) no cuentan con un fichero descargable autonómico separado porque se atienden habitualmente dentro de los centros ordinarios con profesorado especialista en Audición y Lenguaje (AL) y el asesoramiento técnico del EOEP Específico (código 28701214).",
+    comoFunciona: [
+      "El EOEP de Atención Temprana (0-6 años) o EOEP de sector valora la presencia de necesidades específicas de apoyo en comunicación y lenguaje.",
+      "El centro escolar asigna apoyos de Audición y Lenguaje (AL) y Pedagogía Terapéutica (PT) dentro de la modalidad ordinaria.",
+      "El EOEP Específico de Dificultades de Aprendizaje, Trastornos del Lenguaje y TDAH (28701214) orienta de manera regional a orientadores, maestros AL y familias.",
+      "En casos graves que precisen adaptación curricular extrema, se valora la coordinación interequipos con otros recursos preferentes o específicos."
+    ],
+    tramiteEnlace: "https://www.educa2.madrid.org/web/eoep.tdah.madrid",
+    tramiteEtiqueta: "Visitar web oficial del EOEP Lenguaje y TDAH",
+    contacto: "EOEP Específico de Dificultades de Aprendizaje, Trastornos del Lenguaje y TDAH (cód. 28701214): Avda. de Canillejas a Vicálvaro, 82, 28022 Madrid · eoep.tdah.madrid@educa.madrid.org."
+  },
+  compensatoria: {
+    titulo: "Escuelas de Bienvenida y Aulas de Enlace (DAT)",
+    subtitulo: "Programa temporal por Dirección de Área Territorial (sin conjunto abierto descargable)",
+    resumen: "El programa «Escuelas de Bienvenida» (Aulas de Enlace para alumnado de incorporación tardía con desconocimiento del español o desfase curricular) y las actuaciones de Compensación Educativa se autorizan por curso desde las Direcciones de Área Territorial (DAT). No existe aún un dataset abierto en Datos Abiertos CAM ni un EOEP único descargable.",
+    comoFunciona: [
+      "El Servicio de Apoyo a la Escolarización (SAE) de la zona valora al alumno recién llegado e indica si precisa incorporación temporal a un Aula de Enlace de su área territorial.",
+      "La permanencia en el Aula de Enlace tiene carácter temporal (habitualmente hasta nueve meses) para el aprendizaje intensivo de la lengua vehicular y posterior integración en su grupo ordinario.",
+      "Las medidas de Escuelas de Bienvenida y compensación educativa se prestan en los centros sostenidos con fondos públicos autorizados cada curso por la Consejería.",
+      "Para conocer qué instituto o colegio tiene Aula de Enlace activa en tu localidad hoy, debes dirigirte al SAE de tu municipio o distrito."
+    ],
+    tramiteEnlace: "https://www.comunidad.madrid/servicios/educacion/compensacion-educativa",
+    tramiteEtiqueta: "Ver Escuelas de Bienvenida en portal oficial CAM"
   },
   educacion_especial: {
     titulo: "Modalidad: Centros de Educación Especial (CEE)",
@@ -62,4 +151,7 @@ export const SPECIAL_PROCEDURES = {
     ],
     tramiteEnlace: "https://www.comunidad.madrid/servicios/educacion/educacion-especial"
   }
-};
+} as const;
+
+export type ProcedureTopic = keyof typeof SPECIAL_PROCEDURES;
+

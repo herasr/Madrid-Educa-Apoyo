@@ -1,0 +1,12 @@
+{
+  "dataset": "Centros educativos en Madrid (Portal de Datos Abiertos del Ayuntamiento de Madrid)",
+  "dataset_id": "300614-0-centros-educativos",
+  "portal_url": "https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=b345322456556410VgnVCM1000000b205a0aRCRD",
+  "resource_csv_url": "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
+  "ambito": "Exclusivamente término municipal de Madrid capital",
+  "licencia": "Condiciones generales para la reutilización de la información del Ayuntamiento de Madrid",
+  "fecha_descarga": "2026-11-16T12:55:43Z",
+  "sha256_fuente_original": "9ca3972039f1a418b528e5afc38b2461c48a859ef683fb8c3f65ed204e3d983b",
+  "registros_totales": 1618,
+  "nota": "Copia UTF-8 exacta de 300614-0-centros-educativos.csv usada como respaldo cuando el portal municipal no responde en vivo."
+}

@@ -12,7 +12,7 @@
  * - Comparador con límite de 3 centros y alerta de filtros posteriores
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   DynamicCounts,
   RelaxationOption,
@@ -61,10 +61,11 @@ import {
   ShieldCheck,
   X
 } from 'lucide-react';
-import { LEGAL_DISCLAIMER } from './data/disclaimerAndProcedures';
+import { LEGAL_DISCLAIMER, ProcedureTopic } from './data/disclaimerAndProcedures';
+import { useModalFocusTrap } from './utils/useModalFocusTrap';
 
 export default function App() {
-  // 1. Estado de búsqueda inicial con sincronización de URL (N.4 y FIL-009)
+  // 1. Estado de búsqueda inicial con sincronización de URL
   const [searchState, setSearchState] = useState<SearchState>(() => {
     if (typeof window !== 'undefined' && window.location.search) {
       try {
@@ -81,36 +82,7 @@ export default function App() {
 
   // Modo de visualización en el buscador: Mapa (Mapa + Lista) por defecto en primera carga, o Lista
   const [searchViewMode, setSearchViewMode] = useState<'cards' | 'map'>('map');
-  const [focusedSchoolId, setFocusedSchoolId] = useState<string | null>(null);
-
-  // Detección automática de la ubicación del usuario en la primera carga
-  useEffect(() => {
-    if (typeof navigator !== 'undefined' && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          const lat = Number(pos.coords.latitude.toFixed(4));
-          const lng = Number(pos.coords.longitude.toFixed(4));
-          setSearchState(prev => {
-            if (prev.locationSource === 'browser') {
-              return {
-                ...prev,
-                userCoordinates: {
-                  lat,
-                  lng,
-                  label: 'Tu ubicación actual'
-                }
-              };
-            }
-            return prev;
-          });
-        },
-        err => {
-          console.info('Ubicación del navegador no disponible o denegada:', err.message);
-        },
-        { timeout: 7000, enableHighAccuracy: false }
-      );
-    }
-  }, []);
+  const [visibleCount, setVisibleCount] = useState<number>(24);
 
   // Centros guardados en el comparador (máximo 3) y en el pasaporte local
   const [comparedIds, setComparedIds] = useState<string[]>(() => {
@@ -135,8 +107,8 @@ export default function App() {
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
   const [modalInitialTab, setModalInitialTab] = useState<'why' | 'details' | 'continuity'>('details');
 
-  // Estado del modal de procedimientos específicos (Visual / Altas capacidades)
-  const [procedureTopic, setProcedureTopic] = useState<'visual' | 'altas_capacidades' | 'educacion_especial' | null>(null);
+  // Estado del modal de procedimientos específicos (Visual / Altas capacidades / CEE / EOEP / Compensatoria)
+  const [procedureTopic, setProcedureTopic] = useState<ProcedureTopic | null>(null);
 
   // Modal de Batería de Pruebas oficiales FIL-001 a FIL-012
   const [isTestModalOpen, setIsTestModalOpen] = useState<boolean>(false);
@@ -145,9 +117,37 @@ export default function App() {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
   const [isEasyReadMode, setIsEasyReadMode] = useState<boolean>(false);
   const [isLegalModalOpen, setIsLegalModalOpen] = useState<boolean>(false);
+  const legalModalRef = useRef<HTMLDivElement>(null);
 
-  // Notificación breve de ejecución de test
+  // Notificación breve accesible
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
+
+  const showToast = (message: string, duration = 3500) => {
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+    setToastMessage(message);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToastMessage(null);
+      toastTimerRef.current = null;
+    }, duration);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current !== null) {
+        window.clearTimeout(toastTimerRef.current);
+      }
+    };
+  }, []);
+
+  const closeLegalModal = React.useCallback(() => setIsLegalModalOpen(false), []);
+  useModalFocusTrap(isLegalModalOpen, legalModalRef, closeLegalModal);
+
+  useEffect(() => {
+    setVisibleCount(24);
+  }, [searchState]);
 
   // Guardar comparador y pasaporte en localStorage
   useEffect(() => {
@@ -203,17 +203,15 @@ export default function App() {
 
   // Handlers para comparar (Límite estricto a 3 centros para legibilidad familiar)
   const handleToggleCompare = (school: School) => {
-    setComparedIds(prev => {
-      if (prev.includes(school.id)) {
-        return prev.filter(id => id !== school.id);
-      } else {
-        if (prev.length >= 3) {
-          alert('El comparador permite un máximo de 3 centros simultáneos para garantizar una lectura clara y sin sobrecarga.');
-          return prev;
-        }
-        return [...prev, school.id];
-      }
-    });
+    if (comparedIds.includes(school.id)) {
+      setComparedIds(prev => prev.filter(id => id !== school.id));
+      return;
+    }
+    if (comparedIds.length >= 3) {
+      showToast('El comparador permite un máximo de 3 centros simultáneos para mantener una lectura clara.', 4500);
+      return;
+    }
+    setComparedIds(prev => [...prev, school.id]);
   };
 
   const handleTogglePassport = (school: School) => {
@@ -253,20 +251,20 @@ export default function App() {
     setSearchState(INITIAL_SEARCH_STATE);
   };
 
-  // Copiar enlace compartible completo
+  // Copiar enlace compartible completo (sin coordenadas GPS personales)
   const handleShareLink = () => {
     const fullUrl = window.location.href;
+    const msg = searchState.locationSource === 'browser'
+      ? 'Enlace copiado (por privacidad, omite tu ubicación GPS exacta).'
+      : '¡Enlace compartible copiado al portapapeles!';
     if (navigator.clipboard) {
       navigator.clipboard.writeText(fullUrl).then(() => {
-        setToastMessage('¡Enlace compartible completo copiado al portapapeles!');
-        setTimeout(() => setToastMessage(null), 3500);
+        showToast(msg, 4000);
       }).catch(() => {
-        setToastMessage(`Enlace: ${fullUrl}`);
-        setTimeout(() => setToastMessage(null), 4000);
+        showToast(`Enlace: ${fullUrl}`, 4000);
       });
     } else {
-      setToastMessage(`Enlace: ${fullUrl}`);
-      setTimeout(() => setToastMessage(null), 4000);
+      showToast(`Enlace: ${fullUrl}`, 4000);
     }
   };
 
@@ -286,12 +284,32 @@ export default function App() {
     setSearchState(prev => relaxation.apply(prev));
   };
 
-  // Ejecutar escenario de prueba FIL-001 a FIL-012
+  // Ejecutar escenario de prueba FIL-001 a FIL-012 desde un estado limpio
   const handleRunTest = (test: TestScenario) => {
-    setSearchState(prev => ({
-      ...prev,
+    const cleanBaseState: SearchState = {
+      ...INITIAL_SEARCH_STATE,
+      need: 'tea',
+      stages: [],
+      stageMatchMode: 'any',
+      municipality: null,
+      district: null,
+      radiusKm: null,
+      locationSource: 'municipality',
+      userCoordinates: null,
+      ownership: [],
+      modalities: [],
+      requiredServices: [],
+      preferredServices: [],
+      accessibilityRequired: [],
+      evidence: ['A1', 'A2'],
+      searchQuery: '',
+      sort: 'distance'
+    };
+
+    setSearchState({
+      ...cleanBaseState,
       ...test.estadoPrueba
-    }));
+    });
 
     if (test.code === 'FIL-010') {
       setActiveTab('passport');
@@ -301,10 +319,7 @@ export default function App() {
       setActiveTab('search');
     }
 
-    setToastMessage(`Prueba ${test.code} ejecutada: ${test.titulo}`);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 4500);
+    showToast(`Prueba ${test.code} ejecutada: ${test.titulo}`, 4500);
   };
 
   return (
@@ -325,31 +340,32 @@ export default function App() {
       />
 
       {/* 1b. Aviso de Transparencia y Origen de Datos en la Cabecera (Proyecto DataMad 2026) */}
-      <div className="bg-amber-50 border-b border-amber-200/80 px-4 py-2.5 text-xs text-amber-950">
+      <div className="bg-amber-50 border-b border-amber-200 px-4 py-2.5 text-xs text-amber-950">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
-            <span className="font-bold uppercase tracking-wider bg-blue-100 text-blue-950 px-2 py-0.5 rounded text-[10px] text-center sm:text-left leading-tight whitespace-normal">
-              Datos oficiales · Curso 2024/25 · Ubicaciones aproximadas
+            <span className="font-bold uppercase tracking-wide bg-blue-100 text-blue-950 px-2.5 py-0.5 rounded text-xs text-center sm:text-left leading-tight whitespace-normal">
+              Datos abiertos · CAM + Ayto. Madrid + RCD
             </span>
-            <span className="text-[11px] text-amber-900 leading-tight">
-              <strong>Transparencia:</strong> Catálogo de 336 centros de atención preferente TEA de la Comunidad de Madrid (curso {OFFICIAL_TEA_SOURCE.curso}). Ubicaciones calculadas por centroide municipal o de distrito. Proyecto DataMad 2026.
+            <span className="text-xs text-amber-950 leading-snug">
+              <strong>Transparencia:</strong> {OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos oficiales ({OFFICIAL_TEA_SOURCE.totalCentros} TEA · {OFFICIAL_TEA_SOURCE.totalCee} CEE · {OFFICIAL_TEA_SOURCE.totalHospitalarias} Hosp. · {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} AACC · {OFFICIAL_TEA_SOURCE.totalVisual} Visual · EOEP Auditiva/Motora/TDAH-TEL), con {OFFICIAL_TEA_SOURCE.totalConTransporteAyto} en Madrid capital enriquecidos vía <span className="font-mono">datos.madrid.es</span>.
             </span>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <button
+              type="button"
               onClick={() => setIsLegalModalOpen(true)}
-              className="text-[11px] font-bold text-amber-900 hover:text-amber-950 underline cursor-pointer"
+              className="text-xs font-bold text-amber-950 hover:underline cursor-pointer"
             >
-              Marco y Metodología
+              Marco y Privacidad
             </button>
             <a
               href="https://www.comunidad.madrid/servicios/educacion"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[11px] font-bold text-amber-900 hover:text-amber-950 underline inline-flex items-center gap-1"
+              className="text-xs font-bold text-amber-950 hover:underline inline-flex items-center gap-1"
             >
-              <span>Buscador Oficial CAM</span>
-              <ExternalLink className="w-3 h-3" />
+              <span>Portal Educación CAM</span>
+              <ExternalLink className="w-3 h-3" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -367,7 +383,7 @@ export default function App() {
         </div>
       )}
 
-      {/* 2. Barra de Filtros Activos Resumen (Anexo N.6) - En pestaña Buscar */}
+      {/* 2. Barra de Filtros Activos Resumen - En pestaña Buscar */}
       {activeTab === 'search' && (
         <ActiveFilterChips
           state={searchState}
@@ -377,11 +393,32 @@ export default function App() {
         />
       )}
 
+      {isEasyReadMode && (
+        <div className="bg-indigo-50 border-b border-indigo-200 px-4 py-2 text-xs text-indigo-950">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <span>
+              <strong>Modo Lectura Fácil activo:</strong> las siglas técnicas (<em>CEIPSO, IES, SIES, SAE, EOEP</em>) se muestran explicadas en lenguaje sencillo.
+            </span>
+            <button
+              type="button"
+              onClick={() => setIsEasyReadMode(false)}
+              className="text-indigo-800 font-bold hover:underline cursor-pointer"
+            >
+              Desactivar
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 3. Contenido Principal */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 min-w-0">
         {/* PESTAÑA A: BUSCADOR UNIFICADO CON VISTAS (LISTA, MAPA + LISTA, MAPA) */}
         {activeTab === 'search' && (
-          <div className="flex flex-col lg:flex-row gap-6 items-start min-w-0">
+          <div>
+            <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight mb-4">
+              Buscador Cívico de Educación Inclusiva en la Comunidad de Madrid
+            </h1>
+            <div className="flex flex-col lg:flex-row gap-6 items-start min-w-0">
             {/* Botón flotante para abrir filtros en pantallas pequeñas */}
             <div className="lg:hidden w-full flex items-center justify-between gap-2 mb-2">
               <button
@@ -389,11 +426,11 @@ export default function App() {
                 onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 shadow-xs cursor-pointer"
               >
-                <SlidersHorizontal className="w-4 h-4 text-cam-red" />
+                <SlidersHorizontal className="w-4 h-4 text-cam-red" aria-hidden="true" />
                 <span>{isMobileFilterOpen ? 'Ocultar Filtros' : 'Mostrar Filtros Acumulativos'}</span>
               </button>
 
-              <span className="text-xs font-mono font-bold text-slate-700">
+              <span className="text-xs font-mono font-bold text-slate-800">
                 {filteredSchools.length} {filteredSchools.length === 1 ? 'centro' : 'centros'}
               </span>
             </div>
@@ -416,28 +453,120 @@ export default function App() {
               {/* Procedencia de los datos que se están viendo */}
               <div
                 role="note"
-                className={`rounded-xl border px-3.5 py-2.5 text-[11px] leading-relaxed ${
-                  !searchState.need || searchState.need === 'tea'
+                className={`rounded-xl border px-3.5 py-2.5 text-xs leading-relaxed ${
+                  !searchState.need ||
+                  searchState.need === 'tea' ||
+                  searchState.need === 'educacion_especial' ||
+                  searchState.need === 'salud_hospitalaria' ||
+                  searchState.need === 'visual' ||
+                  searchState.need === 'altas_capacidades' ||
+                  searchState.need === 'auditiva' ||
+                  searchState.need === 'motora' ||
+                  searchState.need === 'tdah' ||
+                  searchState.need === 'tel_lenguaje'
                     ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
                     : 'bg-amber-50 border-amber-200 text-amber-950'
                 }`}
               >
-                {!searchState.need || searchState.need === 'tea' ? (
+                {!searchState.need ? (
                   <>
-                    <span className="font-bold">Datos oficiales TEA:</span>{' '}
-                    {OFFICIAL_TEA_SOURCE.totalCentros} centros preferentes con plazas previsibles en el aula TEA según la
-                    Comunidad de Madrid (curso {OFFICIAL_TEA_SOURCE.curso}, información a {OFFICIAL_TEA_SOURCE.fechaInformacion}).
-                    Ubicaciones aproximadas por centroide; comprueba la vigencia con el SAE.{' '}
-                    <a href={OFFICIAL_TEA_SOURCE.url} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
-                      Ver documento oficial
-                    </a>
+                    <span className="font-bold">Catálogo oficial unificado ({OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y recursos verificados):</span>{' '}
+                    Información oficial de la Comunidad de Madrid, Ayuntamiento de Madrid y ONCE.
+                  </>
+                ) : searchState.need === 'tea' ? (
+                  <>
+                    <span className="font-bold">Atención Preferente TEA:</span>{' '}
+                    {OFFICIAL_TEA_SOURCE.totalCentros} centros con plazas previsibles (curso {OFFICIAL_TEA_SOURCE.curso}) con trazabilidad del Portal de Datos Abiertos CAM.
+                  </>
+                ) : searchState.need === 'educacion_especial' ? (
+                  <>
+                    <span className="font-bold">Educación Especial (CEE):</span>{' '}
+                    {OFFICIAL_TEA_SOURCE.totalCee} Colegios de Educación Especial activos (Nivel A1).{' '}
+                    <button
+                      type="button"
+                      onClick={() => setProcedureTopic('educacion_especial')}
+                      className="font-bold underline cursor-pointer text-emerald-950 ml-1"
+                    >
+                      Ver guía de trámite
+                    </button>
+                  </>
+                ) : searchState.need === 'salud_hospitalaria' ? (
+                  <>
+                    <span className="font-bold">Atención Hospitalaria:</span>{' '}
+                    {OFFICIAL_TEA_SOURCE.totalHospitalarias} Aulas Hospitalarias de la Comunidad de Madrid.
+                  </>
+                ) : searchState.need === 'visual' ? (
+                  <>
+                    <span className="font-bold">Discapacidad Visual (EOEP y C.R.E. ONCE):</span>{' '}
+                    Atención itinerante en centros ordinarios y C.R.E. de Moratalaz.{' '}
+                    <button
+                      type="button"
+                      onClick={() => setProcedureTopic('visual')}
+                      className="font-bold underline cursor-pointer text-emerald-950 ml-1"
+                    >
+                      Ver guía oficial
+                    </button>
+                  </>
+                ) : searchState.need === 'altas_capacidades' ? (
+                  <>
+                    <span className="font-bold">Altas Capacidades (CREACIM, EOEP y Red PEAC):</span>{' '}
+                    Evaluación regional y talleres los sábados (8 sedes IES).{' '}
+                    <button
+                      type="button"
+                      onClick={() => setProcedureTopic('altas_capacidades')}
+                      className="font-bold underline cursor-pointer text-emerald-950 ml-1"
+                    >
+                      Ver guía oficial
+                    </button>
+                  </>
+                ) : searchState.need === 'auditiva' ? (
+                  <>
+                    <span className="font-bold">Discapacidad Auditiva · EOEP Específico (cód. 28700741):</span>{' '}
+                    Equipo público regional de orientación especializada en sordera y apoyos auditivos.{' '}
+                    <button
+                      type="button"
+                      onClick={() => setProcedureTopic('auditiva')}
+                      className="font-bold underline cursor-pointer text-emerald-950 ml-1"
+                    >
+                      Ver guía y trámite DAT
+                    </button>
+                  </>
+                ) : searchState.need === 'motora' ? (
+                  <>
+                    <span className="font-bold">Discapacidad Motora · EOEP Específico (cód. 28700763):</span>{' '}
+                    Equipo público regional de orientación en accesibilidad, fisioterapia y ATU.{' '}
+                    <button
+                      type="button"
+                      onClick={() => setProcedureTopic('motora')}
+                      className="font-bold underline cursor-pointer text-emerald-950 ml-1"
+                    >
+                      Ver guía y trámite DAT
+                    </button>
+                  </>
+                ) : searchState.need === 'tdah' || searchState.need === 'tel_lenguaje' ? (
+                  <>
+                    <span className="font-bold">
+                      {searchState.need === 'tdah' ? 'TDAH y Dificultades' : 'Trastorno del Lenguaje (TDL/TEL)'} · EOEP Específico (cód. 28701214):
+                    </span>{' '}
+                    Asesoramiento técnico regional para centros y familias en modalidad ordinaria.{' '}
+                    <button
+                      type="button"
+                      onClick={() => setProcedureTopic(searchState.need as ProcedureTopic)}
+                      className="font-bold underline cursor-pointer text-emerald-950 ml-1"
+                    >
+                      Ver guía de apoyos
+                    </button>
                   </>
                 ) : (
                   <>
-                    <span className="font-bold">Listado pendiente de incorporar:</span> Todavía no hemos incorporado el listado oficial de la Comunidad de Madrid para esta necesidad en este prototipo. Por rigor absoluto, no mostramos centros sintéticos.{' '}
-                    <a href="https://www.comunidad.madrid/servicios/educacion" target="_blank" rel="noopener noreferrer" className="font-semibold underline">
-                      Consulta el buscador oficial de centros CAM
-                    </a>.
+                    <span className="font-bold">Escuelas de Bienvenida / Aulas de Enlace:</span> Programa de incorporación temporal gestionado por las Direcciones de Área Territorial (DAT).{' '}
+                    <button
+                      type="button"
+                      onClick={() => setProcedureTopic('compensatoria')}
+                      className="font-bold underline cursor-pointer text-amber-950 ml-1"
+                    >
+                      Ver guía oficial DAT / SAE
+                    </button>
                   </>
                 )}
               </div>
@@ -446,13 +575,14 @@ export default function App() {
               <div className="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
                 {/* Búsqueda rápida por texto o código */}
                 <div className="relative w-full sm:max-w-xs">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                  <Search className="w-4 h-4 text-slate-600 absolute left-3 top-2.5" aria-hidden="true" />
                   <input
                     type="text"
-                    placeholder="Buscar por nombre, código o calle..."
+                    placeholder="Buscar por nombre, código o municipio..."
+                    aria-label="Buscar centros por nombre, código o municipio"
                     value={searchState.searchQuery}
                     onChange={e => setSearchState(prev => ({ ...prev, searchQuery: e.target.value }))}
-                    className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cam-red focus:bg-white transition-all"
+                    className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cam-red focus:bg-white transition-all"
                   />
                 </div>
 
@@ -464,11 +594,11 @@ export default function App() {
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                       searchViewMode === 'cards'
                         ? 'bg-white text-slate-900 shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900'
+                        : 'text-slate-700 hover:text-slate-900'
                     }`}
                     title="Vista de lista de tarjetas"
                   >
-                    <LayoutGrid className="w-3.5 h-3.5 text-slate-600" />
+                    <LayoutGrid className="w-3.5 h-3.5 text-slate-700" aria-hidden="true" />
                     <span>Lista</span>
                   </button>
 
@@ -478,20 +608,24 @@ export default function App() {
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                       searchViewMode === 'map'
                         ? 'bg-white text-slate-900 shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900'
+                        : 'text-slate-700 hover:text-slate-900'
                     }`}
                     title="Vista con mapa y tarjetas"
                   >
-                    <Map className="w-3.5 h-3.5 text-slate-600" />
+                    <Map className="w-3.5 h-3.5 text-slate-700" aria-hidden="true" />
                     <span>Mapa</span>
                   </button>
                 </div>
 
                 {/* Selector de Ordenación (sólo Distancia y Alfabético) */}
                 <div className="flex items-center gap-2 w-full sm:w-auto justify-end text-xs">
-                  <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                  <span className="text-slate-500 font-medium hidden sm:inline">Ordenar:</span>
+                  <ArrowUpDown className="w-3.5 h-3.5 text-slate-600 shrink-0" aria-hidden="true" />
+                  <label htmlFor="sort-select" className="text-slate-700 font-medium hidden sm:inline">
+                    Ordenar:
+                  </label>
                   <select
+                    id="sort-select"
+                    aria-label="Ordenar resultados"
                     value={searchState.sort}
                     onChange={e =>
                       setSearchState(prev => ({
@@ -499,7 +633,7 @@ export default function App() {
                         sort: e.target.value as 'distance' | 'alphabetical'
                       }))
                     }
-                    className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-blue-600 cursor-pointer font-medium"
+                    className="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1 text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 cursor-pointer font-medium"
                   >
                     <option value="distance">Distancia</option>
                     <option value="alphabetical">Alfabético (A-Z)</option>
@@ -509,24 +643,24 @@ export default function App() {
 
               {/* Aviso para Primera Infancia y Atención Temprana cuando se selecciona Infantil */}
               {searchState.stages.includes('infantil') && (
-                <div className="bg-amber-50/90 border border-amber-200 rounded-2xl p-3.5 text-xs text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-xs">
+                <div className="bg-amber-50/90 border border-amber-300 rounded-2xl p-3.5 text-xs text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-xs">
                   <div>
-                    <span className="font-bold text-amber-900">Primera Infancia (0-6 años): </span>
-                    Para niños y niñas en edad temprana, la valoración y orientación la gestionan los <span className="font-semibold">Equipos de Atención Temprana (EAT)</span> de la Comunidad de Madrid.
+                    <span className="font-bold text-amber-950">Primera Infancia (0-6 años): </span>
+                    Para niños y niñas en edad temprana, la valoración y orientación la gestionan los <span className="font-semibold">Equipos de Atención Temprana (EAT)</span> de la Comunidad de Madrid. Recuerda que los colegios públicos de Infantil y Primaria (CEIP) también escolarizan 2.º ciclo de Infantil aunque el listado TEA suela consignar «Primaria».
                   </div>
                   <a
                     href="https://www.comunidad.madrid/servicios/educacion/equipos-atencion-temprana-eat"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 hover:text-amber-950 underline shrink-0"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-amber-950 underline shrink-0"
                   >
                     <span>Guía oficial EAT CAM</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                   </a>
                 </div>
               )}
 
-              {/* Si hay cero resultados, mostrar análisis y relajación asistida (Anexo N.7) */}
+              {/* Si hay cero resultados, mostrar análisis y relajación asistida */}
               {filteredSchools.length === 0 && zeroResultsAnalysis ? (
                 <ZeroResultsAdvice
                   state={searchState}
@@ -542,7 +676,7 @@ export default function App() {
                       <SchoolsMap
                         schools={filteredSchools}
                         state={searchState}
-                        selectedSchoolId={focusedSchoolId}
+                        selectedSchoolId={selectedSchool?.id ?? null}
                         onSelectSchool={sch => {
                           setSelectedSchool(sch);
                           setModalInitialTab('details');
@@ -560,7 +694,7 @@ export default function App() {
 
                   {/* Grid de Tarjetas de Centros (1 columna en < 1280px para evitar desborde) */}
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 min-w-0">
-                    {filteredSchools.map(school => (
+                    {filteredSchools.slice(0, visibleCount).map(school => (
                       <SchoolCard
                         key={school.id}
                         school={school}
@@ -583,8 +717,33 @@ export default function App() {
                       />
                     ))}
                   </div>
+
+                  {filteredSchools.length > visibleCount && (
+                    <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                      <span className="text-xs text-slate-700">
+                        Mostrando <strong className="text-slate-900">{Math.min(visibleCount, filteredSchools.length)}</strong> de <strong className="text-slate-900">{filteredSchools.length}</strong> centros
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setVisibleCount(prev => prev + 24)}
+                        className="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 shadow-xs transition-colors cursor-pointer"
+                      >
+                        Mostrar 24 centros más
+                      </button>
+                      {filteredSchools.length - visibleCount > 24 && (
+                        <button
+                          type="button"
+                          onClick={() => setVisibleCount(filteredSchools.length)}
+                          className="px-3 py-2 text-xs font-semibold text-blue-900 hover:underline cursor-pointer"
+                        >
+                          Ver todos ({filteredSchools.length})
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </>
               )}
+            </div>
             </div>
           </div>
         )}
@@ -594,6 +753,7 @@ export default function App() {
           <ContinuityView
             schools={filteredSchools}
             state={searchState}
+            isEasyReadMode={isEasyReadMode}
             onOpenDetail={sch => {
               setSelectedSchool(sch);
               setModalInitialTab('continuity');
@@ -639,45 +799,46 @@ export default function App() {
       </main>
 
       {/* 4. Pie de página Proyecto Cívico DataMad 2026 */}
-      <footer className="no-print bg-white border-t border-slate-200 mt-12 py-8 text-xs text-slate-500">
+      <footer className="no-print bg-white border-t border-slate-200 mt-12 py-8 text-xs text-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div className="col-span-1 md:col-span-1">
-              <span className="font-bold text-slate-800 text-sm">Madrid Educa Apoyo · DataMad 2026</span>
-              <p className="text-[11px] text-slate-500 mt-1">
-                Proyecto cívico de datos abiertos con evidencia oficial y filtros acumulativos.
+            <div className="col-span-1 md:col-span-1 space-y-1.5">
+              <span className="font-bold text-slate-900 text-sm block">Madrid Educa Apoyo · DataMad 2026</span>
+              <p className="text-xs text-slate-700">
+                Proyecto cívico de datos abiertos con evidencia documental y filtros acumulativos.
               </p>
-              <p className="text-[10px] text-slate-400 mt-1">
-                Datos oficiales de la Comunidad de Madrid (relación de centros preferentes). Iniciativa cívica independiente.
+              <p className="text-xs text-slate-600">
+                Fuentes: Datos Abiertos CAM (CC BY 4.0), Consejería de Educación (TEA 2024/25), Ayuntamiento de Madrid (datos.madrid.es) y Registro Estatal RCD (MEFPD).
+              </p>
+              <p className="text-xs text-slate-700 font-medium">
+                Privacidad: tus notas del Pasaporte y ubicación GPS no salen de tu navegador.
               </p>
             </div>
-            
+
             <div className="col-span-1 md:col-span-2 space-y-6">
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                <button onClick={() => setActiveTab('passport')} className="text-left hover:text-blue-900 transition-colors">
-                  <div className="font-semibold text-slate-700">Pasaporte Local</div>
-                  <div className="text-[10px] text-slate-400">Consulta tus centros guardados</div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <button type="button" onClick={() => setActiveTab('passport')} className="text-left hover:text-blue-900 transition-colors cursor-pointer">
+                  <div className="font-semibold text-slate-900">Pasaporte Local</div>
+                  <div className="text-xs text-slate-600">Consulta tus centros guardados</div>
                 </button>
-                <button onClick={() => setActiveTab('sources')} className="text-left hover:text-blue-900 transition-colors">
-                  <div className="font-semibold text-slate-700">Fuentes y Datos</div>
-                  <div className="text-[10px] text-slate-400">Resoluciones BOCM y fechas</div>
+                <button type="button" onClick={() => setActiveTab('sources')} className="text-left hover:text-blue-900 transition-colors cursor-pointer">
+                  <div className="font-semibold text-slate-900">Fuentes y Datos</div>
+                  <div className="text-xs text-slate-600">Datos Abiertos CAM y TEA</div>
                 </button>
-                <button onClick={() => setIsLegalModalOpen(true)} className="text-left hover:text-blue-900 transition-colors">
-                  <div className="font-semibold text-slate-700">Metodología y Legal</div>
-                  <div className="text-[10px] text-slate-400">Evidencia A1/A2 y Aviso Legal</div>
+                <button type="button" onClick={() => setIsLegalModalOpen(true)} className="text-left hover:text-blue-900 transition-colors cursor-pointer">
+                  <div className="font-semibold text-slate-900">Marco y Privacidad</div>
+                  <div className="text-xs text-slate-600">Evidencia A1/A2 y uso local</div>
                 </button>
-                <button onClick={() => setIsTestModalOpen(true)} className="text-left hover:text-blue-900 transition-colors">
-                  <div className="font-semibold text-slate-700">Pruebas Técnicas</div>
-                  <div className="text-[10px] text-slate-400">Batería de validación FIL-001/012</div>
+                <button type="button" onClick={() => setIsTestModalOpen(true)} className="text-left hover:text-blue-900 transition-colors cursor-pointer">
+                  <div className="font-semibold text-slate-900">Pruebas Técnicas</div>
+                  <div className="text-xs text-slate-600">Escenarios FIL-001 a FIL-012</div>
                 </button>
               </div>
-
-
             </div>
           </div>
-          
-          <div className="border-t border-slate-100 pt-6 text-[10px] text-slate-400 text-center">
-            No constituyen el registro oficial de la Consejería de Educación. Función puramente orientadora.
+
+          <div className="border-t border-slate-200 pt-6 text-xs text-slate-700 text-center">
+            Herramienta cívica independiente con función puramente orientadora. No sustituye el registro ni la admisión oficial de la Consejería de Educación.
           </div>
         </div>
       </footer>
@@ -706,50 +867,70 @@ export default function App() {
         onClose={() => setIsTestModalOpen(false)}
         onRunTest={handleRunTest}
       />
-      
-      {/* Modal Descriptivo de Marco Oficial y Metodología (movido de Header) */}
+
+      {/* Modal Descriptivo de Marco Oficial, Metodología y Privacidad */}
       {isLegalModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden">
+        <div
+          className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+          onClick={closeLegalModal}
+        >
+          <div
+            ref={legalModalRef}
+            tabIndex={-1}
+            onClick={e => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="legal-modal-title"
+            className="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-700"
+          >
             <div className="p-5 border-b border-slate-200 bg-slate-50 flex items-start justify-between gap-4">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-blue-700" />
-                <h3 className="text-base font-extrabold text-slate-900">
-                  Marco Legal e Información de la Herramienta
-                </h3>
+                <ShieldCheck className="w-5 h-5 text-blue-800" aria-hidden="true" />
+                <h2 id="legal-modal-title" className="text-base font-extrabold text-slate-900">
+                  Marco Legal, Metodología y Privacidad
+                </h2>
               </div>
               <button
-                onClick={() => setIsLegalModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg cursor-pointer"
+                type="button"
+                onClick={closeLegalModal}
+                aria-label="Cerrar aviso legal"
+                className="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 rounded-lg cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
 
-            <div className="p-5 space-y-4 text-xs text-slate-700 leading-relaxed">
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-amber-950 font-medium">
+            <div className="p-5 space-y-4 text-xs text-slate-800 leading-relaxed">
+              <div className="bg-amber-50 border border-amber-300 rounded-xl p-3.5 text-amber-950 font-medium">
                 <span className="font-bold">Aviso para familias: </span>
                 {LEGAL_DISCLAIMER}
               </div>
 
               <div>
-                <h4 className="font-bold text-slate-900 mb-1">Criterio de Evidencia</h4>
+                <h3 className="font-bold text-slate-900 mb-1">Criterio de Evidencia</h3>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="font-bold text-emerald-700 shrink-0">Confirmado (A1):</span>
-                    <span>Centro y etapa ratificados en resoluciones vigentes del BOCM y listados de la Consejería.</span>
+                    <span className="font-bold text-emerald-800 shrink-0">Confirmado (A1):</span>
+                    <span>Centro y etapa confirmados en listados vigentes del curso en vigor.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="font-bold text-amber-700 shrink-0">Por comprobar (A2):</span>
-                    <span>El centro dispone del recurso, pero la etapa específica o vacantes deben comprobarse administrativamente.</span>
+                    <span className="font-bold text-amber-900 shrink-0">Por comprobar (A2):</span>
+                    <span>El centro figura en el listado oficial 2024/25, pero las vacantes vigentes deben comprobarse ante el SAE.</span>
                   </li>
                 </ul>
               </div>
 
-              <div className="pt-3 border-t border-slate-100 flex justify-end">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                <h3 className="font-bold text-slate-900 mb-1">Privacidad y Protección de Datos</h3>
+                <p className="text-slate-700">
+                  Esta aplicación no utiliza cookies de seguimiento ni envía datos a servidores externos. Tu selección del Comparador y las notas del Pasaporte se guardan únicamente en el almacenamiento local (<code className="font-mono">localStorage</code>) de tu navegador. Si activas «Cerca de mí», tu ubicación aproximada se procesa en tu dispositivo y nunca se incluye en los enlaces compartibles.
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-slate-200 flex justify-end">
                 <button
                   type="button"
-                  onClick={() => setIsLegalModalOpen(false)}
+                  onClick={closeLegalModal}
                   className="px-4 py-2 bg-blue-700 text-white rounded-xl font-bold hover:bg-blue-800 transition-colors cursor-pointer"
                 >
                   Entendido

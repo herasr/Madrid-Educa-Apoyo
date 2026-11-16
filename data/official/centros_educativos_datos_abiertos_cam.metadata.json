@@ -1,0 +1,13 @@
+{
+  "dataset": "Centros educativos de la Comunidad de Madrid (Portal de Datos Abiertos CAM)",
+  "ckan_package_id": "centros_educativos",
+  "portal_url": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
+  "resource_json_url": "https://datos.comunidad.madrid/dataset/c750856d-3166-4dac-8e80-d1b824c968b5/resource/be2264df-c720-4619-ab79-aebad9b248e0/download/centros_educativos.json",
+  "licencia": "Creative Commons Attribution 4.0 (CC BY 4.0) · Comunidad de Madrid",
+  "licencia_url": "https://creativecommons.org/licenses/by/4.0/legalcode.es",
+  "fecha_descarga": "2026-11-16T13:12:24Z",
+  "sha256_fuente_completa": "a94f90133852ed85b16db8203b5c6498a5ba020967b651bb5d1119c399414360",
+  "registros_totales_cam": 7757,
+  "registros_cruzados_total": 433,
+  "nota": "Subconjunto exacto de los 433 códigos oficiales únicos activos (336 preferentes TEA, 69 Centros de Educación Especial ALTA —incluyendo CRE ONCE con doble perfil visual—, 14 Aulas Hospitalarias no anuladas, CRE ONCE Primaria-Secundaria, EOEP Visuales, EOEP Auditivas, EOEP Motóricas, EOEP Dificultades de Aprendizaje/Lenguaje/TDAH, CREACIM, EOEP Altas Capacidades y las 8 sedes territoriales IES del PEAC, compartiendo IES Juan de la Cierva doble perfil TEA+PEAC) extraído del dataset CKAN completo."
+}

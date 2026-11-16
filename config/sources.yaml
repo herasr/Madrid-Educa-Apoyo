@@ -1,7 +1,19 @@
 # Madrid Educa Apoyo · Registro de Fuentes Oficiales
-# Configuración de Ingesta y Periodicidades
+# Configuración de Ingesta y Trazabilidad
 
 sources:
+  centros_educativos_cam:
+    name: "Centros educativos de la Comunidad de Madrid (CEE, Aulas Hospitalarias, EOEP Específicos, CREACIM, CRE ONCE y sedes PEAC)"
+    authority: comunidad_madrid
+    type: ckan
+    portal_url: https://datos.comunidad.madrid/catalogo/dataset/centros_educativos
+    resource_json_url: https://datos.comunidad.madrid/dataset/c750856d-3166-4dac-8e80-d1b824c968b5/resource/be2264df-c720-4619-ab79-aebad9b248e0/download/centros_educativos.json
+    snapshot: data/official/centros_educativos_datos_abiertos_cam.json
+    frequency: weekly
+    parser: ckan_centros_educativos_v2
+    status: loaded
+    licence: "Creative Commons Attribution 4.0 (CC BY 4.0) · Comunidad de Madrid"
+
   tea_preferentes_plazas:
     name: "Centros de atención preferente TEA con plazas previsibles en el aula TEA (curso 2024/2025)"
     authority: comunidad_madrid
@@ -14,51 +26,63 @@ sources:
     status: loaded
     licence: "Información pública CAM (Ley 37/2007)"
 
-  preferred_support:
-    name: "Centros con Atención Preferente (TEA, Auditiva, Motora)"
+  visual_eoep_once:
+    name: "Discapacidad Visual · EOEP Específico de Deficiencias Visuales (28700738) y C.R.E. «Antonio Vicente Mosquete» ONCE (28021070, 28067501)"
+    authority: comunidad_madrid_y_once
+    type: official_catalog_crossref
+    portal_url: https://www.once.es/servicios-sociales/educacion-inclusiva
+    status: loaded
+    scope: "Atención itinerante en centros ordinarios + C.R.E. ONCE en Moratalaz"
+    licence: "Datos Abiertos CAM (CC BY 4.0) + Información institucional ONCE"
+
+  altas_capacidades_peac_creacim:
+    name: "Altas Capacidades · CREACIM (28701275), EOEP Específico (28701202) y 8 sedes IES del Programa PEAC"
     authority: comunidad_madrid
-    type: official_web
-    url: https://www.comunidad.madrid/educacion/atencion-preferente-necesidades-educativas-especiales
+    type: official_catalog_crossref
+    portal_url: https://www.comunidad.madrid/servicios/educacion/programa-enriquecimiento-educativo-alumnos-altas-capacidades
+    status: loaded
+    scope: "Evaluación regional + talleres quincenales los sábados (Primaria, ESO, Bachillerato)"
+    licence: "Datos Abiertos CAM (CC BY 4.0) + Consejería de Educación"
+
+  eoep_especificos_regionales:
+    name: "EOEP Específicos CAM · Auditivas (28700741), Motóricas (28700763) y Dificultades de Aprendizaje, Lenguaje y TDAH (28701214)"
+    authority: comunidad_madrid
+    type: official_catalog_crossref
+    portal_url: https://datos.comunidad.madrid/catalogo/dataset/centros_educativos
+    status: loaded
+    scope: "Equipos públicos de orientación de ámbito regional (situación ALTA, A1). Sin listado nominativo abierto de colegios preferentes auditivos/motóricos."
+    licence: "Datos Abiertos CAM (CC BY 4.0)"
+
+
+  ayuntamiento_madrid_centros:
+    name: "Centros educativos en Madrid (transporte público, servicios y accesibilidad en Madrid capital)"
+    authority: ayuntamiento_madrid
+    type: open_data_csv
+    portal_url: https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=b345322456556410VgnVCM1000000b205a0aRCRD
+    resource_csv_url: https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv
+    snapshot: data/official/ayuntamiento_madrid_centros_300614.csv
     frequency: weekly
-    parser: preferred_support_html_v1
-    expected_content:
-      - autism
-      - hearing_disability
-      - motor_disability
-    licence: "Open Data CAM / Ley 19/2013 de Transparencia"
+    parser: ayto_madrid_centros_csv_v1
+    status: loaded
+    scope: "Exclusivamente municipio de Madrid capital"
+    licence: "Condiciones generales de reutilización · Ayuntamiento de Madrid (datos.madrid.es)"
 
-  education_centres:
-    name: "Catálogo General de Centros Educativos de la Comunidad de Madrid"
-    authority: comunidad_madrid
-    type: ckan
-    url: https://datos.comunidad.madrid/catalogo/dataset/centros_educativos
-    frequency: weekly
-    parser: education_centres_ckan_v1
-    licence: "CC-BY 4.0 / Datos Abiertos CAM"
+  ministerio_educacion_rcd:
+    name: "Registro Estatal de Centros Docentes No Universitarios (RCD) y EDUCAbase"
+    authority: ministerio_educacion
+    type: institutional_reference
+    portal_url: https://www.educacionfpydeportes.gob.es/servicios-al-ciudadano/catalogo/general/05/050220/ficha/050220.html
+    frequency: reference
+    status: reference
+    licence: "Información pública estatal (Ley 37/2007)"
 
-  visual_guidance_team:
-    name: "Equipo Específico de Discapacidad Visual (EOEP)"
-    authority: comunidad_madrid
-    type: official_web
-    url: https://www.comunidad.madrid/servicios/educacion/equipos-orientacion-educativa-psicopedagogica-eoep
-    frequency: monthly
-    parser: official_resource_page_v1
-    licence: "Oficial CAM"
-
-  once_cre_madrid:
-    name: "CRE de la ONCE en Madrid (Centros de Recursos y Escuelas)"
-    authority: once
-    type: institutional_web
-    url: https://cremadrid.once.es/
-    frequency: monthly
-    parser: once_cre_v1
-    licence: "Institucional ONCE"
-
-  creacim:
-    name: "Sede Electrónica CREACIM / PEAC"
-    authority: comunidad_madrid
-    type: official_procedure
-    url: https://sede.comunidad.madrid/oferta-formativa/creacim-peac
-    frequency: daily
-    parser: creacim_procedure_v1
-    licence: "Sede Electrónica CAM"
+  ign_ine_nomenclator:
+    name: "Nomenclátor Geográfico de Municipios y Entidades / Centroides"
+    authority: ign_ine
+    type: reference_csv
+    url: https://www.ign.es/
+    snapshot: data/reference/municipios_madrid_centroides.csv
+    frequency: static
+    parser: reference_centroids_csv_v1
+    status: loaded
+    licence: "CC BY 4.0 IGN / INE"

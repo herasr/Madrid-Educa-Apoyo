@@ -42,10 +42,8 @@ change_severity:
     - coordinates_displaced_over_500m
 
 reconciliation_priority:
-  centre_code: "Comunidad de Madrid (EDUCAbase)"
-  official_name: "Comunidad de Madrid"
-  visual_specialisation: "ONCE Madrid / EOEP Específico"
-  stages: "Comunidad de Madrid + ONCE"
-  services: "ONCE / Dirección del Centro"
-  address: "Comunidad de Madrid (contrastado con Registro)"
-  accessibility: "Ayuntamiento de Madrid / Ficha Municipal"
+  centre_code: "Comunidad de Madrid · Consejería de Educación"
+  official_name: "Comunidad de Madrid · Consejería de Educación"
+  stages: "Comunidad de Madrid · Consejería de Educación"
+  municipality_districts: "Nomenclátor INE / Centroide IGN y barrios de Madrid"
+  address_services: "No publicados en el catálogo TEA actual (consultar buscador oficial CAM)"

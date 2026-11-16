@@ -68,7 +68,7 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
   if (state.locationSource === 'browser' && state.userCoordinates) {
     chips.push({
       id: 'browser-location',
-      label: 'Cerca de mí (Tu ubicación)',
+      label: 'Cerca de mí (Tu ubicación aproximada)',
       onRemove: () => onUpdateState(prev => ({ ...prev, locationSource: 'municipality', userCoordinates: null, municipality: 'Madrid' }))
     });
   } else if (state.municipality) {
@@ -89,7 +89,7 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
   }
 
   // Radio
-  if (state.radiusKm !== null && (state.municipality || state.locationSource === 'browser')) {
+  if (state.radiusKm !== null && ((state.municipality && !state.district) || state.locationSource === 'browser')) {
     chips.push({
       id: 'radius',
       label: `Radio: ${state.radiusKm} km`,
@@ -101,7 +101,8 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
   state.ownership.forEach(own => {
     const ownName: Record<OwnershipId, string> = {
       publico: 'Público',
-      concertado: 'Concertado'
+      concertado: 'Concertado',
+      privado: 'Privado'
     };
     chips.push({
       id: `own-${own}`,
@@ -203,12 +204,12 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         {/* Chips de filtros activos */}
         <div className="flex items-center flex-wrap gap-1.5">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mr-1">
+          <span className="text-xs font-semibold text-slate-700 uppercase tracking-wider mr-1">
             Filtros activos:
           </span>
 
           {chips.length === 0 ? (
-            <span className="text-xs text-slate-400 italic">Ningún filtro activo (mostrando todo el catálogo)</span>
+            <span className="text-xs text-slate-600 italic">Ningún filtro activo (mostrando todo el catálogo)</span>
           ) : (
             chips.map(chip => (
               <span
@@ -223,6 +224,7 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
               >
                 <span>{chip.label}</span>
                 <button
+                  type="button"
                   onClick={chip.onRemove}
                   className="p-0.5 hover:bg-black/10 rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cam-red cursor-pointer"
                   aria-label={`Eliminar filtro ${chip.label}`}
@@ -242,8 +244,9 @@ export const ActiveFilterChips: React.FC<ActiveFilterChipsProps> = ({
 
           {chips.length > 0 && (
             <button
+              type="button"
               onClick={onClearAll}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-red-700 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 hover:text-red-700 transition-colors cursor-pointer"
               title="Restablece todos los filtros acumulados"
             >
               <Trash2 className="w-3.5 h-3.5" />

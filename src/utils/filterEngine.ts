@@ -28,12 +28,8 @@ export const INITIAL_SEARCH_STATE: SearchState = {
   municipality: 'Madrid',
   district: null,
   radiusKm: 20,
-  locationSource: 'browser',
-  userCoordinates: {
-    lat: 40.4168,
-    lng: -3.7038,
-    label: 'Tu ubicación actual'
-  },
+  locationSource: 'municipality',
+  userCoordinates: null,
   ownership: [], // Vacío = cualquier titularidad (público y concertado)
   modalities: [],
   requiredServices: [],
@@ -50,22 +46,20 @@ export const INITIAL_SEARCH_STATE: SearchState = {
 export function matchesCentre(centre: School, state: SearchState): boolean {
   // 1. Necesidad educativa
   if (state.need) {
-    if (state.need === 'educacion_especial') {
-      const isEspecial = centre.modalidad === 'especial' || centre.apoyos.some(a => a.needId === 'educacion_especial');
-      if (!isEspecial) return false;
-    } else {
-      const hasNeed = centre.apoyos.some(a => a.needId === state.need);
-      if (!hasNeed) return false;
-    }
+    const hasNeed = centre.apoyos.some(a => a.needId === state.need);
+    if (!hasNeed) return false;
   }
 
   // 2. Etapas (Modo ANY u OR vs ALL o AND)
+  // Si hay una necesidad activa y el centro tiene varios apoyos (ej. TEA + PEAC), evaluar las etapas del apoyo activo
   if (state.stages.length > 0) {
+    const activeSupport = state.need ? centre.apoyos.find(a => a.needId === state.need) : undefined;
+    const effectiveStages = activeSupport?.etapasConApoyo || centre.etapas;
     if (state.stageMatchMode === 'all') {
-      const hasAllStages = state.stages.every(st => centre.etapas.includes(st));
+      const hasAllStages = state.stages.every(st => effectiveStages.includes(st));
       if (!hasAllStages) return false;
     } else {
-      const hasAnyStage = state.stages.some(st => centre.etapas.includes(st));
+      const hasAnyStage = state.stages.some(st => effectiveStages.includes(st));
       if (!hasAnyStage) return false;
     }
   }
@@ -84,17 +78,19 @@ export function matchesCentre(centre: School, state: SearchState): boolean {
   } else if (state.municipality) {
     const munObj = findMunicipality(state.municipality);
 
-    // Si es Madrid capital y hay distrito seleccionado, filtrar por distrito
-    if (state.district && centre.distrito) {
-      if (normalizeName(centre.distrito) !== normalizeName(state.district)) {
+    // Si hay distrito seleccionado (Madrid capital), exigir coincidencia estricta y excluir otros municipios o sin distrito
+    if (state.district) {
+      if (
+        normalizeName(centre.municipio) !== 'madrid' ||
+        !centre.distrito ||
+        normalizeName(centre.distrito) !== normalizeName(state.district)
+      ) {
         return false;
       }
-    }
-
-    if (state.radiusKm !== null && state.radiusKm > 0 && munObj) {
+    } else if (state.radiusKm !== null && state.radiusKm > 0 && munObj) {
       const distance = calculateHaversineDistance(munObj.lat, munObj.lng, centre.lat, centre.lng);
       if (distance > state.radiusKm) return false;
-    } else if (!state.district) {
+    } else {
       // Coincidencia estricta de municipio si no hay radio ni distrito
       const centreMun = normalizeName(centre.municipio);
       const wantedMun = normalizeName(munObj?.nombre || state.municipality);
@@ -129,7 +125,7 @@ export function matchesCentre(centre: School, state: SearchState): boolean {
   if (state.evidence.length > 0) {
     if (state.need) {
       const needSupport = centre.apoyos.find(a => a.needId === state.need);
-      if (needSupport && !state.evidence.includes(needSupport.evidencia)) {
+      if (!needSupport || !state.evidence.includes(needSupport.evidencia)) {
         return false;
       }
     } else {
@@ -138,15 +134,16 @@ export function matchesCentre(centre: School, state: SearchState): boolean {
     }
   }
 
-  // 9. Búsqueda de texto libre (código de centro, nombre, calle)
+  // 9. Búsqueda de texto libre (código de centro, nombre, municipio o distrito, insensible a tildes)
   if (state.searchQuery && state.searchQuery.trim().length > 0) {
-    const query = state.searchQuery.toLowerCase().trim();
-    const matchesQuery = 
-      centre.nombre.toLowerCase().includes(query) ||
-      centre.codigo.includes(query) ||
-      centre.direccion.toLowerCase().includes(query) ||
-      (centre.distrito && centre.distrito.toLowerCase().includes(query)) ||
-      centre.municipio.toLowerCase().includes(query);
+    const rawQuery = state.searchQuery.trim();
+    const normQuery = normalizeName(rawQuery);
+    const matchesQuery =
+      normalizeName(centre.nombre).includes(normQuery) ||
+      centre.codigo.includes(rawQuery) ||
+      normalizeName(centre.direccion || '').includes(normQuery) ||
+      (centre.distrito ? normalizeName(centre.distrito).includes(normQuery) : false) ||
+      normalizeName(centre.municipio).includes(normQuery);
     if (!matchesQuery) return false;
   }
 
@@ -195,7 +192,7 @@ export function sortCentres(centres: School[], state: SearchState): School[] {
 export function computeDynamicCounts(schools: School[], state: SearchState): DynamicCounts {
   const allNeeds: NeedId[] = ['tea', 'auditiva', 'motora', 'educacion_especial', 'visual', 'altas_capacidades', 'tdah', 'tel_lenguaje', 'salud_hospitalaria', 'compensatoria'];
   const allStages: StageId[] = ['infantil', 'primaria', 'eso', 'bachillerato', 'fp_basica'];
-  const allOwnership: OwnershipId[] = ['publico', 'concertado'];
+  const allOwnership: OwnershipId[] = ['publico', 'concertado', 'privado'];
   const allModalities: ModalityId[] = ['preferente', 'especial', 'ordinaria'];
   const allServices: ServiceId[] = ['comedor', 'transporte', 'aula_matinal', 'enfermeria', 'actividades_extraescolares'];
   const allAccessibility: AccessibilityId[] = ['acceso_fisico', 'ascensor', 'bano_adaptado', 'bucle_magnetico', 'plano_podotactil'];
@@ -219,8 +216,6 @@ export function computeDynamicCounts(schools: School[], state: SearchState): Dyn
   });
 
   // 2. Etapas:
-  // Si stageMatchMode es 'all' y hay etapas seleccionadas, calcula cuántos tendrían TODAS más esta etapa.
-  // En modo 'any' (predeterminado), indica cuántos centros imparten esta etapa con los filtros actuales.
   allStages.forEach(stageId => {
     let testStages: StageId[];
     if (state.stageMatchMode === 'all' && state.stages.length > 0) {
@@ -279,6 +274,18 @@ export function computeDynamicCounts(schools: School[], state: SearchState): Dyn
   return counts;
 }
 
+const ACTIVE_CATALOG_NEEDS: NeedId[] = [
+  'tea',
+  'educacion_especial',
+  'salud_hospitalaria',
+  'visual',
+  'altas_capacidades',
+  'auditiva',
+  'motora',
+  'tdah',
+  'tel_lenguaje'
+];
+
 /**
  * N.7 Análisis de Cero Resultados y Generación de Relajaciones con 1 Clic
  * "Cuando la intersección acumulativa produce cero resultados, la aplicación no debe borrar
@@ -295,20 +302,20 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
     state.need === 'motora' ? 'Discapacidad Motora' : 
     state.need === 'visual' ? 'Discapacidad Visual' : 
     state.need === 'altas_capacidades' ? 'Altas Capacidades' : 
-    state.need === 'educacion_especial' ? 'Educación Especial' : 
+    state.need === 'educacion_especial' ? 'Educación Especial (CEE)' : 
     state.need === 'tdah' ? 'TDAH y Conducta' : 
     state.need === 'tel_lenguaje' ? 'Trastornos del Lenguaje' : 
     state.need === 'salud_hospitalaria' ? 'Atención Hospitalaria' : 
-    state.need === 'compensatoria' ? 'Compensación Educativa' : 
+    state.need === 'compensatoria' ? 'Escuelas de Bienvenida' : 
     'la necesidad seleccionada';
   const munName = state.municipality || 'la Comunidad de Madrid';
   const radiusText = state.radiusKm ? ` en ${state.radiusKm} km de ${munName}` : ` en ${munName}`;
 
   let reason = `No hay centros que cumplan simultáneamente todos los criterios activos para ${needName}${radiusText}.`;
 
-  // Caso A: Necesidad no incorporada aún en este prototipo
-  if (state.need && state.need !== 'tea') {
-    reason = `El listado oficial para ${needName} está pendiente de incorporar en este prototipo. Por rigor deontológico, no mostramos centros sintéticos.`;
+  // Caso A: Necesidad sin catálogo oficial descargable incorporado
+  if (state.need && !ACTIVE_CATALOG_NEEDS.includes(state.need)) {
+    reason = `No existe todavía un conjunto abierto regional descargable con resolución actualizada para ${needName}. Por rigor deontológico, no mostramos centros inventados o desactualizados.`;
     const teaCount = schools.filter(s => matchesCentre(s, { ...state, need: 'tea' })).length;
     relaxations.push({
       id: 'switch_to_tea',
@@ -318,12 +325,27 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
       resultingCount: teaCount > 0 ? teaCount : 336,
       apply: (prev) => ({ ...prev, need: 'tea' })
     });
+    const ceeCount = schools.filter(s => matchesCentre(s, { ...state, need: 'educacion_especial' })).length;
+    if (ceeCount > 0) {
+      relaxations.push({
+        id: 'switch_to_cee',
+        label: "Ver Centros de Educación Especial (CEE)",
+        description: `Muestra ${ceeCount} centro(s) específicos activos en la zona.`,
+        actionType: 'remove_filter',
+        resultingCount: ceeCount,
+        apply: (prev) => ({ ...prev, need: 'educacion_especial' })
+      });
+    }
     return { reason, failingConditions, relaxations };
   }
 
-  // Caso B: Servicios o Nivel A1 no contemplados en la fuente oficial
+  // Caso B: Servicios municipales (solo Madrid capital) o Evidencia A1 cuando el filtro actual da 0
   if (state.requiredServices.length > 0 || state.accessibilityRequired.length > 0 || (state.evidence.length === 1 && state.evidence[0] === 'A1')) {
-    reason = `El listado oficial publicado por la Consejería de Educación para centros TEA no incluye datos sobre comedor, transporte o accesibilidad, y todos los registros figuran como A2 (por comprobar vigencia actual).`;
+    if (state.need === 'tea' && state.evidence.length === 1 && state.evidence[0] === 'A1') {
+      reason = `Todos los centros preferentes TEA proceden de la publicación 2024/25 (nivel A2, por comprobar vigencia actual ante el SAE).`;
+    } else if (state.requiredServices.length > 0 || state.accessibilityRequired.length > 0) {
+      reason = `Los datos de servicios complementarios y accesibilidad física proceden exclusivamente del Ayuntamiento de Madrid (datos.madrid.es) para centros de la capital y no constan para los otros 178 municipios.`;
+    }
     
     const stateCleanSrv: SearchState = {
       ...state,
@@ -335,8 +357,8 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
     if (countClean > 0) {
       relaxations.push({
         id: 'clear_unsupported_filters',
-        label: "Retirar exenciones de servicios y evidencia A1",
-        description: `Muestra los ${countClean} centros oficiales TEA en tu zona.`,
+        label: "Retirar requisitos de servicios, accesibilidad y evidencia A1",
+        description: `Muestra los ${countClean} centros oficiales que cumplen el resto de filtros.`,
         actionType: 'remove_filter',
         resultingCount: countClean,
         apply: (prev) => ({
@@ -468,13 +490,8 @@ export function serializeSearchStateToQuery(state: SearchState): string {
   if (state.need) params.set('need', state.need);
   if (state.stages.length > 0) params.set('stage', state.stages.join(','));
   if (state.stageMatchMode && state.stageMatchMode !== 'any') params.set('smode', state.stageMatchMode);
-  if (state.locationSource === 'browser') {
-    params.set('loc', 'browser');
-    if (state.userCoordinates) {
-      params.set('lat', state.userCoordinates.lat.toString());
-      params.set('lng', state.userCoordinates.lng.toString());
-    }
-  } else if (state.municipality) {
+  // Por privacidad, nunca serializamos coordenadas personales GPS (lat/lng) en la URL compartible.
+  if (state.municipality && state.locationSource !== 'browser') {
     params.set('municipality', state.municipality);
     if (state.district) params.set('district', state.district);
   }
@@ -498,7 +515,7 @@ export function parseSearchStateFromQuery(queryString: string): SearchState {
   // Control lists for validation
   const validNeeds: NeedId[] = ['tea', 'auditiva', 'motora', 'educacion_especial', 'visual', 'altas_capacidades', 'tdah', 'tel_lenguaje', 'salud_hospitalaria', 'compensatoria'];
   const validStages: StageId[] = ['infantil', 'primaria', 'eso', 'bachillerato', 'fp_basica'];
-  const validOwnership: OwnershipId[] = ['publico', 'concertado'];
+  const validOwnership: OwnershipId[] = ['publico', 'concertado', 'privado'];
   const validModalities: ModalityId[] = ['preferente', 'especial', 'ordinaria'];
   const validServices: ServiceId[] = ['comedor', 'transporte', 'aula_matinal', 'enfermeria', 'actividades_extraescolares'];
   const validAccessibility: AccessibilityId[] = ['acceso_fisico', 'ascensor', 'bano_adaptado', 'bucle_magnetico', 'plano_podotactil'];
@@ -536,7 +553,7 @@ export function parseSearchStateFromQuery(queryString: string): SearchState {
       state.userCoordinates = {
         lat: Number(latParam),
         lng: Number(lngParam),
-        label: 'Tu ubicación actual'
+        label: 'Ubicación compartida'
       };
     }
   } else if (munParam) {
@@ -603,44 +620,91 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
     'Tipo_Centro',
     'Municipio',
     'Distrito',
+    'Barrio',
+    'Codigo_Postal',
     'Direccion',
-    'Etapas_Impartidas',
+    'Telefono',
+    'Email',
+    'Web',
+    'Etapas',
     'Apoyos_Confirmados',
     'Nivel_Evidencia',
-    'Fuente_BOCM',
+    'Situacion_Oficial',
+    'Fuente_Oficial',
+    'Fuente_Municipal',
+    'Transporte_Publico',
     'Comedor',
-    'Transporte_Adaptado',
+    'Horario_Ampliado',
+    'Transporte_Escolar',
     'Enfermeria',
+    'Accesibilidad_Fisica',
     'Latitud',
     'Longitud',
     'Procedencia',
     'Ubicacion_Aproximada'
   ];
 
+  const escapeCsv = (val: string | undefined | null) =>
+    `"${(val || '').replace(/"/g, '""')}"`;
+
   const rows = schools.map(s => {
     const currentSupport = state.need
       ? s.apoyos.find(a => a.needId === state.need) || s.apoyos[0]
       : s.apoyos[0];
 
+    const ownershipLabel =
+      s.titularidad === 'publico'
+        ? 'Público'
+        : s.titularidad === 'concertado'
+        ? 'Concertado'
+        : 'Privado';
+
+    const formatSrv = (val: boolean) => {
+      if (s.procedencia !== 'oficial') return val ? 'Sí' : 'No';
+      if (s.serviciosConfirmadosAyto) return val ? 'Sí (Ayto. Madrid)' : 'No declarado en Ayto.';
+      return 'Sin datos en fuente oficial';
+    };
+
+    const accLabel =
+      s.procedencia !== 'oficial'
+        ? s.accesibilidad.acceso_fisico
+          ? 'Sí'
+          : 'No'
+        : s.accesibilidadConfirmadaAyto
+        ? 'Accesible (Ayto. Madrid)'
+        : s.fuenteAyuntamiento
+        ? 'Sin mención en ficha Ayto. Madrid'
+        : 'Sin datos en fuente oficial';
+
     return [
-      `"${s.codigo}"`,
-      `"${s.nombre.replace(/"/g, '""')}"`,
-      `"${s.titularidad === 'publico' ? 'Público' : 'Concertado'}"`,
-      `"${s.tipo}"`,
-      `"${s.municipio}"`,
-      `"${s.distrito || ''}"`,
-      `"${(s.direccion || '').replace(/"/g, '""')}"`,
-      `"${s.etapas.join(', ')}"`,
-      `"${s.apoyos.map(a => a.needId).join(', ')}"`,
-      `"${currentSupport?.evidencia || 'A2'}"`,
-      `"${currentSupport?.fuenteOficial || 'Comunidad de Madrid · Centros TEA 2024/25'}"`,
-      `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.comedor ? 'Sí' : 'No'}"`,
-      `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.transporte ? 'Sí' : 'No'}"`,
-      `"${s.procedencia === 'oficial' ? 'Sin datos' : s.servicios.enfermeria ? 'Sí' : 'No'}"`,
+      escapeCsv(s.codigo),
+      escapeCsv(s.nombre),
+      escapeCsv(ownershipLabel),
+      escapeCsv(s.tipo),
+      escapeCsv(s.municipio),
+      escapeCsv(s.distrito),
+      escapeCsv(s.barrio),
+      escapeCsv(s.codigoPostal),
+      escapeCsv(s.direccion),
+      escapeCsv(s.telefono),
+      escapeCsv(s.email),
+      escapeCsv(s.web),
+      escapeCsv(s.etapas.join(', ')),
+      escapeCsv(s.apoyos.map(a => a.needId).join(', ')),
+      escapeCsv(currentSupport?.evidencia || 'A2'),
+      escapeCsv(s.situacionOficial || 'ALTA'),
+      escapeCsv(currentSupport?.fuenteOficial || 'Comunidad de Madrid'),
+      escapeCsv(s.fuenteAyuntamiento),
+      escapeCsv(s.transportePublico),
+      escapeCsv(formatSrv(s.servicios.comedor)),
+      escapeCsv(formatSrv(s.servicios.aula_matinal)),
+      escapeCsv(formatSrv(s.servicios.transporte)),
+      escapeCsv(formatSrv(s.servicios.enfermeria)),
+      escapeCsv(accLabel),
       s.lat,
       s.lng,
-      `"${s.procedencia === 'oficial' ? 'Oficial' : 'Demostración'}"`,
-      `"${s.ubicacionAproximada ? 'Sí' : 'No'}"`
+      escapeCsv(s.procedencia === 'oficial' ? 'Oficial' : 'Demostración'),
+      escapeCsv(s.ubicacionAproximada ? 'Sí' : 'No')
     ].join(';');
   });
 
@@ -663,7 +727,12 @@ export function downloadResultsJSON(schools: School[], state: SearchState) {
     metadata: {
       proyecto: "Madrid Educa Apoyo (Proyecto DataMad 2026)",
       fuentesDatos: {
-        oficial: "Comunidad de Madrid · Centros de atención preferente TEA (curso 2024/2025, información a 22/03/2024)"
+        datosAbiertosCam: "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0): TEA, 69 CEE (ALTA), 14 Aulas Hospitalarias, Discapacidad Visual (EOEP + CRE ONCE), Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC) y EOEP Específicos de Auditivas, Motóricas y Lenguaje/TDAH",
+        listadoTea: "Comunidad de Madrid · Centros de atención preferente TEA (curso 2024/2025, información a 22/03/2024)",
+        onceInclusion: "ONCE · Convenio CAM-ONCE y C.R.E. «Antonio Vicente Mosquete» (Educación Inclusiva)",
+        altasCapacidadesPeac: "Comunidad de Madrid · CREACIM, EOEP Específico y 8 sedes IES del Programa PEAC",
+        ayuntamientoMadrid: "Portal de Datos Abiertos Ayuntamiento de Madrid (datos.madrid.es, conjunto 300614-0): transporte público, barrio, servicios y accesibilidad en Madrid capital",
+        registroEstatalRcd: "Ministerio de Educación, Formación Profesional y Deportes · Registro Estatal de Centros Docentes (RCD)"
       },
       fechaExportacion: new Date().toISOString(),
       criteriosFiltro: {
@@ -684,16 +753,28 @@ export function downloadResultsJSON(schools: School[], state: SearchState) {
       tipo: s.tipo,
       municipio: s.municipio,
       distrito: s.distrito || null,
+      barrio: s.barrio || null,
+      codigoPostal: s.codigoPostal || "",
       direccion: s.direccion || "",
       telefono: s.telefono || "",
+      email: s.email || "",
       web: s.web || null,
+      transportePublico: s.transportePublico || null,
       coordenadas: { lat: s.lat, lng: s.lng, aproximadas: Boolean(s.ubicacionAproximada) },
+      situacionOficial: s.situacionOficial || null,
       procedencia: s.procedencia || 'oficial',
       fuenteUrl: s.fuenteUrl || null,
-      etapasImpartidas: s.etapas,
+      fuenteDatosAbiertos: s.fuenteDatosAbiertos || null,
+      fuenteAyuntamiento: s.fuenteAyuntamiento || null,
+      etapas: s.etapas,
       apoyosOficiales: s.apoyos,
-      servicios: s.servicios,
-      accesibilidad: s.accesibilidad,
+      servicios: s.serviciosConfirmadosAyto || s.procedencia !== 'oficial' ? s.servicios : null,
+      accesibilidad: s.accesibilidadConfirmadaAyto || s.procedencia !== 'oficial' ? s.accesibilidad : null,
+      serviciosAccesibilidadNota: s.serviciosConfirmadosAyto
+        ? 'Servicios procedentes del bloque EQUIPAMIENTO de Ayuntamiento de Madrid (datos.madrid.es)'
+        : s.fuenteAyuntamiento
+        ? 'Centro localizado en datos.madrid.es; sin bloque de equipamiento declarado en fuente municipal'
+        : 'No publicados en las fuentes oficiales para este municipio',
       continuidad: s.continuidad
     }))
   };

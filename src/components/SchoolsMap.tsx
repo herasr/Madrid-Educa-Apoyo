@@ -30,6 +30,14 @@ interface SchoolsMapProps {
   onToggleExpand?: () => void;
 }
 
+const escapeHtml = (unsafe: string) =>
+  unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
 export const SchoolsMap: React.FC<SchoolsMapProps> = ({
   schools,
   state,
@@ -143,7 +151,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
             transform: translate(-50%, -50%);
           ">
             <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #38bdf8;"></span>
-            <span>◎ ${refCoords.label}</span>
+            <span>◎ ${escapeHtml(refCoords.label)}</span>
           </div>
         `,
         iconSize: [0, 0]
@@ -177,7 +185,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
         tdah: { bgColor: '#d97706', tag: 'TDA', name: 'TDAH y Conducta' },
         tel_lenguaje: { bgColor: '#0891b2', tag: 'TEL', name: 'Trastorno del Lenguaje' },
         salud_hospitalaria: { bgColor: '#dc2626', tag: 'HOSP', name: 'Atención Hospitalaria' },
-        compensatoria: { bgColor: '#4f46e5', tag: 'COMP', name: 'Compensación Educativa' },
+        compensatoria: { bgColor: '#4f46e5', tag: 'BIENV', name: 'Escuelas de Bienvenida' },
         educacion_especial: { bgColor: '#059669', tag: 'CEE', name: 'Educación Especial' }
       };
 
@@ -227,7 +235,8 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       let distanceText = school.municipio;
       if (refCoords) {
         const d = calculateHaversineDistance(refCoords.lat, refCoords.lng, school.lat, school.lng);
-        distanceText = `${d} km aprox.`;
+        const displayKm = school.ubicacionAproximada || d >= 10 ? Math.round(d) : d;
+        distanceText = `${school.ubicacionAproximada ? '≈ ' : ''}${displayKm} km`;
       }
 
       const stageLabels = (currentSupport?.etapasConApoyo || school.etapas).map(s => {
@@ -238,36 +247,47 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
         return 'FP';
       }).join(', ');
 
+      const locationLine = school.direccion
+        ? `${escapeHtml(school.direccion)} · ${escapeHtml(school.municipio)}${school.distrito ? ` (${escapeHtml(school.distrito)})` : ''}`
+        : `${escapeHtml(school.municipio)}${school.distrito ? ` (${escapeHtml(school.distrito)})` : ''}`;
+
+      const ownershipLabel =
+        school.titularidad === 'publico'
+          ? 'Público'
+          : school.titularidad === 'concertado'
+          ? 'Concertado'
+          : 'Privado';
+
       const popupHtml = `
         <div style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; min-width: 220px; max-width: 270px; padding: 2px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-            <span style="font-size: 10px; font-weight: 700; color: #64748b;">
-              ${school.tipo} · ${school.titularidad === 'publico' ? 'Público' : 'Concertado'}
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 4px;">
+            <span style="font-size: 12px; font-weight: 700; color: #334155;">
+              ${escapeHtml(school.tipo)} · ${ownershipLabel}
             </span>
-            <span style="font-size: 10px; font-weight: 800; padding: 1px 6px; border-radius: 4px; background: ${isA1 ? '#ecfdf5' : '#fffbeb'}; color: ${isA1 ? '#065f46' : '#92400e'}; border: 1px solid ${isA1 ? '#a7f3d0' : '#fde68a'};">
-              ${isA1 ? '✓ Confirmado' : '⚡ Por comprobar'}
+            <span style="font-size: 12px; font-weight: 800; padding: 1px 6px; border-radius: 4px; background: ${isA1 ? '#ecfdf5' : '#fffbeb'}; color: ${isA1 ? '#065f46' : '#78350f'}; border: 1px solid ${isA1 ? '#a7f3d0' : '#fde68a'};">
+              ${isA1 ? 'Confirmado (A1)' : 'Por comprobar (A2)'}
             </span>
           </div>
 
-          <h4 style="font-size: 13px; font-weight: 800; color: #0f172a; margin: 0 0 3px 0; line-height: 1.25;">
-            ${school.nombre}
+          <h4 style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 0 0 4px 0; line-height: 1.25;">
+            ${escapeHtml(school.nombre)}
           </h4>
 
-          <div style="font-size: 11px; color: #475569; margin-bottom: 6px;">
-            📍 ${school.municipio}${school.distrito ? ` (${school.distrito})` : ''} · <strong>${school.ubicacionAproximada ? '≈ ' : ''}${distanceText}</strong>
+          <div style="font-size: 12px; color: #334155; margin-bottom: 6px; line-height: 1.35;">
+            ${locationLine}${refCoords ? ` · <strong>${escapeHtml(distanceText)}</strong>` : ''}
           </div>
-          <div style="font-size: 10px; margin-bottom: 6px; color: ${school.procedencia === 'oficial' ? '#065f46' : '#92400e'};">
-            ${school.procedencia === 'oficial'
-              ? 'Dato oficial · ubicación aproximada (el listado no publica la dirección)'
-              : 'Dato de demostración · no usar para decidir'}
+          <div style="font-size: 12px; margin-bottom: 6px; color: #065f46; font-weight: 600;">
+            ${school.ubicacionAproximada
+              ? 'Dato oficial · ubicación aproximada'
+              : 'Dato oficial · Datos Abiertos CAM'}
           </div>
 
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 8px; font-size: 11px; margin-bottom: 8px;">
-            <div style="font-weight: 700; color: #1e293b; margin-bottom: 1px;">
+          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 6px 8px; font-size: 12px; margin-bottom: 8px;">
+            <div style="font-weight: 700; color: #0f172a; margin-bottom: 1px;">
               ${needDisplayName}
             </div>
-            <div style="color: #64748b; font-size: 10px;">
-              Etapas confirmadas: <strong>${stageLabels}</strong>
+            <div style="color: #334155; font-size: 12px;">
+              ${needId === 'tea' ? 'Etapas en listado TEA:' : 'Etapas oficiales:'} <strong>${stageLabels}</strong>
             </div>
           </div>
 
@@ -278,8 +298,8 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
               color: #ffffff;
               border: none;
               border-radius: 6px;
-              padding: 6px 8px;
-              font-size: 11px;
+              padding: 7px 10px;
+              font-size: 12px;
               font-weight: 700;
               cursor: pointer;
             ">
@@ -313,9 +333,13 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       map.setView([refCoords.lat, refCoords.lng], 12);
     }
 
-    setTimeout(() => {
+    const resizeTimer = window.setTimeout(() => {
       map.invalidateSize();
     }, 150);
+
+    return () => {
+      window.clearTimeout(resizeTimer);
+    };
   }, [schools, state, onSelectSchool, onOpenWhyAppears, selectedSchoolId]);
 
   const handleResetView = () => {
@@ -336,8 +360,8 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
         <div className="flex items-center gap-2">
           <MapPin className="w-4 h-4 text-blue-700" />
           <span className="font-extrabold text-slate-900">Mapa de Centros</span>
-          <span className="text-slate-400">·</span>
-          <span className="text-slate-600 font-medium">
+          <span className="text-slate-600">·</span>
+          <span className="text-slate-700 font-medium">
             {schools.length} {schools.length === 1 ? 'centro ubicado' : 'centros ubicados'}
           </span>
         </div>
@@ -347,17 +371,18 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
           <button
             type="button"
             onClick={() => setIsLegendOpen(!isLegendOpen)}
-            className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-semibold transition-colors cursor-pointer"
+            aria-expanded={isLegendOpen}
+            className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg text-slate-800 font-semibold transition-colors cursor-pointer"
           >
-            <Layers className="w-3.5 h-3.5 text-slate-500" />
+            <Layers className="w-3.5 h-3.5 text-slate-600" aria-hidden="true" />
             <span>Leyenda</span>
-            {isLegendOpen ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+            {isLegendOpen ? <ChevronUp className="w-3 h-3" aria-hidden="true" /> : <ChevronDown className="w-3 h-3" aria-hidden="true" />}
           </button>
 
           <button
             type="button"
             onClick={handleResetView}
-            className="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-semibold transition-colors cursor-pointer"
+            className="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg text-slate-800 font-semibold transition-colors cursor-pointer"
             title="Ajustar encuadre a todos los centros"
           >
             Reencuadrar
@@ -367,10 +392,11 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
             <button
               type="button"
               onClick={onToggleExpand}
-              className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-200 rounded transition-colors cursor-pointer"
+              className="p-1 text-slate-700 hover:text-slate-900 hover:bg-slate-200 rounded transition-colors cursor-pointer"
+              aria-label={isExpanded ? 'Reducir tamaño del mapa' : 'Ampliar mapa'}
               title={isExpanded ? 'Reducir tamaño' : 'Ampliar mapa'}
             >
-              <Maximize2 className="w-3.5 h-3.5" />
+              <Maximize2 className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           )}
         </div>
@@ -383,39 +409,79 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
         className="w-full z-10 transition-all duration-300"
       />
 
-      {/* LEYENDA VISIBLE Y FLOTANTE (Requisito P0) */}
+      {/* LEYENDA VISIBLE Y FLOTANTE */}
       {isLegendOpen && (
         <div className="absolute bottom-4 left-4 z-20 bg-white/95 backdrop-blur-md border border-slate-300 rounded-xl p-3 shadow-lg max-w-xs text-xs space-y-2">
-          <div className="flex items-center justify-between pb-1.5 border-b border-slate-100 font-bold text-slate-900">
+          <div className="flex items-center justify-between pb-1.5 border-b border-slate-200 font-bold text-slate-900">
             <span>Leyenda del mapa</span>
             <button
               type="button"
               onClick={() => setIsLegendOpen(false)}
-              className="text-slate-400 hover:text-slate-700 cursor-pointer"
+              aria-label="Cerrar leyenda"
+              className="text-slate-600 hover:text-slate-900 cursor-pointer"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           </div>
 
-          <div className="space-y-1.5 text-[11px] text-slate-700">
+          <div className="space-y-1.5 text-xs text-slate-800">
             <div className="flex items-center gap-2">
-              <span className="w-3.5 h-3.5 rounded-full bg-blue-700 border-2 border-emerald-500 inline-block shrink-0"></span>
-              <span><strong>Confirmado para esta etapa</strong> (Borde verde continuo)</span>
+              <span className="w-3.5 h-3.5 rounded-full bg-blue-700 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>TEA</strong> · Preferente TEA</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="w-3.5 h-3.5 rounded-full bg-blue-700 border-2 border-dashed border-amber-500 inline-block shrink-0"></span>
-              <span><strong>Por comprobar etapa o vigencia</strong> (Borde ámbar discontinuo)</span>
+              <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>CEE</strong> · Educación Especial</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-sky-400 border border-slate-900 inline-block shrink-0"></span>
-              <span><strong>◎ Tu ubicación o municipio</strong></span>
+              <span className="w-3.5 h-3.5 rounded-full bg-red-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>HOSP</strong> · Aula Hospitalaria</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="w-4 border-t-2 border-dashed border-blue-600 inline-block shrink-0"></span>
-              <span><strong>Radio de búsqueda activo</strong> ({state.radiusKm ?? 20} km)</span>
+              <span className="w-3.5 h-3.5 rounded-full bg-blue-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>VIS</strong> · Discapacidad Visual</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="w-3.5 h-3.5 rounded-full bg-purple-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>AAC</strong> · Altas Capacidades</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="w-3.5 h-3.5 rounded-full bg-sky-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>AUD · MOT</strong> · EOEP Auditiva / Motora</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="w-3.5 h-3.5 rounded-full bg-amber-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>TDA · TEL</strong> · EOEP TDAH / Lenguaje</span>
+            </div>
+
+            <div className="border-t border-slate-200 pt-1.5 mt-1.5 space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className="w-3.5 h-3.5 rounded-full bg-white border-2 border-emerald-500 inline-block shrink-0" aria-hidden="true"></span>
+                <span><strong>Confirmado (A1)</strong> (Borde verde continuo)</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="w-3.5 h-3.5 rounded-full bg-white border-2 border-dashed border-amber-500 inline-block shrink-0" aria-hidden="true"></span>
+                <span><strong>Por comprobar vigencia (A2)</strong> (Borde ámbar)</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-sky-400 border border-slate-900 inline-block shrink-0" aria-hidden="true"></span>
+                <span><strong>◎ Referencia territorial o GPS</strong></span>
+              </div>
+
+              {state.radiusKm !== null && (state.municipality || state.locationSource === 'browser') && (
+                <div className="flex items-center gap-2">
+                  <span className="w-4 border-t-2 border-dashed border-blue-600 inline-block shrink-0" aria-hidden="true"></span>
+                  <span><strong>Radio de búsqueda activo</strong> ({state.radiusKm} km)</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

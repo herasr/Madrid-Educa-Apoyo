@@ -114,10 +114,10 @@ export const TEST_SCENARIOS: TestScenario[] = [
     id: 'FIL-007',
     code: 'FIL-007',
     titulo: 'Cero Resultados (Gestión Asistida)',
-    descripcion: 'Selecciona una necesidad pendiente de incorporar (Discapacidad Auditiva).',
-    esperado: 'NO elimina filtros. Explica que la necesidad está pendiente y ofrece volver a TEA con 1 clic.',
+    descripcion: 'Selecciona la única línea sin catálogo abierto regional nominativo (Escuelas de Bienvenida).',
+    esperado: 'NO elimina filtros. Explica que se tramita vía SAE/DAT y ofrece volver a TEA o CEE con 1 clic.',
     estadoPrueba: {
-      need: 'auditiva',
+      need: 'compensatoria',
       stages: ['primaria'],
       locationSource: 'municipality',
       userCoordinates: null,

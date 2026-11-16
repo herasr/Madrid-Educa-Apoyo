@@ -3,16 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d4ed8'/%3E%3Cpath d='M16 7L4 13l12 6 10-5v7h2V13L16 7zm-7 9.5V21c0 2.5 3.1 4.5 7 4.5s7-2 7-4.5v-4.5l-7 3.5-7-3.5z' fill='white'/%3E%3C/svg%3E" />
     <title>Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales (DataMad 2026)</title>
-    <meta name="description" content="Buscador cívico de educación inclusiva y centros de atención preferente TEA con datos abiertos y evidencia oficial de la Comunidad de Madrid (Proyecto DataMad 2026)." />
+    <meta name="description" content="Buscador cívico de educación inclusiva (TEA, Educación Especial CEE, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos de Auditiva, Motora, TDAH y Lenguaje) con datos abiertos oficiales de la Comunidad de Madrid, Ayuntamiento de Madrid y ONCE (DataMad 2026)." />
     <meta name="theme-color" content="#1D4ED8" />
     <meta property="og:title" content="Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales (DataMad 2026)" />
-    <meta property="og:description" content="Buscador cívico de educación inclusiva y centros de atención preferente TEA con datos abiertos y evidencia oficial de la Comunidad de Madrid (Proyecto DataMad 2026)." />
+    <meta property="og:description" content="Buscador cívico de educación inclusiva (433 centros y equipos oficiales: TEA, CEE, Hospitalaria, Visual, Altas Capacidades y EOEP Específicos) con datos abiertos de la Comunidad de Madrid, datos.madrid.es y Registro Estatal RCD (Proyecto DataMad 2026)." />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-share.jpg" />
     <meta property="og:site_name" content="Madrid Educa Apoyo · DataMad 2026" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales" />
-    <meta name="twitter:description" content="Datos abiertos oficiales de 336 centros de atención preferente TEA de la Comunidad de Madrid. Proyecto DataMad 2026." />
+    <meta name="twitter:description" content="433 centros y equipos oficiales (336 TEA, 69 CEE, 14 Hospitalarias, 3 Visual, 10 Altas Capacidades y 3 EOEP Específicos) cruzados con Datos Abiertos CAM, datos.madrid.es y ONCE. DataMad 2026." />
+    <meta name="twitter:image" content="/og-share.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -26,7 +29,7 @@
           "name": "Madrid Educa Apoyo",
           "applicationCategory": "EducationalApplication",
           "operatingSystem": "All",
-          "description": "Buscador cívico de educación inclusiva y centros de atención preferente TEA con datos abiertos y evidencia oficial de la Comunidad de Madrid.",
+          "description": "Buscador cívico de educación inclusiva (TEA, Colegios de Educación Especial, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos regionales) con datos abiertos oficiales de la Comunidad de Madrid y el Ayuntamiento de Madrid.",
           "author": {
             "@type": "Organization",
             "name": "Proyecto DataMad 2026"
@@ -39,15 +42,20 @@
         },
         {
           "@type": "Dataset",
-          "name": "Catálogo Estructurado de Centros de Atención Preferente TEA en la Comunidad de Madrid",
-          "description": "Conjunto de datos estructurado y georreferenciado derivado de la relación oficial de centros de atención preferente TEA publicada por la Consejería de Educación de la Comunidad de Madrid.",
+          "name": "Catálogo Unificado de Educación Inclusiva en la Comunidad de Madrid (433 entidades oficiales)",
+          "description": "Conjunto de datos abierto y georreferenciado de 433 centros y equipos oficiales (336 TEA, 69 CEE, 14 Aulas Hospitalarias, 3 Discapacidad Visual, 10 Altas Capacidades y 3 EOEP Específicos de Auditiva, Motora, TDAH y Lenguaje) cruzado con Datos Abiertos CAM, Ayuntamiento de Madrid (datos.madrid.es), ONCE y Registro Estatal RCD.",
           "isAccessibleForFree": true,
-          "keywords": ["Educación Inclusiva", "TEA", "Comunidad de Madrid", "Datos Abiertos", "DataMad 2026", "Centros Educativos"],
+          "keywords": ["Educación Inclusiva", "TEA", "Educación Especial", "CEE", "Aulas Hospitalarias", "Discapacidad Visual", "Altas Capacidades", "PEAC", "EOEP Específico", "Comunidad de Madrid", "datos.madrid.es", "Datos Abiertos", "DataMad 2026"],
           "creator": {
             "@type": "Organization",
             "name": "Proyecto DataMad 2026"
           },
-          "isBasedOn": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf"
+          "isBasedOn": [
+            "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
+            "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
+            "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
+            "https://www.educacionfpydeportes.gob.es/servicios-al-ciudadano/catalogo/general/05/050220/ficha/050220.html"
+          ]
         }
       ]
     }
