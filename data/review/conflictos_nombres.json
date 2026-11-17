@@ -1,0 +1,30 @@
+{
+  "detectado": "2026-11-17T18:57:16Z",
+  "total_conflictos": 2,
+  "conflictos": [
+    {
+      "codigo": "28020120",
+      "nombre_ckan_cam": "CHAMBERI",
+      "nombre_listado_tea": "AMOR MISERICORDIOSO",
+      "tipo_ckan_cam": "CPR INF-PRI-SEC",
+      "tipo_listado_tea": "CPR INF-PRI-SEC",
+      "direccion_ckan": "Calle de Rafael Calvo, 12",
+      "telefono_ckan": "914456250",
+      "email_ckan": "cc.chamberi.madrid@educa.madrid.org",
+      "web_ckan": "http://www.maristaschamberi.com",
+      "criterio_aplicado": "Se usa la denominación oficial del registro CAM (CKAN) y se añade aviso en observaciones."
+    },
+    {
+      "codigo": "28011258",
+      "nombre_ckan_cam": "AMOR MISERICORDIOSO",
+      "nombre_listado_tea": "CHAMBERÍ",
+      "tipo_ckan_cam": "CPR INF-PRI-SEC",
+      "tipo_listado_tea": "CPR INF-PRI-SEC",
+      "direccion_ckan": "Paseo de San Francisco de Sales, 42",
+      "telefono_ckan": "915332233",
+      "email_ckan": "cc.amormisericordioso.madrid@educa.madrid.org",
+      "web_ckan": "http://www.coamimadrid.es",
+      "criterio_aplicado": "Se usa la denominación oficial del registro CAM (CKAN) y se añade aviso en observaciones."
+    }
+  ]
+}

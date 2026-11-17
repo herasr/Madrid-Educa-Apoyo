@@ -64,9 +64,9 @@ export const ContinuityView: React.FC<ContinuityViewProps> = ({
             <GraduationCap className="w-6 h-6 text-blue-900" aria-hidden="true" />
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-extrabold text-slate-900 leading-tight">
+            <h1 className="text-xl font-extrabold text-slate-900 leading-tight">
               Mapa de Transición y Continuidad Escolar (Primaria a ESO)
-            </h2>
+            </h1>
             <p className="text-sm text-slate-700 mt-1 max-w-3xl leading-relaxed">
               {formatText(
                 'En la Comunidad de Madrid, la continuidad del apoyo educativo específico (aulas TEA) al pasar de Primaria a Secundaria depende de si el centro imparte ESO (CEIPSO o concertado integrado) o de los Institutos (IES) adscritos oficialmente.'
@@ -145,9 +145,9 @@ export const ContinuityView: React.FC<ContinuityViewProps> = ({
                       )}
                     </div>
 
-                    <h3 className="text-lg font-bold text-slate-900">
+                    <h2 className="text-lg font-bold text-slate-900">
                       {isEasyReadMode ? simplifySchoolTitle(school.nombre) : school.nombre}
-                    </h3>
+                    </h2>
                   </div>
 
                   <div className="flex items-center gap-2">

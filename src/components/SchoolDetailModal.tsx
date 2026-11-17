@@ -24,9 +24,36 @@ import {
   Info
 } from 'lucide-react';
 import { LEGAL_DISCLAIMER } from '../data/disclaimerAndProcedures';
-import { SchoolMiniMap } from './SchoolMiniMap';
 import { simplifySchoolTitle, simplifyText } from '../utils/textSimplifier';
 import { useModalFocusTrap } from '../utils/useModalFocusTrap';
+
+const LazySchoolMiniMap = React.lazy(() =>
+  import('./SchoolMiniMap').then(m => ({ default: m.SchoolMiniMap }))
+);
+
+const AYTO_ACC_LABELS: Record<string, string> = {
+  '0': 'No accesible para movilidad reducida (código 0)',
+  '1': 'Accesible para movilidad reducida (código 1)',
+  '2': 'Parcialmente accesible PMR (código 2)',
+  '3': 'Sin información sobre accesibilidad PMR (código 3)',
+  '4': 'Lengua de signos disponible (código 4)',
+  '5': 'Señalización podotáctil (código 5)',
+  '6': 'Bucle de inducción magnética (código 6)'
+};
+
+function formatAytoAccessibilityText(school: School): string {
+  const parts = (school.accesibilidadCodigoAyto || '')
+    .split(',')
+    .map(p => p.trim())
+    .filter(Boolean);
+  if (parts.length > 0) {
+    return `${parts.map(code => AYTO_ACC_LABELS[code] || `Código ${code}`).join(' · ')} en datos.madrid.es.`;
+  }
+  if (school.accesibilidadConfirmadaAyto) {
+    return 'Accesible para movilidad reducida (código oficial ACCESIBILIDAD = 1 en datos.madrid.es).';
+  }
+  return 'Sin información de accesibilidad PMR en la ficha municipal.';
+}
 
 interface SchoolDetailModalProps {
   school: School | null;
@@ -369,7 +396,7 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
 
               {/* Recordatorio de procedimiento */}
               <div className="bg-slate-50 rounded-xl p-4 text-xs text-slate-700 border border-slate-200">
-                <h4 className="font-bold text-slate-900 mb-1">Requisitos para la Asignación de Plaza</h4>
+                <h3 className="font-bold text-slate-900 mb-1">Requisitos para la Asignación de Plaza</h3>
                 <p className="leading-relaxed">
                   {formatText(
                     needId === 'salud_hospitalaria'
@@ -458,7 +485,7 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
               )}
 
               {/* Datos municipales verificados en Ayuntamiento de Madrid (datos.madrid.es) */}
-              {(school.fuenteAyuntamiento || school.transportePublico || school.serviciosConfirmadosAyto || school.accesibilidadConfirmadaAyto) && (
+              {(school.fuenteAyuntamiento || school.transportePublico || school.serviciosConfirmadosAyto || school.accesibilidadConfirmadaAyto || Boolean(school.accesibilidadCodigoAyto)) && (
                 <div className="border-t border-slate-200 pt-4 space-y-2.5">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
                     Transporte Público, Equipamiento y Accesibilidad (Ayuntamiento de Madrid · datos.madrid.es)
@@ -494,12 +521,8 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                       </div>
                     )}
                     <div>
-                      <span className="font-bold text-slate-900">Accesibilidad física declarada: </span>
-                      <span>
-                        {school.accesibilidadConfirmadaAyto
-                          ? 'Instalación accesible para movilidad reducida (indicador oficial ACCESIBILIDAD = 1 en datos.madrid.es).'
-                          : 'No consta el indicador oficial de accesibilidad física en la ficha municipal.'}
-                      </span>
+                      <span className="font-bold text-slate-900">Accesibilidad declarada (Ayto. Madrid): </span>
+                      <span>{formatAytoAccessibilityText(school)}</span>
                     </div>
                   </div>
                 </div>
@@ -547,7 +570,15 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                     ? 'Ubicación aproximada (centro del municipio)'
                     : 'Ubicación Oficial Georreferenciada (Datos Abiertos CAM · OpenStreetMap)'}
                 </h3>
-                <SchoolMiniMap school={school} height="200px" />
+                <React.Suspense
+                  fallback={
+                    <div className="h-[200px] rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center text-xs text-slate-600">
+                      Cargando mapa del centro...
+                    </div>
+                  }
+                >
+                  <LazySchoolMiniMap school={school} height="200px" />
+                </React.Suspense>
               </div>
             </div>
           )}

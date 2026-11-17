@@ -4,7 +4,7 @@ Convierte los centros oficiales procesados por el pipeline
 (data/processed/schools_extracted.json) en el módulo TypeScript que consume la web:
 
   src/data/officialTea.ts ->
-    OFFICIAL_ALL_SCHOOLS (419 centros oficiales: TEA + CEE + Hospitalaria)
+    OFFICIAL_ALL_SCHOOLS (433 centros y equipos oficiales)
     OFFICIAL_TEA_SCHOOLS (subconjunto de 336 centros preferentes TEA)
     OFFICIAL_CATALOG_SUMMARY, OFFICIAL_TEA_SOURCE, OFFICIAL_MUNICIPALITIES
 """
@@ -196,10 +196,10 @@ def to_school(r, tea_rows, meta):
     elif need_id == "educacion_especial":
         detalle = (
             "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la "
-            "Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE "
-            "permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+            "Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de "
+            "escolarización del EOEP y resolución de la DAT."
         )
-        fecha_corte = f"Catálogo CKAN vigente · corte {fecha_es(r['fecha_informacion'])}"
+        fecha_corte = f"Catálogo CKAN · copia {fecha_es(r['fecha_informacion'])}"
         recursos = [
             "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
             "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro",
@@ -211,7 +211,7 @@ def to_school(r, tea_rows, meta):
             f"Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: {sit}) "
             "para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
         )
-        fecha_corte = f"Catálogo CKAN vigente ({sit}) · corte {fecha_es(r['fecha_informacion'])}"
+        fecha_corte = f"Catálogo CKAN ({sit}) · copia {fecha_es(r['fecha_informacion'])}"
         recursos = [
             "Atención educativa individualizada y coordinación con el centro de referencia del alumno",
         ]
@@ -236,7 +236,7 @@ def to_school(r, tea_rows, meta):
                 "Atención educativa específica, tiflotecnología y transcripción Braille",
                 "Programas de autonomía personal, orientación y movilidad y residencia escolar",
             ]
-        fecha_corte = f"Catálogo CKAN vigente · corte {fecha_es(r['fecha_informacion'])}"
+        fecha_corte = f"Catálogo CKAN · copia {fecha_es(r['fecha_informacion'])}"
         id_prefix = "oficial-vis"
     elif need_id == "auditiva":
         detalle = (
@@ -248,7 +248,7 @@ def to_school(r, tea_rows, meta):
             "Valoración psicopedagógica especializada de ámbito regional en sordera e hipoacusia",
             "Orientación sobre centros preferentes auditivos, Lengua de Signos Española (LSE) y ayudas técnicas",
         ]
-        fecha_corte = f"Catálogo CKAN vigente · corte {fecha_es(r['fecha_informacion'])}"
+        fecha_corte = f"Catálogo CKAN · copia {fecha_es(r['fecha_informacion'])}"
         id_prefix = "oficial-aud"
     elif need_id == "motora":
         detalle = (
@@ -260,7 +260,7 @@ def to_school(r, tea_rows, meta):
             "Evaluación regional de movilidad, accesibilidad de acceso al currículo y adaptaciones",
             "Orientación sobre centros preferentes motóricos y dotación de fisioterapia y personal ATU",
         ]
-        fecha_corte = f"Catálogo CKAN vigente · corte {fecha_es(r['fecha_informacion'])}"
+        fecha_corte = f"Catálogo CKAN · copia {fecha_es(r['fecha_informacion'])}"
         id_prefix = "oficial-mot"
     elif need_id == "tdah":
         detalle = (
@@ -272,7 +272,7 @@ def to_school(r, tea_rows, meta):
             "Asesoramiento regional especializado en TDAH, dislexia y dificultades de aprendizaje",
             "Orientación metodológica y de medidas ordinarias/específicas en Infantil, Primaria, ESO y Bachillerato",
         ]
-        fecha_corte = f"Catálogo CKAN vigente · corte {fecha_es(r['fecha_informacion'])}"
+        fecha_corte = f"Catálogo CKAN · copia {fecha_es(r['fecha_informacion'])}"
         id_prefix = "oficial-eoep"
     else:
         if r["codigo"] == "28701275":
@@ -303,7 +303,7 @@ def to_school(r, tea_rows, meta):
                 "Sesiones presenciales de enriquecimiento (sábados quincenales de octubre a mayo)",
                 "Coordinación técnica del CREACIM en ámbitos científico, artístico y humanístico",
             ]
-        fecha_corte = f"Catálogo CKAN vigente · corte {fecha_es(r['fecha_informacion'])}"
+        fecha_corte = f"Catálogo CKAN · copia {fecha_es(r['fecha_informacion'])}"
         id_prefix = "oficial-aacc"
 
     servicios = dict(DEFAULT_SERVICES)
@@ -375,6 +375,8 @@ def to_school(r, tea_rows, meta):
         school["serviciosConfirmadosAyto"] = True
     if r.get("accesibilidad_confirmada_ayto"):
         school["accesibilidadConfirmadaAyto"] = True
+    if r.get("accesibilidad_codigo_ayto"):
+        school["accesibilidadCodigoAyto"] = r["accesibilidad_codigo_ayto"]
     if r["observaciones"]:
         school["observacionesOficiales"] = " ".join(r["observaciones"])
     return school
@@ -423,9 +425,9 @@ def main():
         "datosAbiertosUrl": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
         "datosAbiertosLicencia": "CC BY 4.0",
         "ayuntamientoUrl": "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
-        "ministerioUrl": "https://www.educacionfpydeportes.gob.es/servicios-al-ciudadano/catalogo/general/05/050220/ficha/050220.html",
         "curso": meta["curso"],
         "fechaInformacion": fecha_es(meta["fecha_informacion"]),
+        "fechaDatosAbiertos": fecha_es(meta.get("ckan_fecha_descarga", meta["fecha_informacion"])),
         "totalCentros": len(schools_tea),
         "totalCentrosCatalogo": len(schools_all),
         "totalCee": cee_count,
@@ -458,14 +460,14 @@ def main():
  *
  * ARCHIVO GENERADO AUTOMÁTICAMENTE por scripts/build_app_data.py — no editar a mano.
  *
- * Datos 100% OFICIALES de fuentes públicas abiertas:
+ * Datos procedentes exclusivamente de fuentes públicas oficiales (con detección de conflictos en data/review/):
  * - {len(schools_tea)} centros de atención preferente TEA (Consejería de Educación CAM, {meta['curso']})
- * - {cee_count} Centros de Educación Especial (CEE) en situación ALTA (Datos Abiertos CAM + RCD Ministerio)
- * - {hosp_count} Aulas Hospitalarias no anuladas (Datos Abiertos CAM)
+ * - {cee_count} Centros de Educación Especial (CEE) en situación ALTA (Datos Abiertos CAM, CC BY 4.0)
+ * - {hosp_count} Aulas Hospitalarias no anuladas (Datos Abiertos CAM, CC BY 4.0)
  * - {visual_count} recursos oficiales para Discapacidad Visual (EOEP Visuales + CRE ONCE Madrid)
  * - {aacc_count} centros y sedes oficiales para Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC)
  * - EOEP Específicos regionales en situación ALTA: Auditiva ({auditiva_count}), Motora ({motora_count}), TDAH ({tdah_count}) y Trastornos del Lenguaje ({tel_count})
- * - Enriquecimiento de Madrid capital (transporte público, barrio, servicios y accesibilidad): Ayuntamiento de Madrid (datos.madrid.es).
+ * - Enriquecimiento de Madrid capital (transporte público, barrio, equipamiento y códigos ACCESIBILIDAD 0..6): Ayuntamiento de Madrid (datos.madrid.es).
  */
 
 import {{ MunicipalityOption, School }} from '../types';

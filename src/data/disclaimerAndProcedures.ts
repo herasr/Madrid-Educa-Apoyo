@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  * Procedimientos oficiales, marcos normativos y advertencias legales
- * conforme a la especificación oficial Madrid Educa Apoyo v2.4.
+ * para Madrid Educa Apoyo (Proyecto DataMad 2026).
  */
 
 export const LEGAL_DISCLAIMER = 
@@ -12,39 +12,33 @@ export const OFFICIAL_SOURCES_INFO = [
   {
     prioridad: 1,
     organismo: "Portal de Datos Abiertos CAM · Centros educativos",
-    descripcion: "Conjunto abierto oficial 'Centros educativos de la Comunidad de Madrid' (CC BY 4.0). Aporta los 69 Centros de Educación Especial (ALTA), 14 Aulas Hospitalarias, 3 recursos de Discapacidad Visual (EOEP + C.R.E. ONCE), 10 recursos/sedes de Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC) y los EOEP Específicos regionales en situación ALTA para Auditivas (28700741), Motóricas (28700763) y Dificultades de Aprendizaje, Lenguaje y TDAH (28701214), con dirección postal, teléfono, correo, web, distrito y coordenadas UTM (ETRS89) cruzadas por código oficial.",
+    descripcion: "Conjunto abierto oficial 'Centros educativos de la Comunidad de Madrid' (CC BY 4.0). Es la fuente maestra de denominación, titularidad, tipo actualizado (CEIP, CEIPSO, IES, CEE...), contacto y coordenadas UTM (ETRS89) para los 69 Centros de Educación Especial (ALTA), 14 Aulas Hospitalarias, 3 recursos de Discapacidad Visual (EOEP + C.R.E. ONCE), 10 recursos/sedes de Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC) y los 3 EOEP Específicos regionales para Auditivas (28700741), Motóricas (28700763) y Lenguaje/TDAH (28701214).",
     ambito: "Datos Abiertos CAM (CC BY 4.0)."
   },
   {
     prioridad: 2,
     organismo: "Comunidad de Madrid · Consejería de Educación (TEA, PEAC y Equipos Específicos)",
-    descripcion: "Relación oficial de centros de atención preferente TEA con plazas previsibles (curso 2024/2025, 336 centros), junto con la red regional del Programa de Enriquecimiento Educativo (PEAC, 8 sedes IES), CREACIM y los 5 EOEP Específicos regionales.",
+    descripcion: "Relación oficial de centros de atención preferente TEA con plazas previsibles (curso 2024/2025, 336 centros), junto con la red regional del Programa PEAC (8 sedes IES), CREACIM y los EOEP Específicos. Si un código difiere nominalmente respecto al registro CKAN (caso 28020120 / 28011258), prevalece el registro maestro y se notifica la discrepancia en la ficha.",
     ambito: "Información pública CAM (Ley 37/2007)."
   },
   {
     prioridad: 3,
     organismo: "Ayuntamiento de Madrid · Portal de Datos Abiertos (datos.madrid.es)",
-    descripcion: "Conjunto 'Centros educativos en Madrid' (300614-0): aporta líneas de Metro, EMT y Cercanías, barrio, accesibilidad física certificada y servicios confirmados (comedor, horario ampliado, transporte) exclusivamente para centros situados en Madrid capital.",
+    descripcion: "Conjunto 'Centros educativos en Madrid' (300614-0): aporta líneas de Metro, EMT y Cercanías, barrio, servicios declarados (comedor, horario ampliado, transporte) y códigos oficiales de ACCESIBILIDAD según estructura_ds_conjuntodatos.pdf (0: No accesible, 1: Accesible, 2: Parcialmente accesible PMR, 3: Sin información sobre accesibilidad PMR, 4: Lengua de signos, 5: Señalización podotáctil, 6: Bucle magnético) exclusivamente para centros de Madrid capital.",
     ambito: "Datos Abiertos Ayto. Madrid (solo capital)."
   },
   {
     prioridad: 4,
-    organismo: "Ministerio de Educación (RCD) y Convenio CAM–ONCE",
-    descripcion: "Referencia institucional estatal (RCD) que respalda la codificación oficial de CEE y aulas hospitalarias, junto con el C.R.E. «Antonio Vicente Mosquete» de la ONCE para el apoyo a la discapacidad visual.",
-    ambito: "Información pública estatal y ONCE."
-  },
-  {
-    prioridad: 5,
-    organismo: "Nomenclátor INE / IGN",
-    descripcion: "Coordenadas municipales de respaldo y normalización toponímica para los 179 municipios de la región.",
-    ambito: "Geodesia y nomenclátor oficial."
+    organismo: "Convenio CAM–ONCE y Nomenclátor Geográfico INE / IGN",
+    descripcion: "Integración de los centros del C.R.E. «Antonio Vicente Mosquete» (ONCE) presentes en el catálogo oficial CAM para apoyo visual, junto con centroides oficiales municipales de respaldo y toponimia normalizada de los 179 municipios y 21 distritos de Madrid.",
+    ambito: "Información pública CAM–ONCE e IGN/INE."
   }
 ];
 
 export const SPECIAL_PROCEDURES = {
   visual: {
     titulo: "Discapacidad Visual: Equipo Específico (EOEP) y C.R.E. ONCE",
-    subtitulo: "Atención itinerante en cualquier centro ordinario + sede específica CRE ONCE (sin red de preferentes)",
+    subtitulo: "Atención itinerante en cualquier centro ordinario y sede específica C.R.E. ONCE",
     resumen: "En la Comunidad de Madrid, el alumnado con discapacidad visual puede escolarizarse en cualquier centro ordinario apoyado por el Equipo Específico de Deficiencias Visuales (convenio CAM–ONCE) o en los centros de recursos del C.R.E. «Antonio Vicente Mosquete» de la ONCE en Moratalaz (código 28021070 para CEE y 28067501 para Primaria/ESO).",
     comoFunciona: [
       "El menor puede escolarizarse en cualquier centro ordinario de la Comunidad de Madrid sin depender de un listado de colegios preferentes.",
@@ -128,7 +122,7 @@ export const SPECIAL_PROCEDURES = {
   },
   compensatoria: {
     titulo: "Escuelas de Bienvenida y Aulas de Enlace (DAT)",
-    subtitulo: "Programa temporal por Dirección de Área Territorial (sin conjunto abierto descargable)",
+    subtitulo: "Programa de incorporación temporal gestionado por Dirección de Área Territorial (DAT)",
     resumen: "El programa «Escuelas de Bienvenida» (Aulas de Enlace para alumnado de incorporación tardía con desconocimiento del español o desfase curricular) y las actuaciones de Compensación Educativa se autorizan por curso desde las Direcciones de Área Territorial (DAT). No existe aún un dataset abierto en Datos Abiertos CAM ni un EOEP único descargable.",
     comoFunciona: [
       "El Servicio de Apoyo a la Escolarización (SAE) de la zona valora al alumno recién llegado e indica si precisa incorporación temporal a un Aula de Enlace de su área territorial.",

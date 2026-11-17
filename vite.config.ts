@@ -4,8 +4,22 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
+  const siteUrl = (
+    process.env.VITE_SITE_URL || 'https://datamadrid.github.io/madrid-educa-apoyo'
+  ).replace(/\/$/, '');
+
   return {
-    plugins: [react(), tailwindcss()],
+    base: process.env.VITE_BASE_PATH || './',
+    plugins: [
+      react(),
+      tailwindcss(),
+      {
+        name: 'inject-site-url-meta',
+        transformIndexHtml(html: string) {
+          return html.replace(/%VITE_SITE_URL%/g, siteUrl);
+        },
+      },
+    ],
     resolve: {
       alias: {
         '@': path.resolve(import.meta.dirname, '.'),

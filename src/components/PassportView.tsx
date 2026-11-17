@@ -77,9 +77,9 @@ export const PassportView: React.FC<PassportViewProps> = ({
         <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-800 flex items-center justify-center mx-auto mb-4">
           <BookmarkCheck className="w-6 h-6" aria-hidden="true" />
         </div>
-        <h2 className="text-lg font-bold text-slate-900 mb-1">
+        <h1 className="text-lg font-bold text-slate-900 mb-1">
           Tu Pasaporte Local está vacío
-        </h2>
+        </h1>
         <p className="text-xs text-slate-700 max-w-md mx-auto mb-6 leading-relaxed">
           Guarda centros educativos en tu Pasaporte desde la ficha de cada centro para generar un cuaderno personal imprimible con la evidencia oficial, los datos de contacto, la ruta de continuidad y la guía de preguntas clave para tu visita.
         </p>
@@ -99,9 +99,9 @@ export const PassportView: React.FC<PassportViewProps> = ({
       {/* Botonera de control superior (oculta al imprimir) */}
       <div className="no-print bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
         <div>
-          <h2 className="text-lg font-bold text-slate-900">
+          <div className="text-lg font-bold text-slate-900">
             Pasaporte Local de Orientación Escolar
-          </h2>
+          </div>
           <p className="text-xs text-slate-700">
             Dossier personal orientativo generado para la familia · Listo para imprimir o llevar en el móvil a la visita
           </p>
@@ -179,22 +179,48 @@ export const PassportView: React.FC<PassportViewProps> = ({
                   ? 'Discapacidad Visual (EOEP / ONCE)'
                   : state.need === 'altas_capacidades'
                   ? 'Altas Capacidades (CREACIM / PEAC)'
-                  : 'Todo el catálogo (TEA, CEE, Hosp., Visual y AACC)'}
+                  : state.need === 'auditiva'
+                  ? 'Discapacidad Auditiva (EOEP Específico)'
+                  : state.need === 'motora'
+                  ? 'Discapacidad Motora (EOEP Específico)'
+                  : state.need === 'tdah'
+                  ? 'TDAH y Dificultades (EOEP Específico)'
+                  : state.need === 'tel_lenguaje'
+                  ? 'Trastorno del Lenguaje (EOEP Específico)'
+                  : state.need === 'compensatoria'
+                  ? 'Escuelas de Bienvenida (Aulas de Enlace)'
+                  : 'Todo el catálogo (TEA, CEE, Hosp., Visual, AACC y EOEP)'}
               </span>
             </div>
 
             <div>
               <span className="text-slate-600 font-medium block">Etapas Seleccionadas:</span>
               <span className="font-bold text-slate-900">
-                {state.stages.join(', ') || 'Todas'}
+                {state.stages.length > 0
+                  ? state.stages
+                      .map(st =>
+                        st === 'infantil'
+                          ? 'Infantil'
+                          : st === 'primaria'
+                          ? 'Primaria'
+                          : st === 'eso'
+                          ? 'ESO'
+                          : st === 'bachillerato'
+                          ? 'Bachillerato'
+                          : 'FP Básica'
+                      )
+                      .join(', ')
+                  : 'Todas'}
               </span>
             </div>
 
             <div>
               <span className="text-slate-600 font-medium block">Ámbito Territorial:</span>
               <span className="font-bold text-slate-900">
-                {state.municipality || 'Toda la Comunidad de Madrid'}
-                {state.district ? ` (${state.district})` : ''}
+                {state.locationSource === 'browser'
+                  ? 'Tu ubicación aproximada'
+                  : state.municipality || 'Toda la Comunidad de Madrid'}
+                {state.district && state.locationSource !== 'browser' ? ` (${state.district})` : ''}
                 {state.radiusKm ? ` · Radio ${state.radiusKm} km` : ''}
               </span>
             </div>
@@ -202,7 +228,13 @@ export const PassportView: React.FC<PassportViewProps> = ({
             <div>
               <span className="text-slate-600 font-medium block">Titularidad:</span>
               <span className="font-bold text-slate-900">
-                {state.ownership.length > 0 ? state.ownership.join(', ') : 'Cualquier titularidad'}
+                {state.ownership.length > 0
+                  ? state.ownership
+                      .map(o =>
+                        o === 'publico' ? 'Público' : o === 'concertado' ? 'Concertado' : 'Privado'
+                      )
+                      .join(', ')
+                  : 'Cualquier titularidad'}
               </span>
             </div>
           </div>

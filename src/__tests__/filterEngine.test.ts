@@ -12,6 +12,9 @@ import {
   sortCentres,
   analyzeZeroResults,
   computeDynamicCounts,
+  buildResultsCSVContent,
+  serializeSearchStateToQuery,
+  parseSearchStateFromQuery,
   INITIAL_SEARCH_STATE
 } from '../utils/filterEngine';
 import { School, SearchState } from '../types';
@@ -505,16 +508,38 @@ describe('filterEngine - analyzeZeroResults & multi-source dynamicCounts', () =>
     expect(alcalaCounts.accessibility.acceso_fisico).toBe(0);
   });
 
-  it('offers both TEA and CEE relaxations when an uncatalogued need is selected', () => {
-    const analysis = analyzeZeroResults(SCHOOLS_DATA, {
+  it('offers Escuelas de Bienvenida guidance plus TEA and CEE relaxations and round-trips compensatoria URL state', () => {
+    const compState: SearchState = {
       ...INITIAL_SEARCH_STATE,
       need: 'compensatoria',
       stages: [],
       municipality: 'Madrid',
       radiusKm: null
-    });
-    expect(analysis.reason).toContain('conjunto abierto regional descargable');
+    };
+    const counts = computeDynamicCounts(SCHOOLS_DATA, compState);
+    expect(counts.needs.compensatoria).toBe(0);
+
+    const query = serializeSearchStateToQuery(compState);
+    const parsed = parseSearchStateFromQuery(`?${query}`);
+    expect(parsed.need).toBe('compensatoria');
+    expect(parsed.municipality).toBe('Madrid');
+
+    const analysis = analyzeZeroResults(SCHOOLS_DATA, compState);
+    expect(analysis.reason).toContain('Escuelas de Bienvenida');
     expect(analysis.relaxations.some(r => r.id === 'switch_to_tea')).toBe(true);
     expect(analysis.relaxations.some(r => r.id === 'switch_to_cee')).toBe(true);
+  });
+
+  it('exports Codigo_Accesibilidad_Ayto and Observaciones columns in CSV export', () => {
+    const chamberi = SCHOOLS_DATA.find(s => s.codigo === '28020120')!;
+    const ciudadValencia = SCHOOLS_DATA.find(s => s.codigo === '28020673')!;
+    const csv = buildResultsCSVContent([chamberi, ciudadValencia], INITIAL_SEARCH_STATE);
+
+    const headerLine = csv.split('\n')[0];
+    expect(headerLine).toContain('Codigo_Accesibilidad_Ayto');
+    expect(headerLine).toContain('Observaciones');
+    expect(csv).toContain('28020120');
+    expect(csv).toMatch(/Amor Misericordioso/i);
+    expect(csv).toContain('Parcialmente accesible PMR (cód. 2, Ayto. Madrid)');
   });
 });

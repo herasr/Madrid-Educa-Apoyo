@@ -3,12 +3,13 @@
 Pipeline de Ingesta — Madrid Educa Apoyo (v3.0)
 ================================================
 
-Combina CUATRO fuentes públicas oficiales sin añadir ningún dato inventado:
+Combina tres fuentes públicas oficiales con apoyo toponímico oficial y cola automática de revisión:
   1. Relación oficial de centros de atención preferente TEA con plazas previsibles
      (Consejería de Educación CAM, curso 2024/2025, información a 22/03/2024, 336 códigos).
   2. Conjunto abierto «Centros educativos de la Comunidad de Madrid» del Portal de Datos Abiertos
      (https://datos.comunidad.madrid/catalogo/dataset/centros_educativos, licencia CC BY 4.0):
-     - Enriquece dirección postal, CP, teléfono, correo, web, distrito y coordenadas UTM (ETRS89 -> WGS84).
+     - Enriquece denominación vigente, tipo actualizado (p. ej. CEIP -> CEIPSO), dirección postal,
+       CP, teléfono, correo, web, distrito y coordenadas UTM (ETRS89 -> WGS84).
      - Incorpora todos los Centros de Educación Especial (CEE) en situación ALTA (69 centros).
      - Incorpora las Aulas Hospitalarias no anuladas (14 unidades: 4 ALTA y 10 EN TRÁMITE).
      - Incorpora los recursos y equipos específicos oficiales en situación ALTA para Discapacidad Visual
@@ -17,12 +18,12 @@ Combina CUATRO fuentes públicas oficiales sin añadir ningún dato inventado:
        (EOEP Motóricas 28700763) y TDAH / Trastornos del Lenguaje (EOEP Dificultades, Lenguaje y TDAH 28701214).
   3. Portal de Datos Abiertos del Ayuntamiento de Madrid (dataset 300614-0-centros-educativos):
      - Enriquecimiento externo exclusivo para Madrid capital (transporte público cercano,
-       barrio, accesibilidad física certificada y servicios confirmados en EQUIPAMIENTO).
-  4. Referencia institucional del Registro Estatal de Centros Docentes No Universitarios (RCD)
-     del Ministerio de Educación, Formación Profesional y Deportes.
+       barrio, equipamiento declarado y códigos oficiales de ACCESIBILIDAD 0..6 según estructura_ds_conjuntodatos.pdf).
 
-Si algún centro carece de coordenadas UTM en CKAN (actualmente 1 centro: CEE Duque de Ahumada),
-usa el centroide oficial INE/IGN del municipio marcado con `ubicacion_aproximada = True`.
+Las discrepancias nominales o cruces municipales dudosos se envían automáticamente a `data/review/`
+para verificación manual sin inventar datos. Si algún centro carece de coordenadas UTM en CKAN
+(actualmente 1 centro: CEE Duque de Ahumada), usa el centroide oficial INE/IGN del municipio marcado
+con `ubicacion_aproximada = True`.
 """
 
 import csv
@@ -126,6 +127,22 @@ def norm(text):
 
 def sig_tokens(text):
     return {w for w in re.findall(r"[a-z0-9]+", norm(text)) if len(w) >= 3 and w not in STOP_NAME_TOKENS}
+
+
+def compact_alnum(text):
+    return re.sub(r"[^a-z0-9]", "", norm(text))
+
+
+def has_name_overlap(name_a, name_b):
+    toks_a = sig_tokens(name_a)
+    toks_b = sig_tokens(name_b)
+    if toks_a and toks_b and (toks_a & toks_b):
+        return True
+    comp_a = compact_alnum(name_a)
+    comp_b = compact_alnum(name_b)
+    if len(comp_a) >= 5 and len(comp_b) >= 5 and (comp_a in comp_b or comp_b in comp_a):
+        return True
+    return False
 
 
 def extract_phones(raw):
@@ -265,6 +282,8 @@ def load_ckan_all():
         "resource_json_url",
         "https://datos.comunidad.madrid/dataset/c750856d-3166-4dac-8e80-d1b824c968b5/resource/be2264df-c720-4619-ab79-aebad9b248e0/download/centros_educativos.json",
     )
+    snap_date = str(ckan_meta.get("fecha_descarga", "2026-11-16") or "2026-11-16")[:10]
+    live_date = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
 
     try:
         req = urllib.request.Request(
@@ -278,9 +297,9 @@ def load_ckan_all():
         by_code = {str(x.get("CODIGO", "")).strip(): x for x in rows if str(x.get("CODIGO", "")).strip()}
         if len(by_code) >= 7000:
             print(f"  ✓ Portal de Datos Abiertos CAM verificado en vivo ({len(by_code)} centros totales en catálogo)")
-            return by_code, "CKAN_EN_VIVO", sha256_bytes(raw), ckan_meta.get("portal_url", "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos")
+            return by_code, "CKAN_EN_VIVO", sha256_bytes(raw), ckan_meta.get("portal_url", "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos"), live_date
     except Exception as e:
-        print(f"  ℹ Portal de Datos Abiertos CAM offline ({e}). Se usa instantánea versionada.")
+        print(f"  ℹ Portal de Datos Abiertos CAM offline ({e}). Se usa instantánea versionada ({snap_date}).")
 
     for snap_path in (CKAN_SNAPSHOT_JSON, CKAN_TEA_FALLBACK_JSON):
         if os.path.exists(snap_path):
@@ -289,14 +308,21 @@ def load_ckan_all():
             by_code = snap.get("centros", {})
             with open(snap_path, "rb") as f:
                 snap_sha = sha256_bytes(f.read())
-            print(f"  ✓ Instantánea CKAN Datos Abiertos CAM cargada ({len(by_code)} centros en {snap_path})")
-            return by_code, "SNAPSHOT_CKAN_VERSIONADO", snap_sha, ckan_meta.get("portal_url", "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos")
+            print(f"  ✓ Instantánea CKAN Datos Abiertos CAM cargada ({len(by_code)} centros en {snap_path}, descarga {snap_date})")
+            return by_code, "SNAPSHOT_CKAN_VERSIONADO", snap_sha, ckan_meta.get("portal_url", "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos"), snap_date
 
-    return {}, "NO_DISPONIBLE", None, "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos"
+    return {}, "NO_DISPONIBLE", None, "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos", snap_date
 
 
 def load_ayuntamiento_centres():
     """Carga el catálogo de Centros Educativos del Ayuntamiento de Madrid (datos.madrid.es 300614-0)."""
+    ayto_meta = {}
+    if os.path.exists(AYTO_SNAPSHOT_META):
+        with open(AYTO_SNAPSHOT_META, encoding="utf-8") as f:
+            ayto_meta = json.load(f)
+    snap_date = str(ayto_meta.get("fecha_descarga", "2026-11-16") or "2026-11-16")[:10]
+    live_date = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+
     url = "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (MadridEducaApoyo/3.0)"})
@@ -305,19 +331,19 @@ def load_ayuntamiento_centres():
         rows = list(csv.DictReader(raw.decode("latin-1").splitlines(), delimiter=";"))
         if len(rows) >= 1000:
             print(f"  ✓ Portal de Datos Abiertos Ayto. de Madrid verificado en vivo ({len(rows)} centros en capital)")
-            return rows, "AYTO_MADRID_EN_VIVO", sha256_bytes(raw)
+            return rows, "AYTO_MADRID_EN_VIVO", sha256_bytes(raw), live_date
     except Exception as e:
-        print(f"  ℹ Portal Ayto. de Madrid no disponible en vivo ({e}). Se usa instantánea versionada.")
+        print(f"  ℹ Portal Ayto. de Madrid no disponible en vivo ({e}). Se usa instantánea versionada ({snap_date}).")
 
     if os.path.exists(AYTO_SNAPSHOT_CSV):
         with open(AYTO_SNAPSHOT_CSV, encoding="utf-8") as f:
             rows = list(csv.DictReader(f, delimiter=";"))
         with open(AYTO_SNAPSHOT_CSV, "rb") as f:
             snap_sha = sha256_bytes(f.read())
-        print(f"  ✓ Instantánea Ayto. de Madrid cargada ({len(rows)} filas de 300614-0)")
-        return rows, "SNAPSHOT_AYTO_VERSIONADO", snap_sha
+        print(f"  ✓ Instantánea Ayto. de Madrid cargada ({len(rows)} filas de 300614-0, descarga {snap_date})")
+        return rows, "SNAPSHOT_AYTO_VERSIONADO", snap_sha, snap_date
 
-    return [], "NO_DISPONIBLE", None
+    return [], "NO_DISPONIBLE", None, snap_date
 
 
 def build_ayto_index(ayto_rows):
@@ -332,21 +358,37 @@ def build_ayto_index(ayto_rows):
     return ayto_rows, by_phone, by_email
 
 
-def match_ayuntamiento_record(centro_name, codigo_postal, telefono, email, lat, lng, ayto_index):
+def match_ayuntamiento_record(centro_name, codigo_postal, telefono, email, lat, lng, ayto_index, codigo=None, dubious_log=None):
     all_rows, by_phone, by_email = ayto_index
     if not all_rows:
         return None
     t_toks = sig_tokens(centro_name)
 
+    def log_dubious(criterion, cand):
+        if dubious_log is not None:
+            dubious_log.append({
+                "codigo": codigo or "",
+                "nombre_cam": centro_name,
+                "criterio_candidato": criterion,
+                "candidato_ayto": cand.get("NOMBRE", ""),
+                "telefono_candidato": cand.get("TELEFONO", ""),
+                "email_candidato": cand.get("EMAIL", ""),
+                "codigo_postal_candidato": cand.get("CODIGO-POSTAL", ""),
+                "accion": "DESCARTADO_POR_SIN_COINCIDENCIA_NOMINAL",
+            })
+
     for p in extract_phones(telefono):
         for cand in by_phone.get(p, []):
-            cand_cp = str(cand.get("CODIGO-POSTAL", "")).strip()
-            if (t_toks & sig_tokens(cand.get("NOMBRE", ""))) or (codigo_postal and cand_cp == codigo_postal):
+            if has_name_overlap(centro_name, cand.get("NOMBRE", "")):
                 return cand
+            log_dubious("telefono", cand)
 
     em = (email or "").strip().lower()
     if em and em in by_email:
-        return by_email[em][0]
+        for cand in by_email[em]:
+            if has_name_overlap(centro_name, cand.get("NOMBRE", "")):
+                return cand
+            log_dubious("email", cand)
 
     best = None
     for cand in all_rows:
@@ -388,7 +430,12 @@ def extract_ayto_enrichment(ayto_rec):
         "actividades_extraescolares": "extraescolar" in eq_l if has_equip else False,
     }
 
+    # Diccionario oficial (estructura_ds_conjuntodatos.pdf, Mayo 2019, Ayto. Madrid):
+    # 0 = No accesible, 1 = Accesible, 2 = Parcialmente accesible PMR,
+    # 3 = Sin información sobre accesibilidad PMR,
+    # 4 = Lengua de signos, 5 = Señalización podotáctil, 6 = Bucle de inducción magnético.
     acc_tokens = set(re.findall(r"\d+", str(ayto_rec.get("ACCESIBILIDAD", "") or "")))
+    acc_codigo = ",".join(sorted(acc_tokens, key=int)) if acc_tokens else ""
     acceso_fisico = "1" in acc_tokens
 
     return {
@@ -396,12 +443,13 @@ def extract_ayto_enrichment(ayto_rec):
         "barrio": barrio,
         "servicios": servicios,
         "servicios_confirmados_ayto": has_equip,
+        "accesibilidad_codigo_ayto": acc_codigo,
         "accesibilidad": {
             "acceso_fisico": acceso_fisico,
             "ascensor": False,
             "bano_adaptado": False,
-            "bucle_magnetico": False,
-            "plano_podotactil": False,
+            "bucle_magnetico": "6" in acc_tokens,
+            "plano_podotactil": "5" in acc_tokens,
         },
         "accesibilidad_confirmada_ayto": acceso_fisico,
         "fuente_ayuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
@@ -423,6 +471,26 @@ def extract_codes_from_pdf(pdf_bytes):
     return codes
 
 
+def write_tea_verification_log(meta, status, info, error_msg=None, added=None, removed=None):
+    os.makedirs(REVIEW_DIR, exist_ok=True)
+    log_path = os.path.join(REVIEW_DIR, "verificacion_tea_pdf.json")
+    payload = {
+        "ultima_comprobacion": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "pdf_url": meta["url"],
+        "estado": status,
+        "snapshot_csv": SNAPSHOT_CSV,
+        "snapshot_fecha_informacion": meta.get("fecha_informacion"),
+        "snapshot_total_codigos": len(load_snapshot()[0]),
+        "pdf_sha256": info.get("pdf_sha256"),
+        "pdf_codigos_extraidos": info.get("pdf_codigos"),
+        "codigos_nuevos_en_pdf": added or [],
+        "codigos_que_ya_no_aparecen": removed or [],
+        "error_descarga_o_lectura": error_msg,
+    }
+    with open(log_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)
+
+
 def verify_against_official(meta, snapshot_codes):
     """Descarga el PDF oficial y compara sus códigos con la instantánea versionada."""
     info = {"pdf_url": meta["url"], "pdf_sha256": None, "pdf_codigos": None}
@@ -430,6 +498,7 @@ def verify_against_official(meta, snapshot_codes):
         pdf_bytes = download_pdf(meta["url"])
     except Exception as e:
         print(f"  ℹ No se pudo descargar el PDF oficial ({e}). Se usa la instantánea versionada.")
+        write_tea_verification_log(meta, "SNAPSHOT_VERSIONADO", info, error_msg=str(e))
         return "SNAPSHOT_VERSIONADO", info
 
     info["pdf_sha256"] = sha256_bytes(pdf_bytes)
@@ -442,6 +511,7 @@ def verify_against_official(meta, snapshot_codes):
         pdf_codes = extract_codes_from_pdf(pdf_bytes)
     except Exception as e:
         print(f"  ⚠ PDF descargado pero no se pudo leer ({e}). Se usa la instantánea versionada.")
+        write_tea_verification_log(meta, "SNAPSHOT_VERSIONADO", info, error_msg=str(e))
         return "SNAPSHOT_VERSIONADO", info
 
     info["pdf_codigos"] = len(pdf_codes)
@@ -449,6 +519,7 @@ def verify_against_official(meta, snapshot_codes):
     removed = sorted(set(snapshot_codes) - set(pdf_codes))
     if not added and not removed:
         print(f"  ✓ Los {len(set(pdf_codes))} códigos del PDF oficial coinciden con la instantánea versionada.")
+        write_tea_verification_log(meta, "PDF_OFICIAL_VERIFICADO", info)
         return "PDF_OFICIAL_VERIFICADO", info
 
     os.makedirs(REVIEW_DIR, exist_ok=True)
@@ -462,6 +533,7 @@ def verify_against_official(meta, snapshot_codes):
             "codigos_que_ya_no_aparecen": removed,
             "accion": "Revisar a mano y actualizar data/official/tea_preferentes_curso_2024-25.csv",
         }, f, indent=2, ensure_ascii=False)
+    write_tea_verification_log(meta, "PDF_OFICIAL_CON_CAMBIOS", info, added=added, removed=removed)
     print(f"  ⚡ El PDF oficial difiere de la instantánea (+{len(added)} / -{len(removed)} códigos). "
           f"Enviado a revisión: {review_path}")
     return "PDF_OFICIAL_CON_CAMBIOS", info
@@ -539,12 +611,13 @@ def extract_contact(ckan_rec):
     return direccion, codigo_postal, telefono, email, web
 
 
-def normalise_tea_rows(snapshot_rows, meta, ckan_by_code, ayto_index, municipios, distritos):
+def normalise_tea_rows(snapshot_rows, meta, ckan_by_code, ayto_index, municipios, distritos, conflict_log, dubious_ayto_log):
     groups = {}
     out = []
     for r in snapshot_rows:
         codigo = r["codigo_centro"].strip()
         tipo_doc = r["tipo"].strip()
+        tea_raw_name = r["centro"].strip()
         municipio, distrito, ref, nivel = resolve_place(
             r["distrito_o_localidad"].strip(), r["dat"].strip(), municipios, distritos
         )
@@ -573,25 +646,69 @@ def normalise_tea_rows(snapshot_rows, meta, ckan_by_code, ayto_index, municipios
 
         direccion, codigo_postal, telefono, email, web = extract_contact(ckan_rec)
         tipo_general_ckan = str(ckan_rec.get("TIPO_EXT", "") or "").strip() if ckan_rec else ""
+        ckan_tipo_abrv = str(ckan_rec.get("TIPO_ABRV", "") or "").strip() if ckan_rec else ""
+        ckan_raw_name = str(ckan_rec.get("CENTRO", "") or "").strip() if ckan_rec else ""
 
-        tipo_app, titularidad, centre_stages, prefijo = TIPO_INFO.get(tipo_doc, ("CEIP", "publico", [], ""))
-        nombre_base = title_es(r["centro"])
-        nombre = f"{prefijo} {nombre_base}" if prefijo and not nombre_base.lower().startswith(prefijo.lower()) else nombre_base
+        # Priorizar el tipo oficial vigente en CKAN cuando evoluciona (p. ej. CP INF-PRI -> CEIPSO, SIES -> IES)
+        effective_tipo = ckan_tipo_abrv if (ckan_tipo_abrv in TIPO_INFO) else tipo_doc
+        effective_raw_name = tea_raw_name
 
         observaciones = []
+        # Detección automática de conflicto nominal real entre listado TEA y registro CKAN CAM
+        has_name_conflict = bool(
+            ckan_raw_name
+            and compact_alnum(tea_raw_name) != compact_alnum(ckan_raw_name)
+            and not has_name_overlap(tea_raw_name, ckan_raw_name)
+        )
+        if has_name_conflict:
+            effective_raw_name = ckan_raw_name
+            conflict_log.append({
+                "codigo": codigo,
+                "nombre_ckan_cam": ckan_raw_name,
+                "nombre_listado_tea": tea_raw_name,
+                "tipo_ckan_cam": ckan_tipo_abrv,
+                "tipo_listado_tea": tipo_doc,
+                "direccion_ckan": direccion,
+                "telefono_ckan": telefono,
+                "email_ckan": email,
+                "web_ckan": web,
+                "criterio_aplicado": "Se usa la denominación oficial del registro CAM (CKAN) y se añade aviso en observaciones.",
+            })
+            observaciones.append(
+                f"Conflicto detectado en el código {codigo}: el registro oficial de Datos Abiertos CAM corresponde a «{title_es(ckan_raw_name)}», "
+                f"mientras que el listado TEA 2024/25 asocia este código a «{title_es(tea_raw_name)}». "
+                "Se muestran la denominación y el contacto del registro oficial CAM; conviene confirmar la asignación real de plaza TEA ante el SAE."
+            )
+        elif tipo_doc == "SIES" and ckan_tipo_abrv == "IES" and ckan_raw_name:
+            effective_raw_name = ckan_raw_name
+            observaciones.append(
+                f"En el listado TEA 2024/25 figuraba como SIES «{title_es(tea_raw_name)}»; "
+                f"el catálogo oficial Datos Abiertos CAM ya lo registra como IES «{title_es(ckan_raw_name)}»."
+            )
+
+        tipo_app, titularidad, centre_stages, prefijo = TIPO_INFO.get(effective_tipo, ("CEIP", "publico", [], ""))
+        nombre_base = title_es(effective_raw_name)
+        nombre = f"{prefijo} {nombre_base}" if prefijo and not nombre_base.lower().startswith(prefijo.lower()) else nombre_base
+
         if not tipo_doc:
             observaciones.append(
                 "El listado TEA no indica el tipo ni la titularidad de este centro; "
-                "el catálogo general de Datos Abiertos CAM lo registra como centro público."
+                f"el catálogo general de Datos Abiertos CAM lo registra como centro público ({effective_tipo or 'CEIP'})."
             )
-        elif tipo_doc not in TIPO_INFO:
-            observaciones.append(f"Tipo de centro '{tipo_doc}' no definido en la leyenda del documento TEA.")
-        elif tipo_doc == "SIES":
+        elif ckan_tipo_abrv and ckan_tipo_abrv in TIPO_INFO and ckan_tipo_abrv != tipo_doc and tipo_doc != "SIES":
+            observaciones.append(
+                f"En el listado TEA 2024/25 figuraba como {tipo_doc}; el catálogo oficial Datos Abiertos CAM lo registra actualmente como {tipo_app} ({ckan_tipo_abrv})."
+            )
+        elif effective_tipo not in TIPO_INFO:
+            observaciones.append(f"Tipo de centro '{effective_tipo}' no definido en la leyenda del documento TEA.")
+        elif effective_tipo == "SIES":
             observaciones.append("'SIES' (Sección de IES) no figura en la leyenda del documento TEA.")
 
         ayto_info = {}
         if municipio == "Madrid":
-            matched = match_ayuntamiento_record(r["centro"], codigo_postal, telefono, email, lat, lng, ayto_index)
+            matched = match_ayuntamiento_record(
+                effective_raw_name, codigo_postal, telefono, email, lat, lng, ayto_index, codigo=codigo, dubious_log=dubious_ayto_log
+            )
             ayto_info = extract_ayto_enrichment(matched)
 
         observaciones_extra = list(observaciones)
@@ -610,7 +727,7 @@ def normalise_tea_rows(snapshot_rows, meta, ckan_by_code, ayto_index, municipios
                     "Comunidad de Madrid · Programa de Enriquecimiento Educativo (PEAC / CREACIM) "
                     "y Portal de Datos Abiertos CAM (CC BY 4.0)"
                 ),
-                "fecha_corte": f"Catálogo CKAN vigente · convocatoria PEAC · corte {fecha_es(meta['fecha_informacion'])}",
+                "fecha_corte": f"Catálogo CKAN vigente · corte {fecha_es(meta['fecha_informacion'])}",
                 "detalles": (
                     "Instituto público que además de centro preferente TEA en Secundaria actúa como sede "
                     "territorial oficial en Madrid capital del Programa de Enriquecimiento Educativo para "
@@ -621,8 +738,8 @@ def normalise_tea_rows(snapshot_rows, meta, ckan_by_code, ayto_index, municipios
         out.append({
             "codigo": codigo,
             "nombre": nombre,
-            "nombre_oficial": r["centro"].strip(),
-            "tipo_oficial": tipo_doc,
+            "nombre_oficial": ckan_raw_name if (has_name_conflict or (tipo_doc == "SIES" and ckan_tipo_abrv == "IES")) else tea_raw_name,
+            "tipo_oficial": effective_tipo,
             "tipo_general_oficial": tipo_general_ckan,
             "tipo": tipo_app,
             "titularidad": titularidad,
@@ -641,7 +758,7 @@ def normalise_tea_rows(snapshot_rows, meta, ckan_by_code, ayto_index, municipios
             "evidencia": "A2",
             "situacion_oficial": str(ckan_rec.get("SITUACIÓN", "ALTA") or "ALTA").strip() if ckan_rec else "ALTA",
             "etapa_oficial": r["etapa"].strip(),
-            "etapas_con_apoyo": stages_with_support(r["etapa"].strip(), tipo_doc),
+            "etapas_con_apoyo": stages_with_support(r["etapa"].strip(), effective_tipo),
             "etapas_generales_centro": centre_stages,
             "extra_apoyos": extra_apoyos,
             "latitud": lat,
@@ -651,6 +768,7 @@ def normalise_tea_rows(snapshot_rows, meta, ckan_by_code, ayto_index, municipios
             "transporte_publico": ayto_info.get("transporte_publico", ""),
             "servicios_ayto": ayto_info.get("servicios", {}),
             "servicios_confirmados_ayto": ayto_info.get("servicios_confirmados_ayto", False),
+            "accesibilidad_codigo_ayto": ayto_info.get("accesibilidad_codigo_ayto", ""),
             "accesibilidad_ayto": ayto_info.get("accesibilidad", {}),
             "accesibilidad_confirmada_ayto": ayto_info.get("accesibilidad_confirmada_ayto", False),
             "fuente_ayuntamiento": ayto_info.get("fuente_ayuntamiento", ""),
@@ -673,7 +791,7 @@ def normalise_tea_rows(snapshot_rows, meta, ckan_by_code, ayto_index, municipios
     return out
 
 
-def normalise_cee_and_hospital_rows(ckan_by_code, existing_codes, ayto_index, municipios, distritos, retrieval_date):
+def normalise_cee_and_hospital_rows(ckan_by_code, existing_codes, ayto_index, municipios, distritos, retrieval_date, dubious_ayto_log):
     """Extrae 69 Centros de Educación Especial (ALTA) y 14 Aulas Hospitalarias (no anuladas)."""
     out = []
     groups = {}
@@ -738,7 +856,7 @@ def normalise_cee_and_hospital_rows(ckan_by_code, existing_codes, ayto_index, mu
             if ubicacion_aprox:
                 observaciones.append("Las coordenadas exactas UTM no figuran aún en CKAN para este centro; se posiciona en el centroide oficial del municipio.")
             if titularidad == "privado":
-                observaciones.append("Centro de titularidad privada no concertada inscrito en el catálogo oficial CAM y Registro Estatal (RCD).")
+                observaciones.append("Centro de titularidad privada no concertada inscrito en situación ALTA en Datos Abiertos CAM.")
         else:
             low = nombre_base.lower()
             nombre = nombre_base if low.startswith("aula hospitalaria") else f"Aula Hospitalaria {nombre_base}"
@@ -754,7 +872,9 @@ def normalise_cee_and_hospital_rows(ckan_by_code, existing_codes, ayto_index, mu
 
         ayto_info = {}
         if municipio == "Madrid":
-            matched = match_ayuntamiento_record(centro_raw, codigo_postal, telefono, email, lat, lng, ayto_index)
+            matched = match_ayuntamiento_record(
+                centro_raw, codigo_postal, telefono, email, lat, lng, ayto_index, codigo=codigo, dubious_log=dubious_ayto_log
+            )
             ayto_info = extract_ayto_enrichment(matched)
 
         extra_apoyos = []
@@ -771,7 +891,7 @@ def normalise_cee_and_hospital_rows(ckan_by_code, existing_codes, ayto_index, mu
                 "fuente": (
                     "Portal de Datos Abiertos CAM (CC BY 4.0) y Centro de Recursos Educativos (CRE) ONCE Madrid"
                 ),
-                "fecha_corte": f"Catálogo CKAN vigente · corte {fecha_es(retrieval_date)}",
+                "fecha_corte": f"Catálogo CKAN · copia {fecha_es(retrieval_date)}",
                 "detalles": (
                     "Centro de Recursos Educativos (CRE) «Antonio Vicente Mosquete» de la ONCE en modalidad de "
                     "Educación Especial para discapacidad visual y sordoceguera. Atiende estancias temporales, "
@@ -812,13 +932,11 @@ def normalise_cee_and_hospital_rows(ckan_by_code, existing_codes, ayto_index, mu
             "transporte_publico": ayto_info.get("transporte_publico", ""),
             "servicios_ayto": ayto_info.get("servicios", {}),
             "servicios_confirmados_ayto": ayto_info.get("servicios_confirmados_ayto", False),
+            "accesibilidad_codigo_ayto": ayto_info.get("accesibilidad_codigo_ayto", ""),
             "accesibilidad_ayto": ayto_info.get("accesibilidad", {}),
             "accesibilidad_confirmada_ayto": ayto_info.get("accesibilidad_confirmada_ayto", False),
             "fuente_ayuntamiento": ayto_info.get("fuente_ayuntamiento", ""),
-            "fuente": (
-                "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) "
-                "y Registro Estatal de Centros Docentes (MEFPD)"
-            ),
+            "fuente": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
             "fuente_datos_abiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
             "fuente_url": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
             "fecha_informacion": retrieval_date,
@@ -842,7 +960,7 @@ PEAC_SEDES_CODES = [
 ]
 
 
-def normalise_visual_and_aacc_rows(ckan_by_code, existing_codes, ayto_index, municipios, distritos, retrieval_date):
+def normalise_visual_and_aacc_rows(ckan_by_code, existing_codes, ayto_index, municipios, distritos, retrieval_date, dubious_ayto_log):
     """Extrae recursos y EOEP Específicos oficiales verificados (Visual, Altas Capacidades, Auditiva, Motora, TDAH/TEL)."""
     specs = [
         ("28700738", "visual"),
@@ -931,7 +1049,7 @@ def normalise_visual_and_aacc_rows(ckan_by_code, existing_codes, ayto_index, mun
                     "Coordinación con los EOEP de sector, Departamentos de Orientación y profesorado de Audición y Lenguaje (AL)",
                 ],
                 "fuente": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (EOEP Específico Lenguaje y TDAH)",
-                "fecha_corte": f"Catálogo CKAN vigente · corte {fecha_es(retrieval_date)}",
+                "fecha_corte": f"Catálogo CKAN · copia {fecha_es(retrieval_date)}",
                 "detalles": (
                     "Equipo de Orientación Educativa y Psicopedagógica (EOEP) Específico de Dificultades de Aprendizaje, "
                     "Trastornos del Lenguaje y TDAH (código oficial 28701214, situación ALTA). Presta orientación técnica "
@@ -996,7 +1114,9 @@ def normalise_visual_and_aacc_rows(ckan_by_code, existing_codes, ayto_index, mun
 
         ayto_info = {}
         if municipio == "Madrid":
-            matched = match_ayuntamiento_record(centro_raw, codigo_postal, telefono, email, lat, lng, ayto_index)
+            matched = match_ayuntamiento_record(
+                centro_raw, codigo_postal, telefono, email, lat, lng, ayto_index, codigo=codigo, dubious_log=dubious_ayto_log
+            )
             ayto_info = extract_ayto_enrichment(matched)
 
         out.append({
@@ -1032,6 +1152,7 @@ def normalise_visual_and_aacc_rows(ckan_by_code, existing_codes, ayto_index, mun
             "transporte_publico": ayto_info.get("transporte_publico", ""),
             "servicios_ayto": ayto_info.get("servicios", {}),
             "servicios_confirmados_ayto": ayto_info.get("servicios_confirmados_ayto", False),
+            "accesibilidad_codigo_ayto": ayto_info.get("accesibilidad_codigo_ayto", ""),
             "accesibilidad_ayto": ayto_info.get("accesibilidad", {}),
             "accesibilidad_confirmada_ayto": ayto_info.get("accesibilidad_confirmada_ayto", False),
             "fuente_ayuntamiento": ayto_info.get("fuente_ayuntamiento", ""),
@@ -1064,6 +1185,7 @@ def ingest_official_data():
     print("[Pipeline - Ingest] Cargando relación TEA, catálogo completo Datos Abiertos CAM (CEE + Hospital) y Ayto. de Madrid...")
     os.makedirs(OUTPUT_RAW_DIR, exist_ok=True)
     os.makedirs(OUTPUT_PROC_DIR, exist_ok=True)
+    os.makedirs(REVIEW_DIR, exist_ok=True)
 
     municipios, distritos = load_reference()
     snapshot_rows, snap_meta, csv_sha = load_snapshot()
@@ -1071,8 +1193,8 @@ def ingest_official_data():
     print(f"  ✓ Instantánea TEA versionada: {len(snapshot_rows)} centros ({SNAPSHOT_CSV}, SHA-256 {csv_sha[:16]}…)")
 
     status, pdf_info = verify_against_official(snap_meta, snapshot_codes)
-    ckan_by_code, ckan_status, ckan_sha, ckan_url = load_ckan_all()
-    ayto_rows, ayto_status, ayto_sha = load_ayuntamiento_centres()
+    ckan_by_code, ckan_status, ckan_sha, ckan_url, ckan_date = load_ckan_all()
+    ayto_rows, ayto_status, ayto_sha, ayto_date = load_ayuntamiento_centres()
     ayto_index = build_ayto_index(ayto_rows)
 
     meta_path = os.path.join(OUTPUT_RAW_DIR, "metadata.json")
@@ -1080,18 +1202,40 @@ def ingest_official_data():
     if os.path.exists(meta_path):
         shutil.copyfile(meta_path, prev_meta_path)
 
-    retrieved_date = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
     retrieved_at = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    tea_rows = normalise_tea_rows(snapshot_rows, snap_meta, ckan_by_code, ayto_index, municipios, distritos)
+    conflict_log = []
+    dubious_ayto_log = []
+
+    tea_rows = normalise_tea_rows(
+        snapshot_rows, snap_meta, ckan_by_code, ayto_index, municipios, distritos, conflict_log, dubious_ayto_log
+    )
     seen_codes = {r["codigo"] for r in tea_rows}
     extra_rows = normalise_cee_and_hospital_rows(
-        ckan_by_code, seen_codes, ayto_index, municipios, distritos, retrieved_date
+        ckan_by_code, seen_codes, ayto_index, municipios, distritos, ckan_date, dubious_ayto_log
     )
     seen_codes.update(r["codigo"] for r in extra_rows)
     visual_aacc_rows = normalise_visual_and_aacc_rows(
-        ckan_by_code, seen_codes, ayto_index, municipios, distritos, retrieved_date
+        ckan_by_code, seen_codes, ayto_index, municipios, distritos, ckan_date, dubious_ayto_log
     )
+
+    conflicts_path = os.path.join(REVIEW_DIR, "conflictos_nombres.json")
+    with open(conflicts_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "detectado": retrieved_at,
+            "total_conflictos": len(conflict_log),
+            "conflictos": conflict_log,
+        }, f, indent=2, ensure_ascii=False)
+    print(f"  ✓ Revisión nominal automática: {len(conflict_log)} conflictos registrados en {conflicts_path}")
+
+    dubious_path = os.path.join(REVIEW_DIR, "ayto_matches_dudosos.json")
+    with open(dubious_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "detectado": retrieved_at,
+            "total_descartados": len(dubious_ayto_log),
+            "candidatos": dubious_ayto_log,
+        }, f, indent=2, ensure_ascii=False)
+    print(f"  ✓ Revisión de cruces Ayto. Madrid: {len(dubious_ayto_log)} candidatos descartados registrados en {dubious_path}")
 
     rows = tea_rows + extra_rows + visual_aacc_rows
     cee_count = sum(1 for r in rows if r["need_id"] == "educacion_especial")
@@ -1119,7 +1263,6 @@ def ingest_official_data():
         "url": snap_meta["url"],
         "ckan_dataset_url": ckan_url,
         "ayto_dataset_url": "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
-        "ministerio_rcd_url": "https://www.educacionfpydeportes.gob.es/servicios-al-ciudadano/catalogo/general/05/050220/ficha/050220.html",
         "retrieved_at": retrieved_at,
         "sha256": csv_sha,
         "sha256_de": SNAPSHOT_CSV,
@@ -1128,8 +1271,12 @@ def ingest_official_data():
         "status": status,
         "ckan_status": ckan_status,
         "ckan_sha256": ckan_sha,
+        "ckan_fecha_descarga": ckan_date,
         "ayto_status": ayto_status,
         "ayto_sha256": ayto_sha,
+        "ayto_fecha_descarga": ayto_date,
+        "conflictos_nominales": len(conflict_log),
+        "cruces_ayto_descartados": len(dubious_ayto_log),
         "bytes": os.path.getsize(SNAPSHOT_CSV),
         "data_mode": "OFFICIAL_DATA",
         "fecha_informacion": snap_meta["fecha_informacion"],
@@ -1168,7 +1315,7 @@ def ingest_official_data():
         }, f, indent=2, ensure_ascii=False)
 
     print(
-        f"  ✓ Ingesta completada ({status} | {ckan_status} | {ayto_status}). "
+        f"  ✓ Ingesta completada ({status} | {ckan_status} ({ckan_date}) | {ayto_status} ({ayto_date})). "
         f"{len(rows)} centros reales normalizados (TEA: {len(tea_rows)}, CEE: {cee_count}, Hospitalaria: {hosp_count}, "
         f"Visual: {visual_count}, Altas Capacidades: {aacc_count}, Auditiva: {auditiva_count}, "
         f"Motora: {motora_count}, TDAH: {tdah_count}, TEL: {tel_count}; "

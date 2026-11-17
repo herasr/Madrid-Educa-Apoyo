@@ -1,7 +1,7 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- * Madrid Educa Apoyo - Tipos de dominio y estado de filtros acumulativos (v2.4)
+ * Madrid Educa Apoyo - Tipos de dominio y estado de filtros acumulativos
  */
 
 export type NeedId = 
@@ -116,6 +116,8 @@ export interface School {
   serviciosConfirmadosAyto?: boolean;
   /** true cuando el registro del Ayuntamiento confirma ACCESIBILIDAD=1 (instalación accesible). */
   accesibilidadConfirmadaAyto?: boolean;
+  /** Código literal del campo ACCESIBILIDAD en datos.madrid.es (0..6 según estructura_ds_conjuntodatos.pdf). */
+  accesibilidadCodigoAyto?: string;
   /** Situación administrativa en el catálogo oficial CAM (ALTA / EN TRÁMITE). */
   situacionOficial?: string;
   /** Nombre y tipo exactamente como figuran en la fuente oficial. */

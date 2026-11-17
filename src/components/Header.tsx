@@ -1,9 +1,8 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- * Encabezado Institucional Madrid Educa Apoyo (v2.4)
- * Estructura limpia y desaturada:
- * - Menú superior simplificado: Buscar, Comparar, Lectura Fácil, Exportar y Más
+ * Cabecera de navegación de Madrid Educa Apoyo
+ * Estructura limpia: Buscar, Comparar, Lectura Fácil, Exportar y Más
  */
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -50,6 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
   onExportJSON
 }) => {
   const [isShareExportOpen, setIsShareExportOpen] = useState(false);
+  const [isMobileExportOpen, setIsMobileExportOpen] = useState(false);
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
   const shareExportMenuRef = useRef<HTMLDivElement>(null);
   const moreMenuRef = useRef<HTMLDivElement>(null);
@@ -100,6 +100,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* 1. Buscar */}
             <button
               type="button"
+              aria-current={currentTab === 'search' ? 'page' : undefined}
               onClick={() => onSelectTab('search')}
               className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                 currentTab === 'search'
@@ -107,13 +108,14 @@ export const Header: React.FC<HeaderProps> = ({
                   : 'hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              <Search className={`w-4 h-4 shrink-0 ${currentTab === 'search' ? 'text-blue-700' : 'text-slate-600'}`} />
+              <Search className={`w-4 h-4 shrink-0 ${currentTab === 'search' ? 'text-blue-700' : 'text-slate-600'}`} aria-hidden="true" />
               <span>Buscar</span>
             </button>
 
             {/* 2. Comparar */}
             <button
               type="button"
+              aria-current={currentTab === 'comparator' ? 'page' : undefined}
               onClick={() => onSelectTab('comparator')}
               className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                 currentTab === 'comparator'
@@ -121,7 +123,7 @@ export const Header: React.FC<HeaderProps> = ({
                   : 'hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              <GitCompare className={`w-4 h-4 shrink-0 ${currentTab === 'comparator' ? 'text-blue-700' : 'text-slate-600'}`} />
+              <GitCompare className={`w-4 h-4 shrink-0 ${currentTab === 'comparator' ? 'text-blue-700' : 'text-slate-600'}`} aria-hidden="true" />
               <span>Comparar</span>
               <span className={`text-xs font-mono px-1.5 py-0.5 rounded-full tabular-nums font-bold ${
                 comparedCount > 0 ? 'bg-blue-100 text-blue-900' : 'bg-slate-100 text-slate-700'
@@ -316,21 +318,23 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Sub-barra de navegación móvil compacta */}
-        <div className="md:hidden flex items-center overflow-x-auto px-3 py-1.5 bg-slate-50 border-t border-slate-200 text-xs gap-1.5">
+        <nav aria-label="Navegación móvil" className="md:hidden flex items-center overflow-x-auto px-3 py-1.5 bg-slate-50 border-t border-slate-200 text-xs gap-1.5">
           <button
             type="button"
+            aria-current={currentTab === 'search' ? 'page' : undefined}
             onClick={() => onSelectTab('search')}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              currentTab === 'search' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
+              currentTab === 'search' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
             }`}
           >
             Buscar
           </button>
           <button
             type="button"
+            aria-current={currentTab === 'comparator' ? 'page' : undefined}
             onClick={() => onSelectTab('comparator')}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              currentTab === 'comparator' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
+              currentTab === 'comparator' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
             }`}
           >
             Comparar ({comparedCount}/3)
@@ -340,34 +344,48 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={onToggleEasyRead}
             aria-pressed={isEasyReadMode}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              isEasyReadMode ? 'bg-indigo-100 text-indigo-900 font-bold' : 'text-slate-600'
+              isEasyReadMode ? 'bg-indigo-100 text-indigo-900 font-bold' : 'text-slate-700'
             }`}
           >
             Lectura Fácil
           </button>
           <button
             type="button"
+            aria-expanded={isMobileExportOpen}
+            onClick={() => setIsMobileExportOpen(prev => !prev)}
+            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer inline-flex items-center gap-1 ${
+              isMobileExportOpen ? 'bg-blue-100 text-blue-950 font-bold' : 'text-slate-700'
+            }`}
+          >
+            <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Exportar</span>
+          </button>
+          <button
+            type="button"
+            aria-current={currentTab === 'continuity' ? 'page' : undefined}
             onClick={() => onSelectTab('continuity')}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              currentTab === 'continuity' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
+              currentTab === 'continuity' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
             }`}
           >
             Continuidad
           </button>
           <button
             type="button"
+            aria-current={currentTab === 'passport' ? 'page' : undefined}
             onClick={() => onSelectTab('passport')}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              currentTab === 'passport' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
+              currentTab === 'passport' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
             }`}
           >
             Pasaporte ({passportCount})
           </button>
           <button
             type="button"
+            aria-current={currentTab === 'sources' ? 'page' : undefined}
             onClick={() => onSelectTab('sources')}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              currentTab === 'sources' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-600'
+              currentTab === 'sources' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
             }`}
           >
             Fuentes
@@ -375,18 +393,57 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={onOpenLegalModal}
-            className="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900 cursor-pointer"
+            className="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium text-slate-700 hover:text-slate-900 cursor-pointer"
           >
             Aviso Legal
           </button>
           <button
             type="button"
             onClick={onOpenTestModal}
-            className="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 cursor-pointer"
+            className="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-semibold text-blue-800 bg-blue-50 hover:bg-blue-100 cursor-pointer"
           >
             Pruebas FIL
           </button>
-        </div>
+        </nav>
+
+        {/* Panel móvil desplegable para compartir enlace y exportar CSV/JSON */}
+        {isMobileExportOpen && (
+          <div className="md:hidden bg-white border-t border-slate-200 px-3 py-2 flex flex-wrap items-center gap-2 text-xs">
+            <button
+              type="button"
+              onClick={() => {
+                onShareLink();
+                setIsMobileExportOpen(false);
+              }}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-950 font-semibold cursor-pointer"
+            >
+              <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Copiar enlace</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onExportCSV();
+                setIsMobileExportOpen(false);
+              }}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950 font-semibold cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>CSV</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onExportJSON();
+                setIsMobileExportOpen(false);
+              }}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-100 border border-slate-300 text-slate-900 font-semibold cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>JSON</span>
+            </button>
+          </div>
+        )}
       </header>
     </>
   );

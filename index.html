@@ -7,19 +7,25 @@
     <title>Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales (DataMad 2026)</title>
     <meta name="description" content="Buscador cívico de educación inclusiva (TEA, Educación Especial CEE, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos de Auditiva, Motora, TDAH y Lenguaje) con datos abiertos oficiales de la Comunidad de Madrid, Ayuntamiento de Madrid y ONCE (DataMad 2026)." />
     <meta name="theme-color" content="#1D4ED8" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
     <meta property="og:title" content="Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales (DataMad 2026)" />
-    <meta property="og:description" content="Buscador cívico de educación inclusiva (433 centros y equipos oficiales: TEA, CEE, Hospitalaria, Visual, Altas Capacidades y EOEP Específicos) con datos abiertos de la Comunidad de Madrid, datos.madrid.es y Registro Estatal RCD (Proyecto DataMad 2026)." />
+    <meta property="og:description" content="Buscador cívico de educación inclusiva (433 centros y equipos oficiales: TEA, CEE, Hospitalaria, Visual, Altas Capacidades y EOEP Específicos) con datos abiertos de la Comunidad de Madrid, datos.madrid.es y ONCE (Proyecto DataMad 2026)." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/og-share.jpg" />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og-share.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Vista previa en español del buscador cívico Madrid Educa Apoyo con filtros y centros oficiales" />
     <meta property="og:site_name" content="Madrid Educa Apoyo · DataMad 2026" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Madrid Educa Apoyo · Buscador Cívico con Datos Abiertos Oficiales" />
     <meta name="twitter:description" content="433 centros y equipos oficiales (336 TEA, 69 CEE, 14 Hospitalarias, 3 Visual, 10 Altas Capacidades y 3 EOEP Específicos) cruzados con Datos Abiertos CAM, datos.madrid.es y ONCE. DataMad 2026." />
-    <meta name="twitter:image" content="/og-share.jpg" />
+    <meta name="twitter:image" content="%VITE_SITE_URL%/og-share.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -27,6 +33,7 @@
         {
           "@type": "WebApplication",
           "name": "Madrid Educa Apoyo",
+          "url": "%VITE_SITE_URL%/",
           "applicationCategory": "EducationalApplication",
           "operatingSystem": "All",
           "description": "Buscador cívico de educación inclusiva (TEA, Colegios de Educación Especial, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos regionales) con datos abiertos oficiales de la Comunidad de Madrid y el Ayuntamiento de Madrid.",
@@ -43,7 +50,7 @@
         {
           "@type": "Dataset",
           "name": "Catálogo Unificado de Educación Inclusiva en la Comunidad de Madrid (433 entidades oficiales)",
-          "description": "Conjunto de datos abierto y georreferenciado de 433 centros y equipos oficiales (336 TEA, 69 CEE, 14 Aulas Hospitalarias, 3 Discapacidad Visual, 10 Altas Capacidades y 3 EOEP Específicos de Auditiva, Motora, TDAH y Lenguaje) cruzado con Datos Abiertos CAM, Ayuntamiento de Madrid (datos.madrid.es), ONCE y Registro Estatal RCD.",
+          "description": "Conjunto de datos abierto y georreferenciado de 433 centros y equipos oficiales (336 TEA, 69 CEE, 14 Aulas Hospitalarias, 3 Discapacidad Visual, 10 Altas Capacidades y 3 EOEP Específicos de Auditiva, Motora, TDAH y Lenguaje) cruzado con Datos Abiertos CAM, Ayuntamiento de Madrid (datos.madrid.es) y ONCE.",
           "isAccessibleForFree": true,
           "keywords": ["Educación Inclusiva", "TEA", "Educación Especial", "CEE", "Aulas Hospitalarias", "Discapacidad Visual", "Altas Capacidades", "PEAC", "EOEP Específico", "Comunidad de Madrid", "datos.madrid.es", "Datos Abiertos", "DataMad 2026"],
           "creator": {
@@ -53,8 +60,7 @@
           "isBasedOn": [
             "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
             "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
-            "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
-            "https://www.educacionfpydeportes.gob.es/servicios-al-ciudadano/catalogo/general/05/050220/ficha/050220.html"
+            "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv"
           ]
         }
       ]

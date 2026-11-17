@@ -56,7 +56,7 @@ const ACTIVE_NEED_OPTIONS: Array<{
   {
     id: 'educacion_especial',
     label: 'Educación Especial (CEE)',
-    desc: 'Colegios específicos en situación ALTA (CAM + RCD Ministerio)',
+    desc: 'Colegios específicos en situación ALTA (CAM)',
     sourceTag: 'Datos Abiertos · A1'
   },
   {
@@ -68,7 +68,7 @@ const ACTIVE_NEED_OPTIONS: Array<{
   {
     id: 'visual',
     label: 'Discapacidad Visual',
-    desc: 'EOEP regional itinerante y C.R.E. ONCE (sin red de preferentes)',
+    desc: 'EOEP regional itinerante y C.R.E. ONCE',
     sourceTag: 'CAM + ONCE · A1'
   },
   {
@@ -88,13 +88,13 @@ const REGIONAL_EOEP_NEED_OPTIONS: Array<{
   {
     id: 'auditiva',
     label: 'Discapacidad Auditiva',
-    desc: 'EOEP Específico regional (sin CSV abierto de preferentes)',
+    desc: 'EOEP Específico regional de orientación auditiva',
     sourceTag: 'EOEP CAM · A1'
   },
   {
     id: 'motora',
     label: 'Discapacidad Motora',
-    desc: 'EOEP Específico regional (sin CSV abierto de preferentes)',
+    desc: 'EOEP Específico regional en movilidad y acceso',
     sourceTag: 'EOEP CAM · A1'
   },
   {
@@ -431,6 +431,43 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   </button>
                 );
               })}
+              <div className="pt-2.5 border-t border-slate-100 space-y-1.5">
+                <div className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Programa específico (DAT / SAE):
+                </div>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={state.need === 'compensatoria'}
+                  onClick={() => handleSelectNeed('compensatoria')}
+                  className={`w-full text-left px-3 py-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                    state.need === 'compensatoria'
+                      ? 'bg-amber-50 border-amber-500 text-amber-950 font-semibold ring-1 ring-amber-500/20'
+                      : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800'
+                  }`}
+                >
+                  <div className="min-w-0">
+                    <div className="text-xs font-bold leading-snug flex items-center gap-1.5 flex-wrap">
+                      <span>Escuelas de Bienvenida (Aulas de Enlace)</span>
+                      <span className="text-xs font-semibold text-amber-950 bg-amber-100 border border-amber-300 px-1.5 py-0.5 rounded">
+                        Vía SAE / DAT
+                      </span>
+                    </div>
+                    <div className="text-xs text-slate-600 mt-0.5">
+                      Incorporación temporal gestionada por Área Territorial
+                    </div>
+                  </div>
+                  <span
+                    className={`text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 font-bold ${
+                      state.need === 'compensatoria'
+                        ? 'bg-amber-200 text-amber-950'
+                        : 'bg-slate-100 text-slate-800'
+                    }`}
+                  >
+                    {dynamicCounts.needs['compensatoria'] ?? 0}
+                  </span>
+                </button>
+              </div>
             </div>
 
             {state.need && state.need !== 'tea' && state.need !== 'salud_hospitalaria' && onOpenProcedureModal && (
@@ -454,28 +491,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     ? '¿Cómo apoya el EOEP de TDAH en centros ordinarios?'
                     : state.need === 'tel_lenguaje'
                     ? '¿Cómo funciona el apoyo de Lenguaje (TDL/TEL) y AL?'
-                    : '¿Cómo funcionan las Aulas de Enlace (DAT)?'}
+                    : '¿Cómo solicitar Escuelas de Bienvenida / Aulas de Enlace (DAT)?'}
                 </span>
                 <ExternalLink className="w-3.5 h-3.5 text-emerald-800 shrink-0" aria-hidden="true" />
               </button>
             )}
-
-            {/* Escuelas de Bienvenida */}
-            <div className="pt-2.5 border-t border-slate-100">
-              {onOpenProcedureModal && (
-                <button
-                  type="button"
-                  onClick={() => onOpenProcedureModal('compensatoria')}
-                  className="w-full text-left p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs text-slate-800 font-semibold flex items-center justify-between gap-2 cursor-pointer transition-colors"
-                >
-                  <div>
-                    <div className="text-slate-900 font-bold">Escuelas de Bienvenida / Aulas de Enlace</div>
-                    <div className="text-xs text-slate-600 font-normal">Gestión descentralizada por DAT / SAE</div>
-                  </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-slate-700 shrink-0" aria-hidden="true" />
-                </button>
-              )}
-            </div>
           </div>
         )}
       </div>
@@ -549,27 +569,33 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   const isChecked = state.stages.includes(st.id);
                   const count = dynamicCounts.stages[st.id] ?? 0;
                   return (
-                    <label
-                      key={st.id}
-                      className={`flex items-center justify-between px-3 py-2 rounded-xl border cursor-pointer transition-colors ${
-                        isChecked
-                          ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold'
-                          : 'bg-white border-transparent hover:bg-slate-50 text-slate-800'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <input
-                          type="checkbox"
-                          checked={isChecked}
-                          onChange={() => handleToggleStage(st.id)}
-                          className="rounded border-slate-400 text-cam-red focus:ring-cam-red cursor-pointer"
-                        />
-                        <span className="text-xs">{st.label}</span>
-                      </div>
-                      <span className="text-xs font-mono text-slate-700 tabular-nums">
-                        ({count})
-                      </span>
-                    </label>
+                    <div key={st.id}>
+                      <label
+                        className={`flex items-center justify-between px-3 py-2 rounded-xl border cursor-pointer transition-colors ${
+                          isChecked
+                            ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold'
+                            : 'bg-white border-transparent hover:bg-slate-50 text-slate-800'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={() => handleToggleStage(st.id)}
+                            className="rounded border-slate-400 text-cam-red focus:ring-cam-red cursor-pointer"
+                          />
+                          <span className="text-xs">{st.label}</span>
+                        </div>
+                        <span className="text-xs font-mono text-slate-700 tabular-nums">
+                          ({count})
+                        </span>
+                      </label>
+                      {st.id === 'infantil' && (!state.need || state.need === 'tea') && (
+                        <p className="px-3 pt-1 pb-1.5 text-xs text-slate-600 leading-snug">
+                          Nota: solo 3 centros figuran solo en Infantil en el PDF TEA 2024/25; los CEIP/CEIPSO marcados en Primaria también imparten Infantil.
+                        </p>
+                      )}
+                    </div>
                   );
                 })}
             </div>
@@ -986,10 +1012,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               );
             })}
 
-            {/* Accesibilidad física verificada por Ayuntamiento de Madrid */}
+            {/* Accesibilidad física según códigos oficiales ACCESIBILIDAD del Ayuntamiento de Madrid */}
             <div className="pt-2 border-t border-slate-200">
               <div className="text-xs font-bold text-slate-700 mb-1.5">
-                Accesibilidad física declarada:
+                Accesibilidad física declarada (cód. 1 · Ayto. Madrid):
               </div>
               <label
                 className={`flex items-center justify-between px-3 py-2.5 rounded-xl border text-xs transition-colors ${
@@ -1001,8 +1027,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 }`}
                 title={
                   isAccPhysicalDisabled
-                    ? 'Sin centros con indicador oficial de accesibilidad física en la selección actual'
-                    : 'Centros con etiqueta oficial ACCESIBILIDAD = 1 en datos.madrid.es'
+                    ? 'Sin centros con código oficial ACCESIBILIDAD = 1 (Accesible) en la selección actual'
+                    : 'Centros con código ACCESIBILIDAD = 1 (Accesible) en datos.madrid.es (los códigos 2 = parcialmente accesible PMR y 3 = sin información PMR se detallan en cada ficha)'
                 }
               >
                 <div className="flex items-center gap-2.5">
@@ -1015,7 +1041,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                       isAccPhysicalDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
                     }`}
                   />
-                  <span>Acceso físico sin barreras (Ayto. Madrid)</span>
+                  <span>Solo accesible confirmado (ACCESIBILIDAD = 1)</span>
                 </div>
                 <span className="font-mono text-xs text-slate-700 tabular-nums shrink-0 font-semibold">
                   {accPhysicalCount > 0 ? `(${accPhysicalCount})` : 'Sin datos'}

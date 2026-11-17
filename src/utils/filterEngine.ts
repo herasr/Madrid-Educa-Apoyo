@@ -1,7 +1,7 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- * Motor de filtros acumulativos para Madrid Educa Apoyo (v2.4)
+ * Motor de filtros acumulativos para Madrid Educa Apoyo
  * Implementa las reglas lógicas N.1 a N.9, contadores dinámicos y sugerencias de relajación.
  */
 
@@ -610,9 +610,9 @@ export function parseSearchStateFromQuery(queryString: string): SearchState {
 }
 
 /**
- * Exportación de datos de resultados a CSV con procedencia y metadata
+ * Genera el contenido CSV (UTF-8 con BOM y separador ;) con procedencia, códigos Ayto y observaciones
  */
-export function downloadResultsCSV(schools: School[], state: SearchState) {
+export function buildResultsCSVContent(schools: School[], state: SearchState): string {
   const headers = [
     'Codigo_Oficial',
     'Nombre_Centro',
@@ -638,14 +638,31 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
     'Transporte_Escolar',
     'Enfermeria',
     'Accesibilidad_Fisica',
+    'Codigo_Accesibilidad_Ayto',
     'Latitud',
     'Longitud',
     'Procedencia',
-    'Ubicacion_Aproximada'
+    'Ubicacion_Aproximada',
+    'Observaciones'
   ];
 
   const escapeCsv = (val: string | undefined | null) =>
     `"${(val || '').replace(/"/g, '""')}"`;
+
+  const formatAytoAccessibility = (school: School): string => {
+    if (school.procedencia !== 'oficial') {
+      return school.accesibilidad.acceso_fisico ? 'Sí' : 'No';
+    }
+    const rawCode = (school.accesibilidadCodigoAyto || '').trim();
+    const parts = rawCode.split(',').map(p => p.trim()).filter(Boolean);
+    if (parts.includes('1')) return 'Accesible (cód. 1, Ayto. Madrid)';
+    if (parts.includes('2')) return 'Parcialmente accesible PMR (cód. 2, Ayto. Madrid)';
+    if (parts.includes('0')) return 'No accesible (cód. 0, Ayto. Madrid)';
+    if (parts.includes('3')) return 'Sin información PMR (cód. 3, Ayto. Madrid)';
+    if (school.accesibilidadConfirmadaAyto) return 'Accesible (Ayto. Madrid)';
+    if (school.fuenteAyuntamiento) return 'Sin información PMR en Ayto. Madrid';
+    return 'Sin datos en fuente oficial';
+  };
 
   const rows = schools.map(s => {
     const currentSupport = state.need
@@ -665,16 +682,7 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
       return 'Sin datos en fuente oficial';
     };
 
-    const accLabel =
-      s.procedencia !== 'oficial'
-        ? s.accesibilidad.acceso_fisico
-          ? 'Sí'
-          : 'No'
-        : s.accesibilidadConfirmadaAyto
-        ? 'Accesible (Ayto. Madrid)'
-        : s.fuenteAyuntamiento
-        ? 'Sin mención en ficha Ayto. Madrid'
-        : 'Sin datos en fuente oficial';
+    const accLabel = formatAytoAccessibility(s);
 
     return [
       escapeCsv(s.codigo),
@@ -701,14 +709,23 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
       escapeCsv(formatSrv(s.servicios.transporte)),
       escapeCsv(formatSrv(s.servicios.enfermeria)),
       escapeCsv(accLabel),
+      escapeCsv(s.accesibilidadCodigoAyto || ''),
       s.lat,
       s.lng,
       escapeCsv(s.procedencia === 'oficial' ? 'Oficial' : 'Demostración'),
-      escapeCsv(s.ubicacionAproximada ? 'Sí' : 'No')
+      escapeCsv(s.ubicacionAproximada ? 'Sí' : 'No'),
+      escapeCsv(s.observacionesOficiales || '')
     ].join(';');
   });
 
-  const csvContent = '\uFEFF' + [headers.join(';'), ...rows].join('\n');
+  return '\uFEFF' + [headers.join(';'), ...rows].join('\n');
+}
+
+/**
+ * Exportación de datos de resultados a CSV con procedencia y metadata
+ */
+export function downloadResultsCSV(schools: School[], state: SearchState) {
+  const csvContent = buildResultsCSVContent(schools, state);
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
@@ -727,12 +744,11 @@ export function downloadResultsJSON(schools: School[], state: SearchState) {
     metadata: {
       proyecto: "Madrid Educa Apoyo (Proyecto DataMad 2026)",
       fuentesDatos: {
-        datosAbiertosCam: "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0): TEA, 69 CEE (ALTA), 14 Aulas Hospitalarias, Discapacidad Visual (EOEP + CRE ONCE), Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC) y EOEP Específicos de Auditivas, Motóricas y Lenguaje/TDAH",
+        datosAbiertosCam: "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0): directorio maestro, 69 CEE (ALTA), 14 Aulas Hospitalarias, Discapacidad Visual (EOEP + CRE ONCE), Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC) y EOEP Específicos de Auditivas, Motóricas y Lenguaje/TDAH",
         listadoTea: "Comunidad de Madrid · Centros de atención preferente TEA (curso 2024/2025, información a 22/03/2024)",
         onceInclusion: "ONCE · Convenio CAM-ONCE y C.R.E. «Antonio Vicente Mosquete» (Educación Inclusiva)",
         altasCapacidadesPeac: "Comunidad de Madrid · CREACIM, EOEP Específico y 8 sedes IES del Programa PEAC",
-        ayuntamientoMadrid: "Portal de Datos Abiertos Ayuntamiento de Madrid (datos.madrid.es, conjunto 300614-0): transporte público, barrio, servicios y accesibilidad en Madrid capital",
-        registroEstatalRcd: "Ministerio de Educación, Formación Profesional y Deportes · Registro Estatal de Centros Docentes (RCD)"
+        ayuntamientoMadrid: "Portal de Datos Abiertos Ayuntamiento de Madrid (datos.madrid.es, conjunto 300614-0): transporte público, barrio, servicios y códigos oficiales ACCESIBILIDAD (0..6) en Madrid capital"
       },
       fechaExportacion: new Date().toISOString(),
       criteriosFiltro: {
@@ -769,7 +785,9 @@ export function downloadResultsJSON(schools: School[], state: SearchState) {
       etapas: s.etapas,
       apoyosOficiales: s.apoyos,
       servicios: s.serviciosConfirmadosAyto || s.procedencia !== 'oficial' ? s.servicios : null,
-      accesibilidad: s.accesibilidadConfirmadaAyto || s.procedencia !== 'oficial' ? s.accesibilidad : null,
+      accesibilidad: s.accesibilidadCodigoAyto || s.accesibilidadConfirmadaAyto || s.procedencia !== 'oficial' ? s.accesibilidad : null,
+      accesibilidadCodigoAyto: s.accesibilidadCodigoAyto || null,
+      observaciones: s.observacionesOficiales || null,
       serviciosAccesibilidadNota: s.serviciosConfirmadosAyto
         ? 'Servicios procedentes del bloque EQUIPAMIENTO de Ayuntamiento de Madrid (datos.madrid.es)'
         : s.fuenteAyuntamiento

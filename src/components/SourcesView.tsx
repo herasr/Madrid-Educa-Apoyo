@@ -25,9 +25,9 @@ export const SourcesView: React.FC = () => {
             <span className="text-xs font-bold tracking-wider uppercase text-blue-900 block mb-1">
               Régimen Jurídico y Función de la Aplicación
             </span>
-            <h2 className="text-xl font-extrabold text-slate-900 leading-tight">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">
               Aviso Legal, Fuentes y Limitaciones
-            </h2>
+            </h1>
             <div className="mt-3 p-3 bg-slate-900 text-white rounded-xl text-xs font-semibold">
               <span className="text-amber-300 mr-1.5">Declaración obligatoria:</span>
               {LEGAL_DISCLAIMER}
@@ -44,10 +44,10 @@ export const SourcesView: React.FC = () => {
 
       {/* Datos realmente cargados en esta versión */}
       <div className="bg-white border border-emerald-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-4">
-        <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+        <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-emerald-700" aria-hidden="true" />
           <span>Datos cargados en esta versión ({OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros oficiales)</span>
-        </h3>
+        </h2>
 
         {/* Bloque 1: Portal de Datos Abiertos CAM */}
         <div className="border border-blue-200 bg-blue-50/50 rounded-xl p-4 text-xs text-slate-800 space-y-2">
@@ -91,7 +91,7 @@ export const SourcesView: React.FC = () => {
             </span>
           </div>
           <p className="leading-relaxed">
-            Cruce verificado en Madrid capital con <strong>{OFFICIAL_TEA_SOURCE.totalConTransporteAyto} centros con transporte público</strong> (Metro/EMT/Cercanías) y barrio, <strong>{OFFICIAL_TEA_SOURCE.totalConServiciosAyto} con equipamiento municipal confirmado</strong> (comedor, horario ampliado, transporte escolar) y <strong>{OFFICIAL_TEA_SOURCE.totalConAccesibilidadAyto} con indicador oficial de accesibilidad física</strong>. Los restantes 178 municipios carecen de este conjunto abierto.
+            Cruce verificado en Madrid capital con <strong>{OFFICIAL_TEA_SOURCE.totalConTransporteAyto} centros con transporte público</strong> (Metro/EMT/Cercanías) y barrio, <strong>{OFFICIAL_TEA_SOURCE.totalConServiciosAyto} con equipamiento municipal declarado</strong> (comedor, horario ampliado, transporte escolar) y <strong>{OFFICIAL_TEA_SOURCE.totalConAccesibilidadAyto} con código 1 (Accesible)</strong> según <span className="font-mono">estructura_ds_conjuntodatos.pdf</span> (que distingue <span className="font-mono">0</span> No accesible, <span className="font-mono">1</span> Accesible, <span className="font-mono">2</span> Parcialmente accesible PMR, <span className="font-mono">3</span> Sin información PMR, <span className="font-mono">4</span> Lengua de signos, <span className="font-mono">5</span> Señalización podotáctil y <span className="font-mono">6</span> Bucle magnético). Los restantes 178 municipios carecen de este conjunto abierto.
           </p>
           <div className="pt-1">
             <a
@@ -139,21 +139,23 @@ export const SourcesView: React.FC = () => {
           </div>
         </div>
 
-        <div className="border border-slate-200 bg-slate-50/80 rounded-xl p-4 text-xs text-slate-800">
-          <div className="font-extrabold text-slate-900 mb-1">Compromiso de datos 100% reales</div>
+        <div className="border border-slate-200 bg-slate-50/80 rounded-xl p-4 text-xs text-slate-800 space-y-1.5">
+          <div className="font-extrabold text-slate-900">Metodología de cruce, detección de conflictos y límites de los datos</div>
           <p className="leading-relaxed">
-            Esta aplicación cumple un principio estricto: <strong>cero datos inventados o sintéticos</strong>.
-            Integra {OFFICIAL_TEA_SOURCE.totalCentros} centros TEA con plazas previsibles, {OFFICIAL_TEA_SOURCE.totalCee} Centros de Educación Especial (ALTA), {OFFICIAL_TEA_SOURCE.totalHospitalarias} Aulas Hospitalarias, {OFFICIAL_TEA_SOURCE.totalVisual} recursos oficiales de Discapacidad Visual (EOEP + C.R.E. ONCE), {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} recursos/sedes de Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC) y los 3 EOEP Específicos regionales en <span className="font-mono">ALTA</span> (Auditivas, Motóricas y Lenguaje/TDAH), más el enriquecimiento municipal de <span className="font-mono">datos.madrid.es</span> para Madrid capital y la referencia del Registro Estatal de Centros Docentes (MEFPD). Para las líneas sin fichero abierto de centros preferentes (Auditiva, Motora, TDAH/TEL y Compensación), nunca se rellena con listados parciales ni simulados.
+            Los datos proceden exclusivamente de los conjuntos abiertos arriba citados ({OFFICIAL_TEA_SOURCE.totalCentros} centros TEA con plazas previsibles, {OFFICIAL_TEA_SOURCE.totalCee} CEE en <span className="font-mono">ALTA</span>, {OFFICIAL_TEA_SOURCE.totalHospitalarias} Aulas Hospitalarias, {OFFICIAL_TEA_SOURCE.totalVisual} recursos de Discapacidad Visual, {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} recursos/sedes de Altas Capacidades y 3 EOEP Específicos regionales), más el enriquecimiento municipal de <span className="font-mono">datos.madrid.es</span> para Madrid capital.
+          </p>
+          <p className="leading-relaxed text-slate-700">
+            Cuando el listado TEA 2024/25 presenta discrepancias de código o nombre respecto al directorio maestro CKAN (como el intercambio detectado entre <span className="font-mono">28020120</span> y <span className="font-mono">28011258</span>), prevalecen la denominación y contacto del catálogo maestro y se registra la incidencia en <span className="font-mono">data/review/conflictos_nombres.json</span>. Los enlaces telefónicos ambiguos con el fichero municipal se descartan automáticamente en <span className="font-mono">data/review/ayto_matches_dudosos.json</span>.
           </p>
         </div>
       </div>
 
       {/* Jerarquía de Fuentes */}
       <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-4">
-        <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+        <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-blue-800" aria-hidden="true" />
           <span>Fuentes Públicas Integradas</span>
-        </h3>
+        </h2>
 
         <div className="space-y-3">
           {OFFICIAL_SOURCES_INFO.map(src => (
@@ -180,10 +182,10 @@ export const SourcesView: React.FC = () => {
 
       {/* Niveles de Evidencia: A1 y A2 */}
       <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-4">
-        <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+        <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-emerald-700" aria-hidden="true" />
           <span>Criterio de Evidencia Documental</span>
-        </h3>
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           <div className="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40">
@@ -231,17 +233,6 @@ export const SourcesView: React.FC = () => {
               className="text-blue-900 hover:underline inline-flex items-center gap-1 font-medium"
             >
               <span>Portal de Datos Abiertos Ayuntamiento de Madrid · Centros educativos (300614-0)</span>
-              <ExternalLink className="w-3 h-3" aria-hidden="true" />
-            </a>
-          </li>
-          <li>
-            <a
-              href={OFFICIAL_TEA_SOURCE.ministerioUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-900 hover:underline inline-flex items-center gap-1 font-medium"
-            >
-              <span>Ministerio de Educación · Registro Estatal de Centros Docentes (RCD)</span>
               <ExternalLink className="w-3 h-3" aria-hidden="true" />
             </a>
           </li>

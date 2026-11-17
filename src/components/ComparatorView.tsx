@@ -45,9 +45,9 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
         <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-800 flex items-center justify-center mx-auto mb-4">
           <Building className="w-6 h-6" aria-hidden="true" />
         </div>
-        <h2 className="text-lg font-bold text-slate-900 mb-1">
+        <h1 className="text-lg font-bold text-slate-900 mb-1">
           El comparador está vacío
-        </h2>
+        </h1>
         <p className="text-xs text-slate-700 max-w-md mx-auto mb-6 leading-relaxed">
           Puedes comparar hasta un máximo de <span className="font-semibold text-slate-900">3 centros a la vez</span> para analizar lado a lado sus datos de contacto, etapas oficiales y continuidad sin rankings subjetivos.
         </p>
@@ -78,9 +78,9 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
               </span>
             )}
           </div>
-          <h2 className="text-xl font-extrabold text-slate-900 leading-tight">
+          <h1 className="text-xl font-extrabold text-slate-900 leading-tight">
             Comparador Objetivo (Sin Rankings ni Estrellas)
-          </h2>
+          </h1>
           <p className="text-xs text-slate-700 mt-0.5 max-w-2xl">
             Compara datos publicados por la Comunidad de Madrid y el Portal de Datos Abiertos CAM.
           </p>
@@ -269,11 +269,13 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
             <tr>
               <td className="p-4 font-bold text-slate-900 bg-slate-50/50">Servicios y Accesibilidad</td>
               {comparedSchools.map(sch => {
+                const accParts = (sch.accesibilidadCodigoAyto || '').split(',').map(x => x.trim());
                 const activeSrvs = [
                   sch.servicios.comedor && 'Comedor',
                   sch.servicios.aula_matinal && 'Horario ampliado',
                   sch.servicios.transporte && 'Transporte',
-                  sch.accesibilidad.acceso_fisico && 'Acceso físico'
+                  sch.accesibilidad.acceso_fisico && 'Accesible (cód. 1)',
+                  !sch.accesibilidad.acceso_fisico && accParts.includes('2') && 'Parcialmente accesible PMR (cód. 2)'
                 ].filter(Boolean) as string[];
 
                 return (

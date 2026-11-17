@@ -1,0 +1,26 @@
+{
+  "detectado": "2026-11-17T18:57:16Z",
+  "total_descartados": 2,
+  "candidatos": [
+    {
+      "codigo": "28012299",
+      "nombre_cam": "ALENTA",
+      "criterio_candidato": "telefono",
+      "candidato_ayto": "Centro de Educación Especial Instituto Psicopediatría Doctor Quintero Lumbreras",
+      "telefono_candidato": "917 345 138",
+      "email_candidato": "cc.ipdoctorquinterolumbreras.madrid@educa.madrid.org",
+      "codigo_postal_candidato": "28049",
+      "accion": "DESCARTADO_POR_SIN_COINCIDENCIA_NOMINAL"
+    },
+    {
+      "codigo": "28012299",
+      "nombre_cam": "ALENTA",
+      "criterio_candidato": "email",
+      "candidato_ayto": "Centro de Educación Especial Instituto Psicopediatría Doctor Quintero Lumbreras",
+      "telefono_candidato": "917 345 138",
+      "email_candidato": "cc.ipdoctorquinterolumbreras.madrid@educa.madrid.org",
+      "codigo_postal_candidato": "28049",
+      "accion": "DESCARTADO_POR_SIN_COINCIDENCIA_NOMINAL"
+    }
+  ]
+}

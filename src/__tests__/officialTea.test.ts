@@ -12,7 +12,7 @@ import { INITIAL_SEARCH_STATE, matchesCentre, serializeSearchStateToQuery } from
 import { TEST_SCENARIOS } from '../data/testScenarios';
 import { SearchState } from '../types';
 
-describe('Datos oficiales CAM + Ayto. Madrid + ONCE + RCD (433 entidades)', () => {
+describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
   it('carga los 336 centros del documento TEA con códigos únicos de 8 dígitos', () => {
     expect(OFFICIAL_TEA_SCHOOLS).toHaveLength(336);
     expect(OFFICIAL_TEA_SOURCE.totalCentros).toBe(336);
@@ -134,10 +134,47 @@ describe('Datos oficiales CAM + Ayto. Madrid + ONCE + RCD (433 entidades)', () =
     });
   });
 
-  it('no contiene ningún dato inventado: 100% entidades oficiales verificadas (433)', () => {
+  it('contiene únicamente las 433 entidades oficiales del catálogo sin registros de muestra', () => {
     expect(DEMO_SCHOOLS).toHaveLength(0);
     expect(SCHOOLS_DATA).toHaveLength(433);
     expect(SCHOOLS_DATA.every(s => s.procedencia === 'oficial')).toBe(true);
+  });
+
+  it('mantiene el nombre del registro CAM en el choque 28020120/28011258 con aviso en observaciones', () => {
+    const chamberi = OFFICIAL_ALL_SCHOOLS.find(s => s.codigo === '28020120');
+    const amorMisericordioso = OFFICIAL_ALL_SCHOOLS.find(s => s.codigo === '28011258');
+
+    expect(chamberi).toBeDefined();
+    expect(amorMisericordioso).toBeDefined();
+    expect(chamberi?.nombre).toMatch(/Chamber[ií]/i);
+    expect(chamberi?.observacionesOficiales).toMatch(/Amor Misericordioso/i);
+    expect(chamberi?.observacionesOficiales).toContain('28020120');
+    expect(amorMisericordioso?.nombre).toMatch(/Amor Misericordioso/i);
+    expect(amorMisericordioso?.observacionesOficiales).toMatch(/Chamber[ií]/i);
+    expect(amorMisericordioso?.observacionesOficiales).toContain('28011258');
+  });
+
+  it('evita el falso cruce de Ayuntamiento en CEE Alenta (28012299) y conserva códigos reales Ayto/CKAN', () => {
+    const alenta = OFFICIAL_ALL_SCHOOLS.find(s => s.codigo === '28012299');
+    expect(alenta).toBeDefined();
+    expect(alenta?.serviciosConfirmadosAyto).toBeFalsy();
+    expect(alenta?.servicios.comedor).toBe(false);
+    expect(alenta?.servicios.transporte).toBe(false);
+    expect(alenta?.transportePublico).toBeUndefined();
+
+    const ceipso = OFFICIAL_ALL_SCHOOLS.find(s => s.codigo === '28026067');
+    const ies = OFFICIAL_ALL_SCHOOLS.find(s => s.codigo === '28065841');
+    expect(ceipso?.tipo).toBe('CEIPSO');
+    expect(ies?.tipo).toBe('IES');
+
+    const ciudadValencia = OFFICIAL_ALL_SCHOOLS.find(s => s.codigo === '28020673');
+    expect(ciudadValencia?.accesibilidadCodigoAyto).toBe('2');
+    expect(ciudadValencia?.accesibilidad.acceso_fisico).toBe(false);
+
+    const hasOldCompensacion = OFFICIAL_ALL_SCHOOLS.some(s =>
+      s.apoyos.some(a => /compensaci[oó]n educativa/i.test(a.detallesResolucion || ''))
+    );
+    expect(hasOldCompensacion).toBe(false);
   });
 
   it('el estado inicial no activa geolocalización automática ni fija Puerta del Sol', () => {

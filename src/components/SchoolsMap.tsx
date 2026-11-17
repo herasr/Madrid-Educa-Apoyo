@@ -15,7 +15,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { School, SearchState } from '../types';
 import { MUNICIPALITIES, calculateHaversineDistance } from '../data/municipalities';
-import { ShieldCheck, AlertTriangle, Maximize2, MapPin, Layers, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { simplifySchoolTitle } from '../utils/textSimplifier';
+import { MapPin, Layers, X, ChevronDown, ChevronUp, Maximize2 } from 'lucide-react';
 
 interface SchoolsMapProps {
   schools: School[];
@@ -25,6 +26,7 @@ interface SchoolsMapProps {
   onOpenWhyAppears: (school: School) => void;
   onToggleCompare?: (school: School) => void;
   isSchoolCompared?: (schoolId: string) => boolean;
+  isEasyReadMode?: boolean;
   height?: string;
   isExpanded?: boolean;
   onToggleExpand?: () => void;
@@ -44,6 +46,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
   selectedSchoolId,
   onSelectSchool,
   onOpenWhyAppears,
+  isEasyReadMode = false,
   height = '480px',
   isExpanded = false,
   onToggleExpand
@@ -51,6 +54,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markersLayerRef = useRef<L.LayerGroup | null>(null);
+  const spiderLayerRef = useRef<L.LayerGroup | null>(null);
   const radiusCircleRef = useRef<L.Circle | null>(null);
   const [isLegendOpen, setIsLegendOpen] = useState(false);
 
@@ -75,7 +79,9 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       }).addTo(map);
 
       const markersGroup = L.layerGroup().addTo(map);
+      const spiderGroup = L.layerGroup().addTo(map);
       markersLayerRef.current = markersGroup;
+      spiderLayerRef.current = spiderGroup;
       mapInstanceRef.current = map;
     }
 
@@ -84,18 +90,21 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
         markersLayerRef.current = null;
+        spiderLayerRef.current = null;
         radiusCircleRef.current = null;
       }
     };
   }, []);
 
-  // Actualizar marcadores, círculo de radio y encuadre
+  // Actualizar marcadores, círculo de radio, encuadre y arañas adaptativas al zoom
   useEffect(() => {
     const map = mapInstanceRef.current;
     const markersGroup = markersLayerRef.current;
-    if (!map || !markersGroup) return;
+    const spiderGroup = spiderLayerRef.current;
+    if (!map || !markersGroup || !spiderGroup) return;
 
     markersGroup.clearLayers();
+    spiderGroup.clearLayers();
 
     if (radiusCircleRef.current) {
       radiusCircleRef.current.remove();
@@ -160,13 +169,20 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       L.marker([refCoords.lat, refCoords.lng], { icon: centerIcon, zIndexOffset: 1000 }).addTo(markersGroup);
     }
 
-    // Colección de límites geográficos para ajustar zoom
-    const latLngs: L.LatLngExpression[] = [];
+    const NEED_CONFIGS: Record<string, { bgColor: string; tag: string; name: string }> = {
+      tea: { bgColor: '#1d4ed8', tag: 'TEA', name: 'Atención preferente TEA' },
+      auditiva: { bgColor: '#0284c7', tag: 'AUD', name: 'Discapacidad auditiva' },
+      motora: { bgColor: '#7c3aed', tag: 'MOT', name: 'Discapacidad motora' },
+      visual: { bgColor: '#2563eb', tag: 'VIS', name: 'Discapacidad visual' },
+      altas_capacidades: { bgColor: '#9333ea', tag: 'AAC', name: 'Altas capacidades' },
+      tdah: { bgColor: '#d97706', tag: 'TDA', name: 'TDAH y Conducta' },
+      tel_lenguaje: { bgColor: '#0891b2', tag: 'TEL', name: 'Trastorno del Lenguaje' },
+      salud_hospitalaria: { bgColor: '#dc2626', tag: 'HOSP', name: 'Atención Hospitalaria' },
+      compensatoria: { bgColor: '#4f46e5', tag: 'BIENV', name: 'Escuelas de Bienvenida' },
+      educacion_especial: { bgColor: '#059669', tag: 'CEE', name: 'Educación Especial' }
+    };
 
-    // Añadir centros escolares con diseño simplificado de marcadores
-    schools.forEach((school, index) => {
-      latLngs.push([school.lat, school.lng]);
-
+    const createSchoolMarker = (school: School, lat: number, lng: number) => {
       const currentSupport = state.need
         ? school.apoyos.find(a => a.needId === state.need) || school.apoyos[0]
         : school.apoyos[0];
@@ -175,29 +191,11 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       const isA1 = currentSupport?.evidencia === 'A1';
       const isFocused = selectedSchoolId === school.id;
 
-      // Configuración de marcadores
-      const NEED_CONFIGS: Record<string, { bgColor: string, tag: string, name: string }> = {
-        tea: { bgColor: '#1d4ed8', tag: 'TEA', name: 'Atención preferente TEA' },
-        auditiva: { bgColor: '#0284c7', tag: 'AUD', name: 'Discapacidad auditiva' },
-        motora: { bgColor: '#7c3aed', tag: 'MOT', name: 'Discapacidad motora' },
-        visual: { bgColor: '#2563eb', tag: 'VIS', name: 'Discapacidad visual' },
-        altas_capacidades: { bgColor: '#9333ea', tag: 'AAC', name: 'Altas capacidades' },
-        tdah: { bgColor: '#d97706', tag: 'TDA', name: 'TDAH y Conducta' },
-        tel_lenguaje: { bgColor: '#0891b2', tag: 'TEL', name: 'Trastorno del Lenguaje' },
-        salud_hospitalaria: { bgColor: '#dc2626', tag: 'HOSP', name: 'Atención Hospitalaria' },
-        compensatoria: { bgColor: '#4f46e5', tag: 'BIENV', name: 'Escuelas de Bienvenida' },
-        educacion_especial: { bgColor: '#059669', tag: 'CEE', name: 'Educación Especial' }
-      };
-
       const config = NEED_CONFIGS[needId] || NEED_CONFIGS.tea;
-      const bgColor = config.bgColor;
-      const needTag = config.tag;
-      const needDisplayName = config.name;
-
-
-      // Estilo de borde: Sólido para A1 (Confirmado), Discontinuo para A2 (En comprobación)
       const borderStyle = isA1 ? '3px solid #10b981' : '3px dashed #f59e0b';
-      const haloStyle = isFocused ? 'box-shadow: 0 0 0 6px rgba(37,99,235,0.4), 0 4px 12px rgba(0,0,0,0.3);' : 'box-shadow: 0 3px 8px rgba(0,0,0,0.25);';
+      const haloStyle = isFocused
+        ? 'box-shadow: 0 0 0 6px rgba(37,99,235,0.4), 0 4px 12px rgba(0,0,0,0.3);'
+        : 'box-shadow: 0 3px 8px rgba(0,0,0,0.25);';
 
       const icon = L.divIcon({
         className: `clean-school-marker pin-${school.id}`,
@@ -207,7 +205,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: ${bgColor};
+            background: ${config.bgColor};
             border: ${borderStyle};
             ${haloStyle}
             display: flex;
@@ -221,7 +219,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
             cursor: pointer;
             transition: transform 0.15s ease;
           ">
-            <span>${needTag}</span>
+            <span>${config.tag}</span>
           </div>
         `,
         iconSize: [28, 28],
@@ -229,9 +227,8 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
         popupAnchor: [0, -16]
       });
 
-      const marker = L.marker([school.lat, school.lng], { icon });
+      const marker = L.marker([lat, lng], { icon });
 
-      // Cálculo de distancia para el popup
       let distanceText = school.municipio;
       if (refCoords) {
         const d = calculateHaversineDistance(refCoords.lat, refCoords.lng, school.lat, school.lng);
@@ -258,6 +255,8 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
           ? 'Concertado'
           : 'Privado';
 
+      const displayTitle = isEasyReadMode ? simplifySchoolTitle(school.nombre) : school.nombre;
+
       const popupHtml = `
         <div style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; min-width: 220px; max-width: 270px; padding: 2px;">
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 4px;">
@@ -269,9 +268,9 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
             </span>
           </div>
 
-          <h4 style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 0 0 4px 0; line-height: 1.25;">
-            ${escapeHtml(school.nombre)}
-          </h4>
+          <h3 style="font-size: 14px; font-weight: 800; color: #0f172a; margin: 0 0 4px 0; line-height: 1.25;">
+            ${escapeHtml(displayTitle)}
+          </h3>
 
           <div style="font-size: 12px; color: #334155; margin-bottom: 6px; line-height: 1.35;">
             ${locationLine}${refCoords ? ` · <strong>${escapeHtml(distanceText)}</strong>` : ''}
@@ -284,7 +283,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
 
           <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 6px 8px; font-size: 12px; margin-bottom: 8px;">
             <div style="font-weight: 700; color: #0f172a; margin-bottom: 1px;">
-              ${needDisplayName}
+              ${config.name}
             </div>
             <div style="color: #334155; font-size: 12px;">
               ${needId === 'tea' ? 'Etapas en listado TEA:' : 'Etapas oficiales:'} <strong>${stageLabels}</strong>
@@ -310,7 +309,6 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       `;
 
       marker.bindPopup(popupHtml);
-
       marker.on('popupopen', () => {
         const btnDetail = document.getElementById(`btn-detail-${school.id}`);
         if (btnDetail) {
@@ -318,10 +316,111 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
         }
       });
 
-      marker.addTo(markersGroup);
+      return marker;
+    };
+
+    // Agrupación espacial por proximidad (< ~35 m) para evitar solapamientos
+    const clusteredGroups: School[][] = [];
+    const visited = new Set<string>();
+    const PROXIMITY_THRESHOLD_DEG = 0.00035;
+
+    for (let i = 0; i < schools.length; i++) {
+      const base = schools[i];
+      if (visited.has(base.id)) continue;
+      visited.add(base.id);
+      const group = [base];
+      for (let j = i + 1; j < schools.length; j++) {
+        const candidate = schools[j];
+        if (visited.has(candidate.id)) continue;
+        if (
+          Math.abs(candidate.lat - base.lat) < PROXIMITY_THRESHOLD_DEG &&
+          Math.abs(candidate.lng - base.lng) < PROXIMITY_THRESHOLD_DEG
+        ) {
+          visited.add(candidate.id);
+          group.push(candidate);
+        }
+      }
+      clusteredGroups.push(group);
+    }
+
+    const latLngs: L.LatLngExpression[] = [];
+    const spiderItems: Array<{
+      anchorLat: number;
+      anchorLng: number;
+      angle: number;
+      radiusPx: number;
+      marker: L.Marker;
+      spoke: L.Polyline;
+    }> = [];
+
+    const computeSpiderPosition = (anchorLat: number, anchorLng: number, angle: number, radiusPx: number, zoom: number) => {
+      const degLngPerPx = 360 / (256 * Math.pow(2, zoom));
+      const degLatPerPx = degLngPerPx * Math.cos((anchorLat * Math.PI) / 180);
+      return {
+        lat: anchorLat + Math.sin(angle) * radiusPx * degLatPerPx,
+        lng: anchorLng + Math.cos(angle) * radiusPx * degLngPerPx
+      };
+    };
+
+    clusteredGroups.forEach(group => {
+      if (group.length === 1) {
+        const school = group[0];
+        latLngs.push([school.lat, school.lng]);
+        createSchoolMarker(school, school.lat, school.lng).addTo(markersGroup);
+        return;
+      }
+
+      const anchorLat = group.reduce((acc, s) => acc + s.lat, 0) / group.length;
+      const anchorLng = group.reduce((acc, s) => acc + s.lng, 0) / group.length;
+      latLngs.push([anchorLat, anchorLng]);
+
+      L.circleMarker([anchorLat, anchorLng], {
+        radius: 4,
+        color: '#0f172a',
+        weight: 1.5,
+        fillColor: '#ffffff',
+        fillOpacity: 1
+      }).addTo(spiderGroup);
+
+      const radiusPx =
+        group.length === 2
+          ? 22
+          : Math.max(24, Math.ceil(36 / (2 * Math.sin(Math.PI / group.length))));
+
+      group.forEach((school, idx) => {
+        const angle = (2 * Math.PI * idx) / group.length - Math.PI / 2;
+        const initialPos = computeSpiderPosition(anchorLat, anchorLng, angle, radiusPx, map.getZoom());
+        const spoke = L.polyline(
+          [
+            [anchorLat, anchorLng],
+            [initialPos.lat, initialPos.lng]
+          ],
+          {
+            color: '#64748b',
+            weight: 1.5,
+            dashArray: '3, 4',
+            opacity: 0.85
+          }
+        ).addTo(spiderGroup);
+
+        const marker = createSchoolMarker(school, initialPos.lat, initialPos.lng).addTo(spiderGroup);
+        spiderItems.push({ anchorLat, anchorLng, angle, radiusPx, marker, spoke });
+      });
     });
 
-    // Ajuste de encuadre
+    const repositionSpiderClusters = () => {
+      const currentZoom = map.getZoom();
+      spiderItems.forEach(item => {
+        const pos = computeSpiderPosition(item.anchorLat, item.anchorLng, item.angle, item.radiusPx, currentZoom);
+        item.marker.setLatLng([pos.lat, pos.lng]);
+        item.spoke.setLatLngs([
+          [item.anchorLat, item.anchorLng],
+          [pos.lat, pos.lng]
+        ]);
+      });
+    };
+
+    // Ajuste de encuadre antes de recolocar las arañas con el zoom definitivo
     if (latLngs.length > 0) {
       if (refCoords && state.radiusKm && radiusCircleRef.current) {
         map.fitBounds(radiusCircleRef.current.getBounds(), { padding: [24, 24] });
@@ -333,14 +432,18 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       map.setView([refCoords.lat, refCoords.lng], 12);
     }
 
+    repositionSpiderClusters();
+    map.on('zoomend', repositionSpiderClusters);
+
     const resizeTimer = window.setTimeout(() => {
       map.invalidateSize();
     }, 150);
 
     return () => {
       window.clearTimeout(resizeTimer);
+      map.off('zoomend', repositionSpiderClusters);
     };
-  }, [schools, state, onSelectSchool, onOpenWhyAppears, selectedSchoolId]);
+  }, [schools, state, onSelectSchool, onOpenWhyAppears, selectedSchoolId, isEasyReadMode]);
 
   const handleResetView = () => {
     const map = mapInstanceRef.current;
@@ -405,6 +508,8 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       {/* Contenedor del mapa Leaflet */}
       <div
         ref={mapContainerRef}
+        role="region"
+        aria-label="Mapa interactivo de centros educativos"
         style={{ height }}
         className="w-full z-10 transition-all duration-300"
       />
@@ -452,12 +557,22 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
 
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-3.5 rounded-full bg-sky-600 inline-block shrink-0" aria-hidden="true"></span>
-              <span><strong>AUD · MOT</strong> · EOEP Auditiva / Motora</span>
+              <span><strong>AUD</strong> · EOEP Discapacidad Auditiva</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="w-3.5 h-3.5 rounded-full bg-violet-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>MOT</strong> · EOEP Discapacidad Motora</span>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-3.5 rounded-full bg-amber-600 inline-block shrink-0" aria-hidden="true"></span>
-              <span><strong>TDA · TEL</strong> · EOEP TDAH / Lenguaje</span>
+              <span><strong>TDA</strong> · EOEP TDAH y Conducta</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="w-3.5 h-3.5 rounded-full bg-cyan-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>TEL</strong> · EOEP Lenguaje (TDL/TEL)</span>
             </div>
 
             <div className="border-t border-slate-200 pt-1.5 mt-1.5 space-y-1.5">

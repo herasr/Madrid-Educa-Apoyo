@@ -1,13 +1,13 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- * Madrid Educa Apoyo (v2.4 - Filtros Acumulativos)
+ * Madrid Educa Apoyo - Filtros Acumulativos
  * Buscador Educativo con Evidencia Oficial y Filtros que se Acumulan
  *
- * Mejoras aplicadas:
+ * Arquitectura:
  * - Eliminación total del desborde horizontal (responsive 1 col en < 1280px)
  * - Tarjetas simplificadas en 4 preguntas esenciales con lenguaje familiar
- * - Unificación de navegación: Buscar (Lista / Lista + Mapa / Solo Mapa)
+ * - Unificación de navegación: Buscar (Lista / Mapa)
  * - Navegación desaturada de 4 destinos + Menú Más
  * - Comparador con límite de 3 centros y alerta de filtros posteriores
  */
@@ -38,15 +38,32 @@ import { Header } from './components/Header';
 import { FilterSidebar } from './components/FilterSidebar';
 import { ActiveFilterChips } from './components/ActiveFilterChips';
 import { SchoolCard } from './components/SchoolCard';
-import { SchoolDetailModal } from './components/SchoolDetailModal';
 import { ZeroResultsAdvice } from './components/ZeroResultsAdvice';
-import { ContinuityView } from './components/ContinuityView';
-import { ComparatorView } from './components/ComparatorView';
-import { PassportView } from './components/PassportView';
-import { SourcesView } from './components/SourcesView';
-import { OfficialProceduresModal } from './components/OfficialProceduresModal';
-import { TestScenariosModal } from './components/TestScenariosModal';
-import { SchoolsMap } from './components/SchoolsMap';
+
+const SchoolsMap = React.lazy(() =>
+  import('./components/SchoolsMap').then(m => ({ default: m.SchoolsMap }))
+);
+const SchoolDetailModal = React.lazy(() =>
+  import('./components/SchoolDetailModal').then(m => ({ default: m.SchoolDetailModal }))
+);
+const ContinuityView = React.lazy(() =>
+  import('./components/ContinuityView').then(m => ({ default: m.ContinuityView }))
+);
+const ComparatorView = React.lazy(() =>
+  import('./components/ComparatorView').then(m => ({ default: m.ComparatorView }))
+);
+const PassportView = React.lazy(() =>
+  import('./components/PassportView').then(m => ({ default: m.PassportView }))
+);
+const SourcesView = React.lazy(() =>
+  import('./components/SourcesView').then(m => ({ default: m.SourcesView }))
+);
+const OfficialProceduresModal = React.lazy(() =>
+  import('./components/OfficialProceduresModal').then(m => ({ default: m.OfficialProceduresModal }))
+);
+const TestScenariosModal = React.lazy(() =>
+  import('./components/TestScenariosModal').then(m => ({ default: m.TestScenariosModal }))
+);
 
 import {
   SlidersHorizontal,
@@ -82,7 +99,7 @@ export default function App() {
 
   // Modo de visualización en el buscador: Mapa (Mapa + Lista) por defecto en primera carga, o Lista
   const [searchViewMode, setSearchViewMode] = useState<'cards' | 'map'>('map');
-  const [visibleCount, setVisibleCount] = useState<number>(24);
+  const [visibleCount, setVisibleCount] = useState<number>(12);
 
   // Centros guardados en el comparador (máximo 3) y en el pasaporte local
   const [comparedIds, setComparedIds] = useState<string[]>(() => {
@@ -146,7 +163,7 @@ export default function App() {
   useModalFocusTrap(isLegalModalOpen, legalModalRef, closeLegalModal);
 
   useEffect(() => {
-    setVisibleCount(24);
+    setVisibleCount(12);
   }, [searchState]);
 
   // Guardar comparador y pasaporte en localStorage
@@ -324,6 +341,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col antialiased overflow-x-hidden w-full">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-slate-900 focus:text-white focus:rounded-lg focus:text-xs focus:font-bold focus:shadow-lg"
+      >
+        Saltar al contenido principal
+      </a>
       {/* 1. Encabezado Oficial con Menú "Más" y Notificación Legal Desescalada */}
       <Header
         currentTab={activeTab}
@@ -339,79 +362,80 @@ export default function App() {
         onExportJSON={() => downloadResultsJSON(filteredSchools, searchState)}
       />
 
-      {/* 1b. Aviso de Transparencia y Origen de Datos en la Cabecera (Proyecto DataMad 2026) */}
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-2.5 text-xs text-amber-950">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
-            <span className="font-bold uppercase tracking-wide bg-blue-100 text-blue-950 px-2.5 py-0.5 rounded text-xs text-center sm:text-left leading-tight whitespace-normal">
-              Datos abiertos · CAM + Ayto. Madrid + RCD
-            </span>
-            <span className="text-xs text-amber-950 leading-snug">
-              <strong>Transparencia:</strong> {OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos oficiales ({OFFICIAL_TEA_SOURCE.totalCentros} TEA · {OFFICIAL_TEA_SOURCE.totalCee} CEE · {OFFICIAL_TEA_SOURCE.totalHospitalarias} Hosp. · {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} AACC · {OFFICIAL_TEA_SOURCE.totalVisual} Visual · EOEP Auditiva/Motora/TDAH-TEL), con {OFFICIAL_TEA_SOURCE.totalConTransporteAyto} en Madrid capital enriquecidos vía <span className="font-mono">datos.madrid.es</span>.
-            </span>
-          </div>
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={() => setIsLegalModalOpen(true)}
-              className="text-xs font-bold text-amber-950 hover:underline cursor-pointer"
-            >
-              Marco y Privacidad
-            </button>
-            <a
-              href="https://www.comunidad.madrid/servicios/educacion"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-bold text-amber-950 hover:underline inline-flex items-center gap-1"
-            >
-              <span>Portal Educación CAM</span>
-              <ExternalLink className="w-3 h-3" aria-hidden="true" />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Toast accesible al ejecutar escenarios de prueba */}
-      {toastMessage && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="fixed bottom-4 right-4 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg border border-slate-700 flex items-center gap-2"
-        >
-          <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span>{toastMessage}</span>
-        </div>
-      )}
-
-      {/* 2. Barra de Filtros Activos Resumen - En pestaña Buscar */}
-      {activeTab === 'search' && (
-        <ActiveFilterChips
-          state={searchState}
-          resultsCount={filteredSchools.length}
-          onUpdateState={setSearchState}
-          onClearAll={handleClearAll}
-        />
-      )}
-
-      {isEasyReadMode && (
-        <div className="bg-indigo-50 border-b border-indigo-200 px-4 py-2 text-xs text-indigo-950">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-            <span>
-              <strong>Modo Lectura Fácil activo:</strong> las siglas técnicas (<em>CEIPSO, IES, SIES, SAE, EOEP</em>) se muestran explicadas en lenguaje sencillo.
-            </span>
-            <button
-              type="button"
-              onClick={() => setIsEasyReadMode(false)}
-              className="text-indigo-800 font-bold hover:underline cursor-pointer"
-            >
-              Desactivar
-            </button>
+      {/* 3. Contenido Principal (todo el contenido visible dentro de regiones ARIA) */}
+      <main id="main-content" className="flex-1 w-full min-w-0">
+        {/* Aviso de Transparencia y Origen de Datos dentro del landmark principal */}
+        <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-xs text-amber-950">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
+              <span className="font-bold uppercase tracking-wide bg-blue-100 text-blue-950 px-2.5 py-0.5 rounded text-xs leading-tight">
+                Datos abiertos · CAM + Ayto. Madrid
+              </span>
+              <span className="text-xs text-amber-950 leading-snug">
+                <strong>Transparencia:</strong> {OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos oficiales ({OFFICIAL_TEA_SOURCE.totalCentros} TEA · {OFFICIAL_TEA_SOURCE.totalCee} CEE · {OFFICIAL_TEA_SOURCE.totalHospitalarias} Hosp. · {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} AACC · {OFFICIAL_TEA_SOURCE.totalVisual} Visual · EOEP Auditiva/Motora/TDAH-TEL), con {OFFICIAL_TEA_SOURCE.totalConTransporteAyto} en Madrid capital vía <span className="font-mono">datos.madrid.es</span>.
+              </span>
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsLegalModalOpen(true)}
+                className="text-xs font-bold text-amber-950 hover:underline cursor-pointer"
+              >
+                Marco y Privacidad
+              </button>
+              <a
+                href="https://www.comunidad.madrid/servicios/educacion"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-amber-950 hover:underline inline-flex items-center gap-1"
+              >
+                <span>Portal Educación CAM</span>
+                <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </div>
-      )}
 
-      {/* 3. Contenido Principal */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 min-w-0">
+        {/* Barra de Filtros Activos Resumen - En pestaña Buscar */}
+        {activeTab === 'search' && (
+          <ActiveFilterChips
+            state={searchState}
+            resultsCount={filteredSchools.length}
+            onUpdateState={setSearchState}
+            onClearAll={handleClearAll}
+          />
+        )}
+
+        {isEasyReadMode && (
+          <div className="bg-indigo-50 border-b border-indigo-200 px-4 py-2 text-xs text-indigo-950">
+            <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+              <span>
+                <strong>Modo Lectura Fácil activo:</strong> las siglas técnicas (<em>CEIPSO, IES, SIES, SAE, EOEP</em>) se muestran explicadas en lenguaje sencillo.
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsEasyReadMode(false)}
+                className="text-indigo-800 font-bold hover:underline cursor-pointer"
+              >
+                Desactivar
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Toast accesible al ejecutar escenarios de prueba */}
+        {toastMessage && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed bottom-4 right-4 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg border border-slate-700 flex items-center gap-2"
+          >
+            <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>{toastMessage}</span>
+          </div>
+        )}
+
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 min-w-0">
         {/* PESTAÑA A: BUSCADOR UNIFICADO CON VISTAS (LISTA, MAPA + LISTA, MAPA) */}
         {activeTab === 'search' && (
           <div>
@@ -423,6 +447,8 @@ export default function App() {
             <div className="lg:hidden w-full flex items-center justify-between gap-2 mb-2">
               <button
                 type="button"
+                aria-expanded={isMobileFilterOpen}
+                aria-controls="filters-sidebar-panel"
                 onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 shadow-xs cursor-pointer"
               >
@@ -436,7 +462,7 @@ export default function App() {
             </div>
 
             {/* Panel Lateral de Filtros Plegables */}
-            <div className={`${isMobileFilterOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 xl:w-80 shrink-0`}>
+            <div id="filters-sidebar-panel" className={`${isMobileFilterOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 xl:w-80 shrink-0`}>
               <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs sticky top-20">
                 <FilterSidebar
                   state={searchState}
@@ -450,6 +476,7 @@ export default function App() {
 
             {/* Columna Derecha: Barra de Búsqueda Rápida, Conmutador de Vista y Resultados */}
             <div className="flex-1 w-full min-w-0 space-y-4">
+              <h2 className="sr-only">Resultados de centros y equipos oficiales</h2>
               {/* Procedencia de los datos que se están viendo */}
               <div
                 role="note"
@@ -673,22 +700,31 @@ export default function App() {
                   {/* Vista Mapa: Mapa interactivo sobre las tarjetas de centros */}
                   {searchViewMode === 'map' && (
                     <div className="mb-4">
-                      <SchoolsMap
-                        schools={filteredSchools}
-                        state={searchState}
-                        selectedSchoolId={selectedSchool?.id ?? null}
-                        onSelectSchool={sch => {
-                          setSelectedSchool(sch);
-                          setModalInitialTab('details');
-                        }}
-                        onOpenWhyAppears={sch => {
-                          setSelectedSchool(sch);
-                          setModalInitialTab('why');
-                        }}
-                        onToggleCompare={handleToggleCompare}
-                        isSchoolCompared={schId => comparedIds.includes(schId)}
-                        height="400px"
-                      />
+                      <React.Suspense
+                        fallback={
+                          <div className="h-[400px] rounded-2xl border border-slate-200 bg-white flex items-center justify-center text-xs text-slate-600 shadow-xs">
+                            Cargando mapa interactivo de centros...
+                          </div>
+                        }
+                      >
+                        <SchoolsMap
+                          schools={filteredSchools}
+                          state={searchState}
+                          selectedSchoolId={selectedSchool?.id ?? null}
+                          onSelectSchool={sch => {
+                            setSelectedSchool(sch);
+                            setModalInitialTab('details');
+                          }}
+                          onOpenWhyAppears={sch => {
+                            setSelectedSchool(sch);
+                            setModalInitialTab('why');
+                          }}
+                          onToggleCompare={handleToggleCompare}
+                          isSchoolCompared={schId => comparedIds.includes(schId)}
+                          isEasyReadMode={isEasyReadMode}
+                          height="400px"
+                        />
+                      </React.Suspense>
                     </div>
                   )}
 
@@ -725,12 +761,12 @@ export default function App() {
                       </span>
                       <button
                         type="button"
-                        onClick={() => setVisibleCount(prev => prev + 24)}
+                        onClick={() => setVisibleCount(prev => prev + 12)}
                         className="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 shadow-xs transition-colors cursor-pointer"
                       >
-                        Mostrar 24 centros más
+                        Mostrar 12 centros más
                       </button>
-                      {filteredSchools.length - visibleCount > 24 && (
+                      {filteredSchools.length - visibleCount > 12 && (
                         <button
                           type="button"
                           onClick={() => setVisibleCount(filteredSchools.length)}
@@ -750,52 +786,63 @@ export default function App() {
 
         {/* PESTAÑA B: CONTINUIDAD PRIMARIA-ESO */}
         {activeTab === 'continuity' && (
-          <ContinuityView
-            schools={filteredSchools}
-            state={searchState}
-            isEasyReadMode={isEasyReadMode}
-            onOpenDetail={sch => {
-              setSelectedSchool(sch);
-              setModalInitialTab('continuity');
-            }}
-            onUpdateRadius={newRadius => {
-              setSearchState(prev => ({ ...prev, radiusKm: newRadius }));
-            }}
-          />
+          <React.Suspense fallback={<div className="py-12 text-center text-xs text-slate-600">Cargando continuidad educativa...</div>}>
+            <ContinuityView
+              schools={filteredSchools}
+              state={searchState}
+              isEasyReadMode={isEasyReadMode}
+              onOpenDetail={sch => {
+                setSelectedSchool(sch);
+                setModalInitialTab('continuity');
+              }}
+              onUpdateRadius={newRadius => {
+                setSearchState(prev => ({ ...prev, radiusKm: newRadius }));
+              }}
+            />
+          </React.Suspense>
         )}
 
         {/* PESTAÑA C: COMPARADOR OBJETIVO (MÁXIMO 3 CENTROS) */}
         {activeTab === 'comparator' && (
-          <ComparatorView
-            comparedSchools={comparedSchools}
-            state={searchState}
-            onRemoveFromCompare={id => setComparedIds(prev => prev.filter(x => x !== id))}
-            onClearCompare={() => setComparedIds([])}
-            onOpenDetail={sch => {
-              setSelectedSchool(sch);
-              setModalInitialTab('details');
-            }}
-            onGoToSearch={() => setActiveTab('search')}
-          />
+          <React.Suspense fallback={<div className="py-12 text-center text-xs text-slate-600">Cargando comparador...</div>}>
+            <ComparatorView
+              comparedSchools={comparedSchools}
+              state={searchState}
+              onRemoveFromCompare={id => setComparedIds(prev => prev.filter(x => x !== id))}
+              onClearCompare={() => setComparedIds([])}
+              onOpenDetail={sch => {
+                setSelectedSchool(sch);
+                setModalInitialTab('details');
+              }}
+              onGoToSearch={() => setActiveTab('search')}
+            />
+          </React.Suspense>
         )}
 
         {/* PESTAÑA D: PASAPORTE LOCAL PARA FAMILIAS */}
         {activeTab === 'passport' && (
-          <PassportView
-            savedSchools={passportSchools}
-            state={searchState}
-            onRemoveSchool={id => setPassportIds(prev => prev.filter(x => x !== id))}
-            onClearPassport={() => setPassportIds([])}
-            onOpenDetail={sch => {
-              setSelectedSchool(sch);
-              setModalInitialTab('details');
-            }}
-            onGoToSearch={() => setActiveTab('search')}
-          />
+          <React.Suspense fallback={<div className="py-12 text-center text-xs text-slate-600">Cargando pasaporte local...</div>}>
+            <PassportView
+              savedSchools={passportSchools}
+              state={searchState}
+              onRemoveSchool={id => setPassportIds(prev => prev.filter(x => x !== id))}
+              onClearPassport={() => setPassportIds([])}
+              onOpenDetail={sch => {
+                setSelectedSchool(sch);
+                setModalInitialTab('details');
+              }}
+              onGoToSearch={() => setActiveTab('search')}
+            />
+          </React.Suspense>
         )}
 
         {/* PESTAÑA E: FUENTES Y NORMATIVA OFICIAL */}
-        {activeTab === 'sources' && <SourcesView />}
+        {activeTab === 'sources' && (
+          <React.Suspense fallback={<div className="py-12 text-center text-xs text-slate-600">Cargando fuentes oficiales...</div>}>
+            <SourcesView />
+          </React.Suspense>
+        )}
+        </div>
       </main>
 
       {/* 4. Pie de página Proyecto Cívico DataMad 2026 */}
@@ -808,7 +855,7 @@ export default function App() {
                 Proyecto cívico de datos abiertos con evidencia documental y filtros acumulativos.
               </p>
               <p className="text-xs text-slate-600">
-                Fuentes: Datos Abiertos CAM (CC BY 4.0), Consejería de Educación (TEA 2024/25), Ayuntamiento de Madrid (datos.madrid.es) y Registro Estatal RCD (MEFPD).
+                Fuentes: Datos Abiertos CAM (CC BY 4.0), Consejería de Educación (TEA 2024/25) y Ayuntamiento de Madrid (datos.madrid.es).
               </p>
               <p className="text-xs text-slate-700 font-medium">
                 Privacidad: tus notas del Pasaporte y ubicación GPS no salen de tu navegador.
@@ -844,29 +891,37 @@ export default function App() {
       </footer>
 
       {/* 5. Modales Operativos */}
-      <SchoolDetailModal
-        school={selectedSchool}
-        state={searchState}
-        isOpen={Boolean(selectedSchool)}
-        initialTab={modalInitialTab}
-        isCompared={selectedSchool ? comparedIds.includes(selectedSchool.id) : false}
-        isInPassport={selectedSchool ? passportIds.includes(selectedSchool.id) : false}
-        isEasyReadMode={isEasyReadMode}
-        onClose={() => setSelectedSchool(null)}
-        onToggleCompare={handleToggleCompare}
-        onTogglePassport={handleTogglePassport}
-      />
+      <React.Suspense fallback={null}>
+        {Boolean(selectedSchool) && (
+          <SchoolDetailModal
+            school={selectedSchool}
+            state={searchState}
+            isOpen={Boolean(selectedSchool)}
+            initialTab={modalInitialTab}
+            isCompared={selectedSchool ? comparedIds.includes(selectedSchool.id) : false}
+            isInPassport={selectedSchool ? passportIds.includes(selectedSchool.id) : false}
+            isEasyReadMode={isEasyReadMode}
+            onClose={() => setSelectedSchool(null)}
+            onToggleCompare={handleToggleCompare}
+            onTogglePassport={handleTogglePassport}
+          />
+        )}
 
-      <OfficialProceduresModal
-        topic={procedureTopic}
-        onClose={() => setProcedureTopic(null)}
-      />
+        {Boolean(procedureTopic) && (
+          <OfficialProceduresModal
+            topic={procedureTopic}
+            onClose={() => setProcedureTopic(null)}
+          />
+        )}
 
-      <TestScenariosModal
-        isOpen={isTestModalOpen}
-        onClose={() => setIsTestModalOpen(false)}
-        onRunTest={handleRunTest}
-      />
+        {isTestModalOpen && (
+          <TestScenariosModal
+            isOpen={isTestModalOpen}
+            onClose={() => setIsTestModalOpen(false)}
+            onRunTest={handleRunTest}
+          />
+        )}
+      </React.Suspense>
 
       {/* Modal Descriptivo de Marco Oficial, Metodología y Privacidad */}
       {isLegalModalOpen && (

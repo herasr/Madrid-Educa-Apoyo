@@ -1,0 +1,13 @@
+{
+  "ultima_comprobacion": "2026-11-17T18:57:10Z",
+  "pdf_url": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
+  "estado": "SNAPSHOT_VERSIONADO",
+  "snapshot_csv": "data/official/tea_preferentes_curso_2024-25.csv",
+  "snapshot_fecha_informacion": "2024-03-22",
+  "snapshot_total_codigos": 336,
+  "pdf_sha256": null,
+  "pdf_codigos_extraidos": null,
+  "codigos_nuevos_en_pdf": [],
+  "codigos_que_ya_no_aparecen": [],
+  "error_descarga_o_lectura": "HTTP Error 404: Not Found"
+}

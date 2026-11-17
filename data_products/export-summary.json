@@ -1,5 +1,5 @@
 {
-  "dataset": "Madrid Educa Apoyo - Catálogo multi-fuente (TEA, CEE, Aulas Hospitalarias, Discapacidad Visual y Altas Capacidades)",
+  "dataset": "Madrid Educa Apoyo - Catálogo multi-fuente (TEA, CEE, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos)",
   "total_records": 433,
   "counts_by_need": {
     "total": 433,
@@ -13,9 +13,9 @@
     "tdah": 1,
     "tel_lenguaje": 1,
     "exact_location": 432,
-    "ayto_matched": 153,
-    "ayto_transit": 152,
-    "ayto_services": 123,
+    "ayto_matched": 152,
+    "ayto_transit": 151,
+    "ayto_services": 122,
     "ayto_accessibility": 17
   },
   "exact_location_records": 432,
@@ -38,13 +38,15 @@
   "fuente_url": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
   "ckan_dataset_url": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
   "ckan_status": "CKAN_EN_VIVO",
+  "ckan_fecha_descarga": "2026-11-17",
   "ayto_dataset_url": "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
   "ayto_status": "AYTO_MADRID_EN_VIVO",
+  "ayto_fecha_descarga": "2026-11-17",
   "curso": "2024/2025",
   "fecha_informacion": "2024-03-22",
   "estado_verificacion": "SNAPSHOT_VERSIONADO",
   "alcance": "El documento NO es el catálogo completo (la Comunidad declara 682 centros preferentes TEA y 855 aulas). Recoge los centros en los que el número de alumnos atendidos en el aula de apoyo extenso y especializado era menor de cinco a 22/03/2024, es decir, centros con plazas previsibles en el aula TEA para el proceso de admisión 2024/2025. Incluye también los centros y aulas nuevos previstos para ese curso.",
   "ubicaciones": "Coordenadas oficiales UTM (ETRS89 -> WGS84) de 'Centros educativos de la Comunidad de Madrid' (Portal de Datos Abiertos CAM) en 432/433 centros.",
-  "licence": "Datos Abiertos CAM: CC BY 4.0 · Ayuntamiento de Madrid: datos.madrid.es · Listado TEA y RCD Ministerio: Ley 37/2007 · Código: Apache-2.0.",
+  "licence": "Datos Abiertos CAM: CC BY 4.0 · Ayuntamiento de Madrid: datos.madrid.es · Listado TEA CAM: Ley 37/2007 · Código: Apache-2.0.",
   "rfc_7946_compliant": true
 }

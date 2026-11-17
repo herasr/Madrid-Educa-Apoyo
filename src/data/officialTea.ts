@@ -4,14 +4,14 @@
  *
  * ARCHIVO GENERADO AUTOMÁTICAMENTE por scripts/build_app_data.py — no editar a mano.
  *
- * Datos 100% OFICIALES de fuentes públicas abiertas:
+ * Datos procedentes exclusivamente de fuentes públicas oficiales (con detección de conflictos en data/review/):
  * - 336 centros de atención preferente TEA (Consejería de Educación CAM, 2024/2025)
- * - 69 Centros de Educación Especial (CEE) en situación ALTA (Datos Abiertos CAM + RCD Ministerio)
- * - 14 Aulas Hospitalarias no anuladas (Datos Abiertos CAM)
+ * - 69 Centros de Educación Especial (CEE) en situación ALTA (Datos Abiertos CAM, CC BY 4.0)
+ * - 14 Aulas Hospitalarias no anuladas (Datos Abiertos CAM, CC BY 4.0)
  * - 3 recursos oficiales para Discapacidad Visual (EOEP Visuales + CRE ONCE Madrid)
  * - 10 centros y sedes oficiales para Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC)
  * - EOEP Específicos regionales en situación ALTA: Auditiva (1), Motora (1), TDAH (1) y Trastornos del Lenguaje (1)
- * - Enriquecimiento de Madrid capital (transporte público, barrio, servicios y accesibilidad): Ayuntamiento de Madrid (datos.madrid.es).
+ * - Enriquecimiento de Madrid capital (transporte público, barrio, equipamiento y códigos ACCESIBILIDAD 0..6): Ayuntamiento de Madrid (datos.madrid.es).
  */
 
 import { MunicipalityOption, School } from '../types';
@@ -24,9 +24,9 @@ export const OFFICIAL_TEA_SOURCE = {
   "datosAbiertosUrl": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
   "datosAbiertosLicencia": "CC BY 4.0",
   "ayuntamientoUrl": "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
-  "ministerioUrl": "https://www.educacionfpydeportes.gob.es/servicios-al-ciudadano/catalogo/general/05/050220/ficha/050220.html",
   "curso": "2024/2025",
   "fechaInformacion": "22/03/2024",
+  "fechaDatosAbiertos": "17/11/2026",
   "totalCentros": 336,
   "totalCentrosCatalogo": 433,
   "totalCee": 69,
@@ -39,8 +39,8 @@ export const OFFICIAL_TEA_SOURCE = {
   "totalTelLenguaje": 1,
   "totalConUbicacionExacta": 336,
   "totalConUbicacionExactaCatalogo": 432,
-  "totalConTransporteAyto": 152,
-  "totalConServiciosAyto": 123,
+  "totalConTransporteAyto": 151,
+  "totalConServiciosAyto": 122,
   "totalConAccesibilidadAyto": 17,
   "estadoVerificacion": "SNAPSHOT_VERSIONADO",
   "estadoDatosAbiertos": "CKAN_EN_VIVO",
@@ -537,7 +537,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Puerta Toledo, Pirámides, Acacias BUS: 3, 17, 18, 23, 35, 36, 41, 62, 148, C",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28071371",
@@ -615,7 +616,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 8, 102, 152, 156 Metro: Méndez Álvaro",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020910",
@@ -662,7 +664,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
           "Coordinado institucionalmente por CREACIM · Madrid Capital"
         ],
         "fuenteOficial": "Comunidad de Madrid · Programa de Enriquecimiento Educativo (PEAC / CREACIM) y Portal de Datos Abiertos CAM (CC BY 4.0)",
-        "fechaCorte": "Catálogo CKAN vigente · convocatoria PEAC · corte 22/03/2024",
+        "fechaCorte": "Catálogo CKAN vigente · corte 22/03/2024",
         "detallesResolucion": "Instituto público que además de centro preferente TEA en Secundaria actúa como sede territorial oficial en Madrid capital del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC, sábados quincenales en Primaria, ESO y Bachillerato)."
       }
     ],
@@ -695,7 +697,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "INSTITUTO DE EDUCACIÓN SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Acacias BUS: 34 , 36 , 118 , 119 RENFE: Embajadores",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28018502",
@@ -760,7 +763,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Alameda de Osuna BUS: 105, 112, 114, 115, 151",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005039",
@@ -850,7 +854,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 35 , 47",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005568",
@@ -940,7 +945,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Oporto BUS: 47 , 55 , 81 , 108 , 118 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28031051",
@@ -1030,7 +1036,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 17 , 25 , 118 , 119",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28063763",
@@ -1121,7 +1128,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "transportePublico": "BUS: 155, 35 METRO: La Peseta",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28006172",
@@ -1211,7 +1219,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Oporto , Opañel BUS: 34 , 35 , 55 , 81 , 108 , 118 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28073151",
@@ -1300,7 +1309,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 116, 121, 131, 155",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014533",
@@ -1390,7 +1400,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 34 , 108",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014867",
@@ -1480,7 +1491,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Carabanchel BUS: 17 , 34",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020958",
@@ -1545,7 +1557,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Plaza Elíptica BUS: 47 , 55 , 81 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28074918",
@@ -1610,7 +1623,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 47, 35, 155 METRO: La Peseta",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28010679",
@@ -1675,7 +1689,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Noviciado , Tribunal , Bilbao BUS: 3 , 21 , 40 , 147 , 149",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006381",
@@ -1740,7 +1755,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Embajadores, Acacias BUS: , 34 , 36 , 41 , 60 , 116 , 118 , 119 , 148 RENFE: Embajadores",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28019981",
@@ -1805,7 +1821,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Latina , Lavapiés , Tirso de Molina BUS: 6 , 17 , 18 , 23 , 26 , 32 , 35",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014478",
@@ -1871,7 +1888,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Concha Espina BUS: 7 , 16 , 29 , 43 , 52 , 120",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014363",
@@ -1949,7 +1967,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Colombia , Pío XII BUS: 7 , 11 , 16 , 29 , 40 , 51 , 52 , 87 , 150",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010618",
@@ -2005,7 +2024,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
       "destinos": [
         {
           "codigo": "28020120",
-          "nombre": "Colegio Amor Misericordioso",
+          "nombre": "Colegio Chamberi",
           "etapa": "Secundaria (ESO)",
           "municipio": "Madrid",
           "distrito": "Chamberí",
@@ -2028,12 +2047,13 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "transportePublico": "METRO: Quevedo BUS: 16 , 61 , 149",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28020120",
     "codigo": "28020120",
-    "nombre": "Colegio Amor Misericordioso",
+    "nombre": "Colegio Chamberi",
     "titularidad": "concertado",
     "tipo": "Colegio Concertado",
     "modalidad": "preferente",
@@ -2086,19 +2106,21 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "procedencia": "oficial",
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
-    "nombreOficial": "AMOR MISERICORDIOSO",
+    "nombreOficial": "CHAMBERI",
     "tipoOficial": "CPR INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Iglesia BUS: 3 , 5 , 7 , 16 , 40 , 61 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0",
+    "observacionesOficiales": "Conflicto detectado en el código 28020120: el registro oficial de Datos Abiertos CAM corresponde a «Chamberi», mientras que el listado TEA 2024/25 asocia este código a «Amor Misericordioso». Se muestran la denominación y el contacto del registro oficial CAM; conviene confirmar la asignación real de plaza TEA ante el SAE."
   },
   {
     "id": "oficial-tea-28011258",
     "codigo": "28011258",
-    "nombre": "Colegio Chamberí",
+    "nombre": "Colegio Amor Misericordioso",
     "titularidad": "concertado",
     "tipo": "Colegio Concertado",
     "modalidad": "preferente",
@@ -2149,7 +2171,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
       "destinos": [
         {
           "codigo": "28020120",
-          "nombre": "Colegio Amor Misericordioso",
+          "nombre": "Colegio Chamberi",
           "etapa": "Secundaria (ESO)",
           "municipio": "Madrid",
           "distrito": "Chamberí",
@@ -2164,14 +2186,16 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "procedencia": "oficial",
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
-    "nombreOficial": "CHAMBERÍ",
+    "nombreOficial": "AMOR MISERICORDIOSO",
     "tipoOficial": "CPR INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Islas Filipinas, Guzmán el Bueno BUS: 2 , 12 , 44 , 202",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0",
+    "observacionesOficiales": "Conflicto detectado en el código 28011258: el registro oficial de Datos Abiertos CAM corresponde a «Amor Misericordioso», mientras que el listado TEA 2024/25 asocia este código a «Chamberí». Se muestran la denominación y el contacto del registro oficial CAM; conviene confirmar la asignación real de plaza TEA ante el SAE."
   },
   {
     "id": "oficial-tea-28015902",
@@ -2227,7 +2251,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
       "destinos": [
         {
           "codigo": "28020120",
-          "nombre": "Colegio Amor Misericordioso",
+          "nombre": "Colegio Chamberi",
           "etapa": "Secundaria (ESO)",
           "municipio": "Madrid",
           "distrito": "Chamberí",
@@ -2249,7 +2273,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Rios Rosas BUS: 3 , 12 , 37 , 45 , 149",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005261",
@@ -2339,7 +2364,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: El Carmen, Quintana BUS: 21, 38, 48, 109, 146",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28031804",
@@ -2429,7 +2455,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: García Noblejas BUS: 70 , 109 , 106",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28019658",
@@ -2519,7 +2546,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 21 , 70",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28037399",
@@ -2609,7 +2637,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 70 , 106",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013280",
@@ -2676,7 +2705,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 15 , 71 , 110 , 210",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28028465",
@@ -2741,7 +2771,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Avenida de la Paz BUS: 9 , 53 , 72 , 73 , 120",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005741",
@@ -2831,7 +2862,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Peñagrande BUS: 42 , 126 , 132 , 137 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28004941",
@@ -2921,7 +2953,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 66 , 137 RENFE: Fuencarral",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28036012",
@@ -3012,7 +3045,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "transportePublico": "METRO: Peñagrande BUS: 42 , 49 , 126 , 128 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28010060",
@@ -3102,7 +3136,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Barrio del Pilar BUS: 42 , 49 , 126 , 128 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28069297",
@@ -3193,7 +3228,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "transportePublico": "BUS: 178, 134 METRO: Montecarmelo",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28030186",
@@ -3257,7 +3293,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "INSTITUTO DE EDUCACIÓN SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Herrera Oria BUS: 67 , 83 , 124 , 133",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020119",
@@ -3323,7 +3360,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "transportePublico": "METRO: Barrio del Pilar , Peñagrande BUS: 42 , 49 , 126 , 128 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28021367",
@@ -3401,14 +3439,15 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Esperanza, Arturo Soria BUS: 9, 72, 73 ,120 ,122",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28026067",
     "codigo": "28026067",
-    "nombre": "CEIP Ramón Pérez de Ayala",
+    "nombre": "CEIPSO Ramón Pérez de Ayala",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Madrid",
     "distrito": "Hortaleza",
@@ -3473,13 +3512,15 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "RAMÓN PÉREZ DE AYALA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Canillas BUS: 73 , 112 , 120",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28063799",
@@ -3557,7 +3598,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 174",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28072132",
@@ -3623,7 +3665,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 172",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28018401",
@@ -3737,7 +3780,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 25 , 31 , 138",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010576",
@@ -3851,7 +3895,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 25 , 138",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005635",
@@ -3965,7 +4010,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 138",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005684",
@@ -4079,7 +4125,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 34 , 39 , 139 RENFE: Las Aguilas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28037375",
@@ -4193,7 +4240,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Cuatro Vientos BUS: 139 RENFE: Cuatro Vientos",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28031099",
@@ -4307,7 +4355,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Aluche BUS: 17 , 121 , 131 , H RENFE: Aluche",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020740",
@@ -4421,7 +4470,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Laguna BUS: 31 , 119 , 138 RENFE: Laguna",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28028507",
@@ -4535,7 +4585,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 17 , 34 , 39 , 139 RENFE: Las Águilas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28017339",
@@ -4649,7 +4700,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Carabanchel , Carpetana BUS: 17",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28011490",
@@ -4715,7 +4767,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 34 , 39 , 139 RENFE: Las Aguilas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020235",
@@ -4781,7 +4834,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 25 , 36 , 39 , 55 , 65",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013401",
@@ -4848,7 +4902,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Alto de Extremadura BUS: 31 , 33 , 36 , 39 , 65",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28021550",
@@ -4913,7 +4968,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 34 , 139, 155",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28040741",
@@ -4979,7 +5035,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "transportePublico": "METRO: Eugenia de Montijo BUS: 17",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28021446",
@@ -5044,7 +5101,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Valdezarza BUS: 126 ,127 , 128 , 132",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28021434",
@@ -5122,7 +5180,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Artilleros, Pavones BUS: 20, 30, 32 , 100 , 140 , 142",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28030289",
@@ -5200,7 +5259,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Vinateros BUS: 8 , 100 , 113",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020624",
@@ -5265,7 +5325,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Vinateros BUS: 32 , 71",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28004989",
@@ -5355,7 +5416,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Alto del Arenal BUS: 54 , 58 , 103 , 143",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005854",
@@ -5445,7 +5507,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Nueva Numancia , Portazgo BUS: 10 , 54 , 57 , 58 , 103 , 111 , 310 , 410",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28033941",
@@ -5535,7 +5598,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Miguel Hernández BUS: 54 , 58 , 103 , 142 , 143 , 144",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020661",
@@ -5625,7 +5689,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Miguel Hernández BUS: 54 , 58 , 103 , 142 , 143 , 144",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005933",
@@ -5715,7 +5780,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 57, 103, 111, 144, 310",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28026547",
@@ -5805,7 +5871,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24 , 103 , 111 , 144 RENFE: Entrevias",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010862",
@@ -5895,7 +5962,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24 , 102",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006391",
@@ -5985,7 +6053,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Alto del Arenal BUS: 54 , 58 , 103 , 143",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28045566",
@@ -6074,7 +6143,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24 , 57 , 103 , 111 , 136 RENFE: Entrevías",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28011623",
@@ -6164,7 +6234,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "RENFE: Entrevías BUS: 24 , 103 , 111",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28022335",
@@ -6231,7 +6302,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24 , 130",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28058603",
@@ -6297,7 +6369,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "transportePublico": "BUS: 63 , 141 , 143",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28013292",
@@ -6363,7 +6436,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Sáinz de Baranda BUS: 2 , 15 , 30 , 56 , 143 , 215",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010412",
@@ -6441,7 +6515,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Manuel Becerra BUS: 12 , 2 , 56 , 71 , 143, 156, C2",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013103",
@@ -6505,7 +6580,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Lista BUS: 1 , 26 , 29 , 52 , 61 , 74",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013701",
@@ -6583,7 +6659,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: ODonnell BUS: 2 , 28 , 30 , 56 , 71 , 143",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010473",
@@ -6661,7 +6738,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: García Noblejas BUS: 4 , 28 , 38 , 70",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006411",
@@ -6739,7 +6817,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 38 , 48 , 140",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28025956",
@@ -6817,7 +6896,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: San Blas BUS: 38 , 48",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010977",
@@ -6895,7 +6975,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Simancas BUS: 4 , 38 , 48 , 70 , 109",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28032225",
@@ -6972,7 +7053,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Ciudad Lineal BUS: 4 , 38 , 48 , 70 , 105 , 109",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28039840",
@@ -7037,7 +7119,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Suanzes BUS: 77 , 104 , 105 , 114 , 146",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010552",
@@ -7115,7 +7198,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Francos Rodríguez BUS: 44 , 127",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28009291",
@@ -7193,7 +7277,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Estrecho BUS: 3 , 64 , 66 , 124 , 126 , 128",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28028477",
@@ -7258,7 +7343,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Tetuán BUS: 3 , 5 , 64 , 66 , 124 , 126 , 128 , 149",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010813",
@@ -7372,7 +7458,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Usera BUS: 6 , 18 , 22 , 47 , 59 , 76 , 78 , 79 , 85 , 86 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006101",
@@ -7486,7 +7573,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 6 , 60 , 131",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28021999",
@@ -7599,7 +7687,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 18 , 22 , 23 , 59 , 78 , 79 , 86",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28016712",
@@ -7666,7 +7755,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Usera BUS: 6 , 47 , 78 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28008387",
@@ -7733,7 +7823,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "RENFE: Orcasitas BUS: 76 , 78",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013772",
@@ -7847,7 +7938,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Usera BUS: 23 , 55",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28035330",
@@ -7912,7 +8004,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 6 , 78 , 81 , 121 , 131 RENFE: Orcasitas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28074244",
@@ -7977,7 +8070,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Usera BUS: 47 , 55 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28050355",
@@ -8042,7 +8136,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Valdebernardo BUS: 8 , 71 , 130",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28043223",
@@ -8106,7 +8201,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL Y PRIMARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28020673",
@@ -8184,7 +8280,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 58 , 63 , 145",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "2"
   },
   {
     "id": "oficial-tea-28008910",
@@ -8262,7 +8359,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Metro: Sierra de Guadalupe , Villa de Vallecas Bus: 54 , 58 , 103 , 130 , 142 , 143 Renfe: Vallecas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28073173",
@@ -8340,7 +8438,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 142, 145 Metro: La Gavia",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28042644",
@@ -8406,7 +8505,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "transportePublico": "BUS: 58 , 63 , 145",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28021215",
@@ -8496,7 +8596,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 85 , 123 RENFE: Villaverde Bajo",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28071383",
@@ -8586,7 +8687,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 85",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006251",
@@ -8676,7 +8778,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 59 , 79 RENFE: San Cristóbal de los Angeles",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006263",
@@ -8766,7 +8869,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 22, 79 , 130 RENFE: Villaverde Alto",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014272",
@@ -8856,7 +8960,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 22 , 79, 86, 130 , 131 RENFE: Puente Alcocer",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28012949",
@@ -8945,7 +9050,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 18 , 76 , 86 , 116",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28009185",
@@ -9034,7 +9140,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 22 , 59 , 79 , 130 RENFE: Villaverde Bajo",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013899",
@@ -9099,7 +9206,8 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 18 , 22 , 23 , 59 , 79 , 86 , 130",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28080967",
@@ -10684,9 +10792,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28039359",
     "codigo": "28039359",
-    "nombre": "CEIP Antonio Machado",
+    "nombre": "CEIPSO Antonio Machado",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Colmenar Viejo",
     "codigoPostal": "28770",
@@ -10748,10 +10856,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "ANTONIO MACHADO",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28031211",
@@ -12049,9 +12158,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28064421",
     "codigo": "28064421",
-    "nombre": "CEIP Teresa de Calcuta",
+    "nombre": "CEIPSO Teresa de Calcuta",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "San Sebastián de los Reyes",
     "codigoPostal": "28702",
@@ -12124,10 +12233,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "TERESA DE CALCUTA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28058639",
@@ -14248,9 +14358,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28039761",
     "codigo": "28039761",
-    "nombre": "CEIP Enrique Tierno Galván",
+    "nombre": "CEIPSO Enrique Tierno Galván",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Fuenlabrada",
     "codigoPostal": "28943",
@@ -14345,10 +14455,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "ENRIQUE TIERNO GALVÁN",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28070731",
@@ -16317,9 +16428,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28028830",
     "codigo": "28028830",
-    "nombre": "CEIP Francisco de Quevedo",
+    "nombre": "CEIPSO Francisco de Quevedo",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Leganés",
     "codigoPostal": "28914",
@@ -16414,10 +16525,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "FRANCISCO DE QUEVEDO",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28003778",
@@ -16527,9 +16639,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28028222",
     "codigo": "28028222",
-    "nombre": "CEIP Pío Baroja",
+    "nombre": "CEIPSO Pío Baroja",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Leganés",
     "codigoPostal": "28916",
@@ -16624,17 +16736,18 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "PÍO BAROJA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28003791",
     "codigo": "28003791",
-    "nombre": "CEIP Víctor Pradera",
+    "nombre": "CEIPSO Víctor Pradera",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Leganés",
     "codigoPostal": "28915",
@@ -16729,10 +16842,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "VÍCTOR PRADERA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28003742",
@@ -19991,9 +20105,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28063911",
     "codigo": "28063911",
-    "nombre": "CEIP Gandhi",
+    "nombre": "CEIPSO Gandhi",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Villaviciosa de Odón",
     "codigoPostal": "28670",
@@ -20043,17 +20157,18 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "GANDHI",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28040039",
     "codigo": "28040039",
-    "nombre": "CEIP Laura García Noblejas",
+    "nombre": "CEIPSO Laura García Noblejas",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Villaviciosa de Odón",
     "codigoPostal": "28670",
@@ -20103,10 +20218,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "LAURA GARCÍA NOBLEJAS",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28033621",
@@ -20155,7 +20271,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     },
     "continuidad": {
       "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
+      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 6 centros preferentes TEA con Secundaria.",
       "apoyoEnSecundariaVerificado": "no_verificado",
       "destinos": [
         {
@@ -20192,15 +20308,15 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
           "lng": -3.376661
         },
         {
-          "codigo": "28000303",
-          "nombre": "Colegio Escuelas Pías",
+          "codigo": "28070883",
+          "nombre": "Colegio Alborada",
           "etapa": "Secundaria (ESO)",
           "municipio": "Alcalá de Henares",
           "tieneMismoApoyo": true,
           "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 3.0,
-          "lat": 40.483605,
-          "lng": -3.353751
+          "distanciaKm": 2.7,
+          "lat": 40.494967,
+          "lng": -3.367629
         }
       ]
     },
@@ -20260,7 +20376,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     },
     "continuidad": {
       "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
+      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 6 centros preferentes TEA con Secundaria.",
       "apoyoEnSecundariaVerificado": "no_verificado",
       "destinos": [
         {
@@ -20297,15 +20413,15 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
           "lng": -3.365331
         },
         {
-          "codigo": "28080517",
-          "nombre": "IES Isidra de Guzmán",
+          "codigo": "28070883",
+          "nombre": "Colegio Alborada",
           "etapa": "Secundaria (ESO)",
           "municipio": "Alcalá de Henares",
           "tieneMismoApoyo": true,
           "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 1.5,
-          "lat": 40.473711,
-          "lng": -3.371725
+          "distanciaKm": 1.4,
+          "lat": 40.494967,
+          "lng": -3.367629
         }
       ]
     },
@@ -20365,7 +20481,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     },
     "continuidad": {
       "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
+      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 6 centros preferentes TEA con Secundaria.",
       "apoyoEnSecundariaVerificado": "no_verificado",
       "destinos": [
         {
@@ -20439,16 +20555,16 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "lat": 40.494967,
     "lng": -3.367629,
     "etapas": [
-      "infantil",
-      "primaria"
+      "primaria",
+      "eso"
     ],
     "apoyos": [
       {
         "needId": "tea",
         "evidencia": "A2",
         "etapasConApoyo": [
-          "infantil",
-          "primaria"
+          "primaria",
+          "eso"
         ],
         "recursosOficiales": [],
         "fuenteOficial": "Comunidad de Madrid · Escolarización en centros de atención preferente TEA, curso 2024/2025 (información a 22/03/2024)",
@@ -20471,64 +20587,20 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
       "plano_podotactil": false
     },
     "continuidad": {
-      "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
-      "apoyoEnSecundariaVerificado": "no_verificado",
-      "destinos": [
-        {
-          "codigo": "28044744",
-          "nombre": "IES Doctor Marañón",
-          "etapa": "Secundaria (ESO)",
-          "municipio": "Alcalá de Henares",
-          "tieneMismoApoyo": true,
-          "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 0.8,
-          "lat": 40.493632,
-          "lng": -3.376661
-        },
-        {
-          "codigo": "28000492",
-          "nombre": "Colegio Lope de Vega",
-          "etapa": "Secundaria (ESO)",
-          "municipio": "Alcalá de Henares",
-          "tieneMismoApoyo": true,
-          "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 1.0,
-          "lat": 40.490199,
-          "lng": -3.357019
-        },
-        {
-          "codigo": "28000303",
-          "nombre": "Colegio Escuelas Pías",
-          "etapa": "Secundaria (ESO)",
-          "municipio": "Alcalá de Henares",
-          "tieneMismoApoyo": true,
-          "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 1.7,
-          "lat": 40.483605,
-          "lng": -3.353751
-        },
-        {
-          "codigo": "28035305",
-          "nombre": "IES Alonso Quijano",
-          "etapa": "Secundaria (ESO)",
-          "municipio": "Alcalá de Henares",
-          "tieneMismoApoyo": true,
-          "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 2.1,
-          "lat": 40.47602,
-          "lng": -3.365331
-        }
-      ]
+      "tipoContinuidad": "mismo_centro",
+      "descripcion": "El listado oficial indica la etapa «Mixta»: el apoyo TEA figura en más de una etapa del propio centro.",
+      "apoyoEnSecundariaVerificado": true,
+      "destinos": []
     },
     "procedencia": "oficial",
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "COLEGIO ALBORADA",
-    "tipoOficial": "CPR INF-PRI",
+    "tipoOficial": "CPR INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CPR INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como Colegio Concertado (CPR INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28000303",
@@ -20701,7 +20773,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     },
     "continuidad": {
       "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
+      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 6 centros preferentes TEA con Secundaria.",
       "apoyoEnSecundariaVerificado": "no_verificado",
       "destinos": [
         {
@@ -21445,7 +21517,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
       "destinos": [
         {
           "codigo": "28065841",
-          "nombre": "SIES La Poveda en Campo Real",
+          "nombre": "IES Campo Real",
           "etapa": "Secundaria (ESO)",
           "municipio": "Campo Real",
           "tieneMismoApoyo": true,
@@ -21468,7 +21540,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28065841",
     "codigo": "28065841",
-    "nombre": "SIES La Poveda en Campo Real",
+    "nombre": "IES Campo Real",
     "titularidad": "publico",
     "tipo": "IES",
     "modalidad": "preferente",
@@ -21519,12 +21591,12 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "procedencia": "oficial",
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
-    "nombreOficial": "LA POVEDA EN CAMPO REAL",
-    "tipoOficial": "SIES",
+    "nombreOficial": "CAMPO REAL",
+    "tipoOficial": "IES",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "INSTITUTO DE EDUCACIÓN SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
-    "observacionesOficiales": "'SIES' (Sección de IES) no figura en la leyenda del documento TEA."
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como SIES «La Poveda en Campo Real»; el catálogo oficial Datos Abiertos CAM ya lo registra como IES «Campo Real»."
   },
   {
     "id": "oficial-tea-28074608",
@@ -21661,9 +21733,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28002671",
     "codigo": "28002671",
-    "nombre": "CEIP Ángel Berzal Fernández",
+    "nombre": "CEIPSO Ángel Berzal Fernández",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Daganzo de Arriba",
     "codigoPostal": "28814",
@@ -21725,10 +21797,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "ÁNGEL BERZAL FERNÁNDEZ",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28060385",
@@ -22219,9 +22292,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28037946",
     "codigo": "28037946",
-    "nombre": "CEIP El Olivar",
+    "nombre": "CEIPSO El Olivar",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Rivas-Vaciamadrid",
     "codigoPostal": "28523",
@@ -22316,10 +22389,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "EL OLIVAR",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28035676",
@@ -24831,9 +24905,9 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28042814",
     "codigo": "28042814",
-    "nombre": "CEIP Los Jarales-Monterrozas",
+    "nombre": "CEIPSO Los Jarales-Monterrozas",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Las Rozas de Madrid",
     "codigoPostal": "28232",
@@ -24917,17 +24991,18 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "LOS JARALES--MONTERROZAS",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28066119",
     "codigo": "28066119",
-    "nombre": "CEIP Mario Vargas Llosa",
+    "nombre": "CEIPSO Mario Vargas Llosa",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Las Rozas de Madrid",
     "codigoPostal": "28232",
@@ -25011,10 +25086,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "MARIO VARGAS LLOSA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28057362",
@@ -25851,7 +25927,7 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28024071",
     "codigo": "28024071",
-    "nombre": "Nuestra Señora de Navahonda",
+    "nombre": "CEIP Nuestra Señora de Navahonda",
     "titularidad": "publico",
     "tipo": "CEIP",
     "modalidad": "preferente",
@@ -25903,11 +25979,11 @@ export const OFFICIAL_TEA_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "NUESTRA SEÑORA DE NAVAHONDA",
-    "tipoOficial": "",
+    "tipoOficial": "CP INF-PRI",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL Y PRIMARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
-    "observacionesOficiales": "El listado TEA no indica el tipo ni la titularidad de este centro; el catálogo general de Datos Abiertos CAM lo registra como centro público."
+    "observacionesOficiales": "El listado TEA no indica el tipo ni la titularidad de este centro; el catálogo general de Datos Abiertos CAM lo registra como centro público (CP INF-PRI)."
   },
   {
     "id": "oficial-tea-28024393",
@@ -26450,7 +26526,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Puerta Toledo, Pirámides, Acacias BUS: 3, 17, 18, 23, 35, 36, 41, 62, 148, C",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28071371",
@@ -26528,7 +26605,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 8, 102, 152, 156 Metro: Méndez Álvaro",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020910",
@@ -26575,7 +26653,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinado institucionalmente por CREACIM · Madrid Capital"
         ],
         "fuenteOficial": "Comunidad de Madrid · Programa de Enriquecimiento Educativo (PEAC / CREACIM) y Portal de Datos Abiertos CAM (CC BY 4.0)",
-        "fechaCorte": "Catálogo CKAN vigente · convocatoria PEAC · corte 22/03/2024",
+        "fechaCorte": "Catálogo CKAN vigente · corte 22/03/2024",
         "detallesResolucion": "Instituto público que además de centro preferente TEA en Secundaria actúa como sede territorial oficial en Madrid capital del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC, sábados quincenales en Primaria, ESO y Bachillerato)."
       }
     ],
@@ -26608,7 +26686,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "INSTITUTO DE EDUCACIÓN SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Acacias BUS: 34 , 36 , 118 , 119 RENFE: Embajadores",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28018502",
@@ -26673,7 +26752,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Alameda de Osuna BUS: 105, 112, 114, 115, 151",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005039",
@@ -26763,7 +26843,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 35 , 47",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005568",
@@ -26853,7 +26934,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Oporto BUS: 47 , 55 , 81 , 108 , 118 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28031051",
@@ -26943,7 +27025,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 17 , 25 , 118 , 119",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28063763",
@@ -27034,7 +27117,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "BUS: 155, 35 METRO: La Peseta",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28006172",
@@ -27124,7 +27208,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Oporto , Opañel BUS: 34 , 35 , 55 , 81 , 108 , 118 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28073151",
@@ -27213,7 +27298,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 116, 121, 131, 155",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014533",
@@ -27303,7 +27389,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 34 , 108",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014867",
@@ -27393,7 +27480,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Carabanchel BUS: 17 , 34",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020958",
@@ -27458,7 +27546,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Plaza Elíptica BUS: 47 , 55 , 81 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28074918",
@@ -27523,7 +27612,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 47, 35, 155 METRO: La Peseta",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28010679",
@@ -27588,7 +27678,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Noviciado , Tribunal , Bilbao BUS: 3 , 21 , 40 , 147 , 149",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006381",
@@ -27653,7 +27744,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Embajadores, Acacias BUS: , 34 , 36 , 41 , 60 , 116 , 118 , 119 , 148 RENFE: Embajadores",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28019981",
@@ -27718,7 +27810,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Latina , Lavapiés , Tirso de Molina BUS: 6 , 17 , 18 , 23 , 26 , 32 , 35",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014478",
@@ -27784,7 +27877,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Concha Espina BUS: 7 , 16 , 29 , 43 , 52 , 120",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014363",
@@ -27862,7 +27956,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Colombia , Pío XII BUS: 7 , 11 , 16 , 29 , 40 , 51 , 52 , 87 , 150",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010618",
@@ -27918,7 +28013,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
       "destinos": [
         {
           "codigo": "28020120",
-          "nombre": "Colegio Amor Misericordioso",
+          "nombre": "Colegio Chamberi",
           "etapa": "Secundaria (ESO)",
           "municipio": "Madrid",
           "distrito": "Chamberí",
@@ -27941,12 +28036,13 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "METRO: Quevedo BUS: 16 , 61 , 149",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28020120",
     "codigo": "28020120",
-    "nombre": "Colegio Amor Misericordioso",
+    "nombre": "Colegio Chamberi",
     "titularidad": "concertado",
     "tipo": "Colegio Concertado",
     "modalidad": "preferente",
@@ -27999,19 +28095,21 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "procedencia": "oficial",
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
-    "nombreOficial": "AMOR MISERICORDIOSO",
+    "nombreOficial": "CHAMBERI",
     "tipoOficial": "CPR INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Iglesia BUS: 3 , 5 , 7 , 16 , 40 , 61 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0",
+    "observacionesOficiales": "Conflicto detectado en el código 28020120: el registro oficial de Datos Abiertos CAM corresponde a «Chamberi», mientras que el listado TEA 2024/25 asocia este código a «Amor Misericordioso». Se muestran la denominación y el contacto del registro oficial CAM; conviene confirmar la asignación real de plaza TEA ante el SAE."
   },
   {
     "id": "oficial-tea-28011258",
     "codigo": "28011258",
-    "nombre": "Colegio Chamberí",
+    "nombre": "Colegio Amor Misericordioso",
     "titularidad": "concertado",
     "tipo": "Colegio Concertado",
     "modalidad": "preferente",
@@ -28062,7 +28160,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
       "destinos": [
         {
           "codigo": "28020120",
-          "nombre": "Colegio Amor Misericordioso",
+          "nombre": "Colegio Chamberi",
           "etapa": "Secundaria (ESO)",
           "municipio": "Madrid",
           "distrito": "Chamberí",
@@ -28077,14 +28175,16 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "procedencia": "oficial",
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
-    "nombreOficial": "CHAMBERÍ",
+    "nombreOficial": "AMOR MISERICORDIOSO",
     "tipoOficial": "CPR INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Islas Filipinas, Guzmán el Bueno BUS: 2 , 12 , 44 , 202",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0",
+    "observacionesOficiales": "Conflicto detectado en el código 28011258: el registro oficial de Datos Abiertos CAM corresponde a «Amor Misericordioso», mientras que el listado TEA 2024/25 asocia este código a «Chamberí». Se muestran la denominación y el contacto del registro oficial CAM; conviene confirmar la asignación real de plaza TEA ante el SAE."
   },
   {
     "id": "oficial-tea-28015902",
@@ -28140,7 +28240,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
       "destinos": [
         {
           "codigo": "28020120",
-          "nombre": "Colegio Amor Misericordioso",
+          "nombre": "Colegio Chamberi",
           "etapa": "Secundaria (ESO)",
           "municipio": "Madrid",
           "distrito": "Chamberí",
@@ -28162,7 +28262,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Rios Rosas BUS: 3 , 12 , 37 , 45 , 149",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005261",
@@ -28252,7 +28353,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: El Carmen, Quintana BUS: 21, 38, 48, 109, 146",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28031804",
@@ -28342,7 +28444,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: García Noblejas BUS: 70 , 109 , 106",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28019658",
@@ -28432,7 +28535,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 21 , 70",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28037399",
@@ -28522,7 +28626,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 70 , 106",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013280",
@@ -28589,7 +28694,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 15 , 71 , 110 , 210",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28028465",
@@ -28654,7 +28760,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Avenida de la Paz BUS: 9 , 53 , 72 , 73 , 120",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005741",
@@ -28744,7 +28851,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Peñagrande BUS: 42 , 126 , 132 , 137 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28004941",
@@ -28834,7 +28942,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 66 , 137 RENFE: Fuencarral",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28036012",
@@ -28925,7 +29034,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "METRO: Peñagrande BUS: 42 , 49 , 126 , 128 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28010060",
@@ -29015,7 +29125,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Barrio del Pilar BUS: 42 , 49 , 126 , 128 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28069297",
@@ -29106,7 +29217,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "BUS: 178, 134 METRO: Montecarmelo",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28030186",
@@ -29170,7 +29282,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "INSTITUTO DE EDUCACIÓN SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Herrera Oria BUS: 67 , 83 , 124 , 133",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020119",
@@ -29236,7 +29349,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "METRO: Barrio del Pilar , Peñagrande BUS: 42 , 49 , 126 , 128 , 147",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28021367",
@@ -29314,14 +29428,15 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Esperanza, Arturo Soria BUS: 9, 72, 73 ,120 ,122",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28026067",
     "codigo": "28026067",
-    "nombre": "CEIP Ramón Pérez de Ayala",
+    "nombre": "CEIPSO Ramón Pérez de Ayala",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Madrid",
     "distrito": "Hortaleza",
@@ -29386,13 +29501,15 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "RAMÓN PÉREZ DE AYALA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Canillas BUS: 73 , 112 , 120",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28063799",
@@ -29470,7 +29587,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 174",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28072132",
@@ -29536,7 +29654,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 172",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28018401",
@@ -29650,7 +29769,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 25 , 31 , 138",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010576",
@@ -29764,7 +29884,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 25 , 138",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005635",
@@ -29878,7 +29999,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 138",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005684",
@@ -29992,7 +30114,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 34 , 39 , 139 RENFE: Las Aguilas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28037375",
@@ -30106,7 +30229,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Cuatro Vientos BUS: 139 RENFE: Cuatro Vientos",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28031099",
@@ -30220,7 +30344,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Aluche BUS: 17 , 121 , 131 , H RENFE: Aluche",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020740",
@@ -30334,7 +30459,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Laguna BUS: 31 , 119 , 138 RENFE: Laguna",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28028507",
@@ -30448,7 +30574,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 17 , 34 , 39 , 139 RENFE: Las Águilas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28017339",
@@ -30562,7 +30689,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Carabanchel , Carpetana BUS: 17",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28011490",
@@ -30628,7 +30756,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 34 , 39 , 139 RENFE: Las Aguilas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020235",
@@ -30694,7 +30823,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 25 , 36 , 39 , 55 , 65",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013401",
@@ -30761,7 +30891,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Alto de Extremadura BUS: 31 , 33 , 36 , 39 , 65",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28021550",
@@ -30826,7 +30957,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 34 , 139, 155",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28040741",
@@ -30892,7 +31024,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "METRO: Eugenia de Montijo BUS: 17",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28021446",
@@ -30957,7 +31090,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Valdezarza BUS: 126 ,127 , 128 , 132",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28021434",
@@ -31035,7 +31169,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Artilleros, Pavones BUS: 20, 30, 32 , 100 , 140 , 142",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28030289",
@@ -31113,7 +31248,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Vinateros BUS: 8 , 100 , 113",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020624",
@@ -31178,7 +31314,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Vinateros BUS: 32 , 71",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28004989",
@@ -31268,7 +31405,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Alto del Arenal BUS: 54 , 58 , 103 , 143",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005854",
@@ -31358,7 +31496,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Nueva Numancia , Portazgo BUS: 10 , 54 , 57 , 58 , 103 , 111 , 310 , 410",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28033941",
@@ -31448,7 +31587,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Miguel Hernández BUS: 54 , 58 , 103 , 142 , 143 , 144",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28020661",
@@ -31538,7 +31678,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Miguel Hernández BUS: 54 , 58 , 103 , 142 , 143 , 144",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28005933",
@@ -31628,7 +31769,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 57, 103, 111, 144, 310",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28026547",
@@ -31718,7 +31860,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24 , 103 , 111 , 144 RENFE: Entrevias",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010862",
@@ -31808,7 +31951,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24 , 102",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006391",
@@ -31898,7 +32042,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Alto del Arenal BUS: 54 , 58 , 103 , 143",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28045566",
@@ -31987,7 +32132,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24 , 57 , 103 , 111 , 136 RENFE: Entrevías",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28011623",
@@ -32077,7 +32223,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "RENFE: Entrevías BUS: 24 , 103 , 111",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28022335",
@@ -32144,7 +32291,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24 , 130",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28058603",
@@ -32210,7 +32358,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "BUS: 63 , 141 , 143",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28013292",
@@ -32276,7 +32425,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Sáinz de Baranda BUS: 2 , 15 , 30 , 56 , 143 , 215",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010412",
@@ -32354,7 +32504,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Manuel Becerra BUS: 12 , 2 , 56 , 71 , 143, 156, C2",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013103",
@@ -32418,7 +32569,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Lista BUS: 1 , 26 , 29 , 52 , 61 , 74",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013701",
@@ -32496,7 +32648,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: ODonnell BUS: 2 , 28 , 30 , 56 , 71 , 143",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010473",
@@ -32574,7 +32727,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: García Noblejas BUS: 4 , 28 , 38 , 70",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006411",
@@ -32652,7 +32806,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 38 , 48 , 140",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28025956",
@@ -32730,7 +32885,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: San Blas BUS: 38 , 48",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010977",
@@ -32808,7 +32964,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Simancas BUS: 4 , 38 , 48 , 70 , 109",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28032225",
@@ -32885,7 +33042,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Ciudad Lineal BUS: 4 , 38 , 48 , 70 , 105 , 109",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28039840",
@@ -32950,7 +33108,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Suanzes BUS: 77 , 104 , 105 , 114 , 146",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010552",
@@ -33028,7 +33187,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Francos Rodríguez BUS: 44 , 127",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28009291",
@@ -33106,7 +33266,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Estrecho BUS: 3 , 64 , 66 , 124 , 126 , 128",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28028477",
@@ -33171,7 +33332,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Tetuán BUS: 3 , 5 , 64 , 66 , 124 , 126 , 128 , 149",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28010813",
@@ -33285,7 +33447,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Usera BUS: 6 , 18 , 22 , 47 , 59 , 76 , 78 , 79 , 85 , 86 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006101",
@@ -33399,7 +33562,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 6 , 60 , 131",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28021999",
@@ -33512,7 +33676,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 18 , 22 , 23 , 59 , 78 , 79 , 86",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28016712",
@@ -33579,7 +33744,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Usera BUS: 6 , 47 , 78 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28008387",
@@ -33646,7 +33812,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "RENFE: Orcasitas BUS: 76 , 78",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013772",
@@ -33760,7 +33927,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Usera BUS: 23 , 55",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28035330",
@@ -33825,7 +33993,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 6 , 78 , 81 , 121 , 131 RENFE: Orcasitas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28074244",
@@ -33890,7 +34059,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Usera BUS: 47 , 55 , 247",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28050355",
@@ -33955,7 +34125,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Valdebernardo BUS: 8 , 71 , 130",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28043223",
@@ -34019,7 +34190,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL Y PRIMARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28020673",
@@ -34097,7 +34269,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 58 , 63 , 145",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "2"
   },
   {
     "id": "oficial-tea-28008910",
@@ -34175,7 +34348,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Metro: Sierra de Guadalupe , Villa de Vallecas Bus: 54 , 58 , 103 , 130 , 142 , 143 Renfe: Vallecas",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28073173",
@@ -34253,7 +34427,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 142, 145 Metro: La Gavia",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28042644",
@@ -34319,7 +34494,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "BUS: 58 , 63 , 145",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-tea-28021215",
@@ -34409,7 +34585,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 85 , 123 RENFE: Villaverde Bajo",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28071383",
@@ -34499,7 +34676,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 85",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006251",
@@ -34589,7 +34767,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 59 , 79 RENFE: San Cristóbal de los Angeles",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28006263",
@@ -34679,7 +34858,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 22, 79 , 130 RENFE: Villaverde Alto",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28014272",
@@ -34769,7 +34949,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 22 , 79, 86, 130 , 131 RENFE: Puente Alcocer",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28012949",
@@ -34858,7 +35039,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 18 , 76 , 86 , 116",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28009185",
@@ -34947,7 +35129,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 22 , 59 , 79 , 130 RENFE: Villaverde Bajo",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28013899",
@@ -35012,7 +35195,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 18 , 22 , 23 , 59 , 79 , 86 , 130",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-tea-28080967",
@@ -36597,9 +36781,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28039359",
     "codigo": "28039359",
-    "nombre": "CEIP Antonio Machado",
+    "nombre": "CEIPSO Antonio Machado",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Colmenar Viejo",
     "codigoPostal": "28770",
@@ -36661,10 +36845,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "ANTONIO MACHADO",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28031211",
@@ -37962,9 +38147,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28064421",
     "codigo": "28064421",
-    "nombre": "CEIP Teresa de Calcuta",
+    "nombre": "CEIPSO Teresa de Calcuta",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "San Sebastián de los Reyes",
     "codigoPostal": "28702",
@@ -38037,10 +38222,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "TERESA DE CALCUTA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28058639",
@@ -40161,9 +40347,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28039761",
     "codigo": "28039761",
-    "nombre": "CEIP Enrique Tierno Galván",
+    "nombre": "CEIPSO Enrique Tierno Galván",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Fuenlabrada",
     "codigoPostal": "28943",
@@ -40258,10 +40444,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "ENRIQUE TIERNO GALVÁN",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28070731",
@@ -42230,9 +42417,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28028830",
     "codigo": "28028830",
-    "nombre": "CEIP Francisco de Quevedo",
+    "nombre": "CEIPSO Francisco de Quevedo",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Leganés",
     "codigoPostal": "28914",
@@ -42327,10 +42514,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "FRANCISCO DE QUEVEDO",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28003778",
@@ -42440,9 +42628,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28028222",
     "codigo": "28028222",
-    "nombre": "CEIP Pío Baroja",
+    "nombre": "CEIPSO Pío Baroja",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Leganés",
     "codigoPostal": "28916",
@@ -42537,17 +42725,18 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "PÍO BAROJA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28003791",
     "codigo": "28003791",
-    "nombre": "CEIP Víctor Pradera",
+    "nombre": "CEIPSO Víctor Pradera",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Leganés",
     "codigoPostal": "28915",
@@ -42642,10 +42831,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "VÍCTOR PRADERA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28003742",
@@ -45904,9 +46094,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28063911",
     "codigo": "28063911",
-    "nombre": "CEIP Gandhi",
+    "nombre": "CEIPSO Gandhi",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Villaviciosa de Odón",
     "codigoPostal": "28670",
@@ -45956,17 +46146,18 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "GANDHI",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28040039",
     "codigo": "28040039",
-    "nombre": "CEIP Laura García Noblejas",
+    "nombre": "CEIPSO Laura García Noblejas",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Villaviciosa de Odón",
     "codigoPostal": "28670",
@@ -46016,10 +46207,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "LAURA GARCÍA NOBLEJAS",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28033621",
@@ -46068,7 +46260,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     },
     "continuidad": {
       "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
+      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 6 centros preferentes TEA con Secundaria.",
       "apoyoEnSecundariaVerificado": "no_verificado",
       "destinos": [
         {
@@ -46105,15 +46297,15 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "lng": -3.376661
         },
         {
-          "codigo": "28000303",
-          "nombre": "Colegio Escuelas Pías",
+          "codigo": "28070883",
+          "nombre": "Colegio Alborada",
           "etapa": "Secundaria (ESO)",
           "municipio": "Alcalá de Henares",
           "tieneMismoApoyo": true,
           "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 3.0,
-          "lat": 40.483605,
-          "lng": -3.353751
+          "distanciaKm": 2.7,
+          "lat": 40.494967,
+          "lng": -3.367629
         }
       ]
     },
@@ -46173,7 +46365,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     },
     "continuidad": {
       "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
+      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 6 centros preferentes TEA con Secundaria.",
       "apoyoEnSecundariaVerificado": "no_verificado",
       "destinos": [
         {
@@ -46210,15 +46402,15 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "lng": -3.365331
         },
         {
-          "codigo": "28080517",
-          "nombre": "IES Isidra de Guzmán",
+          "codigo": "28070883",
+          "nombre": "Colegio Alborada",
           "etapa": "Secundaria (ESO)",
           "municipio": "Alcalá de Henares",
           "tieneMismoApoyo": true,
           "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 1.5,
-          "lat": 40.473711,
-          "lng": -3.371725
+          "distanciaKm": 1.4,
+          "lat": 40.494967,
+          "lng": -3.367629
         }
       ]
     },
@@ -46278,7 +46470,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     },
     "continuidad": {
       "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
+      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 6 centros preferentes TEA con Secundaria.",
       "apoyoEnSecundariaVerificado": "no_verificado",
       "destinos": [
         {
@@ -46352,16 +46544,16 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "lat": 40.494967,
     "lng": -3.367629,
     "etapas": [
-      "infantil",
-      "primaria"
+      "primaria",
+      "eso"
     ],
     "apoyos": [
       {
         "needId": "tea",
         "evidencia": "A2",
         "etapasConApoyo": [
-          "infantil",
-          "primaria"
+          "primaria",
+          "eso"
         ],
         "recursosOficiales": [],
         "fuenteOficial": "Comunidad de Madrid · Escolarización en centros de atención preferente TEA, curso 2024/2025 (información a 22/03/2024)",
@@ -46384,64 +46576,20 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
       "plano_podotactil": false
     },
     "continuidad": {
-      "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
-      "apoyoEnSecundariaVerificado": "no_verificado",
-      "destinos": [
-        {
-          "codigo": "28044744",
-          "nombre": "IES Doctor Marañón",
-          "etapa": "Secundaria (ESO)",
-          "municipio": "Alcalá de Henares",
-          "tieneMismoApoyo": true,
-          "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 0.8,
-          "lat": 40.493632,
-          "lng": -3.376661
-        },
-        {
-          "codigo": "28000492",
-          "nombre": "Colegio Lope de Vega",
-          "etapa": "Secundaria (ESO)",
-          "municipio": "Alcalá de Henares",
-          "tieneMismoApoyo": true,
-          "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 1.0,
-          "lat": 40.490199,
-          "lng": -3.357019
-        },
-        {
-          "codigo": "28000303",
-          "nombre": "Colegio Escuelas Pías",
-          "etapa": "Secundaria (ESO)",
-          "municipio": "Alcalá de Henares",
-          "tieneMismoApoyo": true,
-          "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 1.7,
-          "lat": 40.483605,
-          "lng": -3.353751
-        },
-        {
-          "codigo": "28035305",
-          "nombre": "IES Alonso Quijano",
-          "etapa": "Secundaria (ESO)",
-          "municipio": "Alcalá de Henares",
-          "tieneMismoApoyo": true,
-          "detallesApoyo": "Centro preferente TEA con Secundaria en el mismo listado oficial. No implica adscripción.",
-          "distanciaKm": 2.1,
-          "lat": 40.47602,
-          "lng": -3.365331
-        }
-      ]
+      "tipoContinuidad": "mismo_centro",
+      "descripcion": "El listado oficial indica la etapa «Mixta»: el apoyo TEA figura en más de una etapa del propio centro.",
+      "apoyoEnSecundariaVerificado": true,
+      "destinos": []
     },
     "procedencia": "oficial",
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "COLEGIO ALBORADA",
-    "tipoOficial": "CPR INF-PRI",
+    "tipoOficial": "CPR INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CPR INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como Colegio Concertado (CPR INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28000303",
@@ -46614,7 +46762,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     },
     "continuidad": {
       "tipoContinuidad": "zona",
-      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 5 centros preferentes TEA con Secundaria.",
+      "descripcion": "La fuente oficial no publica a qué instituto está adscrito este centro. En Alcalá de Henares el listado oficial incluye 6 centros preferentes TEA con Secundaria.",
       "apoyoEnSecundariaVerificado": "no_verificado",
       "destinos": [
         {
@@ -47358,7 +47506,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
       "destinos": [
         {
           "codigo": "28065841",
-          "nombre": "SIES La Poveda en Campo Real",
+          "nombre": "IES Campo Real",
           "etapa": "Secundaria (ESO)",
           "municipio": "Campo Real",
           "tieneMismoApoyo": true,
@@ -47381,7 +47529,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28065841",
     "codigo": "28065841",
-    "nombre": "SIES La Poveda en Campo Real",
+    "nombre": "IES Campo Real",
     "titularidad": "publico",
     "tipo": "IES",
     "modalidad": "preferente",
@@ -47432,12 +47580,12 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "procedencia": "oficial",
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
-    "nombreOficial": "LA POVEDA EN CAMPO REAL",
-    "tipoOficial": "SIES",
+    "nombreOficial": "CAMPO REAL",
+    "tipoOficial": "IES",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "INSTITUTO DE EDUCACIÓN SECUNDARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
-    "observacionesOficiales": "'SIES' (Sección de IES) no figura en la leyenda del documento TEA."
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como SIES «La Poveda en Campo Real»; el catálogo oficial Datos Abiertos CAM ya lo registra como IES «Campo Real»."
   },
   {
     "id": "oficial-tea-28074608",
@@ -47574,9 +47722,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28002671",
     "codigo": "28002671",
-    "nombre": "CEIP Ángel Berzal Fernández",
+    "nombre": "CEIPSO Ángel Berzal Fernández",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Daganzo de Arriba",
     "codigoPostal": "28814",
@@ -47638,10 +47786,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "ÁNGEL BERZAL FERNÁNDEZ",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28060385",
@@ -48132,9 +48281,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28037946",
     "codigo": "28037946",
-    "nombre": "CEIP El Olivar",
+    "nombre": "CEIPSO El Olivar",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Rivas-Vaciamadrid",
     "codigoPostal": "28523",
@@ -48229,10 +48378,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "EL OLIVAR",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28035676",
@@ -50744,9 +50894,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28042814",
     "codigo": "28042814",
-    "nombre": "CEIP Los Jarales-Monterrozas",
+    "nombre": "CEIPSO Los Jarales-Monterrozas",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Las Rozas de Madrid",
     "codigoPostal": "28232",
@@ -50830,17 +50980,18 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "LOS JARALES--MONTERROZAS",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28066119",
     "codigo": "28066119",
-    "nombre": "CEIP Mario Vargas Llosa",
+    "nombre": "CEIPSO Mario Vargas Llosa",
     "titularidad": "publico",
-    "tipo": "CEIP",
+    "tipo": "CEIPSO",
     "modalidad": "preferente",
     "municipio": "Las Rozas de Madrid",
     "codigoPostal": "28232",
@@ -50924,10 +51075,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "MARIO VARGAS LLOSA",
-    "tipoOficial": "CP INF-PRI",
+    "tipoOficial": "CP INF-PRI-SEC",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL, PRIMARIA Y SECUNDARIA",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+    "observacionesOficiales": "En el listado TEA 2024/25 figuraba como CP INF-PRI; el catálogo oficial Datos Abiertos CAM lo registra actualmente como CEIPSO (CP INF-PRI-SEC)."
   },
   {
     "id": "oficial-tea-28057362",
@@ -51764,7 +51916,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
   {
     "id": "oficial-tea-28024071",
     "codigo": "28024071",
-    "nombre": "Nuestra Señora de Navahonda",
+    "nombre": "CEIP Nuestra Señora de Navahonda",
     "titularidad": "publico",
     "tipo": "CEIP",
     "modalidad": "preferente",
@@ -51816,11 +51968,11 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "ubicacionAproximada": false,
     "fuenteUrl": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
     "nombreOficial": "NUESTRA SEÑORA DE NAVAHONDA",
-    "tipoOficial": "",
+    "tipoOficial": "CP INF-PRI",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "COLEGIO DE EDUCACIÓN INFANTIL Y PRIMARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
-    "observacionesOficiales": "El listado TEA no indica el tipo ni la titularidad de este centro; el catálogo general de Datos Abiertos CAM lo registra como centro público."
+    "observacionesOficiales": "El listado TEA no indica el tipo ni la titularidad de este centro; el catálogo general de Datos Abiertos CAM lo registra como centro público (CP INF-PRI)."
   },
   {
     "id": "oficial-tea-28024393",
@@ -52317,9 +52469,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -52386,9 +52538,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -52421,7 +52573,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 25 , 31 , 138",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-hosp-28005520",
@@ -52457,8 +52610,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (ALTA) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (ALTA) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: ALTA) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -52491,7 +52644,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "AULA HOSPITALARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: C, 15, 20, 26, 61, 63, 152, 202, 215 METRO: IBIZA",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28005556",
@@ -52528,9 +52682,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -52564,7 +52718,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "BUS: 35 , 155 METRO: La Peseta",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-cee-28009276",
@@ -52601,9 +52756,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -52635,7 +52790,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 35, 155 METRO: La Peseta",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28010291",
@@ -52671,9 +52827,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -52706,7 +52862,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 134, 178",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28012299",
@@ -52717,7 +52874,6 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "modalidad": "especial",
     "municipio": "Madrid",
     "distrito": "Fuencarral-El Pardo",
-    "barrio": "El Goloso",
     "codigoPostal": "28049",
     "direccion": "Ctra. Colmenar Viejo, k13,6",
     "telefono": "917345138",
@@ -52743,14 +52899,14 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
-      "comedor": true,
-      "transporte": true,
+      "comedor": false,
+      "transporte": false,
       "aula_matinal": false,
       "enfermeria": false,
       "actividades_extraescolares": false
@@ -52775,10 +52931,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoOficial": "CPR EE",
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
-    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
-    "transportePublico": "BUS: SE",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
   },
   {
     "id": "oficial-cee-28012664",
@@ -52815,9 +52968,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -52850,7 +53003,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 105 , 114 , 115",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28013449",
@@ -52887,9 +53041,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -52922,7 +53076,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Tetuán BUS: 42 , 124",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28016839",
@@ -52959,9 +53114,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -52994,7 +53149,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 24, 102, 103, 111",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-hosp-28018371",
@@ -53030,8 +53186,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (ALTA) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (ALTA) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: ALTA) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -53064,7 +53220,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "AULA HOSPITALARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: C, 1, 12, 44, G METRO: Moncloa, Islas Filipinas",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28021070",
@@ -53101,9 +53258,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       },
       {
         "needId": "visual",
@@ -53118,7 +53275,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Tiflotecnología, transcripción Braille, orientación y movilidad y residencia escolar"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) y Centro de Recursos Educativos (CRE) ONCE Madrid",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Centro de Recursos Educativos (CRE) «Antonio Vicente Mosquete» de la ONCE en modalidad de Educación Especial para discapacidad visual y sordoceguera. Atiende estancias temporales, apoyo itinerante a colegios ordinarios y escolarización específica."
       }
     ],
@@ -53151,7 +53308,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Artilleros BUS: 30, 100, 140",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28021151",
@@ -53188,9 +53346,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53223,7 +53381,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 73",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28021161",
@@ -53260,9 +53419,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53296,7 +53455,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "BUS: 66",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-cee-28021173",
@@ -53333,9 +53493,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53369,7 +53529,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "BUS: 4 , 48",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-cee-28021732",
@@ -53406,9 +53567,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53440,7 +53601,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 7 , 51",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28021823",
@@ -53477,9 +53639,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53512,7 +53674,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 160 , I",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28022426",
@@ -53549,9 +53712,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53584,7 +53747,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Ciudad Lineal BUS: 48 , 70 , 77 , 105 , 109",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28022803",
@@ -53619,9 +53783,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53686,9 +53850,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53753,9 +53917,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53820,9 +53984,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53889,9 +54053,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53924,7 +54088,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 63 , 145",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28029664",
@@ -53961,9 +54126,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -53996,7 +54161,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Urgel BUS: 34 , 35 , 108 , 118",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28029718",
@@ -54033,9 +54199,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54068,7 +54234,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 124 , 133",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28030711",
@@ -54105,9 +54272,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54140,7 +54307,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: El Carmen BUS: 106 , 110 , 210",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28032134",
@@ -54177,9 +54345,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54212,7 +54380,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Metro: San Fermín - OrcasurBus: 18 , 22 , 59 , 79 , 85 , 86 , 76 , 121 , 81",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28033291",
@@ -54248,9 +54417,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54283,7 +54452,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 15, 28, 71, 110, 210",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28033515",
@@ -54318,9 +54488,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54385,9 +54555,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54454,9 +54624,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54489,7 +54659,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 160 , 161 , A",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28035020",
@@ -54524,9 +54695,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54591,9 +54762,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54658,9 +54829,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54727,9 +54898,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54762,7 +54933,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 53 , 11",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28037387",
@@ -54799,9 +54971,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54834,7 +55006,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 18 , 22 , 59 , 76 , 79 , 81 , 85 , 86 , 121",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28037624",
@@ -54869,9 +55042,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -54936,9 +55109,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55004,8 +55177,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (ALTA) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (ALTA) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: ALTA) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -55038,7 +55211,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "AULA HOSPITALARIA",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 2, 28, 15, 26, 61, 63 METRO: O'Donnell",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28039116",
@@ -55075,9 +55249,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55110,7 +55284,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Desconocido",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28039323",
@@ -55145,9 +55320,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55212,9 +55387,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55279,9 +55454,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55348,9 +55523,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55383,7 +55558,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 134",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28046856",
@@ -55420,9 +55596,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55455,7 +55631,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 39, 131 Metro: Empalme",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "accesibilidadConfirmadaAyto": true
+    "accesibilidadConfirmadaAyto": true,
+    "accesibilidadCodigoAyto": "1"
   },
   {
     "id": "oficial-cee-28048269",
@@ -55492,9 +55669,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55527,7 +55704,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 120 , 122",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28049602",
@@ -55564,9 +55742,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55599,7 +55777,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Pavones BUS: 71 , 142 , 144",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28056485",
@@ -55636,9 +55815,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55670,7 +55849,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Oporto BUS: 34 , 35 , 108 , 118",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28057349",
@@ -55707,9 +55887,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -55742,7 +55922,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Concha Espina BUS: 7 , 43 , 51 , 120",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-hosp-28057957",
@@ -55776,8 +55957,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -55843,8 +56024,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -55910,8 +56091,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -55977,8 +56158,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -56046,8 +56227,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -56081,6 +56262,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Metro: Begoña (línea 10)",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "3",
     "observacionesOficiales": "Situación administrativa en Datos Abiertos CAM: EN TRÁMITE. Confirmar la operatividad actual de la unidad con el hospital o la DAT."
   },
   {
@@ -56117,8 +56299,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -56152,6 +56334,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Metro: Begoña (línea 10) Cercanías Renfe: Ramón y Cajal (líneas C3, C7, C8, Regional)",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "3",
     "observacionesOficiales": "Situación administrativa en Datos Abiertos CAM: EN TRÁMITE. Confirmar la operatividad actual de la unidad con el hospital o la DAT."
   },
   {
@@ -56188,8 +56371,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -56223,6 +56406,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Metro: Hospital 12 octubre (línea 3) Renfe: Doce de Octubre (C5)",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "3",
     "observacionesOficiales": "Situación administrativa en Datos Abiertos CAM: EN TRÁMITE. Confirmar la operatividad actual de la unidad con el hospital o la DAT."
   },
   {
@@ -56258,9 +56442,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56325,9 +56509,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56394,9 +56578,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56429,7 +56613,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Metro: Lacoma Bus: 49 , 64",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28060464",
@@ -56466,9 +56651,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56501,7 +56686,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 83, 133",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28064226",
@@ -56538,9 +56724,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56572,7 +56758,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 106 , 110 , 210",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-hosp-28064721",
@@ -56606,8 +56793,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -56674,9 +56861,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56743,9 +56930,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56778,7 +56965,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 146",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28069236",
@@ -56813,9 +57001,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56882,9 +57070,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56916,7 +57104,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "BUS: 105",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28069558",
@@ -56953,9 +57142,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -56987,7 +57176,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 124, 125, 135, 137",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28069704",
@@ -57022,9 +57212,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57090,9 +57280,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57159,9 +57349,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57194,7 +57384,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Metro: Tres Olivos Bus: 66, 137",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "serviciosConfirmadosAyto": true
+    "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-cee-28071991",
@@ -57229,9 +57420,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57296,9 +57487,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57329,7 +57520,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "situacionOficial": "ALTA",
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
-    "observacionesOficiales": "Centro de titularidad privada no concertada inscrito en el catálogo oficial CAM y Registro Estatal (RCD)."
+    "observacionesOficiales": "Centro de titularidad privada no concertada inscrito en situación ALTA en Datos Abiertos CAM."
   },
   {
     "id": "oficial-cee-28074141",
@@ -57366,9 +57557,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57400,7 +57591,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "tipoGeneralOficial": "CENTRO PRIVADO DE EDUCACIÓN ESPECIAL",
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 14, 70, 107, 129, 174 Metro: Duque de Pastrana",
-    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0"
+    "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0"
   },
   {
     "id": "oficial-hosp-28074517",
@@ -57433,8 +57625,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (ALTA) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (ALTA) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: ALTA) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -57499,8 +57691,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -57567,9 +57759,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57634,9 +57826,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57700,9 +57892,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57769,9 +57961,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57804,7 +57996,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "Bus: 162",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
-    "observacionesOficiales": "Centro de titularidad privada no concertada inscrito en el catálogo oficial CAM y Registro Estatal (RCD)."
+    "accesibilidadCodigoAyto": "0",
+    "observacionesOficiales": "Centro de titularidad privada no concertada inscrito en situación ALTA en Datos Abiertos CAM."
   },
   {
     "id": "oficial-cee-28078560",
@@ -57839,9 +58032,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -57905,8 +58098,8 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
         "recursosOficiales": [
           "Atención educativa individualizada y coordinación con el centro de referencia del alumno"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente (EN TRÁMITE) · corte 16/11/2026",
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN (EN TRÁMITE) · copia 17/11/2026",
         "detallesResolucion": "Aula Hospitalaria registrada en el Portal de Datos Abiertos CAM (situación administrativa: EN TRÁMITE) para garantizar la continuidad educativa del alumnado convaleciente durante la hospitalización."
       }
     ],
@@ -57973,9 +58166,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -58039,9 +58232,9 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Profesorado especialista en Pedagogía Terapéutica (PT) y Audición y Lenguaje (AL)",
           "Atención en Infantil Especial, Educación Básica Obligatoria (EBO) y PTVA según proyecto del centro"
         ],
-        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0) y Registro Estatal de Centros Docentes (MEFPD)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
-        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid y en el Registro Estatal de Centros Docentes (MEFPD). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
+        "fuenteOficial": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
+        "detallesResolucion": "Centro específico de Educación Especial inscrito en situación ALTA en el Portal de Datos Abiertos de la Comunidad de Madrid (CC BY 4.0). Escolariza alumnado con NEE permanentes según dictamen técnico de escolarización del EOEP y resolución de la DAT."
       }
     ],
     "servicios": {
@@ -58109,7 +58302,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Asignación de maestros itinerantes y tiflotecnología (convenio CAM–ONCE)"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (EOEP Visuales)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Equipo de Orientación Educativa y Psicopedagógica (EOEP) Específico de Deficiencias Visuales de la Comunidad de Madrid. De ámbito regional: evalúa y asigna maestros itinerantes, adaptación Braille y tiflotecnología a cualquier colegio ordinario."
       }
     ],
@@ -58177,7 +58370,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Programas de autonomía personal, orientación y movilidad y residencia escolar"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · CRE ONCE Madrid",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Centro de Recursos Educativos (CRE) «Antonio Vicente Mosquete» de la ONCE en Madrid para alumnado con ceguera, baja visión o sordoceguera (etapas Primaria y ESO, estancias temporales y soporte Braille)."
       }
     ],
@@ -58211,6 +58404,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "fuenteDatosAbiertos": "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)",
     "transportePublico": "METRO: Artilleros BUS: 30, 100, 140",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
+    "accesibilidadCodigoAyto": "0",
     "observacionesOficiales": "Centro de Recursos Educativos de la ONCE en Madrid para alumnado con discapacidad visual y sordoceguera (etapas Primaria y ESO, estancias temporales y soporte Braille/tiflotecnológico)."
   },
   {
@@ -58250,7 +58444,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Formación y asesoramiento especializado a equipos docentes"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Centro Regional de Enriquecimiento Educativo para el Alumnado con Altas Capacidades Intelectuales (CREACIM). Coordina en exclusiva los recursos regionales y todas las sedes del programa PEAC."
       }
     ],
@@ -58321,7 +58515,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Asesoramiento para flexibilización de etapas y planes curriculares"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Equipo de Orientación Educativa y Psicopedagógica (EOEP) Específico de Altas Capacidades. Ámbito regional: asesoramiento a orientadores, planes de enriquecimiento y medidas de flexibilización."
       }
     ],
@@ -58390,7 +58584,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Orientación sobre centros preferentes auditivos, Lengua de Signos Española (LSE) y ayudas técnicas"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (EOEP Auditivas)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Equipo de Orientación Educativa y Psicopedagógica (EOEP) Específico de Deficiencias Auditivas (código oficial 28700741, situación ALTA). Equipo público de ámbito regional: evalúa e informa la escolarización con apoyos auditivos (LSE, audición y lenguaje y equipos FM) en centros de toda la CAM."
       }
     ],
@@ -58459,7 +58653,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Orientación sobre centros preferentes motóricos y dotación de fisioterapia y personal ATU"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (EOEP Motóricas)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Equipo de Orientación Educativa y Psicopedagógica (EOEP) Específico de Deficiencias Motóricas (código oficial 28700763, situación ALTA). Equipo público regional que valora necesidades de acceso, fisioterapia y auxiliar técnico educativo (ATU) para la escolarización ordinaria y preferente motora."
       }
     ],
@@ -58530,7 +58724,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Orientación metodológica y de medidas ordinarias/específicas en Infantil, Primaria, ESO y Bachillerato"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (EOEP TDAH y Lenguaje)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Equipo de Orientación Educativa y Psicopedagógica (EOEP) Específico de Dificultades de Aprendizaje, Trastornos del Lenguaje y TDAH (código oficial 28701214, situación ALTA). Presta asesoramiento técnico regional a orientadores, docentes y familias de toda la Comunidad de Madrid."
       },
       {
@@ -58547,7 +58741,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinación con los EOEP de sector, Departamentos de Orientación y profesorado de Audición y Lenguaje (AL)"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (EOEP Específico Lenguaje y TDAH)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Equipo de Orientación Educativa y Psicopedagógica (EOEP) Específico de Dificultades de Aprendizaje, Trastornos del Lenguaje y TDAH (código oficial 28701214, situación ALTA). Presta orientación técnica regional sobre evaluación e intervención educativa en Trastorno del Lenguaje."
       }
     ],
@@ -58617,7 +58811,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinación técnica del CREACIM en ámbitos científico, artístico y humanístico"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Instituto público designado como sede territorial oficial del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC). Acoge sesiones los sábados alternos en Primaria, ESO y Bachillerato previa propuesta del orientador del centro ordinario."
       }
     ],
@@ -58652,6 +58846,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
     "transportePublico": "METRO: Serrano BUS: 53 , 1 , 5 , 9 , 14 , 19 , 21 , 45 , 51 , 53 , 74",
     "fuenteAyuntamiento": "Portal de Datos Abiertos del Ayuntamiento de Madrid · 300614-0",
     "serviciosConfirmadosAyto": true,
+    "accesibilidadCodigoAyto": "0",
     "observacionesOficiales": "Sede territorial oficial del Programa de Enriquecimiento Educativo (PEAC) los sábados quincenales. El alumnado permanece matriculado entre semana en su centro ordinario."
   },
   {
@@ -58688,7 +58883,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinación técnica del CREACIM en ámbitos científico, artístico y humanístico"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Instituto público designado como sede territorial oficial del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC). Acoge sesiones los sábados alternos en Primaria, ESO y Bachillerato previa propuesta del orientador del centro ordinario."
       }
     ],
@@ -58756,7 +58951,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinación técnica del CREACIM en ámbitos científico, artístico y humanístico"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Instituto público designado como sede territorial oficial del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC). Acoge sesiones los sábados alternos en Primaria, ESO y Bachillerato previa propuesta del orientador del centro ordinario."
       }
     ],
@@ -58824,7 +59019,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinación técnica del CREACIM en ámbitos científico, artístico y humanístico"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Instituto público designado como sede territorial oficial del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC). Acoge sesiones los sábados alternos en Primaria, ESO y Bachillerato previa propuesta del orientador del centro ordinario."
       }
     ],
@@ -58892,7 +59087,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinación técnica del CREACIM en ámbitos científico, artístico y humanístico"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Instituto público designado como sede territorial oficial del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC). Acoge sesiones los sábados alternos en Primaria, ESO y Bachillerato previa propuesta del orientador del centro ordinario."
       }
     ],
@@ -58960,7 +59155,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinación técnica del CREACIM en ámbitos científico, artístico y humanístico"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Instituto público designado como sede territorial oficial del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC). Acoge sesiones los sábados alternos en Primaria, ESO y Bachillerato previa propuesta del orientador del centro ordinario."
       }
     ],
@@ -59028,7 +59223,7 @@ export const OFFICIAL_ALL_SCHOOLS: School[] = [
           "Coordinación técnica del CREACIM en ámbitos científico, artístico y humanístico"
         ],
         "fuenteOficial": "Portal de Datos Abiertos CAM (CC BY 4.0) · Consejería de Educación (CREACIM / PEAC)",
-        "fechaCorte": "Catálogo CKAN vigente · corte 16/11/2026",
+        "fechaCorte": "Catálogo CKAN · copia 17/11/2026",
         "detallesResolucion": "Instituto público designado como sede territorial oficial del Programa de Enriquecimiento Educativo para Alumnado con Altas Capacidades (PEAC). Acoge sesiones los sábados alternos en Primaria, ESO y Bachillerato previa propuesta del orientador del centro ordinario."
       }
     ],
