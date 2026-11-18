@@ -19,7 +19,7 @@ import {
 } from '../utils/filterEngine';
 import { MUNICIPALITIES } from '../data/municipalities';
 import { OFFICIAL_TEA_SOURCE } from '../data/officialTea';
-import { School, SearchState } from '../types';
+import { NeedId, School, SearchState } from '../types';
 import { TEST_ALL_SCHOOLS as SCHOOLS_DATA } from './catalogHelper';
 
 // Mock dataset representing varied school types, needs, and locations
@@ -510,7 +510,7 @@ describe('filterEngine - analyzeZeroResults & multi-source dynamicCounts', () =>
     expect(alcalaCounts.accessibility.acceso_fisico).toBe(0);
   });
 
-  it('offers Escuelas de Bienvenida guidance plus TEA and CEE relaxations and round-trips compensatoria URL state', () => {
+  it('calculates Escuelas de Bienvenida counts (33 in Madrid, 47 total) and explains public DAT/SAE limit with concertado relaxation', () => {
     const compState: SearchState = {
       ...INITIAL_SEARCH_STATE,
       need: 'compensatoria',
@@ -519,17 +519,27 @@ describe('filterEngine - analyzeZeroResults & multi-source dynamicCounts', () =>
       radiusKm: null
     };
     const counts = computeDynamicCounts(SCHOOLS_DATA, compState);
-    expect(counts.needs.compensatoria).toBe(0);
+    expect(counts.needs.compensatoria).toBe(33);
+    expect(counts.evidence.A1).toBe(33);
+    expect(counts.ownership.concertado).toBe(33);
+    expect(counts.ownership.publico).toBe(0);
 
     const query = serializeSearchStateToQuery(compState);
     const parsed = parseSearchStateFromQuery(`?${query}`);
     expect(parsed.need).toBe('compensatoria');
     expect(parsed.municipality).toBe('Madrid');
 
-    const analysis = analyzeZeroResults(SCHOOLS_DATA, compState);
-    expect(analysis.reason).toContain('Escuelas de Bienvenida');
-    expect(analysis.relaxations.some(r => r.id === 'switch_to_tea')).toBe(true);
-    expect(analysis.relaxations.some(r => r.id === 'switch_to_cee')).toBe(true);
+    const analysisPublic = analyzeZeroResults(SCHOOLS_DATA, {
+      ...compState,
+      stages: ['primaria'],
+      radiusKm: 20,
+      ownership: ['publico']
+    });
+    expect(analysisPublic.reason).toContain('Escuelas de Bienvenida');
+    expect(analysisPublic.reason).toContain('concertados');
+    const relaxOwnership = analysisPublic.relaxations.find(r => r.id === 'remove_ownership');
+    expect(relaxOwnership).toBeDefined();
+    expect(relaxOwnership?.resultingCount).toBeGreaterThan(30);
   });
 
   it('exports Codigo_Accesibilidad_Ayto and Observaciones columns in CSV export', () => {
@@ -688,18 +698,18 @@ describe('filterEngine - analyzeZeroResults & multi-source dynamicCounts', () =>
     });
     expect(analysisExtra.relaxations.some(r => r.label.includes('Actividades extraescolares'))).toBe(true);
 
-    const compAnalysis = analyzeZeroResults(SCHOOLS_DATA, {
+    const uncataloguedAnalysis = analyzeZeroResults(SCHOOLS_DATA, {
       ...INITIAL_SEARCH_STATE,
-      need: 'compensatoria'
+      need: 'sin_catalogo' as unknown as NeedId
     });
-    const teaRelax = compAnalysis.relaxations.find(r => r.id === 'switch_to_tea');
+    const teaRelax = uncataloguedAnalysis.relaxations.find(r => r.id === 'switch_to_tea');
     expect(teaRelax?.resultingCount).toBe(164);
 
-    const compEmptyCatalog = analyzeZeroResults([], {
+    const emptyCatalogAnalysis = analyzeZeroResults([], {
       ...INITIAL_SEARCH_STATE,
-      need: 'compensatoria'
+      need: 'sin_catalogo' as unknown as NeedId
     });
-    expect(compEmptyCatalog.relaxations.find(r => r.id === 'switch_to_tea')?.resultingCount).toBe(
+    expect(emptyCatalogAnalysis.relaxations.find(r => r.id === 'switch_to_tea')?.resultingCount).toBe(
       OFFICIAL_TEA_SOURCE.totalCentros
     );
   });

@@ -1,9 +1,10 @@
 {
-  "dataset": "Madrid Educa Apoyo - Catálogo multi-fuente (TEA, CEE, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos)",
-  "total_records": 433,
+  "dataset": "Madrid Educa Apoyo - Catálogo multi-fuente (TEA, Escuelas de Bienvenida / Aulas de Enlace, CEE, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos)",
+  "total_records": 470,
   "counts_by_need": {
-    "total": 433,
+    "total": 470,
     "tea": 336,
+    "compensatoria": 47,
     "educacion_especial": 69,
     "salud_hospitalaria": 14,
     "visual": 3,
@@ -12,23 +13,23 @@
     "motora": 1,
     "tdah": 1,
     "tel_lenguaje": 1,
-    "exact_location": 432,
-    "ayto_matched": 152,
-    "ayto_transit": 151,
-    "ayto_services": 122,
+    "exact_location": 469,
+    "ayto_matched": 179,
+    "ayto_transit": 178,
+    "ayto_services": 143,
     "ayto_accessibility": 17
   },
-  "exact_location_records": 432,
+  "exact_location_records": 469,
   "products": [
     {
       "path": "data_products/centros_apoyo.geojson",
       "format": "GeoJSON (RFC 7946)",
-      "features": 433
+      "features": 470
     },
     {
       "path": "data_products/centros_apoyo.csv",
       "format": "CSV",
-      "rows": 433
+      "rows": 470
     },
     {
       "path": "data/processed/schools_extracted.json",
@@ -36,17 +37,22 @@
     }
   ],
   "fuente_url": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
+  "aulas_enlace_url": "https://site.educa.madrid.org/dg.concertada-becasyayudas//wp-content/uploads/dg.concertada-becasyayudas/2026/10/2026.08_Resolucion_Aulas_Enlace_2026-27__62493703.pdf",
+  "aulas_enlace_curso": "2026/2027",
+  "aulas_enlace_fecha_informacion": "2026-08-25",
+  "aulas_enlace_status": "PDF_OFICIAL_VERIFICADO",
   "ckan_dataset_url": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
   "ckan_status": "CKAN_EN_VIVO",
-  "ckan_fecha_descarga": "2026-11-17",
+  "ckan_fecha_descarga": "2026-11-18",
   "ayto_dataset_url": "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
   "ayto_status": "AYTO_MADRID_EN_VIVO",
-  "ayto_fecha_descarga": "2026-11-17",
+  "ayto_fecha_descarga": "2026-11-18",
   "curso": "2024/2025",
   "fecha_informacion": "2024-03-22",
   "estado_verificacion": "SNAPSHOT_VERSIONADO",
   "alcance": "El documento NO es el catálogo completo (la Comunidad declara 682 centros preferentes TEA y 855 aulas). Recoge los centros en los que el número de alumnos atendidos en el aula de apoyo extenso y especializado era menor de cinco a 22/03/2024, es decir, centros con plazas previsibles en el aula TEA para el proceso de admisión 2024/2025. Incluye también los centros y aulas nuevos previstos para ese curso.",
-  "ubicaciones": "Coordenadas oficiales UTM (ETRS89 -> WGS84) de 'Centros educativos de la Comunidad de Madrid' (Portal de Datos Abiertos CAM) en 432/433 centros.",
-  "licence": "Datos Abiertos CAM: CC BY 4.0 · Ayuntamiento de Madrid: datos.madrid.es · Listado TEA CAM: Ley 37/2007 · Código: Apache-2.0.",
+  "alcance_aulas_enlace": "Recoge las 47 Aulas de Enlace autorizadas en centros privados sostenidos con fondos públicos (concertados) para el curso escolar 2026-2027 (Anexo I de la Resolución de 25/08/2026). Las Aulas de Enlace de centros públicos (CEIP/IES) se asignan por las Direcciones de Área Territorial (DAT) y Servicios de Apoyo a la Escolarización (SAE) sin listado abierto descargable publicado por la Consejería.",
+  "ubicaciones": "Coordenadas oficiales UTM (ETRS89 -> WGS84) de 'Centros educativos de la Comunidad de Madrid' (Portal de Datos Abiertos CAM) en 469/470 centros.",
+  "licence": "Datos Abiertos CAM: CC BY 4.0 · Ayuntamiento de Madrid: datos.madrid.es · Listado TEA y Resolución Aulas de Enlace CAM: Ley 37/2007 · Código: Apache-2.0.",
   "rfc_7946_compliant": true
 }

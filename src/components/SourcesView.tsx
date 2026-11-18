@@ -139,10 +139,39 @@ export const SourcesView: React.FC = () => {
           </div>
         </div>
 
+        {/* Bloque 4: Escuelas de Bienvenida / Aulas de Enlace */}
+        <div className="border border-indigo-200 bg-indigo-50/40 rounded-xl p-4 text-xs text-slate-800 space-y-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="font-extrabold text-slate-900">
+              Consejería de Educación (DG Concertada) · {OFFICIAL_TEA_SOURCE.totalCompensatoria} Aulas de Enlace ({OFFICIAL_TEA_SOURCE.cursoAulasEnlace})
+            </div>
+            <span className="text-xs font-bold uppercase tracking-wide px-2 py-0.5 rounded bg-white border border-indigo-300 text-indigo-900">
+              {OFFICIAL_TEA_SOURCE.estadoAulasEnlace === 'PDF_OFICIAL_VERIFICADO'
+                ? 'Resolución PDF verificada (SHA-256)'
+                : 'Resolución oficial 2026/27'}
+            </span>
+          </div>
+          <p className="leading-relaxed">
+            Resolución de {OFFICIAL_TEA_SOURCE.fechaAulasEnlace} por la que se autorizan{' '}
+            <strong>{OFFICIAL_TEA_SOURCE.totalCompensatoria} Aulas de Enlace (Escuelas de Bienvenida)</strong> en centros privados concertados para el curso {OFFICIAL_TEA_SOURCE.cursoAulasEnlace} (<strong>Nivel A1 · oficial vigente</strong>). De ellos, 10 coinciden con centros TEA y 37 amplían el catálogo hasta {OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos.
+          </p>
+          <p className="leading-relaxed text-slate-700">
+            <span className="font-semibold text-slate-900">Límite de cobertura pública:</span> {OFFICIAL_TEA_SOURCE.alcanceAulasEnlace}
+          </p>
+          <div className="flex flex-wrap gap-3 pt-1">
+            <a href={OFFICIAL_TEA_SOURCE.aulasEnlaceResolucionUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-900 hover:underline inline-flex items-center gap-1">
+              Resolución Aulas de Enlace 2026/27 (PDF) <ExternalLink className="w-3 h-3" aria-hidden="true" />
+            </a>
+            <a href={OFFICIAL_TEA_SOURCE.aulasEnlaceUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-900 hover:underline inline-flex items-center gap-1">
+              Portal Aulas de Enlace (EducaMadrid) <ExternalLink className="w-3 h-3" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
         <div className="border border-slate-200 bg-slate-50/80 rounded-xl p-4 text-xs text-slate-800 space-y-1.5">
           <div className="font-extrabold text-slate-900">Metodología de cruce, detección de conflictos y límites de los datos</div>
           <p className="leading-relaxed">
-            Los datos proceden exclusivamente de los conjuntos abiertos arriba citados ({OFFICIAL_TEA_SOURCE.totalCentros} centros TEA con plazas previsibles, {OFFICIAL_TEA_SOURCE.totalCee} CEE en <span className="font-mono">ALTA</span>, {OFFICIAL_TEA_SOURCE.totalHospitalarias} Aulas Hospitalarias, {OFFICIAL_TEA_SOURCE.totalVisual} recursos de Discapacidad Visual, {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} recursos/sedes de Altas Capacidades y 3 EOEP Específicos regionales), más el enriquecimiento municipal de <span className="font-mono">datos.madrid.es</span> para Madrid capital.
+            Los datos proceden exclusivamente de los conjuntos abiertos arriba citados ({OFFICIAL_TEA_SOURCE.totalCentros} centros TEA con plazas previsibles, {OFFICIAL_TEA_SOURCE.totalCompensatoria} Aulas de Enlace concertadas 2026/27, {OFFICIAL_TEA_SOURCE.totalCee} CEE en <span className="font-mono">ALTA</span>, {OFFICIAL_TEA_SOURCE.totalHospitalarias} Aulas Hospitalarias, {OFFICIAL_TEA_SOURCE.totalVisual} recursos de Discapacidad Visual, {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} recursos/sedes de Altas Capacidades y 3 EOEP Específicos regionales), más el enriquecimiento municipal de <span className="font-mono">datos.madrid.es</span> para Madrid capital.
           </p>
           <p className="leading-relaxed text-slate-700">
             Cuando el listado TEA 2024/25 presenta discrepancias de código o nombre respecto al directorio maestro CKAN (como el intercambio detectado entre <span className="font-mono">28020120</span> y <span className="font-mono">28011258</span>), prevalecen la denominación y contacto del catálogo maestro y se registra la incidencia en <span className="font-mono">data/review/conflictos_nombres.json</span>. Los enlaces telefónicos ambiguos con el fichero municipal se descartan automáticamente en <span className="font-mono">data/review/ayto_matches_dudosos.json</span>.
@@ -194,7 +223,7 @@ export const SourcesView: React.FC = () => {
               <span>Nivel A1: Confirmado Oficial Vigente</span>
             </div>
             <p className="text-slate-800 leading-relaxed">
-              Centros y equipos activos en situación <span className="font-mono">ALTA</span> en el catálogo vivo de Datos Abiertos CAM: <strong>69 Colegios de Educación Especial</strong>, <strong>4 Aulas Hospitalarias</strong>, <strong>3 recursos de Discapacidad Visual</strong> (EOEP Específico y C.R.E. ONCE), <strong>CREACIM</strong>, <strong>EOEP Específico de Altas Capacidades</strong> y los <strong>3 EOEP Específicos</strong> de <strong>Auditivas</strong>, <strong>Motóricas</strong> y <strong>Dificultades de Aprendizaje / Lenguaje / TDAH</strong>.
+              Centros y equipos activos en situación <span className="font-mono">ALTA</span> y resoluciones vigentes del curso en vigor: <strong>69 Colegios de Educación Especial</strong>, <strong>47 Aulas de Enlace concertadas (2026/27)</strong>, <strong>4 Aulas Hospitalarias</strong>, <strong>3 recursos de Discapacidad Visual</strong> (EOEP Específico y C.R.E. ONCE), <strong>CREACIM</strong>, <strong>EOEP Específico de Altas Capacidades</strong> y los <strong>3 EOEP Específicos</strong> de <strong>Auditivas</strong>, <strong>Motóricas</strong> y <strong>Dificultades de Aprendizaje / Lenguaje / TDAH</strong>.
             </p>
           </div>
 
@@ -233,6 +262,17 @@ export const SourcesView: React.FC = () => {
               className="text-blue-900 hover:underline inline-flex items-center gap-1 font-medium"
             >
               <span>Portal de Datos Abiertos Ayuntamiento de Madrid · Centros educativos (300614-0)</span>
+              <ExternalLink className="w-3 h-3" aria-hidden="true" />
+            </a>
+          </li>
+          <li>
+            <a
+              href={OFFICIAL_TEA_SOURCE.aulasEnlaceUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-900 hover:underline inline-flex items-center gap-1 font-medium"
+            >
+              <span>Comunidad de Madrid (EducaMadrid) · Programa Escuelas de Bienvenida / Aulas de Enlace</span>
               <ExternalLink className="w-3 h-3" aria-hidden="true" />
             </a>
           </li>

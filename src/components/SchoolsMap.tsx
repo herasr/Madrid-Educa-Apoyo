@@ -551,6 +551,11 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
             </div>
 
             <div className="flex items-center gap-2">
+              <span className="w-3.5 h-3.5 rounded-full bg-indigo-600 inline-block shrink-0" aria-hidden="true"></span>
+              <span><strong>BIENV</strong> · Escuelas de Bienvenida</span>
+            </div>
+
+            <div className="flex items-center gap-2">
               <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 inline-block shrink-0" aria-hidden="true"></span>
               <span><strong>CEE</strong> · Educación Especial</span>
             </div>

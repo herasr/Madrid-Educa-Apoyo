@@ -122,7 +122,7 @@ def export_products():
     counts = meta.get("counts", {})
     exact_count = sum(1 for r in rows if not r.get("ubicacion_aproximada", True))
     summary = {
-        "dataset": "Madrid Educa Apoyo - Catálogo multi-fuente (TEA, CEE, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos)",
+        "dataset": "Madrid Educa Apoyo - Catálogo multi-fuente (TEA, Escuelas de Bienvenida / Aulas de Enlace, CEE, Aulas Hospitalarias, Discapacidad Visual, Altas Capacidades y EOEP Específicos)",
         "total_records": len(rows),
         "counts_by_need": counts,
         "exact_location_records": exact_count,
@@ -132,6 +132,10 @@ def export_products():
             {"path": "data/processed/schools_extracted.json", "format": "JSON"},
         ],
         "fuente_url": meta.get("url"),
+        "aulas_enlace_url": meta.get("aulas_enlace_url"),
+        "aulas_enlace_curso": meta.get("aulas_enlace_curso"),
+        "aulas_enlace_fecha_informacion": meta.get("aulas_enlace_fecha_informacion"),
+        "aulas_enlace_status": meta.get("aulas_enlace_status"),
         "ckan_dataset_url": meta.get("ckan_dataset_url"),
         "ckan_status": meta.get("ckan_status"),
         "ckan_fecha_descarga": meta.get("ckan_fecha_descarga"),
@@ -142,13 +146,14 @@ def export_products():
         "fecha_informacion": meta.get("fecha_informacion"),
         "estado_verificacion": meta.get("status"),
         "alcance": data.get("alcance"),
+        "alcance_aulas_enlace": data.get("alcance_aulas_enlace"),
         "ubicaciones": (
             f"Coordenadas oficiales UTM (ETRS89 -> WGS84) de 'Centros educativos de la Comunidad de Madrid' "
             f"(Portal de Datos Abiertos CAM) en {exact_count}/{len(rows)} centros."
         ),
         "licence": (
             "Datos Abiertos CAM: CC BY 4.0 · Ayuntamiento de Madrid: datos.madrid.es · "
-            "Listado TEA CAM: Ley 37/2007 · Código: Apache-2.0."
+            "Listado TEA y Resolución Aulas de Enlace CAM: Ley 37/2007 · Código: Apache-2.0."
         ),
         "rfc_7946_compliant": True,
     }

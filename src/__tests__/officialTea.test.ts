@@ -15,7 +15,7 @@ import { SearchState } from '../types';
 
 const SCHOOLS_DATA = OFFICIAL_ALL_SCHOOLS;
 
-describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
+describe('Datos oficiales CAM + Ayto. Madrid + ONCE (470 entidades)', () => {
   it('carga los 336 centros del documento TEA con códigos únicos de 8 dígitos', () => {
     expect(OFFICIAL_TEA_SCHOOLS).toHaveLength(336);
     expect(OFFICIAL_TEA_SOURCE.totalCentros).toBe(336);
@@ -25,9 +25,10 @@ describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
     codes.forEach(c => expect(c).toMatch(/^28\d{6}$/));
   });
 
-  it('integra el catálogo completo de 433 entidades oficiales (TEA, CEE, Hosp., Visual, AACC y EOEP Específicos)', () => {
-    expect(OFFICIAL_ALL_SCHOOLS).toHaveLength(433);
-    expect(OFFICIAL_TEA_SOURCE.totalCentrosCatalogo).toBe(433);
+  it('integra el catálogo completo de 470 entidades oficiales (TEA, Aulas de Enlace, CEE, Hosp., Visual, AACC y EOEP Específicos)', () => {
+    expect(OFFICIAL_ALL_SCHOOLS).toHaveLength(470);
+    expect(OFFICIAL_TEA_SOURCE.totalCentrosCatalogo).toBe(470);
+    expect(OFFICIAL_TEA_SOURCE.totalCompensatoria).toBe(47);
     expect(OFFICIAL_TEA_SOURCE.totalCee).toBe(69);
     expect(OFFICIAL_TEA_SOURCE.totalHospitalarias).toBe(14);
     expect(OFFICIAL_TEA_SOURCE.totalVisual).toBe(3);
@@ -36,12 +37,13 @@ describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
     expect(OFFICIAL_TEA_SOURCE.totalMotora).toBe(1);
     expect(OFFICIAL_TEA_SOURCE.totalTdah).toBe(1);
     expect(OFFICIAL_TEA_SOURCE.totalTelLenguaje).toBe(1);
-    expect(OFFICIAL_TEA_SOURCE.totalConUbicacionExactaCatalogo).toBe(432);
+    expect(OFFICIAL_TEA_SOURCE.totalConUbicacionExactaCatalogo).toBe(469);
 
     const allCodes = OFFICIAL_ALL_SCHOOLS.map(s => s.codigo);
-    expect(new Set(allCodes).size).toBe(433);
+    expect(new Set(allCodes).size).toBe(470);
     allCodes.forEach(c => expect(c).toMatch(/^28\d{6}$/));
 
+    const enlace = OFFICIAL_ALL_SCHOOLS.filter(s => s.apoyos.some(a => a.needId === 'compensatoria'));
     const cee = OFFICIAL_ALL_SCHOOLS.filter(s => s.apoyos.some(a => a.needId === 'educacion_especial'));
     const hosp = OFFICIAL_ALL_SCHOOLS.filter(s => s.apoyos.some(a => a.needId === 'salud_hospitalaria'));
     const visual = OFFICIAL_ALL_SCHOOLS.filter(s => s.apoyos.some(a => a.needId === 'visual'));
@@ -51,6 +53,9 @@ describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
     const tdah = OFFICIAL_ALL_SCHOOLS.filter(s => s.apoyos.some(a => a.needId === 'tdah'));
     const tel = OFFICIAL_ALL_SCHOOLS.filter(s => s.apoyos.some(a => a.needId === 'tel_lenguaje'));
 
+    expect(enlace).toHaveLength(47);
+    expect(enlace.every(e => e.titularidad === 'concertado')).toBe(true);
+    expect(enlace.every(e => e.apoyos.find(a => a.needId === 'compensatoria')?.evidencia === 'A1')).toBe(true);
     expect(cee).toHaveLength(69);
     expect(hosp).toHaveLength(14);
     expect(visual).toHaveLength(3);
@@ -137,9 +142,9 @@ describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
     });
   });
 
-  it('contiene únicamente las 433 entidades oficiales del catálogo sin registros de muestra', () => {
+  it('contiene únicamente las 470 entidades oficiales del catálogo sin registros de muestra', () => {
     expect(DEMO_SCHOOLS).toHaveLength(0);
-    expect(SCHOOLS_DATA).toHaveLength(433);
+    expect(SCHOOLS_DATA).toHaveLength(470);
     expect(SCHOOLS_DATA.every(s => s.procedencia === 'oficial')).toBe(true);
   });
 
@@ -242,7 +247,7 @@ describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
     expect(results).toHaveLength(10);
   });
 
-  it('devuelve 336 TEA, 3 Visual, 10 AACC, los 3 EOEP Específicos o los 433 totales en Toda la Comunidad', () => {
+  it('devuelve 336 TEA, 47 Aulas de Enlace, 3 Visual, 10 AACC, los 3 EOEP Específicos o los 470 totales en Toda la Comunidad', () => {
     const baseState: SearchState = {
       ...INITIAL_SEARCH_STATE,
       stages: [],
@@ -253,14 +258,21 @@ describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
       radiusKm: null
     };
     expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'tea' }))).toHaveLength(336);
+    expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'compensatoria' }))).toHaveLength(47);
+    expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'compensatoria', stages: ['primaria'] }))).toHaveLength(43);
+    expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'compensatoria', stages: ['eso'] }))).toHaveLength(46);
     expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'visual' }))).toHaveLength(3);
     expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'altas_capacidades' }))).toHaveLength(10);
     expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'auditiva' }))).toHaveLength(1);
     expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'motora' }))).toHaveLength(1);
     expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'tdah' }))).toHaveLength(1);
     expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'tel_lenguaje' }))).toHaveLength(1);
-    expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: 'compensatoria' }))).toHaveLength(0);
-    expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: null }))).toHaveLength(433);
+    expect(SCHOOLS_DATA.filter(s => matchesCentre(s, { ...baseState, need: null }))).toHaveLength(470);
+
+    // Dualidad TEA + Aula de Enlace (p. ej. 28014478)
+    const dualEnlace = SCHOOLS_DATA.find(s => s.codigo === '28014478')!;
+    expect(matchesCentre(dualEnlace, { ...baseState, need: 'tea' })).toBe(true);
+    expect(matchesCentre(dualEnlace, { ...baseState, need: 'compensatoria' })).toBe(true);
 
     // El código 28020910 (IES Juan de la Cierva) tiene apoyo TEA en ESO y PEAC en Primaria/ESO/Bachillerato:
     const juanCiervaTeaPrim = SCHOOLS_DATA.find(s => s.codigo === '28020910')!;

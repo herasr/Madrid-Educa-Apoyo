@@ -54,6 +54,12 @@ const ACTIVE_NEED_OPTIONS: Array<{
     sourceTag: 'Listado CAM · A2'
   },
   {
+    id: 'compensatoria',
+    label: 'Escuelas de Bienvenida (Aulas de Enlace)',
+    desc: '47 concertados 2026/27 (red pública vía SAE/DAT)',
+    sourceTag: 'Concertados 26/27 · A1'
+  },
+  {
     id: 'educacion_especial',
     label: 'Educación Especial (CEE)',
     desc: 'Colegios específicos en situación ALTA (CAM)',
@@ -323,7 +329,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             <div className="text-xs text-slate-600">
               {state.need
                 ? NEED_LABELS[state.need]
-                : 'Todo el catálogo oficial (TEA, CEE, Hosp., Visual, AACC y EOEP)'}
+                : 'Todo el catálogo oficial (TEA, Enlace, CEE, Hosp., Visual, AACC y EOEP)'}
             </div>
           </div>
           {openSections.needs ? (
@@ -392,7 +398,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   Equipos regionales específicos (EOEP CAM):
                 </div>
                 <p className="text-xs text-slate-600 leading-snug mt-0.5">
-                  Sin CSV autonómico de colegios preferentes; mostramos el equipo público específico oficial que orienta en toda la región.
+                  Mostramos el equipo público específico oficial que orienta en toda la región.
                 </p>
               </div>
 
@@ -431,43 +437,6 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   </button>
                 );
               })}
-              <div className="pt-2.5 border-t border-slate-100 space-y-1.5">
-                <div className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Programa específico (DAT / SAE):
-                </div>
-                <button
-                  type="button"
-                  role="radio"
-                  aria-checked={state.need === 'compensatoria'}
-                  onClick={() => handleSelectNeed('compensatoria')}
-                  className={`w-full text-left px-3 py-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
-                    state.need === 'compensatoria'
-                      ? 'bg-amber-50 border-amber-500 text-amber-950 font-semibold ring-1 ring-amber-500/20'
-                      : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800'
-                  }`}
-                >
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold leading-snug flex items-center gap-1.5 flex-wrap">
-                      <span>Escuelas de Bienvenida (Aulas de Enlace)</span>
-                      <span className="text-xs font-semibold text-amber-950 bg-amber-100 border border-amber-300 px-1.5 py-0.5 rounded">
-                        Vía SAE / DAT
-                      </span>
-                    </div>
-                    <div className="text-xs text-slate-600 mt-0.5">
-                      Incorporación temporal gestionada por Área Territorial
-                    </div>
-                  </div>
-                  <span
-                    className={`text-xs tabular-nums px-2 py-0.5 rounded-md font-mono shrink-0 font-bold ${
-                      state.need === 'compensatoria'
-                        ? 'bg-amber-200 text-amber-950'
-                        : 'bg-slate-100 text-slate-800'
-                    }`}
-                  >
-                    {dynamicCounts.needs['compensatoria'] ?? 0}
-                  </span>
-                </button>
-              </div>
             </div>
 
             {state.need && state.need !== 'tea' && state.need !== 'salud_hospitalaria' && onOpenProcedureModal && (
@@ -612,6 +581,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               ) : state.need === 'visual' ? (
                 <>
                   <strong>Discapacidad Visual:</strong> El EOEP Visual atiende de forma itinerante desde Infantil a ESO en cualquier centro ordinario; el C.R.E. ONCE de Moratalaz cubre CEE, Primaria y ESO.
+                </>
+              ) : state.need === 'compensatoria' ? (
+                <>
+                  <strong>Escuelas de Bienvenida (Aulas de Enlace 2026/27):</strong> De los 47 centros concertados autorizados, 1 cubre Primaria, 4 solo Secundaria (ESO) y 42 Primaria y ESO (habitualmente desde 3.º de Primaria). La red pública se asigna vía SAE/DAT.
                 </>
               ) : state.need === 'altas_capacidades' ? (
                 <>
@@ -1082,7 +1055,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         {openSections.evidence && (
           <div className="mt-3.5 space-y-2">
             <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 leading-snug mb-2">
-              <strong>Criterio documental:</strong> Cuentan con vigencia confirmada (<strong>A1</strong>) los centros en situación <span className="font-mono">ALTA</span> (CEE, Hospitalarias activas, EOEP Visual, CRE ONCE, CREACIM y EOEP Altas Capacidades). Figuran en <strong>A2</strong> el listado TEA 2024/25, las aulas hospitalarias en trámite y las 8 sedes IES del programa PEAC.
+              <strong>Criterio documental:</strong> Cuentan con vigencia confirmada (<strong>A1</strong>) los centros en situación <span className="font-mono">ALTA</span> y resoluciones vigentes (CEE, 47 Aulas de Enlace concertadas 2026/27, Hospitalarias activas, EOEP Visual, CRE ONCE, CREACIM y EOEP específicos). Figuran en <strong>A2</strong> el listado TEA 2024/25, las aulas hospitalarias en trámite y las 8 sedes IES del programa PEAC.
             </div>
 
             <label
@@ -1116,7 +1089,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 </div>
                 <p className="text-xs text-slate-600 mt-0.5">
                   {a1Count > 0
-                    ? 'CEE, aulas hospitalarias ALTA, EOEP Visual, CRE ONCE, CREACIM y EOEP Altas Capacidades.'
+                    ? 'CEE, 47 Aulas de Enlace concertadas (2026/27), aulas hospitalarias ALTA, EOEP Visual, CRE ONCE, CREACIM y EOEP específicos.'
                     : 'Sin registros A1 coincidentes con la necesidad o filtros actuales.'}
                 </p>
               </div>

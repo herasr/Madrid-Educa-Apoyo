@@ -342,6 +342,8 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                         <a href={school.fuenteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-900 hover:underline inline-flex items-center gap-1">
                           {needId === 'tea'
                             ? 'Relación de centros preferentes TEA (PDF 2024/25)'
+                            : needId === 'compensatoria'
+                            ? 'Resolución Aulas de Enlace 2026/27 (PDF oficial)'
                             : 'Portal de Datos Abiertos CAM (centros_educativos)'}
                           <ExternalLink className="w-3 h-3" aria-hidden="true" />
                         </a>
@@ -422,6 +424,8 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                         ? 'Equipo público regional especializado en discapacidad motora: valora adaptaciones de acceso físico, movilidad, fisioterapia y dotación de auxiliares técnicos educativos (ATU).'
                         : needId === 'tdah' || needId === 'tel_lenguaje'
                         ? 'Equipo técnico regional de orientación que asesora a orientadores y centros ordinarios en evaluación e intervención educativa para TDAH, trastornos del lenguaje (TDL/TEL) y dificultades de aprendizaje.'
+                        : needId === 'compensatoria'
+                        ? 'Aula de Enlace (Escuelas de Bienvenida, Decreto 23/2023): profesorado especialista para el aprendizaje intensivo de español como lengua vehicular y acogida socioeducativa en grupos reducidos, coordinado con el grupo ordinario.'
                         : 'El listado oficial no detalla el personal concreto de cada aula. Con carácter general en la Comunidad de Madrid, las aulas de atención preferente TEA atienden a un máximo de cinco alumnos con apoyo de profesorado PT, AL e integrador social (TIS).'
                     )}
                   </p>
@@ -455,6 +459,8 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                       ? 'Este EOEP Específico (código 28700763) valora necesidades de acceso, fisioterapia y personal ATU para orientar la escolarización en centro ordinario o preferente motórico ante la DAT / SAE correspondiente.'
                       : needId === 'tdah' || needId === 'tel_lenguaje'
                       ? 'Equipo técnico regional de orientación (código 28701214). La atención directa al alumnado se presta en el centro ordinario mediante el EOEP de sector, Departamento de Orientación y profesorado especialista en PT y AL.'
+                      : needId === 'compensatoria'
+                      ? 'Centro privado concertado autorizado por Resolución de 25/08/2026 (curso 2026/2027). La incorporación al Aula de Enlace (habitualmente hasta 9 meses, desde 3.º de Primaria o ESO) se gestiona mediante valoración e informe del Servicio de Apoyo a la Escolarización (SAE) / DAT.'
                       : 'Para acceder a los recursos de atención preferente TEA o a un Centro de Educación Especial (CEE) es necesario disponer del Dictamen de Escolarización emitido por el EOEP o Departamento de Orientación competente, validado ante el SAE o la DAT correspondiente.'
                   )}
                 </p>
@@ -672,6 +678,8 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                       ? 'Continuidad en centro ordinario complementada con Programa PEAC (Primaria, ESO y Bachillerato)'
                       : needId === 'auditiva' || needId === 'motora' || needId === 'tdah' || needId === 'tel_lenguaje'
                       ? 'Asesoramiento técnico y valoración regional a través de todas las etapas escolares'
+                      : needId === 'compensatoria'
+                      ? 'Programa de acogida lingüística (hasta 9 meses) y transición a aula ordinaria'
                       : school.continuidad.apoyoEnSecundariaVerificado === true
                       ? 'Apoyo TEA en Secundaria según el listado oficial'
                       : 'Continuidad no verificada documentalmente (nunca inexistencia afirmada)'}
@@ -736,6 +744,8 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                       ? 'Compatibilidad con el centro ordinario:'
                       : needId === 'auditiva' || needId === 'motora' || needId === 'tdah' || needId === 'tel_lenguaje'
                       ? 'Cobertura regional en todas las etapas:'
+                      : needId === 'compensatoria'
+                      ? 'Programa de acogida y lengua vehicular:'
                       : 'Centro con Primaria y Secundaria (o etapa ESO directa):'}
                   </div>
                   <p>
@@ -750,6 +760,8 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                         ? 'Las actividades del programa PEAC se celebran los sábados por la mañana para que el alumnado mantenga su escolarización habitual de lunes a viernes en su centro ordinario.'
                         : needId === 'auditiva' || needId === 'motora' || needId === 'tdah' || needId === 'tel_lenguaje'
                         ? 'Los EOEP Específicos operan con ámbito regional: no escolarizan alumnado directamente, sino que orientan a los centros ordinarios, preferentes y familias en toda la Comunidad de Madrid.'
+                        : needId === 'compensatoria'
+                        ? 'Tras la fase intensiva en el Aula de Enlace (máximo orientativo de 9 meses), el alumnado se incorpora plenamente al aula ordinaria que corresponda a su nivel.'
                         : 'El alumnado puede cursar la etapa de Educación Secundaria Obligatoria en el propio recinto escolar sin cambiar de centro.'
                     )}
                   </p>

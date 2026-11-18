@@ -17,8 +17,8 @@ export const OFFICIAL_SOURCES_INFO = [
   },
   {
     prioridad: 2,
-    organismo: "Comunidad de Madrid · Consejería de Educación (TEA, PEAC y Equipos Específicos)",
-    descripcion: "Relación oficial de centros de atención preferente TEA con plazas previsibles (curso 2024/2025, 336 centros), junto con la red regional del Programa PEAC (8 sedes IES), CREACIM y los EOEP Específicos. Si un código difiere nominalmente respecto al registro CKAN (caso 28020120 / 28011258), prevalece el registro maestro y se notifica la discrepancia en la ficha.",
+    organismo: "Comunidad de Madrid · Consejería de Educación (TEA, Aulas de Enlace, PEAC y Equipos Específicos)",
+    descripcion: "Relación oficial de centros de atención preferente TEA con plazas previsibles (curso 2024/2025, 336 centros), Resolución de 25/08/2026 de Escuelas de Bienvenida / Aulas de Enlace en centros concertados (curso 2026/2027, 47 centros autorizados), red regional PEAC (8 sedes IES), CREACIM y EOEP Específicos. Si un código difiere nominalmente respecto al registro CKAN (caso 28020120 / 28011258), prevalece el registro maestro y se notifica la discrepancia en la ficha.",
     ambito: "Información pública CAM (Ley 37/2007)."
   },
   {
@@ -121,17 +121,17 @@ export const SPECIAL_PROCEDURES = {
     contacto: "EOEP Específico de Dificultades de Aprendizaje, Trastornos del Lenguaje y TDAH (cód. 28701214): Avda. de Canillejas a Vicálvaro, 82, 28022 Madrid · eoep.tdah.madrid@educa.madrid.org."
   },
   compensatoria: {
-    titulo: "Escuelas de Bienvenida y Aulas de Enlace (DAT)",
-    subtitulo: "Programa de incorporación temporal gestionado por Dirección de Área Territorial (DAT)",
-    resumen: "El programa «Escuelas de Bienvenida» (Aulas de Enlace para alumnado de incorporación tardía con desconocimiento del español o desfase curricular) y las actuaciones de Compensación Educativa se autorizan por curso desde las Direcciones de Área Territorial (DAT). No existe aún un dataset abierto en Datos Abiertos CAM ni un EOEP único descargable.",
+    titulo: "Escuelas de Bienvenida y Aulas de Enlace (2026/27 + Red Pública DAT/SAE)",
+    subtitulo: "47 centros concertados autorizados cargados (Resolución 25/08/2026) + red pública asignada vía SAE/DAT",
+    resumen: "El programa «Escuelas de Bienvenida» (Aulas de Enlace para alumnado de incorporación tardía al sistema educativo con desconocimiento de la lengua española, Decreto 23/2023) incorpora en esta aplicación los 47 centros privados concertados autorizados por Resolución de 25/08/2026 para el curso 2026/2027 (Nivel A1). Las Aulas de Enlace en colegios e institutos públicos (CEIP/IES) se autorizan y asignan cada curso desde las Direcciones de Área Territorial (DAT) y los Servicios de Apoyo a la Escolarización (SAE) sin listado abierto descargable.",
     comoFunciona: [
-      "El Servicio de Apoyo a la Escolarización (SAE) de la zona valora al alumno recién llegado e indica si precisa incorporación temporal a un Aula de Enlace de su área territorial.",
-      "La permanencia en el Aula de Enlace tiene carácter temporal (habitualmente hasta nueve meses) para el aprendizaje intensivo de la lengua vehicular y posterior integración en su grupo ordinario.",
-      "Las medidas de Escuelas de Bienvenida y compensación educativa se prestan en los centros sostenidos con fondos públicos autorizados cada curso por la Consejería.",
-      "Para conocer qué instituto o colegio tiene Aula de Enlace activa en tu localidad hoy, debes dirigirte al SAE de tu municipio o distrito."
+      "El Servicio de Apoyo a la Escolarización (SAE) de la zona valora al alumno recién llegado e indica si precisa plaza en un Aula de Enlace de su área territorial.",
+      "La estancia en el Aula de Enlace (habitualmente hasta nueve meses) facilita el aprendizaje intensivo de la lengua vehicular y la posterior integración en su grupo ordinario.",
+      "Los 47 centros concertados con Aula de Enlace de la Resolución 2026/2027 ya pueden filtrarse y consultarse directamente en el mapa y listado (A1).",
+      "Si buscas un CEIP o IES público con Aula de Enlace activa en tu localidad hoy, consulta con el SAE de tu municipio o distrito."
     ],
-    tramiteEnlace: "https://www.comunidad.madrid/servicios/educacion/compensacion-educativa",
-    tramiteEtiqueta: "Ver Escuelas de Bienvenida en portal oficial CAM"
+    tramiteEnlace: "https://site.educa.madrid.org/dg.concertada-becasyayudas/index.php/programas-educativos-2/atencion-a-las-diferencias-individuales/medidas-y-programas/aulas-de-enlace/",
+    tramiteEtiqueta: "Ver programa Aulas de Enlace en portal oficial CAM"
   },
   educacion_especial: {
     titulo: "Modalidad: Centros de Educación Especial (CEE)",

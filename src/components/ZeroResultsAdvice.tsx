@@ -38,9 +38,9 @@ export const ZeroResultsAdvice: React.FC<ZeroResultsAdviceProps> = ({
             No se han encontrado centros con la combinación actual
           </h3>
           <p className="text-sm text-slate-600 mt-1">
-            {state.need && !['tea', 'educacion_especial', 'salud_hospitalaria', 'visual', 'altas_capacidades', 'auditiva', 'motora', 'tdah', 'tel_lenguaje'].includes(state.need)
+            {state.need && !['tea', 'compensatoria', 'educacion_especial', 'salud_hospitalaria', 'visual', 'altas_capacidades', 'auditiva', 'motora', 'tdah', 'tel_lenguaje'].includes(state.need)
               ? 'No existe todavía un conjunto abierto regional descargable con listado nominativo para esta necesidad.'
-              : 'Los filtros activos son muy restrictivos para la zona o servicios indicados.'}
+              : 'Los filtros activos son muy restrictivos para la zona, titularidad o servicios indicados.'}
           </p>
         </div>
       </div>

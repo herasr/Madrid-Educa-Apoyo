@@ -151,11 +151,66 @@ def test_processed_catalog_integrity():
     extracted_path = ROOT / "data" / "processed" / "schools_extracted.json"
     data = json.loads(extracted_path.read_text(encoding="utf-8"))
     rows = data["rows"]
-    assert len(rows) == 433
-    assert len({r["codigo"] for r in rows}) == 433
+    assert len(rows) == 470
+    assert len({r["codigo"] for r in rows}) == 470
     assert all(not r.get("es_demostracion") for r in rows)
     exact_utm = sum(1 for r in rows if not r.get("ubicacion_aproximada"))
-    assert exact_utm == 432
+    assert exact_utm == 469
+
+
+def test_aulas_enlace_catalog_integrity():
+    extracted_path = ROOT / "data" / "processed" / "schools_extracted.json"
+    data = json.loads(extracted_path.read_text(encoding="utf-8"))
+    rows = data["rows"]
+
+    def get_support_entries(row):
+        primary = {
+            "need_id": row.get("need_id"),
+            "evidencia": row.get("evidencia"),
+            "etapas": row.get("etapas_con_apoyo", []),
+        }
+        extras = [
+            {
+                "need_id": ex.get("need_id"),
+                "evidencia": ex.get("evidencia"),
+                "etapas": ex.get("etapas_con_apoyo", []),
+            }
+            for ex in row.get("extra_apoyos", [])
+        ]
+        return [primary, *extras]
+
+    enlace_rows = [
+        r for r in rows
+        if any(a.get("need_id") == "compensatoria" for a in get_support_entries(r))
+    ]
+    assert len(enlace_rows) == 47
+    assert all(r["titularidad"] == "concertado" for r in enlace_rows)
+
+    dual_tea_enlace = [
+        r for r in enlace_rows
+        if any(a.get("need_id") == "tea" for a in get_support_entries(r))
+    ]
+    assert len(dual_tea_enlace) == 10
+    assert any(r["codigo"] == "28014478" for r in dual_tea_enlace)
+
+    by_code = {r["codigo"]: r for r in enlace_rows}
+    central_enlace = next(a for a in get_support_entries(by_code["28011520"]) if a["need_id"] == "compensatoria")
+    assert central_enlace["etapas"] == ["primaria"]
+    assert central_enlace["evidencia"] == "A1"
+
+    cpr_es_enlace = next(a for a in get_support_entries(by_code["28019300"]) if a["need_id"] == "compensatoria")
+    assert cpr_es_enlace["etapas"] == ["eso"]
+    assert cpr_es_enlace["evidencia"] == "A1"
+
+    centros_path = ROOT / "public" / "data" / "centros.json"
+    centros = json.loads(centros_path.read_text(encoding="utf-8"))
+    assert len(centros) == 470
+    centros_enlace = [
+        c for c in centros
+        if any(a.get("needId") == "compensatoria" for a in c.get("apoyos", []))
+    ]
+    assert len(centros_enlace) == 47
+    assert all(c["titularidad"] == "concertado" for c in centros_enlace)
 
 
 def test_official_snapshot_sha256_integrity():
@@ -163,6 +218,7 @@ def test_official_snapshot_sha256_integrity():
 
     pairs = [
         ("tea_preferentes_curso_2024-25.csv", "tea_preferentes_curso_2024-25.metadata.json"),
+        ("aulas_enlace_concertados_curso_2026-27.csv", "aulas_enlace_concertados_curso_2026-27.metadata.json"),
         ("centros_educativos_datos_abiertos_cam.json", "centros_educativos_datos_abiertos_cam.metadata.json"),
         ("ayuntamiento_madrid_centros_300614.csv", "ayuntamiento_madrid_centros_300614.metadata.json"),
     ]

@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  * ARCHIVO GENERADO AUTOMÁTICAMENTE por scripts/build_app_data.py — no editar a mano.
- * Los 433 registros completos se publican en public/data/centros.json para descarga
+ * Los 470 registros completos se publican en public/data/centros.json para descarga
  * asíncrona e independiente de la caché del código JavaScript.
  *
  * Datos procedentes exclusivamente de fuentes públicas oficiales (con detección de conflictos en data/review/):
  * - 336 centros de atención preferente TEA (Consejería de Educación CAM, 2024/2025)
+ * - 47 Escuelas de Bienvenida / Aulas de Enlace en centros concertados (Resolución CAM 2026/2027)
  * - 69 Centros de Educación Especial (CEE) en situación ALTA (Datos Abiertos CAM, CC BY 4.0)
  * - 14 Aulas Hospitalarias no anuladas (Datos Abiertos CAM, CC BY 4.0)
  * - 3 recursos oficiales para Discapacidad Visual (EOEP Visuales + CRE ONCE Madrid)
@@ -22,15 +23,20 @@ export const OFFICIAL_TEA_SOURCE = {
   "titulo": "Escolarización en centros de atención preferente para alumnado con TEA",
   "organismo": "Comunidad de Madrid · Consejería de Educación",
   "url": "https://comunidad.madrid/sites/default/files/informacion_centros_preferentes_tea_curso_2024-25_0.pdf",
+  "aulasEnlaceUrl": "https://site.educa.madrid.org/dg.concertada-becasyayudas/index.php/programas-educativos-2/atencion-a-las-diferencias-individuales/medidas-y-programas/aulas-de-enlace/",
+  "aulasEnlaceResolucionUrl": "https://site.educa.madrid.org/dg.concertada-becasyayudas//wp-content/uploads/dg.concertada-becasyayudas/2026/10/2026.08_Resolucion_Aulas_Enlace_2026-27__62493703.pdf",
+  "cursoAulasEnlace": "2026/2027",
+  "fechaAulasEnlace": "25/08/2026",
   "datosAbiertosTitulo": "Centros educativos de la Comunidad de Madrid",
   "datosAbiertosUrl": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
   "datosAbiertosLicencia": "CC BY 4.0",
   "ayuntamientoUrl": "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
   "curso": "2024/2025",
   "fechaInformacion": "22/03/2024",
-  "fechaDatosAbiertos": "17/11/2026",
+  "fechaDatosAbiertos": "18/11/2026",
   "totalCentros": 336,
-  "totalCentrosCatalogo": 433,
+  "totalCompensatoria": 47,
+  "totalCentrosCatalogo": 470,
   "totalCee": 69,
   "totalHospitalarias": 14,
   "totalVisual": 3,
@@ -40,14 +46,16 @@ export const OFFICIAL_TEA_SOURCE = {
   "totalTdah": 1,
   "totalTelLenguaje": 1,
   "totalConUbicacionExacta": 336,
-  "totalConUbicacionExactaCatalogo": 432,
-  "totalConTransporteAyto": 151,
-  "totalConServiciosAyto": 122,
+  "totalConUbicacionExactaCatalogo": 469,
+  "totalConTransporteAyto": 178,
+  "totalConServiciosAyto": 143,
   "totalConAccesibilidadAyto": 17,
   "estadoVerificacion": "SNAPSHOT_VERSIONADO",
+  "estadoAulasEnlace": "PDF_OFICIAL_VERIFICADO",
   "estadoDatosAbiertos": "CKAN_EN_VIVO",
   "estadoAyuntamiento": "AYTO_MADRID_EN_VIVO",
   "alcance": "El documento NO es el catálogo completo (la Comunidad declara 682 centros preferentes TEA y 855 aulas). Recoge los centros en los que el número de alumnos atendidos en el aula de apoyo extenso y especializado era menor de cinco a 22/03/2024, es decir, centros con plazas previsibles en el aula TEA para el proceso de admisión 2024/2025. Incluye también los centros y aulas nuevos previstos para ese curso.",
+  "alcanceAulasEnlace": "Recoge las 47 Aulas de Enlace autorizadas en centros privados sostenidos con fondos públicos (concertados) para el curso escolar 2026-2027 (Anexo I de la Resolución de 25/08/2026). Las Aulas de Enlace de centros públicos (CEIP/IES) se asignan por las Direcciones de Área Territorial (DAT) y Servicios de Apoyo a la Escolarización (SAE) sin listado abierto descargable publicado por la Consejería.",
   "listadoCompletoUrl": "https://www.comunidad.madrid/servicios/educacion/atencion-preferente-necesidades-educativas-especiales"
 } as const;
 

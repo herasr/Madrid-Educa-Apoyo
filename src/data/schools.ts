@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  *
  * Cargador asíncrono del catálogo oficial de centros educativos (Madrid Educa Apoyo).
- * Los 433 registros oficiales se sirven desde `public/data/centros.json` para reducir el
+ * Los 470 registros oficiales se sirven desde `public/data/centros.json` para reducir el
  * tamaño del bundle inicial y mantener su caché independiente de los despliegues de UI.
  */
 
@@ -21,7 +21,7 @@ export function resolveCatalogUrl(): string {
 }
 
 /**
- * Carga y memoriza los 433 centros y equipos oficiales desde `data/centros.json`.
+ * Carga y memoriza los 470 centros y equipos oficiales desde `data/centros.json`.
  */
 export async function loadSchoolsCatalog(): Promise<School[]> {
   if (!cachedCatalogPromise) {

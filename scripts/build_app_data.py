@@ -3,7 +3,7 @@
 Convierte los centros oficiales procesados por el pipeline
 (data/processed/schools_extracted.json) en el módulo TypeScript que consume la web:
 
-  public/data/centros.json -> 433 centros y equipos oficiales (carga asíncrona cacheable)
+  public/data/centros.json -> catálogo completo oficial (carga asíncrona cacheable)
   src/data/officialTea.ts  -> OFFICIAL_TEA_SOURCE, OFFICIAL_MUNICIPALITIES (metadatos ligeros)
 """
 
@@ -128,6 +128,28 @@ def continuity(r, tea_rows):
                 "regional transversal a centros de Infantil, Primaria, Secundaria y Bachillerato."
             ),
             "apoyoEnSecundariaVerificado": True,
+            "destinos": [],
+        }
+    if need_id == "compensatoria":
+        if "eso" in r["etapas_con_apoyo"]:
+            return {
+                "tipoContinuidad": "mismo_centro",
+                "descripcion": (
+                    "Centro concertado autorizado con Aula de Enlace en Secundaria (o mixta Primaria–ESO) para el "
+                    "curso 2026/2027. La incorporación al Aula de Enlace es temporal y simultánea a la "
+                    "escolarización en el grupo ordinario del propio centro."
+                ),
+                "apoyoEnSecundariaVerificado": True,
+                "destinos": [],
+            }
+        return {
+            "tipoContinuidad": "zona",
+            "descripcion": (
+                "Aula de Enlace autorizada específicamente en etapa de Educación Primaria para el curso 2026/2027. "
+                "La medida es temporal hasta la plena incorporación al grupo ordinario; para continuar en Secundaria "
+                "con Aula de Enlace en caso necesario conviene consultar centros mixtos o el SAE correspondiente."
+            ),
+            "apoyoEnSecundariaVerificado": "no_verificado",
             "destinos": [],
         }
 
@@ -274,6 +296,20 @@ def to_school(r, tea_rows, meta):
         ]
         fecha_corte = f"Catálogo CKAN · copia {fecha_es(r['fecha_informacion'])}"
         id_prefix = "oficial-eoep"
+    elif need_id == "compensatoria":
+        info = r.get("aulas_enlace_info") or {}
+        detalle = info.get("detalles") or (
+            "Centro concertado autorizado con Aula de Enlace (Escuelas de Bienvenida) para el curso 2026/2027 "
+            "según Resolución de la DG de Educación Concertada de 25/08/2026."
+        )
+        recursos = info.get("recursos") or [
+            "Programa Escuelas de Bienvenida / Aula de Enlace (incorporación temporal y simultánea al grupo ordinario)",
+        ]
+        fecha_corte = (
+            f"Curso {meta.get('aulas_enlace_curso', '2026/2027')} · resolución "
+            f"{fecha_es(meta.get('aulas_enlace_fecha_informacion', '2026-08-25'))}"
+        )
+        id_prefix = "oficial-enlace"
     else:
         if r["codigo"] == "28701275":
             detalle = (
@@ -404,6 +440,7 @@ def main():
     tea_rows = [r for r in rows if r["need_id"] == "tea"]
     schools_all = [to_school(r, tea_rows, meta) for r in rows]
     schools_tea = [s for s in schools_all if any(a["needId"] == "tea" for a in s["apoyos"])]
+    compensatoria_count = sum(1 for s in schools_all if any(a["needId"] == "compensatoria" for a in s["apoyos"]))
     cee_count = sum(1 for s in schools_all if any(a["needId"] == "educacion_especial" for a in s["apoyos"]))
     hosp_count = sum(1 for s in schools_all if any(a["needId"] == "salud_hospitalaria" for a in s["apoyos"]))
     visual_count = sum(1 for s in schools_all if any(a["needId"] == "visual" for a in s["apoyos"]))
@@ -420,6 +457,12 @@ def main():
         "titulo": "Escolarización en centros de atención preferente para alumnado con TEA",
         "organismo": "Comunidad de Madrid · Consejería de Educación",
         "url": meta["url"],
+        "aulasEnlaceUrl": meta.get("aulas_enlace_portal_url")
+        or "https://site.educa.madrid.org/dg.concertada-becasyayudas/index.php/programas-educativos-2/atencion-a-las-diferencias-individuales/medidas-y-programas/aulas-de-enlace/",
+        "aulasEnlaceResolucionUrl": meta.get("aulas_enlace_url")
+        or "https://site.educa.madrid.org/dg.concertada-becasyayudas//wp-content/uploads/dg.concertada-becasyayudas/2026/10/2026.08_Resolucion_Aulas_Enlace_2026-27__62493703.pdf",
+        "cursoAulasEnlace": meta.get("aulas_enlace_curso", "2026/2027"),
+        "fechaAulasEnlace": fecha_es(meta.get("aulas_enlace_fecha_informacion", "2026-08-25")),
         "datosAbiertosTitulo": "Centros educativos de la Comunidad de Madrid",
         "datosAbiertosUrl": "https://datos.comunidad.madrid/catalogo/dataset/centros_educativos",
         "datosAbiertosLicencia": "CC BY 4.0",
@@ -428,6 +471,7 @@ def main():
         "fechaInformacion": fecha_es(meta["fecha_informacion"]),
         "fechaDatosAbiertos": fecha_es(meta.get("ckan_fecha_descarga", meta["fecha_informacion"])),
         "totalCentros": len(schools_tea),
+        "totalCompensatoria": compensatoria_count,
         "totalCentrosCatalogo": len(schools_all),
         "totalCee": cee_count,
         "totalHospitalarias": hosp_count,
@@ -443,9 +487,11 @@ def main():
         "totalConServiciosAyto": counts_meta.get("ayto_services", 0),
         "totalConAccesibilidadAyto": counts_meta.get("ayto_accessibility", 0),
         "estadoVerificacion": meta["status"],
+        "estadoAulasEnlace": meta.get("aulas_enlace_status", "SNAPSHOT_VERSIONADO"),
         "estadoDatosAbiertos": meta.get("ckan_status", "SNAPSHOT_CKAN_VERSIONADO"),
         "estadoAyuntamiento": meta.get("ayto_status", "SNAPSHOT_AYTO_VERSIONADO"),
         "alcance": data.get("alcance", ""),
+        "alcanceAulasEnlace": data.get("alcance_aulas_enlace", ""),
         "listadoCompletoUrl": "https://www.comunidad.madrid/servicios/educacion/"
                               "atencion-preferente-necesidades-educativas-especiales",
     }
@@ -467,6 +513,7 @@ def main():
  *
  * Datos procedentes exclusivamente de fuentes públicas oficiales (con detección de conflictos en data/review/):
  * - {len(schools_tea)} centros de atención preferente TEA (Consejería de Educación CAM, {meta['curso']})
+ * - {compensatoria_count} Escuelas de Bienvenida / Aulas de Enlace en centros concertados (Resolución CAM {meta.get('aulas_enlace_curso', '2026/2027')})
  * - {cee_count} Centros de Educación Especial (CEE) en situación ALTA (Datos Abiertos CAM, CC BY 4.0)
  * - {hosp_count} Aulas Hospitalarias no anuladas (Datos Abiertos CAM, CC BY 4.0)
  * - {visual_count} recursos oficiales para Discapacidad Visual (EOEP Visuales + CRE ONCE Madrid)
@@ -485,7 +532,7 @@ export const OFFICIAL_MUNICIPALITIES: MunicipalityOption[] = {js(municipalities(
         f.write(content)
     print(
         f"  ✓ {OUTPUT} y {OUTPUT_JSON} generados ({len(schools_all)} centros oficiales totales: "
-        f"{len(schools_tea)} TEA + {cee_count} CEE + {hosp_count} Hospitalaria + "
+        f"{len(schools_tea)} TEA + {compensatoria_count} Aulas de Enlace + {cee_count} CEE + {hosp_count} Hospitalaria + "
         f"{visual_count} Visual + {aacc_count} Altas Capacidades + "
         f"{auditiva_count} Auditiva + {motora_count} Motora + {tdah_count} TDAH + {tel_count} TEL)"
     )

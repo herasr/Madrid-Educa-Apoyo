@@ -18,7 +18,8 @@ import {
   Plus,
   ArrowRight,
   Printer,
-  Phone
+  Phone,
+  Trash2
 } from 'lucide-react';
 import { LEGAL_DISCLAIMER } from '../data/disclaimerAndProcedures';
 
@@ -99,9 +100,11 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
           <button
             type="button"
             onClick={onClearCompare}
-            className="text-xs font-semibold text-slate-700 hover:text-red-700 transition-colors cursor-pointer"
+            className="text-xs font-bold text-red-800 bg-red-50 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1.5"
+            title="Quitar todos los centros marcados del comparador"
           >
-            Vaciar
+            <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Vaciar marcados</span>
           </button>
           {comparedSchools.length < 3 && (
             <button
@@ -326,6 +329,8 @@ export const ComparatorView: React.FC<ComparatorViewProps> = ({
                         ? 'CREACIM / PEAC sábados'
                         : needId === 'auditiva' || needId === 'motora' || needId === 'tdah' || needId === 'tel_lenguaje'
                         ? 'Orientación regional (EOEP Específico)'
+                        : needId === 'compensatoria'
+                        ? 'Aula de Enlace · acogida lingüística'
                         : sch.continuidad.tipoContinuidad === 'mismo_centro'
                         ? 'En el propio centro'
                         : sch.continuidad.tipoContinuidad === 'zona'

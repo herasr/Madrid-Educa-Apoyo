@@ -114,15 +114,16 @@ export const TEST_SCENARIOS: TestScenario[] = [
     id: 'FIL-007',
     code: 'FIL-007',
     titulo: 'Cero Resultados (Gestión Asistida)',
-    descripcion: 'Selecciona la única línea sin catálogo abierto regional nominativo (Escuelas de Bienvenida).',
-    esperado: 'NO elimina filtros. Explica que se tramita vía SAE/DAT y ofrece volver a TEA o CEE con 1 clic.',
+    descripcion: 'Selecciona Escuelas de Bienvenida (Aulas de Enlace) filtrando solo centros públicos (sin listado abierto nominativo para red pública).',
+    esperado: 'NO elimina filtros. Explica que las 47 Aulas de Enlace cargadas (2026/27) son concertadas y que la red pública se tramita vía SAE/DAT, ofreciendo ampliar titularidad o cambiar a TEA/CEE con 1 clic.',
     estadoPrueba: {
       need: 'compensatoria',
       stages: ['primaria'],
       locationSource: 'municipality',
       userCoordinates: null,
       municipality: 'Madrid',
-      radiusKm: 20
+      radiusKm: 20,
+      ownership: ['publico']
     }
   },
   {

@@ -1,0 +1,31 @@
+{
+  "dataset": "Escuelas de Bienvenida / Aulas de Enlace autorizadas en centros privados sostenidos con fondos públicos (curso 2026-2027)",
+  "titulo_documento": "RESOLUCIÓN DE LA DIRECCIÓN GENERAL DE EDUCACIÓN CONCERTADA, BECAS Y AYUDAS AL ESTUDIO, POR LA QUE SE AUTORIZA EL FUNCIONAMIENTO Y FINANCIACIÓN DE AULAS DE ENLACE EN CENTROS PRIVADOS SOSTENIDOS CON FONDOS PÚBLICOS, PARA EL CURSO 2026-2027.",
+  "organismo": "Comunidad de Madrid · Dirección General de Educación Concertada, Becas y Ayudas al Estudio",
+  "portal_url": "https://site.educa.madrid.org/dg.concertada-becasyayudas/index.php/programas-educativos-2/atencion-a-las-diferencias-individuales/medidas-y-programas/aulas-de-enlace/",
+  "url": "https://site.educa.madrid.org/dg.concertada-becasyayudas//wp-content/uploads/dg.concertada-becasyayudas/2026/10/2026.08_Resolucion_Aulas_Enlace_2026-27__62493703.pdf",
+  "curso": "2026/2027",
+  "fecha_informacion": "2026-08-25",
+  "normativa": "Decreto 23/2023, de 22 de marzo; Orden 10347/2012, de 11 de septiembre",
+  "alcance": "Recoge las 47 Aulas de Enlace autorizadas en centros privados sostenidos con fondos públicos (concertados) para el curso escolar 2026-2027 (Anexo I de la Resolución de 25/08/2026). Las Aulas de Enlace de centros públicos (CEIP/IES) se asignan por las Direcciones de Área Territorial (DAT) y Servicios de Apoyo a la Escolarización (SAE) sin listado abierto descargable publicado por la Consejería.",
+  "advertencia_oficial": "La incorporación a un Aula de Enlace es temporal y simultánea a la escolarización en el grupo ordinario para alumnado de incorporación tardía desde 3.º de Educación Primaria o cursos siguientes con desconocimiento de la lengua española. Para conocer Aulas de Enlace disponibles en centros públicos (CEIP/IES), consulta el SAE / DAT correspondiente.",
+  "columnas": {
+    "dat": "Dirección de Área Territorial según el Anexo I",
+    "municipio_o_distrito": "Municipio o distrito de Madrid capital según el Anexo I",
+    "codigo_centro": "Código oficial de centro (8 dígitos CAM)",
+    "centro": "Nombre del centro tal como figura en el Anexo I",
+    "aulas": "Número y tipo de aula autorizada (1 mixta, 1 primaria o 1 secundaria)",
+    "ratio_profesores": "Ratio de profesores autorizada para el aula en el curso 2026-2027"
+  },
+  "filas": 47,
+  "filas_por_dat": {
+    "DAT MADRID-CAPITAL": 33,
+    "DAT ESTE": 3,
+    "DAT OESTE": 6,
+    "DAT SUR": 5
+  },
+  "pdf_sha256": "58a1f543088c7dfc98b0c84161779852cbdfc5bb4fdd1d17653f794b01d8c92b",
+  "sha256_instantanea_repo": "cd1a78a4fa017a00634303ef7082dd35bde5f5c0f4d695cefa96661c0805ad75",
+  "metodo_extraccion": "Transcripción verificada de los flujos de texto de la Resolución oficial firmada electrónicamente el 25/08/2026 (CSV 1018261137011685127724). Los 47 códigos 28xxxxxx fueron contrastados exactamente con el catálogo vivo de Datos Abiertos CAM (centros_educativos.json), todos en situación ALTA.",
+  "licencia": "Información pública de la Comunidad de Madrid (Ley 37/2007 sobre reutilización de la información del sector público). Se cita la Resolución oficial, curso y fecha de firma."
+}

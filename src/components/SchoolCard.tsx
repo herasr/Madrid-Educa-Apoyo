@@ -72,6 +72,8 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
       ? 'Equipo público experto que asesora sobre TDAH y dificultades de aprendizaje'
       : needId === 'tel_lenguaje'
       ? 'Equipo público experto que asesora sobre trastornos del lenguaje'
+      : needId === 'compensatoria'
+      ? 'Tiene Aula de Enlace / Escuela de Bienvenida (español y acogida)'
       : 'Tiene apoyo educativo específico'
     : needId === 'tea'
     ? 'Atención preferente TEA'
@@ -91,6 +93,8 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
     ? 'TDAH y Dificultades (EOEP Específico)'
     : needId === 'tel_lenguaje'
     ? 'Trastorno del Lenguaje (EOEP Específico)'
+    : needId === 'compensatoria'
+    ? 'Escuelas de Bienvenida · Aula de Enlace (2026/27)'
     : 'Atención educativa especializada';
 
   const ownershipLabel =
@@ -163,6 +167,12 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
     continuityText = isEasyReadMode
       ? 'Equipo regional que orienta y asesora en todas las etapas escolares sin matricular directamente.'
       : 'Equipo público de ámbito regional: evalúa y orienta en todas las etapas (no escolariza directamente)';
+  } else if (needId === 'compensatoria') {
+    continuityText = isEasyReadMode
+      ? 'Programa de acogida y español (hasta 9 meses) para continuar en el aula ordinaria.'
+      : currentSupport?.etapasConApoyo.includes('eso') && currentSupport?.etapasConApoyo.includes('primaria')
+      ? 'Aula de Enlace de acogida lingüística con Primaria y ESO en el propio centro'
+      : 'Aula de Enlace de acogida lingüística hacia aula ordinaria';
   } else if (school.continuidad.tipoContinuidad === 'zona') {
     continuityText =
       zoneDestinations > 0

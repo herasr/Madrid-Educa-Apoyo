@@ -1,0 +1,13 @@
+{
+  "ultima_comprobacion": "2026-11-18T15:12:01Z",
+  "pdf_url": "https://site.educa.madrid.org/dg.concertada-becasyayudas//wp-content/uploads/dg.concertada-becasyayudas/2026/10/2026.08_Resolucion_Aulas_Enlace_2026-27__62493703.pdf",
+  "estado": "PDF_OFICIAL_VERIFICADO",
+  "snapshot_csv": "data/official/aulas_enlace_concertados_curso_2026-27.csv",
+  "snapshot_fecha_informacion": "2026-08-25",
+  "snapshot_total_codigos": 47,
+  "pdf_sha256": "58a1f543088c7dfc98b0c84161779852cbdfc5bb4fdd1d17653f794b01d8c92b",
+  "pdf_codigos_extraidos": 47,
+  "codigos_nuevos_en_pdf": [],
+  "codigos_que_ya_no_aparecen": [],
+  "error_descarga_o_lectura": null
+}

@@ -160,7 +160,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
 
             <div className="sm:text-right">
               <span className="inline-block text-xs font-bold text-slate-900 bg-slate-100 border border-slate-300 px-3 py-1 rounded">
-                Datos Abiertos CAM + Listado TEA + Ayto. Madrid
+                Datos Abiertos CAM + TEA + Aulas de Enlace + Ayto. Madrid
               </span>
             </div>
           </div>
@@ -200,7 +200,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
                   ? 'Trastorno del Lenguaje (EOEP Específico)'
                   : state.need === 'compensatoria'
                   ? 'Escuelas de Bienvenida (Aulas de Enlace)'
-                  : 'Todo el catálogo (TEA, CEE, Hosp., Visual, AACC y EOEP)'}
+                  : 'Todo el catálogo (TEA, Enlace, CEE, Hosp., Visual, AACC y EOEP)'}
               </span>
             </div>
 
@@ -287,6 +287,8 @@ export const PassportView: React.FC<PassportViewProps> = ({
                   ? 'TDAH y Dificultades (EOEP Específico)'
                   : needId === 'tel_lenguaje'
                   ? 'Trastorno del Lenguaje (EOEP Específico)'
+                  : needId === 'compensatoria'
+                  ? 'Escuelas de Bienvenida · Aula de Enlace'
                   : 'Atención preferente TEA';
               const ownLabel =
                 sch.titularidad === 'publico'
@@ -470,7 +472,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
 
         {/* Pie con Fuentes Oficiales */}
         <div className="border-t border-slate-200 pt-4 text-xs text-slate-700 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>Fuentes: Comunidad de Madrid (relación TEA 2024/25) y Portal de Datos Abiertos CAM (CC BY 4.0).</span>
+          <span>Fuentes: Comunidad de Madrid (TEA 2024/25 y Aulas de Enlace 2026/27), Datos Abiertos CAM (CC BY 4.0) y Ayto. Madrid.</span>
           <span>Proyecto DataMad 2026 · Madrid Educa Apoyo</span>
         </div>
       </div>

@@ -15,6 +15,7 @@ import axe from 'axe-core';
 import { Header } from '../components/Header';
 import { FilterSidebar } from '../components/FilterSidebar';
 import { SchoolDetailModal } from '../components/SchoolDetailModal';
+import { ComparatorView } from '../components/ComparatorView';
 import App from '../App';
 import { computeDynamicCounts, INITIAL_SEARCH_STATE } from '../utils/filterEngine';
 import { TEST_ALL_SCHOOLS } from './catalogHelper';
@@ -121,7 +122,11 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
 
     await expectNoA11yViolations(container);
 
-    const bienvenidaBtn = screen.getByRole('radio', { name: /Escuelas de Bienvenida/i });
+    expect(screen.queryByText(/Sin CSV autonómico de colegios preferentes;/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/incorporaci[oó]n temporal/i)).not.toBeInTheDocument();
+    expect(screen.getByText('Escuelas de Bienvenida (Aulas de Enlace)')).toBeInTheDocument();
+
+    const bienvenidaBtn = screen.getByRole('radio', { name: /Escuelas de Bienvenida \(Aulas de Enlace\)/i });
     await user.click(bienvenidaBtn);
     expect(currentState.need).toBe('compensatoria');
 
@@ -139,6 +144,29 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
     const guideBtn = screen.getByRole('button', { name: /Escuelas de Bienvenida \/ Aulas de Enlace/i });
     await user.click(guideBtn);
     expect(onOpenProcedure).toHaveBeenCalledWith('compensatoria');
+  });
+
+  it('ComparatorView cumple WCAG AA y muestra el botón "Vaciar marcados"', async () => {
+    const user = userEvent.setup();
+    const onClearCompare = vi.fn();
+
+    const { container } = render(
+      <ComparatorView
+        comparedSchools={TEST_ALL_SCHOOLS.slice(0, 2)}
+        state={INITIAL_SEARCH_STATE}
+        onRemoveFromCompare={vi.fn()}
+        onClearCompare={onClearCompare}
+        onOpenDetail={vi.fn()}
+        onGoToSearch={vi.fn()}
+      />
+    );
+
+    const clearBtn = screen.getByRole('button', { name: /Vaciar marcados/i });
+    expect(clearBtn).toBeInTheDocument();
+    await user.click(clearBtn);
+    expect(onClearCompare).toHaveBeenCalledTimes(1);
+
+    await expectNoA11yViolations(container);
   });
 
   it('SchoolDetailModal atrapa el foco, cierra con Escape y cumple WCAG AA', async () => {
@@ -191,6 +219,7 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
 
   it('Flujo E2E de App: carga asíncrona de centros.json, filtro, Lectura Fácil, modal y privacidad de URL sin GPS', async () => {
     const user = userEvent.setup();
+    window.localStorage.setItem('madrid_educa_compared', JSON.stringify(['id-invalido-1', 'id-invalido-2']));
     vi.stubGlobal(
       'fetch',
       vi.fn(async () => ({
@@ -202,8 +231,15 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
 
     const { container } = render(<App />);
 
+    expect(screen.getAllByRole('button', { name: /Comparar.*0\/3/i }).length).toBeGreaterThan(0);
+
     await waitFor(() => {
       expect(screen.getByText(/Mostrando/i)).toBeInTheDocument();
+    });
+
+    expect(screen.getAllByRole('button', { name: /Comparar.*0\/3/i }).length).toBeGreaterThan(0);
+    await waitFor(() => {
+      expect(JSON.parse(window.localStorage.getItem('madrid_educa_compared') || '[]')).toEqual([]);
     });
 
     expect(screen.getByRole('link', { name: /Saltar al contenido principal/i })).toBeInTheDocument();

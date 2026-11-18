@@ -3,10 +3,13 @@
 Pipeline de Ingesta — Madrid Educa Apoyo (v3.0)
 ================================================
 
-Combina tres fuentes públicas oficiales con apoyo toponímico oficial y cola automática de revisión:
+Combina cuatro fuentes públicas oficiales con apoyo toponímico oficial y cola automática de revisión:
   1. Relación oficial de centros de atención preferente TEA con plazas previsibles
      (Consejería de Educación CAM, curso 2024/2025, información a 22/03/2024, 336 códigos).
-  2. Conjunto abierto «Centros educativos de la Comunidad de Madrid» del Portal de Datos Abiertos
+  2. Resolución oficial de Escuelas de Bienvenida / Aulas de Enlace en centros concertados
+     (DG de Educación Concertada CAM, curso 2026/2027, resolución de 25/08/2026, 47 códigos:
+     10 coincidentes con TEA y 37 centros nuevos).
+  3. Conjunto abierto «Centros educativos de la Comunidad de Madrid» del Portal de Datos Abiertos
      (https://datos.comunidad.madrid/catalogo/dataset/centros_educativos, licencia CC BY 4.0):
      - Enriquece denominación vigente, tipo actualizado (p. ej. CEIP -> CEIPSO), dirección postal,
        CP, teléfono, correo, web, distrito y coordenadas UTM (ETRS89 -> WGS84).
@@ -16,7 +19,7 @@ Combina tres fuentes públicas oficiales con apoyo toponímico oficial y cola au
        (EOEP Visuales y C.R.E. Antonio Vicente Mosquete ONCE), Altas Capacidades (CREACIM, EOEP Específico
        y 8 sedes IES del PEAC), Discapacidad Auditiva (EOEP Auditivas 28700741), Discapacidad Motora
        (EOEP Motóricas 28700763) y TDAH / Trastornos del Lenguaje (EOEP Dificultades, Lenguaje y TDAH 28701214).
-  3. Portal de Datos Abiertos del Ayuntamiento de Madrid (dataset 300614-0-centros-educativos):
+  4. Portal de Datos Abiertos del Ayuntamiento de Madrid (dataset 300614-0-centros-educativos):
      - Enriquecimiento externo exclusivo para Madrid capital (transporte público cercano,
        barrio, equipamiento declarado y códigos oficiales de ACCESIBILIDAD 0..6 según estructura_ds_conjuntodatos.pdf).
 
@@ -42,6 +45,8 @@ import urllib.request
 OFFICIAL_DIR = "data/official"
 SNAPSHOT_CSV = os.path.join(OFFICIAL_DIR, "tea_preferentes_curso_2024-25.csv")
 SNAPSHOT_META = os.path.join(OFFICIAL_DIR, "tea_preferentes_curso_2024-25.metadata.json")
+ENLACE_CSV = os.path.join(OFFICIAL_DIR, "aulas_enlace_concertados_curso_2026-27.csv")
+ENLACE_META = os.path.join(OFFICIAL_DIR, "aulas_enlace_concertados_curso_2026-27.metadata.json")
 CKAN_SNAPSHOT_JSON = os.path.join(OFFICIAL_DIR, "centros_educativos_datos_abiertos_cam.json")
 CKAN_TEA_FALLBACK_JSON = os.path.join(OFFICIAL_DIR, "centros_educativos_datos_abiertos_tea.json")
 CKAN_SNAPSHOT_META = os.path.join(OFFICIAL_DIR, "centros_educativos_datos_abiertos_cam.metadata.json")
@@ -88,6 +93,8 @@ TIPO_INFO = {
     "CPR INF": ("Colegio Concertado", "concertado", ["infantil"], "Colegio"),
     "CPR INF-PRI": ("Colegio Concertado", "concertado", ["infantil", "primaria"], "Colegio"),
     "CPR INF-PRI-SEC": ("Colegio Concertado", "concertado", ["infantil", "primaria", "eso"], "Colegio"),
+    "CPR PRI-SEC": ("Colegio Concertado", "concertado", ["primaria", "eso"], "Colegio"),
+    "CPR ES": ("Colegio Concertado", "concertado", ["eso"], "Colegio"),
     "IES": ("IES", "publico", ["eso"], "IES"),
     "SIES": ("IES", "publico", ["eso"], "SIES"),
 }
@@ -105,7 +112,7 @@ VIA_LABELS = {
     "TRVA": "Travesía",
 }
 
-KEEP_UPPER = {"CEU", "GSD", "FUHEM", "XXI", "II", "III", "XII", "SAFA", "C.R.E.", "CRE", "CPEE", "CEE", "ONCE", "CREACIM", "EOEP", "PEAC", "IES"}
+KEEP_UPPER = {"CEU", "GSD", "FUHEM", "FESD", "XXI", "II", "III", "XII", "SAFA", "C.R.E.", "CRE", "CPEE", "CEE", "ONCE", "CREACIM", "EOEP", "PEAC", "IES"}
 LOWER_WORDS = {"de", "del", "la", "las", "los", "el", "y", "e", "en", "al", "a"}
 NAME_PREFIX_WORDS = {"COLEGIO", "ESCUELA", "INSTITUTO", "CENTRO", "HOSPITAL", "FUNDACION", "FUNDACIÓN", "AULA"}
 STOP_NAME_TOKENS = {
@@ -267,6 +274,18 @@ def load_snapshot():
     with open(SNAPSHOT_META, encoding="utf-8") as f:
         meta = json.load(f)
     with open(SNAPSHOT_CSV, "rb") as f:
+        csv_sha = sha256_bytes(f.read())
+    return rows, meta, csv_sha
+
+
+def load_aulas_enlace_snapshot():
+    if not (os.path.exists(ENLACE_CSV) and os.path.exists(ENLACE_META)):
+        return [], {}, None
+    with open(ENLACE_CSV, encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    with open(ENLACE_META, encoding="utf-8") as f:
+        meta = json.load(f)
+    with open(ENLACE_CSV, "rb") as f:
         csv_sha = sha256_bytes(f.read())
     return rows, meta, csv_sha
 
@@ -463,12 +482,24 @@ def download_pdf(url):
 
 
 def extract_codes_from_pdf(pdf_bytes):
-    import pdfplumber
-    codes = []
-    with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
-        for page in pdf.pages:
-            codes.extend(CODE_RE.findall(page.extract_text() or ""))
-    return codes
+    try:
+        import pdfplumber
+        codes = []
+        with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+            for page in pdf.pages:
+                codes.extend(CODE_RE.findall(page.extract_text() or ""))
+        return codes
+    except ImportError:
+        import zlib
+        codes = []
+        for m in re.finditer(rb"stream\r?\n(.*?)\r?\nendstream", pdf_bytes, re.S):
+            chunk = m.group(1)
+            try:
+                text = zlib.decompress(chunk).decode("latin1", "ignore")
+            except Exception:
+                text = chunk.decode("latin1", "ignore")
+            codes.extend(CODE_RE.findall(text))
+        return codes
 
 
 def write_tea_verification_log(meta, status, info, error_msg=None, added=None, removed=None):
@@ -536,6 +567,77 @@ def verify_against_official(meta, snapshot_codes):
     write_tea_verification_log(meta, "PDF_OFICIAL_CON_CAMBIOS", info, added=added, removed=removed)
     print(f"  ⚡ El PDF oficial difiere de la instantánea (+{len(added)} / -{len(removed)} códigos). "
           f"Enviado a revisión: {review_path}")
+    return "PDF_OFICIAL_CON_CAMBIOS", info
+
+
+def write_aulas_enlace_verification_log(meta, total_rows, status, info, error_msg=None, added=None, removed=None):
+    os.makedirs(REVIEW_DIR, exist_ok=True)
+    log_path = os.path.join(REVIEW_DIR, "verificacion_aulas_enlace_pdf.json")
+    payload = {
+        "ultima_comprobacion": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "pdf_url": meta.get("url"),
+        "estado": status,
+        "snapshot_csv": ENLACE_CSV,
+        "snapshot_fecha_informacion": meta.get("fecha_informacion"),
+        "snapshot_total_codigos": total_rows,
+        "pdf_sha256": info.get("pdf_sha256"),
+        "pdf_codigos_extraidos": info.get("pdf_codigos"),
+        "codigos_nuevos_en_pdf": added or [],
+        "codigos_que_ya_no_aparecen": removed or [],
+        "error_descarga_o_lectura": error_msg,
+    }
+    with open(log_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)
+
+
+def verify_aulas_enlace_against_official(meta, snapshot_codes):
+    """Comprueba la Resolución oficial de Aulas de Enlace 2026-27 frente a la instantánea CSV."""
+    info = {"pdf_url": meta.get("url"), "pdf_sha256": None, "pdf_codigos": None}
+    if not meta.get("url"):
+        return "SNAPSHOT_VERSIONADO", info
+    try:
+        pdf_bytes = download_pdf(meta["url"])
+    except Exception as e:
+        print(f"  ℹ No se pudo descargar la Resolución Aulas de Enlace ({e}). Se usa la instantánea versionada.")
+        write_aulas_enlace_verification_log(meta, len(snapshot_codes), "SNAPSHOT_VERSIONADO", info, error_msg=str(e))
+        return "SNAPSHOT_VERSIONADO", info
+
+    info["pdf_sha256"] = sha256_bytes(pdf_bytes)
+    os.makedirs(OUTPUT_RAW_DIR, exist_ok=True)
+    with open(os.path.join(OUTPUT_RAW_DIR, "resolucion_aulas_enlace_2026-27.pdf"), "wb") as f:
+        f.write(pdf_bytes)
+    print(f"  ✓ Resolución Aulas de Enlace descargada ({len(pdf_bytes)} bytes, SHA-256 {info['pdf_sha256'][:16]}…)")
+
+    try:
+        pdf_codes = extract_codes_from_pdf(pdf_bytes)
+    except Exception as e:
+        print(f"  ⚠ Resolución Aulas de Enlace descargada pero no legible ({e}). Se usa instantánea versionada.")
+        write_aulas_enlace_verification_log(meta, len(snapshot_codes), "SNAPSHOT_VERSIONADO", info, error_msg=str(e))
+        return "SNAPSHOT_VERSIONADO", info
+
+    info["pdf_codigos"] = len(pdf_codes)
+    added = sorted(set(pdf_codes) - set(snapshot_codes))
+    removed = sorted(set(snapshot_codes) - set(pdf_codes))
+    if not added and not removed:
+        print(f"  ✓ Los {len(set(pdf_codes))} códigos de la Resolución Aulas de Enlace coinciden con la instantánea.")
+        write_aulas_enlace_verification_log(meta, len(snapshot_codes), "PDF_OFICIAL_VERIFICADO", info)
+        return "PDF_OFICIAL_VERIFICADO", info
+
+    os.makedirs(REVIEW_DIR, exist_ok=True)
+    review_path = os.path.join(REVIEW_DIR, "aulas_enlace_diferencias.json")
+    with open(review_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "detectado": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "pdf_url": meta["url"],
+            "pdf_sha256": info["pdf_sha256"],
+            "codigos_nuevos_en_pdf": added,
+            "codigos_que_ya_no_aparecen": removed,
+            "accion": "Revisar a mano y actualizar data/official/aulas_enlace_concertados_curso_2026-27.csv",
+        }, f, indent=2, ensure_ascii=False)
+    write_aulas_enlace_verification_log(
+        meta, len(snapshot_codes), "PDF_OFICIAL_CON_CAMBIOS", info, added=added, removed=removed
+    )
+    print(f"  ⚡ La Resolución Aulas de Enlace difiere (+{len(added)} / -{len(removed)}). Revisión: {review_path}")
     return "PDF_OFICIAL_CON_CAMBIOS", info
 
 
@@ -1181,8 +1283,210 @@ def normalise_visual_and_aacc_rows(ckan_by_code, existing_codes, ayto_index, mun
     return out
 
 
+def stages_for_aula_enlace(aulas_raw):
+    val = (aulas_raw or "").strip().lower()
+    if "primaria" in val:
+        return ["primaria"], "PRIMARIA"
+    if "secundaria" in val:
+        return ["eso"], "SECUNDARIA"
+    if "mixta" in val:
+        return ["primaria", "eso"], "MIXTA"
+    raise ValueError(f"Tipo de aula de enlace no reconocido: {aulas_raw}")
+
+
+def normalise_aulas_enlace_rows(
+    enlace_rows,
+    enlace_meta,
+    tea_rows,
+    ckan_by_code,
+    ayto_index,
+    municipios,
+    distritos,
+    conflict_log,
+    dubious_ayto_log,
+):
+    """
+    Integra las 47 Escuelas de Bienvenida / Aulas de Enlace autorizadas para el curso 2026-2027
+    en centros privados concertados (Resolución de 25/08/2026, DG de Educación Concertada CAM):
+    - Si el centro ya figura en TEA (10 casos), añade 'compensatoria' en `extra_apoyos`.
+    - Si el centro es nuevo (37 casos), crea la entidad normalizada y georreferenciada con CKAN + Ayto.
+    """
+    tea_by_code = {r["codigo"]: r for r in tea_rows}
+    fecha_str = fecha_es(enlace_meta.get("fecha_informacion", "2026-08-25"))
+    curso = enlace_meta.get("curso", "2026/2027")
+    fuente_texto = (
+        f"Comunidad de Madrid · Resolución de Aulas de Enlace en centros sostenidos con fondos públicos, "
+        f"curso {curso} (resolución de {fecha_str})"
+    )
+    fecha_corte_texto = f"Curso {curso} · resolución {fecha_str}"
+
+    new_rows = []
+    overlap_count = 0
+
+    for r in enlace_rows:
+        codigo = r["codigo_centro"].strip()
+        enlace_raw_name = r["centro"].strip()
+        aulas_raw = r["aulas"].strip()
+        ratio_raw = r["ratio_profesores"].strip()
+        etapas_enlace, etapa_oficial = stages_for_aula_enlace(aulas_raw)
+
+        recursos = [
+            f"Aula de Enlace autorizada ({aulas_raw}) · ratio {ratio_raw} profesor(es) en curso {curso}",
+            "Programa Escuelas de Bienvenida para alumnado de incorporación tardía con desconocimiento del español",
+            "Acogida lingüística e integración progresiva en el grupo ordinario (Decreto 23/2023)",
+        ]
+        detalles = (
+            f"Centro autorizado con Aula de Enlace (Escuelas de Bienvenida) para el curso {curso} mediante "
+            f"Resolución de la Dirección General de Educación Concertada de {fecha_str}. "
+            f"Dotación autorizada: {aulas_raw} (ratio {ratio_raw} profesor/es). Dirigido a alumnado de "
+            "incorporación tardía desde 3.º de Educación Primaria o cursos siguientes con desconocimiento de la "
+            "lengua española, mediante acogida lingüística y coordinación con su grupo ordinario."
+        )
+
+        ckan_rec = ckan_by_code.get(codigo)
+        ckan_raw_name = str(ckan_rec.get("CENTRO", "") or "").strip() if ckan_rec else ""
+        if ckan_raw_name and compact_alnum(enlace_raw_name) != compact_alnum(ckan_raw_name) and not has_name_overlap(enlace_raw_name, ckan_raw_name):
+            conflict_log.append({
+                "codigo": codigo,
+                "fuente_secundaria": "Aulas de Enlace 2026/27",
+                "nombre_ckan_cam": ckan_raw_name,
+                "nombre_resolucion_enlace": enlace_raw_name,
+                "criterio_aplicado": "Se usa la denominación oficial del registro CAM (CKAN).",
+            })
+
+        if codigo in tea_by_code:
+            overlap_count += 1
+            existing = tea_by_code[codigo]
+            existing.setdefault("extra_apoyos", []).append({
+                "need_id": "compensatoria",
+                "necesidad": "COMPENSATORIA",
+                "evidencia": "A1",
+                "etapas_con_apoyo": etapas_enlace,
+                "recursos": recursos,
+                "fuente": fuente_texto,
+                "fecha_corte": fecha_corte_texto,
+                "detalles": detalles,
+            })
+            existing.setdefault("observaciones", []).append(
+                f"Autorizado también como Escuela de Bienvenida (Aula de Enlace) para el curso {curso} "
+                f"({aulas_raw}, ratio {ratio_raw} profesor/es según Resolución de {fecha_str})."
+            )
+            continue
+
+        if ckan_rec:
+            mun_raw = str(ckan_rec.get("MUNICIPIO", "") or "").strip()
+            dist_raw = str(ckan_rec.get("DISTRITO", "") or "").strip()
+            municipio, distrito, ref_geo, nivel = resolve_ckan_place(mun_raw, dist_raw, municipios, distritos)
+        else:
+            dat_key = "DAT CAPITAL" if "CAPITAL" in r["dat"].upper() else r["dat"].strip()
+            municipio, distrito, ref_geo, nivel = resolve_place(
+                r["municipio_o_distrito"].strip(), dat_key, municipios, distritos
+            )
+
+        utm_x = str(ckan_rec.get("UTM_X", "") or "").strip() if ckan_rec else ""
+        utm_y = str(ckan_rec.get("UTM_Y", "") or "").strip() if ckan_rec else ""
+        if ckan_rec and utm_x and utm_y:
+            lat, lng = utm30n_to_wgs84(float(utm_x), float(utm_y))
+            ubicacion_aprox = False
+            ubicacion_metodo = (
+                "Coordenadas oficiales UTM (ETRS89) del conjunto 'Centros educativos de la Comunidad de Madrid' "
+                "(Portal de Datos Abiertos CAM, CC BY 4.0)."
+            )
+        else:
+            lat, lng = float(ref_geo["lat"]), float(ref_geo["lng"])
+            ubicacion_aprox = True
+            ubicacion_metodo = f"Centroide oficial del {nivel} (IGN) al no constar coordenadas UTM en CKAN."
+
+        direccion, codigo_postal, telefono, email, web = extract_contact(ckan_rec)
+        tipo_general_ckan = str(ckan_rec.get("TIPO_EXT", "") or "").strip() if ckan_rec else ""
+        ckan_tipo_abrv = str(ckan_rec.get("TIPO_ABRV", "") or "").strip() if ckan_rec else ""
+        raw_name = ckan_raw_name or enlace_raw_name
+
+        tipo_app, titularidad, centre_stages, prefijo = TIPO_INFO.get(
+            ckan_tipo_abrv, ("Colegio Concertado", "concertado", etapas_enlace, "Colegio")
+        )
+        nombre_base = title_es(raw_name)
+        lower_base = nombre_base.lower()
+        if prefijo and not lower_base.startswith(("colegio", "real colegio", "agrupación escolar", "instituto", "ciudadescuela")):
+            nombre = f"{prefijo} {nombre_base}"
+        else:
+            nombre = nombre_base
+
+        ayto_info = {}
+        if municipio == "Madrid":
+            matched = match_ayuntamiento_record(
+                raw_name, codigo_postal, telefono, email, lat, lng, ayto_index, codigo=codigo, dubious_log=dubious_ayto_log
+            )
+            ayto_info = extract_ayto_enrichment(matched)
+
+        observaciones = [
+            f"Escuela de Bienvenida (Aula de Enlace) autorizada para el curso {curso}: {aulas_raw}, ratio {ratio_raw} profesor/es."
+        ]
+
+        new_rows.append({
+            "codigo": codigo,
+            "nombre": nombre,
+            "nombre_oficial": raw_name,
+            "tipo_oficial": ckan_tipo_abrv or "CPR",
+            "tipo_general_oficial": tipo_general_ckan or "CENTRO PRIVADO CONCERTADO",
+            "tipo": tipo_app,
+            "titularidad": titularidad,
+            "modalidad": "preferente",
+            "dat": str(ckan_rec.get("DAT", "") or r["dat"]).strip() if ckan_rec else r["dat"].strip(),
+            "municipio": municipio,
+            "distrito": distrito,
+            "barrio": ayto_info.get("barrio", ""),
+            "codigo_postal": codigo_postal,
+            "direccion": direccion,
+            "telefono": telefono,
+            "email": email,
+            "web": web,
+            "necesidad": "COMPENSATORIA",
+            "need_id": "compensatoria",
+            "evidencia": "A1",
+            "situacion_oficial": str(ckan_rec.get("SITUACIÓN", "ALTA") or "ALTA").strip() if ckan_rec else "ALTA",
+            "etapa_oficial": etapa_oficial,
+            "etapas_con_apoyo": etapas_enlace,
+            "etapas_generales_centro": centre_stages or etapas_enlace,
+            "extra_apoyos": [],
+            "aulas_enlace_info": {
+                "aulas": aulas_raw,
+                "ratio_profesores": ratio_raw,
+                "curso": curso,
+                "fecha_resolucion": enlace_meta.get("fecha_informacion", "2026-08-25"),
+                "recursos": recursos,
+                "detalles": detalles,
+            },
+            "latitud": lat,
+            "longitud": lng,
+            "ubicacion_aproximada": ubicacion_aprox,
+            "ubicacion_metodo": ubicacion_metodo,
+            "transporte_publico": ayto_info.get("transporte_publico", ""),
+            "servicios_ayto": ayto_info.get("servicios", {}),
+            "servicios_confirmados_ayto": ayto_info.get("servicios_confirmados_ayto", False),
+            "accesibilidad_codigo_ayto": ayto_info.get("accesibilidad_codigo_ayto", ""),
+            "accesibilidad_ayto": ayto_info.get("accesibilidad", {}),
+            "accesibilidad_confirmada_ayto": ayto_info.get("accesibilidad_confirmada_ayto", False),
+            "fuente_ayuntamiento": ayto_info.get("fuente_ayuntamiento", ""),
+            "fuente": fuente_texto,
+            "fuente_datos_abiertos": (
+                "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0)"
+                if ckan_rec
+                else ""
+            ),
+            "fuente_url": enlace_meta.get("url", ""),
+            "fecha_informacion": enlace_meta.get("fecha_informacion", "2026-08-25"),
+            "curso": curso,
+            "observaciones": observaciones,
+            "es_sintetico": False,
+            "es_demostracion": False,
+        })
+
+    return new_rows, overlap_count
+
+
 def ingest_official_data():
-    print("[Pipeline - Ingest] Cargando relación TEA, catálogo completo Datos Abiertos CAM (CEE + Hospital) y Ayto. de Madrid...")
+    print("[Pipeline - Ingest] Cargando relación TEA, Aulas de Enlace 2026/27, Datos Abiertos CAM y Ayto. de Madrid...")
     os.makedirs(OUTPUT_RAW_DIR, exist_ok=True)
     os.makedirs(OUTPUT_PROC_DIR, exist_ok=True)
     os.makedirs(REVIEW_DIR, exist_ok=True)
@@ -1192,7 +1496,16 @@ def ingest_official_data():
     snapshot_codes = [r["codigo_centro"].strip() for r in snapshot_rows]
     print(f"  ✓ Instantánea TEA versionada: {len(snapshot_rows)} centros ({SNAPSHOT_CSV}, SHA-256 {csv_sha[:16]}…)")
 
+    enlace_rows, enlace_meta, enlace_sha = load_aulas_enlace_snapshot()
+    enlace_codes = [r["codigo_centro"].strip() for r in enlace_rows]
+    if enlace_rows:
+        print(
+            f"  ✓ Instantánea Aulas de Enlace 2026/27: {len(enlace_rows)} centros concertados "
+            f"({ENLACE_CSV}, SHA-256 {enlace_sha[:16]}…)"
+        )
+
     status, pdf_info = verify_against_official(snap_meta, snapshot_codes)
+    enlace_status, enlace_pdf_info = verify_aulas_enlace_against_official(enlace_meta, enlace_codes)
     ckan_by_code, ckan_status, ckan_sha, ckan_url, ckan_date = load_ckan_all()
     ayto_rows, ayto_status, ayto_sha, ayto_date = load_ayuntamiento_centres()
     ayto_index = build_ayto_index(ayto_rows)
@@ -1210,7 +1523,10 @@ def ingest_official_data():
     tea_rows = normalise_tea_rows(
         snapshot_rows, snap_meta, ckan_by_code, ayto_index, municipios, distritos, conflict_log, dubious_ayto_log
     )
-    seen_codes = {r["codigo"] for r in tea_rows}
+    enlace_new_rows, enlace_overlap_count = normalise_aulas_enlace_rows(
+        enlace_rows, enlace_meta, tea_rows, ckan_by_code, ayto_index, municipios, distritos, conflict_log, dubious_ayto_log
+    )
+    seen_codes = {r["codigo"] for r in tea_rows} | {r["codigo"] for r in enlace_new_rows}
     extra_rows = normalise_cee_and_hospital_rows(
         ckan_by_code, seen_codes, ayto_index, municipios, distritos, ckan_date, dubious_ayto_log
     )
@@ -1237,9 +1553,13 @@ def ingest_official_data():
         }, f, indent=2, ensure_ascii=False)
     print(f"  ✓ Revisión de cruces Ayto. Madrid: {len(dubious_ayto_log)} candidatos descartados registrados en {dubious_path}")
 
-    rows = tea_rows + extra_rows + visual_aacc_rows
+    rows = tea_rows + enlace_new_rows + extra_rows + visual_aacc_rows
     cee_count = sum(1 for r in rows if r["need_id"] == "educacion_especial")
     hosp_count = sum(1 for r in rows if r["need_id"] == "salud_hospitalaria")
+    enlace_count = sum(
+        1 for r in rows
+        if r["need_id"] == "compensatoria" or any(a.get("need_id") == "compensatoria" for a in r.get("extra_apoyos", []))
+    )
     visual_count = sum(
         1 for r in rows
         if r["need_id"] == "visual" or any(a.get("need_id") == "visual" for a in r.get("extra_apoyos", []))
@@ -1261,6 +1581,14 @@ def ingest_official_data():
 
     metadata = {
         "url": snap_meta["url"],
+        "aulas_enlace_url": enlace_meta.get("url"),
+        "aulas_enlace_portal_url": enlace_meta.get("portal_url"),
+        "aulas_enlace_curso": enlace_meta.get("curso"),
+        "aulas_enlace_fecha_informacion": enlace_meta.get("fecha_informacion"),
+        "aulas_enlace_status": enlace_status,
+        "aulas_enlace_sha256": enlace_sha,
+        "aulas_enlace_pdf_sha256": enlace_pdf_info.get("pdf_sha256"),
+        "aulas_enlace_solapamientos_tea": enlace_overlap_count,
         "ckan_dataset_url": ckan_url,
         "ayto_dataset_url": "https://datos.madrid.es/egob/catalogo/300614-0-centros-educativos.csv",
         "retrieved_at": retrieved_at,
@@ -1284,6 +1612,7 @@ def ingest_official_data():
         "counts": {
             "total": len(rows),
             "tea": len(tea_rows),
+            "compensatoria": enlace_count,
             "educacion_especial": cee_count,
             "salud_hospitalaria": hosp_count,
             "visual": visual_count,
@@ -1310,13 +1639,15 @@ def ingest_official_data():
             "exact_location_records": exact_count,
             "is_demonstration_sample": False,
             "alcance": snap_meta["alcance"],
+            "alcance_aulas_enlace": enlace_meta.get("alcance", ""),
             "advertencia_oficial": snap_meta["advertencia_oficial"],
             "rows": rows,
         }, f, indent=2, ensure_ascii=False)
 
     print(
-        f"  ✓ Ingesta completada ({status} | {ckan_status} ({ckan_date}) | {ayto_status} ({ayto_date})). "
-        f"{len(rows)} centros reales normalizados (TEA: {len(tea_rows)}, CEE: {cee_count}, Hospitalaria: {hosp_count}, "
+        f"  ✓ Ingesta completada ({status} | Enlace: {enlace_status} | {ckan_status} ({ckan_date}) | {ayto_status} ({ayto_date})). "
+        f"{len(rows)} centros reales normalizados (TEA: {len(tea_rows)}, Aulas de Enlace: {enlace_count} "
+        f"[{len(enlace_new_rows)} nuevos + {enlace_overlap_count} con TEA], CEE: {cee_count}, Hospitalaria: {hosp_count}, "
         f"Visual: {visual_count}, Altas Capacidades: {aacc_count}, Auditiva: {auditiva_count}, "
         f"Motora: {motora_count}, TDAH: {tdah_count}, TEL: {tel_count}; "
         f"{exact_count} coordenadas exactas, {ayto_matched_count} enriquecidos con Ayto. Madrid)."

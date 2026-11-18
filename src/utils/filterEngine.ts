@@ -295,6 +295,7 @@ export function computeDynamicCounts(schools: School[], state: SearchState): Dyn
 
 const ACTIVE_CATALOG_NEEDS: NeedId[] = [
   'tea',
+  'compensatoria',
   'educacion_especial',
   'salud_hospitalaria',
   'visual',
@@ -395,8 +396,14 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
     return { reason, failingConditions, relaxations };
   }
 
-  // Caso B: Servicios municipales (solo Madrid capital) o Evidencia A1 cuando el filtro actual da 0
-  if (state.requiredServices.length > 0 || state.accessibilityRequired.length > 0 || (state.evidence.length === 1 && state.evidence[0] === 'A1')) {
+  // Caso B: Aulas de Enlace públicas (sin CSV nominativo), servicios municipales o Evidencia A1
+  if (
+    state.need === 'compensatoria' &&
+    state.ownership.includes('publico') &&
+    !state.ownership.includes('concertado')
+  ) {
+    reason = `Las ${OFFICIAL_TEA_SOURCE.totalCompensatoria} Escuelas de Bienvenida / Aulas de Enlace cargadas (${OFFICIAL_TEA_SOURCE.cursoAulasEnlace}) corresponden a centros concertados autorizados. La Consejería no publica un listado abierto nominativo de Aulas de Enlace en CEIP/IES públicos, que se asignan vía DAT/SAE.`;
+  } else if (state.requiredServices.length > 0 || state.accessibilityRequired.length > 0 || (state.evidence.length === 1 && state.evidence[0] === 'A1')) {
     if (state.need === 'tea' && state.evidence.length === 1 && state.evidence[0] === 'A1') {
       reason = `Todos los centros preferentes TEA proceden de la publicación 2024/25 (nivel A2, por comprobar vigencia actual ante el SAE).`;
     } else if (state.requiredServices.length > 0 || state.accessibilityRequired.length > 0) {
@@ -512,8 +519,8 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
     }
   }
 
-  // 4. Probar relajar titularidad si solo hay una seleccionada
-  if (state.ownership.length === 1) {
+  // 4. Probar relajar titularidad si hay alguna restringida
+  if (state.ownership.length > 0) {
     const stateAnyOwnership: SearchState = { ...state, ownership: [] };
     const countOwnership = schools.filter(s => matchesCentre(s, stateAnyOwnership)).length;
     if (countOwnership > 0) {
@@ -831,6 +838,7 @@ export function downloadResultsJSON(schools: School[], state: SearchState) {
       fuentesDatos: {
         datosAbiertosCam: "Portal de Datos Abiertos CAM · Centros educativos de la Comunidad de Madrid (CC BY 4.0): directorio maestro, 69 CEE (ALTA), 14 Aulas Hospitalarias, Discapacidad Visual (EOEP + CRE ONCE), Altas Capacidades (CREACIM + EOEP + 8 sedes PEAC) y EOEP Específicos de Auditivas, Motóricas y Lenguaje/TDAH",
         listadoTea: "Comunidad de Madrid · Centros de atención preferente TEA (curso 2024/2025, información a 22/03/2024)",
+        aulasEnlace: "Comunidad de Madrid · DG Concertada: Resolución 2026/2027 de Escuelas de Bienvenida / Aulas de Enlace (47 centros privados concertados autorizados, 25/08/2026)",
         onceInclusion: "ONCE · Convenio CAM-ONCE y C.R.E. «Antonio Vicente Mosquete» (Educación Inclusiva)",
         altasCapacidadesPeac: "Comunidad de Madrid · CREACIM, EOEP Específico y 8 sedes IES del Programa PEAC",
         ayuntamientoMadrid: "Portal de Datos Abiertos Ayuntamiento de Madrid (datos.madrid.es, conjunto 300614-0): transporte público, barrio, servicios y códigos oficiales ACCESIBILIDAD (0..6) en Madrid capital"

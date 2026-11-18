@@ -143,7 +143,7 @@ export default function App({ initialSchools }: AppProps = {}) {
     []
   );
 
-  // Catálogo oficial (433 entidades) cargado de forma asíncrona desde public/data/centros.json
+  // Catálogo oficial (470 entidades) cargado de forma asíncrona desde public/data/centros.json
   const [schoolsCatalog, setSchoolsCatalog] = useState<School[]>(() => initialSchools ?? []);
   const [isCatalogLoading, setIsCatalogLoading] = useState<boolean>(() => !initialSchools);
   const [catalogError, setCatalogError] = useState<string | null>(null);
@@ -180,6 +180,13 @@ export default function App({ initialSchools }: AppProps = {}) {
   const [passportIds, setPassportIds] = useState<string[]>(() =>
     readStoredStringArray('madrid_educa_passport')
   );
+
+  useEffect(() => {
+    if (schoolsCatalog.length > 0) {
+      setComparedIds(prev => prev.filter(id => schoolsCatalog.some(s => s.id === id)));
+      setPassportIds(prev => prev.filter(id => schoolsCatalog.some(s => s.id === id)));
+    }
+  }, [schoolsCatalog]);
 
   // Estado del modal de ficha / evidencia
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
@@ -409,8 +416,8 @@ export default function App({ initialSchools }: AppProps = {}) {
       <Header
         currentTab={activeTab}
         onSelectTab={handleSelectTab}
-        comparedCount={comparedIds.length}
-        passportCount={passportIds.length}
+        comparedCount={comparedSchools.length}
+        passportCount={passportSchools.length}
         onOpenTestModal={() => setIsTestModalOpen(true)}
         onOpenLegalModal={() => setIsLegalModalOpen(true)}
         isEasyReadMode={isEasyReadMode}
@@ -430,7 +437,7 @@ export default function App({ initialSchools }: AppProps = {}) {
                 Datos abiertos · CAM + Ayto. Madrid
               </span>
               <span className="text-xs text-slate-700 leading-snug">
-                <strong className="text-slate-900">Catálogo oficial:</strong> {OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos ({OFFICIAL_TEA_SOURCE.totalCentros} TEA · {OFFICIAL_TEA_SOURCE.totalCee} CEE · {OFFICIAL_TEA_SOURCE.totalHospitalarias} Hosp. · {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} AACC · {OFFICIAL_TEA_SOURCE.totalVisual} Visual · EOEP Auditiva/Motora/TDAH-TEL), {OFFICIAL_TEA_SOURCE.totalConTransporteAyto} en Madrid capital vía <span className="font-mono">datos.madrid.es</span>.
+                <strong className="text-slate-900">Catálogo oficial:</strong> {OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos ({OFFICIAL_TEA_SOURCE.totalCentros} TEA · {OFFICIAL_TEA_SOURCE.totalCompensatoria} Aulas de Enlace · {OFFICIAL_TEA_SOURCE.totalCee} CEE · {OFFICIAL_TEA_SOURCE.totalHospitalarias} Hosp. · {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} AACC · {OFFICIAL_TEA_SOURCE.totalVisual} Visual · EOEP Auditiva/Motora/TDAH-TEL), {OFFICIAL_TEA_SOURCE.totalConTransporteAyto} en Madrid capital vía <span className="font-mono">datos.madrid.es</span>.
               </span>
             </div>
             <div className="flex items-center gap-3 shrink-0">
@@ -541,6 +548,7 @@ export default function App({ initialSchools }: AppProps = {}) {
                 className={`rounded-xl border px-3.5 py-2.5 text-xs leading-relaxed ${
                   !searchState.need ||
                   searchState.need === 'tea' ||
+                  searchState.need === 'compensatoria' ||
                   searchState.need === 'educacion_especial' ||
                   searchState.need === 'salud_hospitalaria' ||
                   searchState.need === 'visual' ||
@@ -644,11 +652,12 @@ export default function App({ initialSchools }: AppProps = {}) {
                   </>
                 ) : (
                   <>
-                    <span className="font-bold">Escuelas de Bienvenida / Aulas de Enlace:</span> Programa de incorporación temporal gestionado por las Direcciones de Área Territorial (DAT).{' '}
+                    <span className="font-bold">Escuelas de Bienvenida / Aulas de Enlace:</span>{' '}
+                    {OFFICIAL_TEA_SOURCE.totalCompensatoria} centros concertados autorizados (curso {OFFICIAL_TEA_SOURCE.cursoAulasEnlace}, Nivel A1) · Red pública CEIP/IES gestionada vía DAT/SAE.{' '}
                     <button
                       type="button"
                       onClick={() => setProcedureTopic('compensatoria')}
-                      className="font-bold underline cursor-pointer text-amber-950 ml-1"
+                      className="font-bold underline cursor-pointer text-emerald-950 ml-1"
                     >
                       Ver guía oficial DAT / SAE
                     </button>
@@ -962,7 +971,7 @@ export default function App({ initialSchools }: AppProps = {}) {
                 Proyecto cívico de datos abiertos con evidencia documental y filtros acumulativos.
               </p>
               <p className="text-xs text-slate-600">
-                Fuentes: Datos Abiertos CAM (CC BY 4.0), Consejería de Educación (TEA 2024/25) y Ayuntamiento de Madrid (datos.madrid.es).
+                Fuentes: Datos Abiertos CAM (CC BY 4.0), Consejería de Educación (TEA 2024/25 y Aulas de Enlace 2026/27) y Ayuntamiento de Madrid (datos.madrid.es).
               </p>
               <p className="text-xs text-slate-700 font-medium">
                 Privacidad: tus notas del Pasaporte y ubicación GPS no salen de tu navegador.
