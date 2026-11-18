@@ -50,10 +50,11 @@ export const Header: React.FC<HeaderProps> = ({
   const [isShareExportOpen, setIsShareExportOpen] = useState(false);
   const [isMobileExportOpen, setIsMobileExportOpen] = useState(false);
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
+  const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
   const shareExportMenuRef = useRef<HTMLDivElement>(null);
   const moreMenuRef = useRef<HTMLDivElement>(null);
 
-  // Cerrar menús al hacer clic fuera
+  // Cerrar menús al hacer clic fuera o pulsar Escape
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (shareExportMenuRef.current && !shareExportMenuRef.current.contains(event.target as Node)) {
@@ -63,8 +64,20 @@ export const Header: React.FC<HeaderProps> = ({
         setIsMoreMenuOpen(false);
       }
     }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsShareExportOpen(false);
+        setIsMoreMenuOpen(false);
+        setIsMobileExportOpen(false);
+        setIsMobileMoreOpen(false);
+      }
+    }
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   return (
@@ -151,12 +164,16 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="relative" ref={shareExportMenuRef}>
               <button
                 type="button"
-                onClick={() => setIsShareExportOpen(!isShareExportOpen)}
+                onClick={() => {
+                  setIsShareExportOpen(prev => !prev);
+                  setIsMoreMenuOpen(false);
+                }}
                 className={`px-3 py-1.5 rounded-xl transition-colors cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isShareExportOpen
                     ? 'bg-blue-50 text-blue-900 font-bold'
                     : 'hover:text-slate-900 hover:bg-slate-50'
                 }`}
+                aria-haspopup="true"
                 aria-expanded={isShareExportOpen}
               >
                 <Share2 className="w-4 h-4 text-blue-700 shrink-0" />
@@ -220,12 +237,16 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="relative" ref={moreMenuRef}>
               <button
                 type="button"
-                onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+                onClick={() => {
+                  setIsMoreMenuOpen(prev => !prev);
+                  setIsShareExportOpen(false);
+                }}
                 className={`px-3 py-1.5 rounded-xl transition-colors cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isMoreMenuOpen
                     ? 'bg-blue-50 text-blue-900 font-bold'
                     : 'hover:text-slate-900 hover:bg-slate-50'
                 }`}
+                aria-haspopup="true"
                 aria-expanded={isMoreMenuOpen}
               >
                 <span>Más</span>
@@ -316,12 +337,16 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
         </div>
 
-        {/* Sub-barra de navegación móvil compacta */}
+        {/* Sub-barra de navegación móvil compacta: Buscar, Comparar, Lectura Fácil, Exportar y Más */}
         <nav aria-label="Navegación móvil" className="md:hidden flex items-center overflow-x-auto px-3 py-1.5 bg-slate-50 border-t border-slate-200 text-xs gap-1.5">
           <button
             type="button"
             aria-current={currentTab === 'search' ? 'page' : undefined}
-            onClick={() => onSelectTab('search')}
+            onClick={() => {
+              onSelectTab('search');
+              setIsMobileExportOpen(false);
+              setIsMobileMoreOpen(false);
+            }}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
               currentTab === 'search' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
             }`}
@@ -331,7 +356,11 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             aria-current={currentTab === 'comparator' ? 'page' : undefined}
-            onClick={() => onSelectTab('comparator')}
+            onClick={() => {
+              onSelectTab('comparator');
+              setIsMobileExportOpen(false);
+              setIsMobileMoreOpen(false);
+            }}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
               currentTab === 'comparator' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
             }`}
@@ -350,8 +379,12 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             type="button"
+            aria-haspopup="true"
             aria-expanded={isMobileExportOpen}
-            onClick={() => setIsMobileExportOpen(prev => !prev)}
+            onClick={() => {
+              setIsMobileExportOpen(prev => !prev);
+              setIsMobileMoreOpen(false);
+            }}
             className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer inline-flex items-center gap-1 ${
               isMobileExportOpen ? 'bg-blue-100 text-blue-950 font-bold' : 'text-slate-700'
             }`}
@@ -361,47 +394,20 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             type="button"
-            aria-current={currentTab === 'continuity' ? 'page' : undefined}
-            onClick={() => onSelectTab('continuity')}
-            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              currentTab === 'continuity' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
+            aria-haspopup="true"
+            aria-expanded={isMobileMoreOpen}
+            onClick={() => {
+              setIsMobileMoreOpen(prev => !prev);
+              setIsMobileExportOpen(false);
+            }}
+            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer inline-flex items-center gap-1 ${
+              isMobileMoreOpen || ['continuity', 'passport', 'sources'].includes(currentTab)
+                ? 'bg-blue-100 text-blue-950 font-bold'
+                : 'text-slate-700'
             }`}
           >
-            Continuidad
-          </button>
-          <button
-            type="button"
-            aria-current={currentTab === 'passport' ? 'page' : undefined}
-            onClick={() => onSelectTab('passport')}
-            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              currentTab === 'passport' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
-            }`}
-          >
-            Pasaporte ({passportCount})
-          </button>
-          <button
-            type="button"
-            aria-current={currentTab === 'sources' ? 'page' : undefined}
-            onClick={() => onSelectTab('sources')}
-            className={`whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium cursor-pointer ${
-              currentTab === 'sources' ? 'bg-white shadow-xs text-blue-900 font-bold' : 'text-slate-700'
-            }`}
-          >
-            Fuentes
-          </button>
-          <button
-            type="button"
-            onClick={onOpenLegalModal}
-            className="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-medium text-slate-700 hover:text-slate-900 cursor-pointer"
-          >
-            Aviso Legal
-          </button>
-          <button
-            type="button"
-            onClick={onOpenTestModal}
-            className="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-lg font-semibold text-blue-800 bg-blue-50 hover:bg-blue-100 cursor-pointer"
-          >
-            Pruebas FIL
+            <span>Más</span>
+            <ChevronDown className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
         </nav>
 
@@ -440,6 +446,77 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Download className="w-3.5 h-3.5" aria-hidden="true" />
               <span>JSON</span>
+            </button>
+          </div>
+        )}
+
+        {/* Panel móvil desplegable "Más" */}
+        {isMobileMoreOpen && (
+          <div className="md:hidden bg-white border-t border-slate-200 px-3 py-2 flex flex-wrap items-center gap-2 text-xs">
+            <button
+              type="button"
+              aria-current={currentTab === 'continuity' ? 'page' : undefined}
+              onClick={() => {
+                onSelectTab('continuity');
+                setIsMobileMoreOpen(false);
+              }}
+              className={`px-2.5 py-1.5 rounded-lg border font-semibold cursor-pointer ${
+                currentTab === 'continuity'
+                  ? 'bg-blue-50 border-blue-300 text-blue-950'
+                  : 'bg-slate-50 border-slate-200 text-slate-800'
+              }`}
+            >
+              Continuidad
+            </button>
+            <button
+              type="button"
+              aria-current={currentTab === 'passport' ? 'page' : undefined}
+              onClick={() => {
+                onSelectTab('passport');
+                setIsMobileMoreOpen(false);
+              }}
+              className={`px-2.5 py-1.5 rounded-lg border font-semibold cursor-pointer ${
+                currentTab === 'passport'
+                  ? 'bg-blue-50 border-blue-300 text-blue-950'
+                  : 'bg-slate-50 border-slate-200 text-slate-800'
+              }`}
+            >
+              Pasaporte ({passportCount})
+            </button>
+            <button
+              type="button"
+              aria-current={currentTab === 'sources' ? 'page' : undefined}
+              onClick={() => {
+                onSelectTab('sources');
+                setIsMobileMoreOpen(false);
+              }}
+              className={`px-2.5 py-1.5 rounded-lg border font-semibold cursor-pointer ${
+                currentTab === 'sources'
+                  ? 'bg-blue-50 border-blue-300 text-blue-950'
+                  : 'bg-slate-50 border-slate-200 text-slate-800'
+              }`}
+            >
+              Fuentes Oficiales
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onOpenLegalModal();
+                setIsMobileMoreOpen(false);
+              }}
+              className="px-2.5 py-1.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-800 font-semibold cursor-pointer"
+            >
+              Aviso Legal
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onOpenTestModal();
+                setIsMobileMoreOpen(false);
+              }}
+              className="px-2.5 py-1.5 rounded-lg border bg-blue-50 border-blue-200 text-blue-900 font-semibold cursor-pointer"
+            >
+              Pruebas FIL
             </button>
           </div>
         )}

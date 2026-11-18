@@ -99,6 +99,16 @@ export default function App({ initialSchools }: AppProps = {}) {
   // Pestaña activa simplificada: Buscar, Continuidad, Comparador, Pasaporte, Fuentes
   const [activeTab, setActiveTab] = useState<'search' | 'continuity' | 'comparator' | 'passport' | 'sources'>('search');
 
+  const handleSelectTab = React.useCallback(
+    (tab: 'search' | 'continuity' | 'comparator' | 'passport' | 'sources') => {
+      setActiveTab(tab);
+      if (typeof window !== 'undefined' && !navigator.userAgent.includes('jsdom')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    },
+    []
+  );
+
   // Catálogo oficial (433 entidades) cargado de forma asíncrona desde public/data/centros.json
   const [schoolsCatalog, setSchoolsCatalog] = useState<School[]>(() => initialSchools ?? []);
   const [isCatalogLoading, setIsCatalogLoading] = useState<boolean>(() => !initialSchools);
@@ -374,7 +384,7 @@ export default function App({ initialSchools }: AppProps = {}) {
       {/* 1. Encabezado Oficial con Menú "Más" y Notificación Legal Desescalada */}
       <Header
         currentTab={activeTab}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleSelectTab}
         comparedCount={comparedIds.length}
         passportCount={passportIds.length}
         onOpenTestModal={() => setIsTestModalOpen(true)}
@@ -389,21 +399,21 @@ export default function App({ initialSchools }: AppProps = {}) {
       {/* 3. Contenido Principal (todo el contenido visible dentro de regiones ARIA) */}
       <main id="main-content" className="flex-1 w-full min-w-0">
         {/* Aviso de Transparencia y Origen de Datos dentro del landmark principal */}
-        <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-xs text-amber-950">
+        <div className="bg-slate-100/90 border-b border-slate-200 px-4 py-1.5 text-xs text-slate-700">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
-              <span className="font-bold uppercase tracking-wide bg-blue-100 text-blue-950 px-2.5 py-0.5 rounded text-xs leading-tight">
+              <span className="font-bold uppercase tracking-wide bg-blue-100 text-blue-950 px-2 py-0.5 rounded text-xs leading-tight">
                 Datos abiertos · CAM + Ayto. Madrid
               </span>
-              <span className="text-xs text-amber-950 leading-snug">
-                <strong>Transparencia:</strong> {OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos oficiales ({OFFICIAL_TEA_SOURCE.totalCentros} TEA · {OFFICIAL_TEA_SOURCE.totalCee} CEE · {OFFICIAL_TEA_SOURCE.totalHospitalarias} Hosp. · {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} AACC · {OFFICIAL_TEA_SOURCE.totalVisual} Visual · EOEP Auditiva/Motora/TDAH-TEL), con {OFFICIAL_TEA_SOURCE.totalConTransporteAyto} en Madrid capital vía <span className="font-mono">datos.madrid.es</span>.
+              <span className="text-xs text-slate-700 leading-snug">
+                <strong className="text-slate-900">Catálogo oficial:</strong> {OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos ({OFFICIAL_TEA_SOURCE.totalCentros} TEA · {OFFICIAL_TEA_SOURCE.totalCee} CEE · {OFFICIAL_TEA_SOURCE.totalHospitalarias} Hosp. · {OFFICIAL_TEA_SOURCE.totalAltasCapacidades} AACC · {OFFICIAL_TEA_SOURCE.totalVisual} Visual · EOEP Auditiva/Motora/TDAH-TEL), {OFFICIAL_TEA_SOURCE.totalConTransporteAyto} en Madrid capital vía <span className="font-mono">datos.madrid.es</span>.
               </span>
             </div>
             <div className="flex items-center gap-3 shrink-0">
               <button
                 type="button"
                 onClick={() => setIsLegalModalOpen(true)}
-                className="text-xs font-bold text-amber-950 hover:underline cursor-pointer"
+                className="text-xs font-bold text-slate-800 hover:text-blue-900 hover:underline cursor-pointer"
               >
                 Marco y Privacidad
               </button>
@@ -411,7 +421,7 @@ export default function App({ initialSchools }: AppProps = {}) {
                 href="https://www.comunidad.madrid/servicios/educacion"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-bold text-amber-950 hover:underline inline-flex items-center gap-1"
+                className="text-xs font-bold text-slate-800 hover:text-blue-900 hover:underline inline-flex items-center gap-1"
               >
                 <span>Portal Educación CAM</span>
                 <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -633,8 +643,18 @@ export default function App({ initialSchools }: AppProps = {}) {
                     aria-label="Buscar centros por nombre, código o municipio"
                     value={searchState.searchQuery}
                     onChange={e => setSearchState(prev => ({ ...prev, searchQuery: e.target.value }))}
-                    className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cam-red focus:bg-white transition-all"
+                    className="w-full pl-9 pr-8 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cam-red focus:bg-white transition-all"
                   />
+                  {searchState.searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchState(prev => ({ ...prev, searchQuery: '' }))}
+                      aria-label="Limpiar búsqueda de texto"
+                      className="absolute right-1.5 top-1.5 p-1 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-200/70 cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" aria-hidden="true" />
+                    </button>
+                  )}
                 </div>
 
                 {/* Selector de modo de vista: Lista | Mapa (con mapa y lista combinados) */}
@@ -668,27 +688,35 @@ export default function App({ initialSchools }: AppProps = {}) {
                   </button>
                 </div>
 
-                {/* Selector de Ordenación (sólo Distancia y Alfabético) */}
-                <div className="flex items-center gap-2 w-full sm:w-auto justify-end text-xs">
-                  <ArrowUpDown className="w-3.5 h-3.5 text-slate-600 shrink-0" aria-hidden="true" />
-                  <label htmlFor="sort-select" className="text-slate-700 font-medium hidden sm:inline">
-                    Ordenar:
-                  </label>
-                  <select
-                    id="sort-select"
-                    aria-label="Ordenar resultados"
-                    value={searchState.sort}
-                    onChange={e =>
-                      setSearchState(prev => ({
-                        ...prev,
-                        sort: e.target.value as 'distance' | 'alphabetical'
-                      }))
-                    }
-                    className="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1 text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 cursor-pointer font-medium"
+                {/* Contador en vivo + Selector de Ordenación */}
+                <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end text-xs">
+                  <span
+                    aria-live="polite"
+                    className="hidden lg:inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 font-mono font-bold tabular-nums"
                   >
-                    <option value="distance">Distancia</option>
-                    <option value="alphabetical">Alfabético (A-Z)</option>
-                  </select>
+                    {filteredSchools.length} {filteredSchools.length === 1 ? 'resultado' : 'resultados'}
+                  </span>
+                  <div className="flex items-center gap-2 ml-auto sm:ml-0">
+                    <ArrowUpDown className="w-3.5 h-3.5 text-slate-600 shrink-0" aria-hidden="true" />
+                    <label htmlFor="sort-select" className="text-slate-700 font-medium hidden sm:inline">
+                      Ordenar:
+                    </label>
+                    <select
+                      id="sort-select"
+                      aria-label="Ordenar resultados"
+                      value={searchState.sort}
+                      onChange={e =>
+                        setSearchState(prev => ({
+                          ...prev,
+                          sort: e.target.value as 'distance' | 'alphabetical'
+                        }))
+                      }
+                      className="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1 text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 cursor-pointer font-medium"
+                    >
+                      <option value="distance">Distancia</option>
+                      <option value="alphabetical">Alfabético (A-Z)</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -916,11 +944,11 @@ export default function App({ initialSchools }: AppProps = {}) {
 
             <div className="col-span-1 md:col-span-2 space-y-6">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <button type="button" onClick={() => setActiveTab('passport')} className="text-left hover:text-blue-900 transition-colors cursor-pointer">
+                <button type="button" onClick={() => handleSelectTab('passport')} className="text-left hover:text-blue-900 transition-colors cursor-pointer">
                   <div className="font-semibold text-slate-900">Pasaporte Local</div>
                   <div className="text-xs text-slate-600">Consulta tus centros guardados</div>
                 </button>
-                <button type="button" onClick={() => setActiveTab('sources')} className="text-left hover:text-blue-900 transition-colors cursor-pointer">
+                <button type="button" onClick={() => handleSelectTab('sources')} className="text-left hover:text-blue-900 transition-colors cursor-pointer">
                   <div className="font-semibold text-slate-900">Fuentes y Datos</div>
                   <div className="text-xs text-slate-600">Datos Abiertos CAM y TEA</div>
                 </button>

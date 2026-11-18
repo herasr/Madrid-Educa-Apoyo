@@ -87,8 +87,17 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
     expect(screen.getByText('Copiar enlace compartible')).toBeInTheDocument();
     expect(screen.getByText('Descargar CSV')).toBeInTheDocument();
 
+    // Escape cierra los menús desplegables de la cabecera
+    await user.keyboard('{Escape}');
+    expect(screen.queryByText('Copiar enlace compartible')).not.toBeInTheDocument();
+
     await user.click(exportBtns[1]);
     expect(screen.getByText('Copiar enlace')).toBeInTheDocument();
+
+    const moreBtns = screen.getAllByRole('button', { name: /Más/i });
+    await user.click(moreBtns[1]);
+    expect(screen.getByText(/Pasaporte \(2\)/i)).toBeInTheDocument();
+    expect(screen.queryByText('Copiar enlace')).not.toBeInTheDocument();
 
     await expectNoA11yViolations(container);
   });
@@ -187,6 +196,14 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
     const easyReadBtn = screen.getAllByRole('button', { name: /Lectura Fácil/i })[0];
     await user.click(easyReadBtn);
     expect(screen.getByText(/Modo Lectura Fácil activo:/i)).toBeInTheDocument();
+
+    // Filtrar por código único y limpiar con el botón rápido
+    const searchInput = screen.getByRole('textbox', { name: /Buscar centros por nombre/i });
+    await user.type(searchInput, '28010722');
+    expect(screen.getByText(/1 resultado/i)).toBeInTheDocument();
+    const clearSearchBtn = screen.getByRole('button', { name: /Limpiar búsqueda de texto/i });
+    await user.click(clearSearchBtn);
+    expect(searchInput).toHaveValue('');
 
     // Abrir la ficha del primer centro y cerrarla con Escape
     const detailButtons = screen.getAllByRole('button', { name: /Ficha completa/i });

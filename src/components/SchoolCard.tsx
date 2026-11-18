@@ -355,13 +355,38 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
         <div className="text-xs text-slate-700 mt-2 mb-3 px-1 leading-relaxed">
           {school.telefono ? (
             isEasyReadMode ? (
-              `Teléfono oficial: ${school.telefono}.${
-                verifiedBadges.length === 0 ? ' Comedor y autobús escolar: debes preguntar en el colegio.' : ''
-              }`
+              <>
+                Teléfono oficial:{' '}
+                <a
+                  href={`tel:${school.telefono.replace(/\s+/g, '')}`}
+                  className="font-semibold text-blue-900 hover:underline"
+                >
+                  {school.telefono}
+                </a>
+                .{verifiedBadges.length === 0 ? ' Comedor y autobús escolar: debes preguntar en el colegio.' : ''}
+              </>
             ) : school.serviciosConfirmadosAyto ? (
-              `Tel. ${school.telefono} · Fuente municipal: datos.madrid.es`
+              <>
+                Tel.{' '}
+                <a
+                  href={`tel:${school.telefono.replace(/\s+/g, '')}`}
+                  className="font-semibold text-blue-900 hover:underline"
+                >
+                  {school.telefono}
+                </a>{' '}
+                · Fuente municipal: datos.madrid.es
+              </>
             ) : (
-              `Tel. ${school.telefono} · Servicios fuera de Madrid capital: sin datos en las fuentes oficiales.`
+              <>
+                Tel.{' '}
+                <a
+                  href={`tel:${school.telefono.replace(/\s+/g, '')}`}
+                  className="font-semibold text-blue-900 hover:underline"
+                >
+                  {school.telefono}
+                </a>{' '}
+                · Servicios fuera de Madrid capital: sin datos en las fuentes oficiales.
+              </>
             )
           ) : (
             formatText(
