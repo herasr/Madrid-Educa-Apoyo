@@ -9,5 +9,6 @@
   "sha256_fuente_completa": "a94f90133852ed85b16db8203b5c6498a5ba020967b651bb5d1119c399414360",
   "registros_totales_cam": 7757,
   "registros_cruzados_tea": 336,
-  "nota": "Subconjunto exacto de los 336 códigos del catálogo TEA preferentes 2024/25 extraído del dataset completo CKAN para trazabilidad, geolocalización oficial (UTM ETRS89) y datos de contacto."
+  "nota": "Subconjunto exacto de los 336 códigos del catálogo TEA preferentes 2024/25 extraído del dataset completo CKAN para trazabilidad, geolocalización oficial (UTM ETRS89) y datos de contacto.",
+  "sha256_instantanea_repo": "53ac91b26f8c3841bcb0d6cfe8f6b741ceca81f5e754439d142a376a0e66df16"
 }

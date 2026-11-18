@@ -8,6 +8,16 @@ coverage/
 !.env.example
 .aistudio/
 
+# Lockfile único: el CI usa npm ci (package-lock.json)
+bun.lock
+bun.lockb
+
 # PDF oficial descargado por el pipeline (se guarda su hash en metadata.json)
 data/raw/**/*.pdf
 __pycache__/
+.pytest_cache/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/

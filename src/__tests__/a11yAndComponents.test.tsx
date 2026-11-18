@@ -12,12 +12,15 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import axe from 'axe-core';
 
+import { Suspense } from 'react';
 import { Header } from '../components/Header';
 import { FilterSidebar } from '../components/FilterSidebar';
 import { SchoolDetailModal } from '../components/SchoolDetailModal';
 import { ComparatorView } from '../components/ComparatorView';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import App from '../App';
 import { computeDynamicCounts, INITIAL_SEARCH_STATE } from '../utils/filterEngine';
+import { lazyWithRetry } from '../utils/lazyWithRetry';
 import { TEST_ALL_SCHOOLS } from './catalogHelper';
 import { SearchState } from '../types';
 
@@ -278,5 +281,36 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
     expect(window.location.search).not.toContain('loc=browser');
 
     await expectNoA11yViolations(container);
+  });
+
+  it('ErrorBoundary y lazyWithRetry recuperan tras fallo de carga de chunk al pulsar Reintentar', async () => {
+    const user = userEvent.setup();
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    let shouldFail = true;
+    const LazySample = lazyWithRetry(
+      async () => {
+        if (shouldFail) {
+          throw new Error('ChunkLoadError simulado');
+        }
+        return { default: () => <div>Vista recuperada</div> };
+      },
+      0,
+      0
+    );
+
+    render(
+      <ErrorBoundary>
+        <Suspense fallback={<div>Cargando...</div>}>
+          <LazySample />
+        </Suspense>
+      </ErrorBoundary>
+    );
+
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText(/ChunkLoadError simulado/i)).toBeInTheDocument();
+
+    shouldFail = false;
+    await user.click(screen.getByRole('button', { name: /^Reintentar$/i }));
+    expect(await screen.findByText('Vista recuperada')).toBeInTheDocument();
   });
 });

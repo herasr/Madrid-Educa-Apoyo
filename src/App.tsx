@@ -40,28 +40,30 @@ import { ActiveFilterChips } from './components/ActiveFilterChips';
 import { SchoolCard } from './components/SchoolCard';
 import { ZeroResultsAdvice } from './components/ZeroResultsAdvice';
 
-const SchoolsMap = React.lazy(() =>
+import { lazyWithRetry } from './utils/lazyWithRetry';
+
+const SchoolsMap = lazyWithRetry(() =>
   import('./components/SchoolsMap').then(m => ({ default: m.SchoolsMap }))
 );
-const SchoolDetailModal = React.lazy(() =>
+const SchoolDetailModal = lazyWithRetry(() =>
   import('./components/SchoolDetailModal').then(m => ({ default: m.SchoolDetailModal }))
 );
-const ContinuityView = React.lazy(() =>
+const ContinuityView = lazyWithRetry(() =>
   import('./components/ContinuityView').then(m => ({ default: m.ContinuityView }))
 );
-const ComparatorView = React.lazy(() =>
+const ComparatorView = lazyWithRetry(() =>
   import('./components/ComparatorView').then(m => ({ default: m.ComparatorView }))
 );
-const PassportView = React.lazy(() =>
+const PassportView = lazyWithRetry(() =>
   import('./components/PassportView').then(m => ({ default: m.PassportView }))
 );
-const SourcesView = React.lazy(() =>
+const SourcesView = lazyWithRetry(() =>
   import('./components/SourcesView').then(m => ({ default: m.SourcesView }))
 );
-const OfficialProceduresModal = React.lazy(() =>
+const OfficialProceduresModal = lazyWithRetry(() =>
   import('./components/OfficialProceduresModal').then(m => ({ default: m.OfficialProceduresModal }))
 );
-const TestScenariosModal = React.lazy(() =>
+const TestScenariosModal = lazyWithRetry(() =>
   import('./components/TestScenariosModal').then(m => ({ default: m.TestScenariosModal }))
 );
 

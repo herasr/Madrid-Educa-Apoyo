@@ -26,8 +26,9 @@ import {
 import { LEGAL_DISCLAIMER } from '../data/disclaimerAndProcedures';
 import { simplifySchoolTitle, simplifyText } from '../utils/textSimplifier';
 import { useModalFocusTrap } from '../utils/useModalFocusTrap';
+import { lazyWithRetry } from '../utils/lazyWithRetry';
 
-const LazySchoolMiniMap = React.lazy(() =>
+const LazySchoolMiniMap = lazyWithRetry(() =>
   import('./SchoolMiniMap').then(m => ({ default: m.SchoolMiniMap }))
 );
 

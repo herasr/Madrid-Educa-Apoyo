@@ -220,6 +220,7 @@ def test_official_snapshot_sha256_integrity():
         ("tea_preferentes_curso_2024-25.csv", "tea_preferentes_curso_2024-25.metadata.json"),
         ("aulas_enlace_concertados_curso_2026-27.csv", "aulas_enlace_concertados_curso_2026-27.metadata.json"),
         ("centros_educativos_datos_abiertos_cam.json", "centros_educativos_datos_abiertos_cam.metadata.json"),
+        ("centros_educativos_datos_abiertos_tea.json", "centros_educativos_datos_abiertos_tea.metadata.json"),
         ("ayuntamiento_madrid_centros_300614.csv", "ayuntamiento_madrid_centros_300614.metadata.json"),
     ]
     official_dir = ROOT / "data" / "official"

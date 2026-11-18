@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://herasr.github.io/Madrid-Educa-Apoyo/sitemap.xml

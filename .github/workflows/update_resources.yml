@@ -20,6 +20,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +28,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Install Python dependencies
         run: |
@@ -49,6 +51,9 @@ jobs:
 
       - name: Generate web data module from official data
         run: python scripts/build_app_data.py
+
+      - name: Verify snapshot integrity (sha256_instantanea_repo)
+        run: python scripts/snapshot_hashes.py --check
 
       - name: Run Python pipeline tests (pytest)
         run: python -m pytest -v
@@ -96,8 +101,42 @@ jobs:
         with:
           path: dist
 
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Web dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build for local preview
+        env:
+          VITE_BASE_PATH: "/"
+          VITE_SITE_URL: "http://localhost:4173"
+        run: npm run build
+
+      - name: Run Playwright E2E & WCAG real-browser tests
+        run: npx playwright test
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
   deploy-pages:
-    needs: update
+    needs: [update, e2e]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment:
