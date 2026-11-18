@@ -7,6 +7,7 @@
   "licencia_url": "https://creativecommons.org/licenses/by/4.0/legalcode.es",
   "fecha_descarga": "2026-11-16T13:12:24Z",
   "sha256_fuente_completa": "a94f90133852ed85b16db8203b5c6498a5ba020967b651bb5d1119c399414360",
+  "sha256_instantanea_repo": "9488686c1c18a33395680ca7752d1eded4977e53f77c94da378c8351e2a3cc86",
   "registros_totales_cam": 7757,
   "registros_cruzados_total": 433,
   "nota": "Subconjunto exacto de los 433 códigos oficiales únicos activos (336 preferentes TEA, 69 Centros de Educación Especial ALTA —incluyendo CRE ONCE con doble perfil visual—, 14 Aulas Hospitalarias no anuladas, CRE ONCE Primaria-Secundaria, EOEP Visuales, EOEP Auditivas, EOEP Motóricas, EOEP Dificultades de Aprendizaje/Lenguaje/TDAH, CREACIM, EOEP Altas Capacidades y las 8 sedes territoriales IES del PEAC, compartiendo IES Juan de la Cierva doble perfil TEA+PEAC) extraído del dataset CKAN completo."

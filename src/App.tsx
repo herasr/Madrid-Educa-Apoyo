@@ -83,6 +83,19 @@ interface AppProps {
   initialSchools?: School[];
 }
 
+function readStoredStringArray(key: string): string[] {
+  try {
+    const stored = localStorage.getItem(key);
+    if (!stored) return [];
+    const parsed: unknown = JSON.parse(stored);
+    return Array.isArray(parsed)
+      ? parsed.filter((item): item is string => typeof item === 'string')
+      : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function App({ initialSchools }: AppProps = {}) {
   // 1. Estado de búsqueda inicial con sincronización de URL
   const [searchState, setSearchState] = useState<SearchState>(() => {
@@ -96,14 +109,35 @@ export default function App({ initialSchools }: AppProps = {}) {
     return INITIAL_SEARCH_STATE;
   });
 
+  // Input controlado con debounce de 150 ms hacia searchState.searchQuery
+  const [searchInput, setSearchInput] = useState<string>(() => searchState.searchQuery);
+
+  useEffect(() => {
+    setSearchInput(searchState.searchQuery);
+  }, [searchState.searchQuery]);
+
+  useEffect(() => {
+    if (searchInput === searchState.searchQuery) return;
+    const timer = window.setTimeout(() => {
+      setSearchState(prev =>
+        prev.searchQuery === searchInput ? prev : { ...prev, searchQuery: searchInput }
+      );
+    }, 150);
+    return () => window.clearTimeout(timer);
+  }, [searchInput, searchState.searchQuery]);
+
   // Pestaña activa simplificada: Buscar, Continuidad, Comparador, Pasaporte, Fuentes
   const [activeTab, setActiveTab] = useState<'search' | 'continuity' | 'comparator' | 'passport' | 'sources'>('search');
 
   const handleSelectTab = React.useCallback(
     (tab: 'search' | 'continuity' | 'comparator' | 'passport' | 'sources') => {
       setActiveTab(tab);
-      if (typeof window !== 'undefined' && !navigator.userAgent.includes('jsdom')) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+        try {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch {
+          // Ignorar entornos sin soporte completo de scrollTo
+        }
       }
     },
     []
@@ -139,23 +173,13 @@ export default function App({ initialSchools }: AppProps = {}) {
   const [visibleCount, setVisibleCount] = useState<number>(12);
 
   // Centros guardados en el comparador (máximo 3) y en el pasaporte local
-  const [comparedIds, setComparedIds] = useState<string[]>(() => {
-    try {
-      const stored = localStorage.getItem('madrid_educa_compared');
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [comparedIds, setComparedIds] = useState<string[]>(() =>
+    readStoredStringArray('madrid_educa_compared')
+  );
 
-  const [passportIds, setPassportIds] = useState<string[]>(() => {
-    try {
-      const stored = localStorage.getItem('madrid_educa_passport');
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [passportIds, setPassportIds] = useState<string[]>(() =>
+    readStoredStringArray('madrid_educa_passport')
+  );
 
   // Estado del modal de ficha / evidencia
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
@@ -486,7 +510,7 @@ export default function App({ initialSchools }: AppProps = {}) {
                 onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 shadow-xs cursor-pointer"
               >
-                <SlidersHorizontal className="w-4 h-4 text-cam-red" aria-hidden="true" />
+                <SlidersHorizontal className="w-4 h-4 text-cam-blue" aria-hidden="true" />
                 <span>{isMobileFilterOpen ? 'Ocultar Filtros' : 'Mostrar Filtros Acumulativos'}</span>
               </button>
 
@@ -641,14 +665,17 @@ export default function App({ initialSchools }: AppProps = {}) {
                     type="text"
                     placeholder="Buscar por nombre, código o municipio..."
                     aria-label="Buscar centros por nombre, código o municipio"
-                    value={searchState.searchQuery}
-                    onChange={e => setSearchState(prev => ({ ...prev, searchQuery: e.target.value }))}
-                    className="w-full pl-9 pr-8 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cam-red focus:bg-white transition-all"
+                    value={searchInput}
+                    onChange={e => setSearchInput(e.target.value)}
+                    className="w-full pl-9 pr-8 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cam-blue focus:bg-white transition-all"
                   />
-                  {searchState.searchQuery && (
+                  {searchInput && (
                     <button
                       type="button"
-                      onClick={() => setSearchState(prev => ({ ...prev, searchQuery: '' }))}
+                      onClick={() => {
+                        setSearchInput('');
+                        setSearchState(prev => ({ ...prev, searchQuery: '' }));
+                      }}
                       aria-label="Limpiar búsqueda de texto"
                       className="absolute right-1.5 top-1.5 p-1 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-200/70 cursor-pointer"
                     >
@@ -658,9 +685,10 @@ export default function App({ initialSchools }: AppProps = {}) {
                 </div>
 
                 {/* Selector de modo de vista: Lista | Mapa (con mapa y lista combinados) */}
-                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl" role="group" aria-label="Modo de visualización">
                   <button
                     type="button"
+                    aria-pressed={searchViewMode === 'cards'}
                     onClick={() => setSearchViewMode('cards')}
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                       searchViewMode === 'cards'
@@ -675,6 +703,7 @@ export default function App({ initialSchools }: AppProps = {}) {
 
                   <button
                     type="button"
+                    aria-pressed={searchViewMode === 'map'}
                     onClick={() => setSearchViewMode('map')}
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                       searchViewMode === 'map'
@@ -690,10 +719,7 @@ export default function App({ initialSchools }: AppProps = {}) {
 
                 {/* Contador en vivo + Selector de Ordenación */}
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end text-xs">
-                  <span
-                    aria-live="polite"
-                    className="hidden lg:inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 font-mono font-bold tabular-nums"
-                  >
+                  <span className="hidden lg:inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 font-mono font-bold tabular-nums">
                     {filteredSchools.length} {filteredSchools.length === 1 ? 'resultado' : 'resultados'}
                   </span>
                   <div className="flex items-center gap-2 ml-auto sm:ml-0">
@@ -708,12 +734,13 @@ export default function App({ initialSchools }: AppProps = {}) {
                       onChange={e =>
                         setSearchState(prev => ({
                           ...prev,
-                          sort: e.target.value as 'distance' | 'alphabetical'
+                          sort: e.target.value as SearchState['sort']
                         }))
                       }
                       className="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1 text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 cursor-pointer font-medium"
                     >
                       <option value="distance">Distancia</option>
+                      <option value="evidence_then_distance">Evidencia oficial (A1 primero)</option>
                       <option value="alphabetical">Alfabético (A-Z)</option>
                     </select>
                   </div>

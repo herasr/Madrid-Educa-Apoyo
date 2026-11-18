@@ -56,7 +56,17 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
   const markersLayerRef = useRef<L.LayerGroup | null>(null);
   const spiderLayerRef = useRef<L.LayerGroup | null>(null);
   const radiusCircleRef = useRef<L.Circle | null>(null);
+  const onSelectSchoolRef = useRef(onSelectSchool);
+  const onOpenWhyAppearsRef = useRef(onOpenWhyAppears);
   const [isLegendOpen, setIsLegendOpen] = useState(false);
+
+  useEffect(() => {
+    onSelectSchoolRef.current = onSelectSchool;
+  }, [onSelectSchool]);
+
+  useEffect(() => {
+    onOpenWhyAppearsRef.current = onOpenWhyAppears;
+  }, [onOpenWhyAppears]);
 
   // Inicialización del mapa Leaflet
   useEffect(() => {
@@ -69,8 +79,13 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       const map = L.map(mapContainerRef.current, {
         center: [initialLat, initialLng],
         zoom: 12,
-        scrollWheelZoom: true
+        scrollWheelZoom: false
       });
+
+      const enableScrollZoom = () => map.scrollWheelZoom.enable();
+      const disableScrollZoom = () => map.scrollWheelZoom.disable();
+      map.on('click focus', enableScrollZoom);
+      map.on('blur mouseout', disableScrollZoom);
 
       // Teselas limpias de OpenStreetMap
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -312,7 +327,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       marker.on('popupopen', () => {
         const btnDetail = document.getElementById(`btn-detail-${school.id}`);
         if (btnDetail) {
-          btnDetail.onclick = () => onSelectSchool(school);
+          btnDetail.onclick = () => onSelectSchoolRef.current(school);
         }
       });
 
@@ -443,7 +458,7 @@ export const SchoolsMap: React.FC<SchoolsMapProps> = ({
       window.clearTimeout(resizeTimer);
       map.off('zoomend', repositionSpiderClusters);
     };
-  }, [schools, state, onSelectSchool, onOpenWhyAppears, selectedSchoolId, isEasyReadMode]);
+  }, [schools, state, selectedSchoolId, isEasyReadMode]);
 
   const handleResetView = () => {
     const map = mapInstanceRef.current;

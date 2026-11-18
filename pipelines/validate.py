@@ -22,8 +22,8 @@ def validate_data():
     input_file = "data/processed/schools_extracted.json"
     
     if not os.path.exists(input_file):
-        print(f"  ⚠ Archivo {input_file} no encontrado. Ejecutando con validación previa de esquema.")
-        return True
+        print(f"  ❌ Archivo {input_file} no encontrado. Ejecuta primero python -m pipelines.ingest.")
+        sys.exit(1)
 
     with open(input_file, "r", encoding="utf-8") as f:
         payload = json.load(f)

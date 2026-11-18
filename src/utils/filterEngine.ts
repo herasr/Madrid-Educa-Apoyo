@@ -19,7 +19,13 @@ import {
   StageId,
   ZeroResultsAnalysis
 } from '../types';
-import { calculateHaversineDistance, findMunicipality, normalizeName } from '../data/municipalities';
+import {
+  MADRID_DISTRICTS,
+  calculateHaversineDistance,
+  findMunicipality,
+  normalizeName
+} from '../data/municipalities';
+import { OFFICIAL_TEA_SOURCE } from '../data/officialTea';
 
 export const INITIAL_SEARCH_STATE: SearchState = {
   need: 'tea', // Predeterminado en flujo normal según especificación
@@ -91,11 +97,10 @@ export function matchesCentre(centre: School, state: SearchState): boolean {
       const distance = calculateHaversineDistance(munObj.lat, munObj.lng, centre.lat, centre.lng);
       if (distance > state.radiusKm) return false;
     } else {
-      // Coincidencia estricta de municipio si no hay radio ni distrito
+      // Coincidencia estricta normalizada de municipio si no hay radio ni distrito
       const centreMun = normalizeName(centre.municipio);
-      const wantedMun = normalizeName(munObj?.nombre || state.municipality);
-      const munMatches = centreMun === wantedMun || centreMun.includes(wantedMun) || wantedMun.includes(centreMun);
-      if (!munMatches) return false;
+      const wantedMun = normalizeName(munObj?.id || state.municipality);
+      if (centreMun !== wantedMun) return false;
     }
   }
 
@@ -174,6 +179,20 @@ export function sortCentres(centres: School[], state: SearchState): School[] {
 
     if (state.sort === 'alphabetical') {
       return a.nombre.localeCompare(b.nombre, 'es');
+    }
+
+    if (state.sort === 'evidence_then_distance') {
+      const getEvidenceRank = (school: School): number => {
+        if (state.need) {
+          const support = school.apoyos.find(sup => sup.needId === state.need);
+          if (support) return support.evidencia === 'A1' ? 0 : 1;
+        }
+        return school.apoyos.some(sup => sup.evidencia === 'A1') ? 0 : 1;
+      };
+      const rankDiff = getEvidenceRank(a) - getEvidenceRank(b);
+      if (rankDiff !== 0) {
+        return rankDiff;
+      }
     }
 
     // Orden por distancia geodésica
@@ -313,16 +332,53 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
 
   let reason = `No hay centros que cumplan simultáneamente todos los criterios activos para ${needName}${radiusText}.`;
 
+  const SERVICE_LABELS: Record<ServiceId, string> = {
+    comedor: 'Comedor escolar',
+    transporte: 'Transporte escolar',
+    aula_matinal: 'Horario ampliado / Aula matinal',
+    enfermeria: 'Enfermería escolar',
+    actividades_extraescolares: 'Actividades extraescolares'
+  };
+
+  if (state.need && !ACTIVE_CATALOG_NEEDS.includes(state.need)) {
+    failingConditions.push(`Necesidad sin listado abierto nominativo (${needName})`);
+  } else {
+    if (state.municipality) {
+      failingConditions.push(`Municipio: ${state.municipality}`);
+    }
+    if (state.district) {
+      failingConditions.push(`Distrito: ${state.district}`);
+    }
+    if (state.radiusKm !== null) {
+      failingConditions.push(`Radio: ${state.radiusKm} km`);
+    }
+    if (state.requiredServices.length > 0) {
+      failingConditions.push(
+        `Servicios obligatorios: ${state.requiredServices.map(s => SERVICE_LABELS[s] || s).join(', ')}`
+      );
+    }
+    if (state.accessibilityRequired.length > 0) {
+      failingConditions.push(`Accesibilidad PMR obligatoria (${state.accessibilityRequired.length})`);
+    }
+    if (state.evidence.length === 1) {
+      failingConditions.push(`Evidencia requerida: ${state.evidence[0]}`);
+    }
+    if (state.ownership.length > 0) {
+      failingConditions.push(`Titularidad: ${state.ownership.join(', ')}`);
+    }
+  }
+
   // Caso A: Necesidad sin catálogo oficial descargable incorporado
   if (state.need && !ACTIVE_CATALOG_NEEDS.includes(state.need)) {
     reason = `No existe todavía un conjunto abierto regional descargable con resolución actualizada para ${needName}. Por rigor deontológico, no mostramos centros inventados o desactualizados.`;
     const teaCount = schools.filter(s => matchesCentre(s, { ...state, need: 'tea' })).length;
+    const resolvedTeaCount = teaCount > 0 ? teaCount : OFFICIAL_TEA_SOURCE.totalCentros;
     relaxations.push({
       id: 'switch_to_tea',
       label: "Ver centros de Atención Preferente TEA (datos oficiales)",
-      description: `Muestra ${teaCount > 0 ? teaCount : 336} centro(s) oficiales TEA.`,
+      description: `Muestra ${resolvedTeaCount} centro(s) oficiales TEA.`,
       actionType: 'remove_filter',
-      resultingCount: teaCount > 0 ? teaCount : 336,
+      resultingCount: resolvedTeaCount,
       apply: (prev) => ({ ...prev, need: 'tea' })
     });
     const ceeCount = schools.filter(s => matchesCentre(s, { ...state, need: 'educacion_especial' })).length;
@@ -373,7 +429,7 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
 
   // 1. Probar relajación de cada servicio obligatorio
   state.requiredServices.forEach(srv => {
-    const srvName = srv === 'comedor' ? 'Comedor' : srv === 'transporte' ? 'Transporte escolar' : srv === 'enfermeria' ? 'Enfermería escolar' : srv;
+    const srvName = SERVICE_LABELS[srv] || srv;
     
     // Opción A: Retirar servicio obligatorio
     const stateWithoutSrv: SearchState = {
@@ -487,21 +543,25 @@ export function analyzeZeroResults(schools: School[], state: SearchState): ZeroR
 export function serializeSearchStateToQuery(state: SearchState): string {
   const params = new URLSearchParams();
 
-  if (state.need) params.set('need', state.need);
-  if (state.stages.length > 0) params.set('stage', state.stages.join(','));
-  if (state.stageMatchMode && state.stageMatchMode !== 'any') params.set('smode', state.stageMatchMode);
+  params.set('need', state.need ?? 'all');
+  params.set('stage', state.stages.length > 0 ? state.stages.join(',') : 'none');
+  if (state.stageMatchMode && state.stageMatchMode !== 'any') {
+    params.set('smode', state.stageMatchMode);
+  }
   // Por privacidad, nunca serializamos coordenadas personales GPS (lat/lng) en la URL compartible.
   if (state.municipality && state.locationSource !== 'browser') {
     params.set('municipality', state.municipality);
     if (state.district) params.set('district', state.district);
+  } else {
+    params.set('municipality', 'all');
   }
-  if (state.radiusKm !== null) params.set('radius', state.radiusKm.toString());
+  params.set('radius', state.radiusKm !== null ? String(state.radiusKm) : 'none');
   if (state.ownership.length > 0) params.set('ownership', state.ownership.join(','));
   if (state.modalities.length > 0) params.set('modality', state.modalities.join(','));
   if (state.requiredServices.length > 0) params.set('required', state.requiredServices.join(','));
   if (state.preferredServices.length > 0) params.set('preferred', state.preferredServices.join(','));
   if (state.accessibilityRequired.length > 0) params.set('accessibility', state.accessibilityRequired.join(','));
-  if (state.evidence.length > 0) params.set('evidence', state.evidence.join(','));
+  params.set('evidence', state.evidence.length > 0 ? state.evidence.join(',') : 'none');
   if (state.searchQuery.trim().length > 0) params.set('q', state.searchQuery.trim());
   if (state.sort !== 'distance') params.set('sort', state.sort);
 
@@ -512,7 +572,7 @@ export function parseSearchStateFromQuery(queryString: string): SearchState {
   const params = new URLSearchParams(queryString.startsWith('?') ? queryString.slice(1) : queryString);
   const state: SearchState = { ...INITIAL_SEARCH_STATE };
 
-  // Control lists for validation
+  // Listas controladas para validación estricta de entrada
   const validNeeds: NeedId[] = ['tea', 'auditiva', 'motora', 'educacion_especial', 'visual', 'altas_capacidades', 'tdah', 'tel_lenguaje', 'salud_hospitalaria', 'compensatoria'];
   const validStages: StageId[] = ['infantil', 'primaria', 'eso', 'bachillerato', 'fp_basica'];
   const validOwnership: OwnershipId[] = ['publico', 'concertado', 'privado'];
@@ -522,14 +582,16 @@ export function parseSearchStateFromQuery(queryString: string): SearchState {
   const validEvidence: EvidenceId[] = ['A1', 'A2'];
 
   const needParam = params.get('need');
-  if (needParam && validNeeds.includes(needParam as NeedId)) {
-    state.need = needParam as NeedId;
-  } else if (needParam === 'null' || needParam === '') {
+  if (needParam === 'all' || needParam === 'null' || needParam === '') {
     state.need = null;
+  } else if (needParam && validNeeds.includes(needParam as NeedId)) {
+    state.need = needParam as NeedId;
   }
 
   const stageParam = params.get('stage');
-  if (stageParam) {
+  if (stageParam === 'none') {
+    state.stages = [];
+  } else if (stageParam) {
     const stages = stageParam.split(',').filter(s => validStages.includes(s as StageId)) as StageId[];
     if (stages.length > 0) state.stages = stages;
   }
@@ -539,33 +601,49 @@ export function parseSearchStateFromQuery(queryString: string): SearchState {
     state.stageMatchMode = smodeParam;
   }
 
-  const locParam = params.get('loc');
-  const latParam = params.get('lat');
-  const lngParam = params.get('lng');
+  // Privacidad: nunca aceptamos ni reconstruimos coordenadas GPS (loc=browser, lat, lng) desde una URL
+  state.locationSource = 'municipality';
+  state.userCoordinates = null;
+
   const munParam = params.get('municipality');
   const distParam = params.get('district');
 
-  if (locParam === 'browser' || (latParam && lngParam)) {
-    state.locationSource = 'browser';
+  if (munParam === 'all') {
     state.municipality = null;
     state.district = null;
-    if (latParam && lngParam && !isNaN(Number(latParam)) && !isNaN(Number(lngParam))) {
-      state.userCoordinates = {
-        lat: Number(latParam),
-        lng: Number(lngParam),
-        label: 'Ubicación compartida'
-      };
-    }
   } else if (munParam) {
-    state.locationSource = 'municipality';
-    state.municipality = munParam;
-    state.district = distParam || null;
-    state.userCoordinates = null;
+    const validMun = findMunicipality(munParam);
+    if (validMun) {
+      state.municipality = validMun.id;
+      if (validMun.id === 'Madrid' && distParam) {
+        const canonicalDistrict = MADRID_DISTRICTS.find(
+          d => normalizeName(d) === normalizeName(distParam)
+        );
+        state.district = canonicalDistrict ?? null;
+      } else {
+        state.district = null;
+      }
+    }
+  } else if (distParam) {
+    const canonicalDistrict = MADRID_DISTRICTS.find(
+      d => normalizeName(d) === normalizeName(distParam)
+    );
+    if (canonicalDistrict) {
+      state.municipality = 'Madrid';
+      state.district = canonicalDistrict;
+    }
   }
 
   const radiusParam = params.get('radius');
-  if (radiusParam && !isNaN(Number(radiusParam))) {
-    state.radiusKm = Number(radiusParam);
+  if (radiusParam === 'none') {
+    state.radiusKm = null;
+  } else if (radiusParam !== null && radiusParam.trim() !== '') {
+    const parsedRadius = Number(radiusParam);
+    if (Number.isFinite(parsedRadius)) {
+      state.radiusKm = Math.min(100, Math.max(1, Math.round(parsedRadius)));
+    }
+  } else if (munParam === 'all') {
+    state.radiusKm = null;
   }
 
   const ownParam = params.get('ownership');
@@ -594,8 +672,11 @@ export function parseSearchStateFromQuery(queryString: string): SearchState {
   }
 
   const evParam = params.get('evidence');
-  if (evParam) {
-    state.evidence = evParam.split(',').filter(e => validEvidence.includes(e as EvidenceId)) as EvidenceId[];
+  if (evParam === 'none') {
+    state.evidence = [];
+  } else if (evParam) {
+    const parsedEvidence = evParam.split(',').filter(e => validEvidence.includes(e as EvidenceId)) as EvidenceId[];
+    if (parsedEvidence.length > 0) state.evidence = parsedEvidence;
   }
 
   const qParam = params.get('q');
@@ -646,8 +727,11 @@ export function buildResultsCSVContent(schools: School[], state: SearchState): s
     'Observaciones'
   ];
 
+  const sanitizeCsvFormula = (raw: string): string =>
+    raw.length > 0 && /^[=+\-@\t\r]/.test(raw) ? `'${raw}` : raw;
+
   const escapeCsv = (val: string | undefined | null) =>
-    `"${(val || '').replace(/"/g, '""')}"`;
+    `"${sanitizeCsvFormula(val || '').replace(/"/g, '""')}"`;
 
   const formatAytoAccessibility = (school: School): string => {
     if (school.procedencia !== 'oficial') {
@@ -734,6 +818,7 @@ export function downloadResultsCSV(schools: School[], state: SearchState) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 /**
@@ -806,4 +891,5 @@ export function downloadResultsJSON(schools: School[], state: SearchState) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

@@ -573,7 +573,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                       <label
                         className={`flex items-center justify-between px-3 py-2 rounded-xl border cursor-pointer transition-colors ${
                           isChecked
-                            ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold'
+                            ? 'bg-cam-blue-light border-cam-blue-border text-cam-blue-dark font-semibold'
                             : 'bg-white border-transparent hover:bg-slate-50 text-slate-800'
                         }`}
                       >
@@ -582,7 +582,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => handleToggleStage(st.id)}
-                            className="rounded border-slate-400 text-cam-red focus:ring-cam-red cursor-pointer"
+                            className="rounded border-slate-400 text-cam-blue focus:ring-cam-blue cursor-pointer"
                           />
                           <span className="text-xs">{st.label}</span>
                         </div>
@@ -664,7 +664,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 onClick={handleUseMunicipality}
                 className={`flex-1 py-1.5 px-3 rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                   state.locationSource !== 'browser'
-                    ? 'bg-cam-red text-white shadow-xs'
+                    ? 'bg-cam-blue text-white shadow-xs'
                     : 'text-slate-700 hover:text-slate-900 hover:bg-slate-200/50'
                 }`}
               >
@@ -718,7 +718,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   className={`w-full text-xs rounded-lg px-2.5 py-1.5 transition-colors ${
                     state.locationSource === 'browser'
                       ? 'bg-slate-100 text-slate-600 border border-slate-200 cursor-not-allowed'
-                      : 'bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-cam-red cursor-pointer'
+                      : 'bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-cam-blue cursor-pointer'
                   }`}
                 >
                   <option value="">Toda la Comunidad de Madrid</option>
@@ -742,7 +742,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                       const val = e.target.value || null;
                       onUpdateState(prev => ({ ...prev, district: val }));
                     }}
-                    className="w-full text-xs rounded-lg px-2.5 py-1.5 transition-colors bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-cam-red cursor-pointer"
+                    className="w-full text-xs rounded-lg px-2.5 py-1.5 transition-colors bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-cam-blue cursor-pointer"
                   >
                     <option value="">Cualquier distrito</option>
                     {MADRID_DISTRICTS.map(d => (
@@ -803,7 +803,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 <div className={state.locationSource !== 'browser' && state.radiusKm === null ? 'opacity-60' : ''}>
                   <div className="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1">
                     <span>Radio geodésico:</span>
-                    <span className="font-mono text-cam-red font-bold tabular-nums">
+                    <span className="font-mono text-cam-blue font-bold tabular-nums">
                       {state.radiusKm ? `${state.radiusKm} km` : 'Solo municipio'}
                     </span>
                   </div>
@@ -818,7 +818,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                       const val = Number(e.target.value);
                       onUpdateState(prev => ({ ...prev, radiusKm: val }));
                     }}
-                    className="w-full accent-cam-red cursor-pointer"
+                    className="w-full accent-cam-blue cursor-pointer"
                   />
                   <div className="flex justify-between text-xs text-slate-600 font-mono">
                     <span>5 km</span>
@@ -876,7 +876,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     isDisabled
                       ? 'bg-slate-50 border-slate-200 text-slate-600 cursor-not-allowed'
                       : isChecked
-                      ? 'bg-cam-red-light border-cam-red-border text-cam-red-dark font-semibold cursor-pointer'
+                      ? 'bg-cam-blue-light border-cam-blue-border text-cam-blue-dark font-semibold cursor-pointer'
                       : 'bg-white border-transparent hover:bg-slate-50 text-slate-800 cursor-pointer'
                   }`}
                 >
@@ -886,7 +886,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                       disabled={isDisabled}
                       checked={isChecked}
                       onChange={() => !isDisabled && handleToggleOwnership(own.id)}
-                      className={`rounded border-slate-400 text-cam-red focus:ring-cam-red ${
+                      className={`rounded border-slate-400 text-cam-blue focus:ring-cam-blue ${
                         isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
                       }`}
                     />

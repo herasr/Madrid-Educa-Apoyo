@@ -44,7 +44,18 @@ export const PassportView: React.FC<PassportViewProps> = ({
   const [notesMap, setNotesMap] = React.useState<Record<string, string>>(() => {
     try {
       const stored = localStorage.getItem('madrid_educa_passport_notes');
-      return stored ? JSON.parse(stored) : {};
+      if (!stored) return {};
+      const parsed: unknown = JSON.parse(stored);
+      if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+        return {};
+      }
+      const clean: Record<string, string> = {};
+      for (const [key, val] of Object.entries(parsed)) {
+        if (typeof val === 'string') {
+          clean[key] = val;
+        }
+      }
+      return clean;
     } catch {
       return {};
     }

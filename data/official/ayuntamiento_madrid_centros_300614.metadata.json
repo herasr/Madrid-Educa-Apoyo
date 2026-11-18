@@ -7,6 +7,7 @@
   "licencia": "Condiciones generales para la reutilización de la información del Ayuntamiento de Madrid",
   "fecha_descarga": "2026-11-16T12:55:43Z",
   "sha256_fuente_original": "9ca3972039f1a418b528e5afc38b2461c48a859ef683fb8c3f65ed204e3d983b",
+  "sha256_instantanea_repo": "347ce0dfbc1e69164e68e7cb44fdc5ae25cb87b6a6385183f0f35a36d22744d3",
   "registros_totales": 1618,
   "nota": "Copia UTF-8 exacta de 300614-0-centros-educativos.csv usada como respaldo cuando el portal municipal no responde en vivo."
 }

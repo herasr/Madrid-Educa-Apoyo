@@ -382,15 +382,14 @@ def to_school(r, tea_rows, meta):
     return school
 
 
-def municipalities(rows):
-    ref = {}
+def municipalities():
+    out = []
     with open(MUNICIPIOS_CSV, encoding="utf-8") as f:
         for m in csv.DictReader(f):
-            ref[m["municipio"]] = m
-    out = []
-    for name in sorted({r["municipio"] for r in rows if r["municipio"] != "Madrid"}):
-        m = ref[name]
-        out.append({"id": name, "nombre": name, "lat": float(m["lat"]), "lng": float(m["lng"])})
+            name = m["municipio"].strip()
+            if name and name != "Madrid":
+                out.append({"id": name, "nombre": name, "lat": float(m["lat"]), "lng": float(m["lng"])})
+    out.sort(key=lambda item: item["nombre"])
     return out
 
 
@@ -480,7 +479,7 @@ import {{ MunicipalityOption }} from '../types';
 
 export const OFFICIAL_TEA_SOURCE = {js(source)} as const;
 
-export const OFFICIAL_MUNICIPALITIES: MunicipalityOption[] = {js(municipalities(rows))};
+export const OFFICIAL_MUNICIPALITIES: MunicipalityOption[] = {js(municipalities())};
 """
     with open(OUTPUT, "w", encoding="utf-8") as f:
         f.write(content)

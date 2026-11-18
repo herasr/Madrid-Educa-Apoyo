@@ -18,6 +18,7 @@
   },
   "filas": 336,
   "filas_por_dat": {"DAT CAPITAL": 106, "DAT NORTE": 48, "DAT SUR": 95, "DAT ESTE": 52, "DAT OESTE": 35},
+  "sha256_instantanea_repo": "cc3b376bf924defe74c5abacf69e2574c74dcb53abb38668fbc0d29049f6a7c6",
   "metodo_extraccion": "Transcripción del PDF oficial sin normalizar los textos. Control de calidad: dos lecturas independientes del documento produjeron la misma secuencia de 336 códigos de centro, sin duplicados. En cada ejecución, pipelines/ingest.py vuelve a descargar el PDF, extrae sus códigos y los compara con este fichero; cualquier diferencia se envía a data/review/ para revisión humana.",
   "licencia": "Información pública de la Comunidad de Madrid (reutilización conforme a la Ley 37/2007 sobre reutilización de la información del sector público). Se cita la fuente y la fecha de la información."
 }

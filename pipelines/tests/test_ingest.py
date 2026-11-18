@@ -156,3 +156,54 @@ def test_processed_catalog_integrity():
     assert all(not r.get("es_demostracion") for r in rows)
     exact_utm = sum(1 for r in rows if not r.get("ubicacion_aproximada"))
     assert exact_utm == 432
+
+
+def test_official_snapshot_sha256_integrity():
+    import hashlib
+
+    pairs = [
+        ("tea_preferentes_curso_2024-25.csv", "tea_preferentes_curso_2024-25.metadata.json"),
+        ("centros_educativos_datos_abiertos_cam.json", "centros_educativos_datos_abiertos_cam.metadata.json"),
+        ("ayuntamiento_madrid_centros_300614.csv", "ayuntamiento_madrid_centros_300614.metadata.json"),
+    ]
+    official_dir = ROOT / "data" / "official"
+    for data_file, meta_file in pairs:
+        actual_sha = hashlib.sha256((official_dir / data_file).read_bytes()).hexdigest()
+        meta = json.loads((official_dir / meta_file).read_text(encoding="utf-8"))
+        assert meta.get("sha256_instantanea_repo") == actual_sha
+
+
+def test_export_csv_bom_semicolon_and_formula_neutralization():
+    from pipelines import export
+
+    assert export.sanitize_csv_cell("=HYPERLINK(\"http://evil\")") == "'=HYPERLINK(\"http://evil\")"
+    assert export.sanitize_csv_cell("+34914450001") == "'+34914450001"
+    assert export.sanitize_csv_cell("-formula") == "'-formula"
+    assert export.sanitize_csv_cell("@SUM(A1)") == "'@SUM(A1)"
+    assert export.sanitize_csv_cell(-3.7038) == "-3.7038"
+    assert export.sanitize_csv_cell("Colegio Chamberí") == "Colegio Chamberí"
+
+    csv_path = ROOT / "data_products" / "centros_apoyo.csv"
+    raw = csv_path.read_bytes()
+    assert raw.startswith(b"\xef\xbb\xbf")
+    first_line = raw.decode("utf-8-sig").splitlines()[0]
+    assert ";" in first_line
+
+
+def test_validate_exits_nonzero_when_processed_missing():
+    import os
+    import tempfile
+    from pipelines import validate
+
+    orig_cwd = os.getcwd()
+    try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            os.chdir(tmpdir)
+            try:
+                validate.validate_data()
+                assert False, "validate_data debía lanzar SystemExit(1) cuando falta el JSON"
+            except SystemExit as exc:
+                assert exc.code == 1
+    finally:
+        os.chdir(orig_cwd)
+

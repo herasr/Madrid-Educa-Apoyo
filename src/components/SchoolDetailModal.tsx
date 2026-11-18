@@ -82,12 +82,32 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
 }) => {
   const [activeTab, setActiveTab] = React.useState<'why' | 'details' | 'continuity'>(initialTab);
   const modalRef = React.useRef<HTMLDivElement>(null);
+  const tabRefs = React.useRef<Record<'why' | 'details' | 'continuity', HTMLButtonElement | null>>({
+    why: null,
+    details: null,
+    continuity: null
+  });
 
   React.useEffect(() => {
     setActiveTab(initialTab);
   }, [initialTab, school]);
 
   useModalFocusTrap(isOpen && Boolean(school), modalRef, onClose);
+
+  const handleTabKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, currentTab: 'why' | 'details' | 'continuity') => {
+    const order: Array<'why' | 'details' | 'continuity'> = ['why', 'details', 'continuity'];
+    const idx = order.indexOf(currentTab);
+    let nextTab: 'why' | 'details' | 'continuity' | null = null;
+    if (e.key === 'ArrowRight') nextTab = order[(idx + 1) % order.length];
+    else if (e.key === 'ArrowLeft') nextTab = order[(idx - 1 + order.length) % order.length];
+    else if (e.key === 'Home') nextTab = order[0];
+    else if (e.key === 'End') nextTab = order[order.length - 1];
+    if (nextTab) {
+      e.preventDefault();
+      setActiveTab(nextTab);
+      tabRefs.current[nextTab]?.focus();
+    }
+  };
 
   if (!isOpen || !school) return null;
 
@@ -195,12 +215,21 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
         </div>
 
         {/* Pestañas de navegación interna del modal */}
-        <div className="flex items-center px-4 sm:px-6 border-b border-slate-200 bg-white gap-3 sm:gap-6 text-xs font-semibold overflow-x-auto" role="tablist">
+        <div
+          className="flex items-center px-4 sm:px-6 border-b border-slate-200 bg-white gap-3 sm:gap-6 text-xs font-semibold overflow-x-auto"
+          role="tablist"
+          aria-label="Secciones de la ficha del centro"
+        >
           <button
+            ref={el => { tabRefs.current.why = el; }}
+            id="school-tab-why"
             type="button"
             role="tab"
             aria-selected={activeTab === 'why'}
+            aria-controls="school-tabpanel-why"
+            tabIndex={activeTab === 'why' ? 0 : -1}
             onClick={() => setActiveTab('why')}
+            onKeyDown={e => handleTabKeyDown(e, 'why')}
             className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'why'
                 ? 'border-blue-700 text-blue-900 font-bold'
@@ -212,10 +241,15 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
           </button>
 
           <button
+            ref={el => { tabRefs.current.details = el; }}
+            id="school-tab-details"
             type="button"
             role="tab"
             aria-selected={activeTab === 'details'}
+            aria-controls="school-tabpanel-details"
+            tabIndex={activeTab === 'details' ? 0 : -1}
             onClick={() => setActiveTab('details')}
+            onKeyDown={e => handleTabKeyDown(e, 'details')}
             className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'details'
                 ? 'border-blue-700 text-blue-900 font-bold'
@@ -227,10 +261,15 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
           </button>
 
           <button
+            ref={el => { tabRefs.current.continuity = el; }}
+            id="school-tab-continuity"
             type="button"
             role="tab"
             aria-selected={activeTab === 'continuity'}
+            aria-controls="school-tabpanel-continuity"
+            tabIndex={activeTab === 'continuity' ? 0 : -1}
             onClick={() => setActiveTab('continuity')}
+            onKeyDown={e => handleTabKeyDown(e, 'continuity')}
             className={`py-3 border-b-2 cursor-pointer flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'continuity'
                 ? 'border-blue-700 text-blue-900 font-bold'
@@ -252,7 +291,12 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
 
           {/* TAB 1: ¿POR QUÉ APARECE ESTE CENTRO? */}
           {activeTab === 'why' && (
-            <div className="space-y-5">
+            <div
+              role="tabpanel"
+              id="school-tabpanel-why"
+              aria-labelledby="school-tab-why"
+              className="space-y-5"
+            >
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                   <div className="flex items-center gap-2">
@@ -420,7 +464,12 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
 
           {/* TAB 2: FICHA, CONTACTO Y MAPA */}
           {activeTab === 'details' && (
-            <div className="space-y-5">
+            <div
+              role="tabpanel"
+              id="school-tabpanel-details"
+              aria-labelledby="school-tab-details"
+              className="space-y-5"
+            >
               {/* Etapas autorizadas */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
@@ -497,7 +546,7 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                         <span>{school.transportePublico}</span>
                       </div>
                     )}
-                    {school.serviciosConfirmadosAyto && (
+                    {school.serviciosConfirmadosAyto ? (
                       <div className="flex flex-wrap items-center gap-1.5">
                         <span className="font-bold text-slate-900 mr-1">Equipamiento declarado:</span>
                         {school.servicios.comedor && (
@@ -518,6 +567,11 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
                         {!school.servicios.comedor && !school.servicios.aula_matinal && !school.servicios.transporte && (
                           <span className="text-slate-700">Sin comedor/transporte/horario ampliado declarado en la ficha municipal.</span>
                         )}
+                      </div>
+                    ) : (
+                      <div>
+                        <span className="font-bold text-slate-900">Equipamiento declarado: </span>
+                        <span className="text-slate-700">Sin datos de servicios en las fuentes oficiales para este centro.</span>
                       </div>
                     )}
                     <div>
@@ -585,7 +639,12 @@ export const SchoolDetailModal: React.FC<SchoolDetailModalProps> = ({
 
           {/* TAB 3: CONTINUIDAD PRIMARIA - SECUNDARIA */}
           {activeTab === 'continuity' && (
-            <div className="space-y-4">
+            <div
+              role="tabpanel"
+              id="school-tabpanel-continuity"
+              aria-labelledby="school-tab-continuity"
+              className="space-y-4"
+            >
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
                 <h3 className="text-sm font-bold text-slate-900 mb-1">
                   {needId === 'tea'

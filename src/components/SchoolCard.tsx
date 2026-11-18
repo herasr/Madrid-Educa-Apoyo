@@ -437,7 +437,7 @@ export const SchoolCard: React.FC<SchoolCardProps> = ({
           <button
             type="button"
             onClick={() => onOpenDetail(school)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-cam-red hover:bg-cam-red-dark shadow-xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-cam-blue hover:bg-cam-blue-dark shadow-xs transition-colors cursor-pointer"
           >
             <span>Ficha completa</span>
             <ArrowRight className="w-3.5 h-3.5" />

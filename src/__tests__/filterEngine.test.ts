@@ -17,6 +17,8 @@ import {
   parseSearchStateFromQuery,
   INITIAL_SEARCH_STATE
 } from '../utils/filterEngine';
+import { MUNICIPALITIES } from '../data/municipalities';
+import { OFFICIAL_TEA_SOURCE } from '../data/officialTea';
 import { School, SearchState } from '../types';
 import { TEST_ALL_SCHOOLS as SCHOOLS_DATA } from './catalogHelper';
 
@@ -541,5 +543,164 @@ describe('filterEngine - analyzeZeroResults & multi-source dynamicCounts', () =>
     expect(csv).toContain('28020120');
     expect(csv).toMatch(/Amor Misericordioso/i);
     expect(csv).toContain('Parcialmente accesible PMR (cód. 2, Ayto. Madrid)');
+  });
+
+  it('exposes all 179 official CAM municipalities and applies strict normalized equality without substring leaks', () => {
+    expect(MUNICIPALITIES).toHaveLength(179);
+
+    const madridOnly: SearchState = {
+      ...INITIAL_SEARCH_STATE,
+      need: null,
+      stages: [],
+      municipality: 'Madrid',
+      district: null,
+      radiusKm: null,
+      evidence: ['A1', 'A2']
+    };
+    const madridCentres = SCHOOLS_DATA.filter(s => matchesCentre(s, madridOnly));
+    expect(madridCentres.length).toBeGreaterThan(100);
+    expect(madridCentres.every(s => s.municipio === 'Madrid')).toBe(true);
+    expect(madridCentres.some(s => s.municipio === 'Rivas-Vaciamadrid')).toBe(false);
+  });
+
+  it('round-trips cleared, partial, and empty-evidence SearchState cleanly via URL sentinels', () => {
+    const clearedState: SearchState = {
+      need: null,
+      stages: [],
+      stageMatchMode: 'any',
+      municipality: null,
+      district: null,
+      radiusKm: null,
+      locationSource: 'municipality',
+      userCoordinates: null,
+      ownership: [],
+      modalities: [],
+      requiredServices: [],
+      preferredServices: [],
+      accessibilityRequired: [],
+      evidence: ['A1', 'A2'],
+      searchQuery: '',
+      sort: 'distance'
+    };
+
+    const statesToVerify: SearchState[] = [
+      clearedState,
+      INITIAL_SEARCH_STATE,
+      {
+        ...clearedState,
+        need: 'visual',
+        stages: ['primaria', 'eso'],
+        stageMatchMode: 'all',
+        municipality: 'Madrid',
+        district: 'Chamberí',
+        evidence: [],
+        sort: 'evidence_then_distance',
+        searchQuery: 'ONCE'
+      }
+    ];
+
+    for (const original of statesToVerify) {
+      const qs = serializeSearchStateToQuery(original);
+      const parsed = parseSearchStateFromQuery(`?${qs}`);
+      expect(parsed).toEqual(original);
+    }
+  });
+
+  it('rejects GPS coordinates in URL, clamps radius to [1,100], and ignores invalid municipality/district', () => {
+    const parsedGps = parseSearchStateFromQuery('?loc=browser&lat=40.4168&lng=-3.7038&need=tea');
+    expect(parsedGps.locationSource).toBe('municipality');
+    expect(parsedGps.userCoordinates).toBeNull();
+
+    const parsedNegativeRadius = parseSearchStateFromQuery('?radius=-5');
+    expect(parsedNegativeRadius.radiusKm).toBe(1);
+
+    const parsedHugeRadius = parseSearchStateFromQuery('?radius=100000');
+    expect(parsedHugeRadius.radiusKm).toBe(100);
+
+    const parsedInvalidMun = parseSearchStateFromQuery('?municipality=Atlantis&district=Centro');
+    expect(parsedInvalidMun.municipality).toBe(INITIAL_SEARCH_STATE.municipality);
+
+    const parsedMismatchDist = parseSearchStateFromQuery('?municipality=Getafe&district=Centro');
+    expect(parsedMismatchDist.municipality).toBe('Getafe');
+    expect(parsedMismatchDist.district).toBeNull();
+  });
+
+  it('sorts A1 evidence before A2 when sort="evidence_then_distance" and breaks ties by distance', () => {
+    const state: SearchState = {
+      ...INITIAL_SEARCH_STATE,
+      need: null,
+      stages: [],
+      municipality: 'Madrid',
+      radiusKm: null,
+      sort: 'evidence_then_distance'
+    };
+    const a1Hospital = SCHOOLS_DATA.find(s => s.apoyos.every(a => a.evidencia === 'A1'))!;
+    const a2Tea = SCHOOLS_DATA.find(s => s.apoyos.every(a => a.evidencia === 'A2'))!;
+    const sorted = sortCentres([a2Tea, a1Hospital], state);
+
+    expect(sorted[0].id).toBe(a1Hospital.id);
+    expect(sorted[1].id).toBe(a2Tea.id);
+  });
+
+  it('neutralizes CSV formula injection in text fields while preserving raw numeric coordinates', () => {
+    const base = SCHOOLS_DATA[0];
+    const malicious: School = {
+      ...base,
+      nombre: '=HYPERLINK("http://evil.example","Click")',
+      telefono: '+34914450001',
+      observacionesOficiales: '@SUM(1+1)',
+      lat: 40.4168,
+      lng: -3.7038
+    };
+
+    const csv = buildResultsCSVContent([malicious], INITIAL_SEARCH_STATE);
+    expect(csv.startsWith('\uFEFF')).toBe(true);
+    expect(csv).toContain('"\'=HYPERLINK(""http://evil.example"",""Click"")"');
+    expect(csv).toContain('"\'+34914450001"');
+    expect(csv).toContain('"\'@SUM(1+1)"');
+    expect(csv).toContain(';40.4168;-3.7038;');
+  });
+
+  it('populates failingConditions and translates all ServiceId labels in analyzeZeroResults', () => {
+    const analysisBoth = analyzeZeroResults(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      municipality: 'Alcala de Henares',
+      radiusKm: null,
+      requiredServices: ['aula_matinal', 'actividades_extraescolares']
+    });
+
+    expect(analysisBoth.failingConditions.some(c => c.includes('Horario ampliado / Aula matinal'))).toBe(true);
+    expect(analysisBoth.failingConditions.some(c => c.includes('Actividades extraescolares'))).toBe(true);
+
+    const analysisMatinal = analyzeZeroResults(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      municipality: 'Alcala de Henares',
+      radiusKm: null,
+      requiredServices: ['aula_matinal']
+    });
+    expect(analysisMatinal.relaxations.some(r => r.label.includes('Horario ampliado / Aula matinal'))).toBe(true);
+
+    const analysisExtra = analyzeZeroResults(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      municipality: 'Alcala de Henares',
+      radiusKm: null,
+      requiredServices: ['actividades_extraescolares']
+    });
+    expect(analysisExtra.relaxations.some(r => r.label.includes('Actividades extraescolares'))).toBe(true);
+
+    const compAnalysis = analyzeZeroResults(SCHOOLS_DATA, {
+      ...INITIAL_SEARCH_STATE,
+      need: 'compensatoria'
+    });
+    const teaRelax = compAnalysis.relaxations.find(r => r.id === 'switch_to_tea');
+    expect(teaRelax?.resultingCount).toBe(164);
+
+    const compEmptyCatalog = analyzeZeroResults([], {
+      ...INITIAL_SEARCH_STATE,
+      need: 'compensatoria'
+    });
+    expect(compEmptyCatalog.relaxations.find(r => r.id === 'switch_to_tea')?.resultingCount).toBe(
+      OFFICIAL_TEA_SOURCE.totalCentros
+    );
   });
 });

@@ -18,6 +18,8 @@ export function useModalFocusTrap(
     if (!isOpen) return;
 
     const previouslyFocused = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
 
     // Mover el foco al interior del modal al abrir
     const timer = window.setTimeout(() => {
@@ -70,6 +72,7 @@ export function useModalFocusTrap(
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
       if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
         previouslyFocused.focus();
       }

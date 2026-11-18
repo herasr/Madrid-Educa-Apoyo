@@ -54,6 +54,7 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
 
   beforeEach(() => {
     window.localStorage.clear();
+    window.scrollTo = vi.fn();
   });
 
   it('Header cumple WCAG AA, marca aria-current="page" y abre el menú Exportar en escritorio y móvil', async () => {
@@ -169,6 +170,21 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
 
     await expectNoA11yViolations(container);
 
+    // Navegación ARIA por teclado entre pestañas de la ficha
+    const detailsTab = screen.getByRole('tab', { name: /Ficha y Contacto/i });
+    expect(detailsTab).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', detailsTab.id);
+
+    detailsTab.focus();
+    await user.keyboard('{ArrowRight}');
+    const continuityTab = screen.getByRole('tab', { name: /Continuidad ESO/i });
+    expect(continuityTab).toHaveAttribute('aria-selected', 'true');
+    expect(document.activeElement).toBe(continuityTab);
+
+    await user.keyboard('{Home}');
+    const whyTab = screen.getByRole('tab', { name: /Evidencia/i });
+    expect(whyTab).toHaveAttribute('aria-selected', 'true');
+
     await user.keyboard('{Escape}');
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -197,10 +213,16 @@ describe('Accesibilidad automatizada (axe-core) y pruebas de componentes', () =>
     await user.click(easyReadBtn);
     expect(screen.getByText(/Modo Lectura Fácil activo:/i)).toBeInTheDocument();
 
-    // Filtrar por código único y limpiar con el botón rápido
+    // Comprobar estado aria-pressed de los modos Lista y Mapa
+    const listBtn = screen.getByRole('button', { name: /^Lista$/i });
+    const mapBtn = screen.getByRole('button', { name: /^Mapa$/i });
+    expect(mapBtn).toHaveAttribute('aria-pressed', 'true');
+    expect(listBtn).toHaveAttribute('aria-pressed', 'false');
+
+    // Filtrar por código único (con debounce de 150 ms) y limpiar con el botón rápido
     const searchInput = screen.getByRole('textbox', { name: /Buscar centros por nombre/i });
     await user.type(searchInput, '28010722');
-    expect(screen.getByText(/1 resultado/i)).toBeInTheDocument();
+    expect(await screen.findByText(/1 resultado/i)).toBeInTheDocument();
     const clearSearchBtn = screen.getByRole('button', { name: /Limpiar búsqueda de texto/i });
     await user.click(clearSearchBtn);
     expect(searchInput).toHaveValue('');

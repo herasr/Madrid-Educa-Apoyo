@@ -125,8 +125,8 @@ python3 -m pipelines.ingest && python3 -m pipelines.validate && python3 -m pipel
 - `validate.py`: comprueba campos obligatorios, unicidad de códigos `28xxxxxx` y coordenadas válidas dentro de la Comunidad de Madrid para los 433 registros.
 - `reconcile.py`: valida los municipios contra el nomenclátor oficial de 179 municipios de la Comunidad de Madrid.
 - `detect_changes.py`: compara el hash SHA-256 del catálogo respecto a la ejecución anterior.
-- `export.py`: genera `data_products/centros_apoyo.csv` y `data_products/centros_apoyo.geojson` (433 features) incluyendo servicios, accesibilidad física, código oficial Ayto (`0..6`) y observaciones.
-- `scripts/build_app_data.py`: genera `public/data/centros.json` (catálogo asíncrono desacoplado del bundle inicial) y `src/data/officialTea.ts` (solo metadatos) para la aplicación web.
+- `export.py`: genera `data_products/centros_apoyo.csv` (UTF-8 con BOM y separador `;` protegido frente a inyección de fórmulas) y `data_products/centros_apoyo.geojson` (433 features) incluyendo servicios, accesibilidad física, código oficial Ayto (`0..6`) y observaciones.
+- `scripts/build_app_data.py`: genera `public/data/centros.json` (catálogo asíncrono desacoplado del bundle inicial) y `src/data/officialTea.ts` (metadatos oficiales y los 179 municipios del nomenclátor IGN) para la aplicación web.
 
 El flujo de GitHub Actions (`.github/workflows/update_resources.yml`) se ejecuta automáticamente en cada `push`/`pull_request` y semanalmente cada lunes: ejecuta el pipeline Python, valida la integridad con `pytest`, corre la suite de pruebas web y de accesibilidad (`axe-core`), verifica tipos TypeScript estrictos (`npm run lint`), compila la aplicación (`npm run build`) y la despliega en GitHub Pages en la rama principal.
 

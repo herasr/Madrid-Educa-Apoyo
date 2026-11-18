@@ -46,6 +46,22 @@ def derived_props(r):
     }
 
 
+FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
+
+
+def sanitize_csv_cell(value):
+    if value is None:
+        return ""
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, (int, float)):
+        return str(value)
+    text = str(value)
+    if text and text[0] in FORMULA_PREFIXES:
+        return "'" + text
+    return text
+
+
 def export_products():
     print("[Pipeline - Export] Generando productos de datos abiertos (GeoJSON RFC 7946, CSV, JSON)...")
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -79,22 +95,28 @@ def export_products():
     print(f"  ✓ GeoJSON RFC 7946 generado: {geojson_path} ({len(features)} entidades)")
 
     csv_path = os.path.join(OUTPUT_DIR, "centros_apoyo.csv")
-    with open(csv_path, "w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDS + EXTRA_FIELDS)
+    with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=FIELDS + EXTRA_FIELDS, delimiter=";")
         writer.writeheader()
         for r in rows:
-            out = {k: r.get(k, "") for k in FIELDS}
-            out["distrito"] = out["distrito"] or ""
+            out = {}
+            for k in FIELDS:
+                val = r.get(k, "")
+                if k in ("latitud", "longitud"):
+                    out[k] = "" if val is None else val
+                else:
+                    out[k] = sanitize_csv_cell(val)
+            out["distrito"] = sanitize_csv_cell(r.get("distrito") or "")
             dp = derived_props(r)
             for dk in ("comedor", "transporte_escolar", "aula_matinal", "enfermeria", "accesibilidad_fisica"):
                 val = dp[dk]
                 out[dk] = "" if val is None else ("true" if val else "false")
-            out["observaciones"] = dp["observaciones"]
-            out["etapas_con_apoyo"] = "|".join(r.get("etapas_con_apoyo", []))
+            out["observaciones"] = sanitize_csv_cell(dp["observaciones"])
+            out["etapas_con_apoyo"] = sanitize_csv_cell("|".join(r.get("etapas_con_apoyo", [])))
             extra_needs = [a.get("need_id") for a in r.get("extra_apoyos", []) if a.get("need_id")]
-            out["all_need_ids"] = "|".join([r.get("need_id", "")] + extra_needs)
+            out["all_need_ids"] = sanitize_csv_cell("|".join([r.get("need_id", "")] + extra_needs))
             writer.writerow(out)
-    print(f"  ✓ CSV generado: {csv_path} ({len(rows)} filas)")
+    print(f"  ✓ CSV (UTF-8 BOM, ';') generado: {csv_path} ({len(rows)} filas)")
 
     meta = data.get("ingestion_metadata", {})
     counts = meta.get("counts", {})

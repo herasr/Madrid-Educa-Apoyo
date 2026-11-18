@@ -61,6 +61,38 @@ export const TERMINOLOGY_MAP: Record<string, { plain: string; desc: string }> = 
     plain: 'Dirección de Área Territorial',
     desc: 'Oficina territorial de educación de la Comunidad de Madrid.',
   },
+  CEE: {
+    plain: 'Colegio de Educación Especial',
+    desc: 'Centro específico para alumnado que requiere apoyos muy intensos o permanentes.',
+  },
+  CREACIM: {
+    plain: 'Centro Regional de Altas Capacidades',
+    desc: 'Centro público especializado en orientación y seguimiento de altas capacidades en Madrid.',
+  },
+  PEAC: {
+    plain: 'Programa de Enriquecimiento (Altas Capacidades)',
+    desc: 'Talleres gratuitos los sábados en institutos públicos para alumnado con altas capacidades.',
+  },
+  TDL: {
+    plain: 'Trastorno del Desarrollo del Lenguaje',
+    desc: 'Dificultad persistente en la comprensión o expresión del lenguaje oral.',
+  },
+  TEL: {
+    plain: 'Trastorno Específico del Lenguaje',
+    desc: 'Denominación equivalente a TDL para dificultades específicas del lenguaje.',
+  },
+  EAT: {
+    plain: 'Equipo de Atención Temprana (0-6 años)',
+    desc: 'Equipo público que orienta y valora las necesidades educativas en Educación Infantil.',
+  },
+  PMR: {
+    plain: 'Personas con Movilidad Reducida',
+    desc: 'Condiciones físicas del edificio (cota cero, ascensor o baño adaptado) para moverse sin barreras.',
+  },
+  PTVA: {
+    plain: 'Programa de Transición a la Vida Adulta',
+    desc: 'Etapa en Colegios de Educación Especial orientada a la autonomía personal y laboral (16-21 años).',
+  },
 };
 
 export function simplifyText(text: string): string {
