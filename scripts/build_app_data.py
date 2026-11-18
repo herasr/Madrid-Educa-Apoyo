@@ -3,18 +3,18 @@
 Convierte los centros oficiales procesados por el pipeline
 (data/processed/schools_extracted.json) en el módulo TypeScript que consume la web:
 
-  src/data/officialTea.ts ->
-    OFFICIAL_ALL_SCHOOLS (433 centros y equipos oficiales)
-    OFFICIAL_TEA_SCHOOLS (subconjunto de 336 centros preferentes TEA)
-    OFFICIAL_CATALOG_SUMMARY, OFFICIAL_TEA_SOURCE, OFFICIAL_MUNICIPALITIES
+  public/data/centros.json -> 433 centros y equipos oficiales (carga asíncrona cacheable)
+  src/data/officialTea.ts  -> OFFICIAL_TEA_SOURCE, OFFICIAL_MUNICIPALITIES (metadatos ligeros)
 """
 
 import csv
 import json
+import os
 
 INPUT = "data/processed/schools_extracted.json"
 MUNICIPIOS_CSV = "data/reference/municipios_madrid_centroides.csv"
 OUTPUT = "src/data/officialTea.ts"
+OUTPUT_JSON = "public/data/centros.json"
 
 ETAPA_LABEL = {"PRIMARIA": "Primaria", "SECUNDARIA": "Secundaria", "MIXTA": "Mixta", "INFANTIL": "Infantil"}
 
@@ -454,11 +454,17 @@ def main():
     def js(obj):
         return json.dumps(obj, ensure_ascii=False, indent=2)
 
+    os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as fj:
+        json.dump(schools_all, fj, ensure_ascii=False, separators=(",", ":"))
+
     content = f"""/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  *
  * ARCHIVO GENERADO AUTOMÁTICAMENTE por scripts/build_app_data.py — no editar a mano.
+ * Los {len(schools_all)} registros completos se publican en public/data/centros.json para descarga
+ * asíncrona e independiente de la caché del código JavaScript.
  *
  * Datos procedentes exclusivamente de fuentes públicas oficiales (con detección de conflictos en data/review/):
  * - {len(schools_tea)} centros de atención preferente TEA (Consejería de Educación CAM, {meta['curso']})
@@ -470,20 +476,16 @@ def main():
  * - Enriquecimiento de Madrid capital (transporte público, barrio, equipamiento y códigos ACCESIBILIDAD 0..6): Ayuntamiento de Madrid (datos.madrid.es).
  */
 
-import {{ MunicipalityOption, School }} from '../types';
+import {{ MunicipalityOption }} from '../types';
 
 export const OFFICIAL_TEA_SOURCE = {js(source)} as const;
 
 export const OFFICIAL_MUNICIPALITIES: MunicipalityOption[] = {js(municipalities(rows))};
-
-export const OFFICIAL_TEA_SCHOOLS: School[] = {js(schools_tea)};
-
-export const OFFICIAL_ALL_SCHOOLS: School[] = {js(schools_all)};
 """
     with open(OUTPUT, "w", encoding="utf-8") as f:
         f.write(content)
     print(
-        f"  ✓ {OUTPUT} generado ({len(schools_all)} centros oficiales totales: "
+        f"  ✓ {OUTPUT} y {OUTPUT_JSON} generados ({len(schools_all)} centros oficiales totales: "
         f"{len(schools_tea)} TEA + {cee_count} CEE + {hosp_count} Hospitalaria + "
         f"{visual_count} Visual + {aacc_count} Altas Capacidades + "
         f"{auditiva_count} Auditiva + {motora_count} Motora + {tdah_count} TDAH + {tel_count} TEL)"

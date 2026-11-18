@@ -2,27 +2,46 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  *
- * Catálogo de centros educativos de la aplicación Madrid Educa Apoyo.
- * Criterio de calidad: catálogo basado exclusivamente en ficheros públicos oficiales verificables
- * y cruce automático con control de conflictos y límites documentados.
- *
- * Fuentes integradas (433 entidades oficiales):
- * - Consejería de Educación CAM: 336 centros de atención preferente TEA (curso 2024/25).
- * - Portal de Datos Abiertos CAM (CC BY 4.0): 69 CEE (ALTA), 14 Aulas Hospitalarias,
- *   3 recursos de Discapacidad Visual, 10 de Altas Capacidades y 3 EOEP Específicos regionales.
- * - Ayuntamiento de Madrid (datos.madrid.es 300614-0): enriquecimiento para Madrid capital.
+ * Cargador asíncrono del catálogo oficial de centros educativos (Madrid Educa Apoyo).
+ * Los 433 registros oficiales se sirven desde `public/data/centros.json` para reducir el
+ * tamaño del bundle inicial y mantener su caché independiente de los despliegues de UI.
  */
 
 import { School } from '../types';
-import { OFFICIAL_ALL_SCHOOLS, OFFICIAL_TEA_SCHOOLS } from './officialTea';
-
-export { OFFICIAL_TEA_SCHOOLS, OFFICIAL_ALL_SCHOOLS };
 
 /** Colección vacía: se han eliminado todos los centros de muestra simulados. */
 export const DEMO_SCHOOLS: School[] = [];
 
+let cachedCatalogPromise: Promise<School[]> | null = null;
+
+export function resolveCatalogUrl(): string {
+  const base = import.meta.env.BASE_URL || './';
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+  return `${normalizedBase}data/centros.json`;
+}
+
 /**
- * Catálogo completo utilizado por la aplicación:
- * Contiene las 433 entidades oficiales verificadas en el catálogo abierto.
+ * Carga y memoriza los 433 centros y equipos oficiales desde `data/centros.json`.
  */
-export const SCHOOLS_DATA: School[] = [...OFFICIAL_ALL_SCHOOLS];
+export async function loadSchoolsCatalog(): Promise<School[]> {
+  if (!cachedCatalogPromise) {
+    cachedCatalogPromise = fetch(resolveCatalogUrl(), {
+      headers: { Accept: 'application/json' }
+    })
+      .then(async response => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} al cargar el catálogo oficial`);
+        }
+        const data = (await response.json()) as School[];
+        if (!Array.isArray(data)) {
+          throw new Error('El formato de centros.json no es una lista válida');
+        }
+        return data;
+      })
+      .catch(err => {
+        cachedCatalogPromise = null;
+        throw err;
+      });
+  }
+  return cachedCatalogPromise;
+}

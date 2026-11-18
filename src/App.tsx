@@ -20,7 +20,7 @@ import {
   SearchState,
   TestScenario
 } from './types';
-import { SCHOOLS_DATA } from './data/schools';
+import { loadSchoolsCatalog } from './data/schools';
 import { OFFICIAL_TEA_SOURCE } from './data/officialTea';
 import {
   computeDynamicCounts,
@@ -72,8 +72,6 @@ import {
   CheckCircle,
   Map,
   LayoutGrid,
-  Share2,
-  Download,
   ExternalLink,
   ShieldCheck,
   X
@@ -81,7 +79,11 @@ import {
 import { LEGAL_DISCLAIMER, ProcedureTopic } from './data/disclaimerAndProcedures';
 import { useModalFocusTrap } from './utils/useModalFocusTrap';
 
-export default function App() {
+interface AppProps {
+  initialSchools?: School[];
+}
+
+export default function App({ initialSchools }: AppProps = {}) {
   // 1. Estado de búsqueda inicial con sincronización de URL
   const [searchState, setSearchState] = useState<SearchState>(() => {
     if (typeof window !== 'undefined' && window.location.search) {
@@ -96,6 +98,31 @@ export default function App() {
 
   // Pestaña activa simplificada: Buscar, Continuidad, Comparador, Pasaporte, Fuentes
   const [activeTab, setActiveTab] = useState<'search' | 'continuity' | 'comparator' | 'passport' | 'sources'>('search');
+
+  // Catálogo oficial (433 entidades) cargado de forma asíncrona desde public/data/centros.json
+  const [schoolsCatalog, setSchoolsCatalog] = useState<School[]>(() => initialSchools ?? []);
+  const [isCatalogLoading, setIsCatalogLoading] = useState<boolean>(() => !initialSchools);
+  const [catalogError, setCatalogError] = useState<string | null>(null);
+
+  const loadCatalog = React.useCallback(async () => {
+    setIsCatalogLoading(true);
+    setCatalogError(null);
+    try {
+      const data = await loadSchoolsCatalog();
+      setSchoolsCatalog(data);
+    } catch (err) {
+      console.error('Error cargando catálogo oficial:', err);
+      setCatalogError('No se pudo cargar el catálogo oficial de centros educativos.');
+    } finally {
+      setIsCatalogLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!initialSchools) {
+      void loadCatalog();
+    }
+  }, [initialSchools, loadCatalog]);
 
   // Modo de visualización en el buscador: Mapa (Mapa + Lista) por defecto en primera carga, o Lista
   const [searchViewMode, setSearchViewMode] = useState<'cards' | 'map'>('map');
@@ -192,31 +219,33 @@ export default function App() {
 
   // 2. Filtrado acumulativo y ordenación (N.1)
   const filteredSchools = useMemo(() => {
-    const matching = SCHOOLS_DATA.filter(school => matchesCentre(school, searchState));
+    if (schoolsCatalog.length === 0) return [];
+    const matching = schoolsCatalog.filter(school => matchesCentre(school, searchState));
     return sortCentres(matching, searchState);
-  }, [searchState]);
+  }, [schoolsCatalog, searchState]);
 
   // 3. Contadores dinámicos para cada opción (N.5)
   const dynamicCounts = useMemo<DynamicCounts>(() => {
-    return computeDynamicCounts(SCHOOLS_DATA, searchState);
-  }, [searchState]);
+    return computeDynamicCounts(schoolsCatalog, searchState);
+  }, [schoolsCatalog, searchState]);
 
   // 4. Análisis de Cero Resultados si no hay coincidencias (N.7)
   const zeroResultsAnalysis = useMemo(() => {
+    if (isCatalogLoading || catalogError) return null;
     if (filteredSchools.length === 0) {
-      return analyzeZeroResults(SCHOOLS_DATA, searchState);
+      return analyzeZeroResults(schoolsCatalog, searchState);
     }
     return null;
-  }, [filteredSchools.length, searchState]);
+  }, [isCatalogLoading, catalogError, filteredSchools.length, schoolsCatalog, searchState]);
 
   // Centros para el Comparador y Pasaporte
   const comparedSchools = useMemo(() => {
-    return SCHOOLS_DATA.filter(s => comparedIds.includes(s.id));
-  }, [comparedIds]);
+    return schoolsCatalog.filter(s => comparedIds.includes(s.id));
+  }, [schoolsCatalog, comparedIds]);
 
   const passportSchools = useMemo(() => {
-    return SCHOOLS_DATA.filter(s => passportIds.includes(s.id));
-  }, [passportIds]);
+    return schoolsCatalog.filter(s => passportIds.includes(s.id));
+  }, [schoolsCatalog, passportIds]);
 
   // Handlers para comparar (Límite estricto a 3 centros para legibilidad familiar)
   const handleToggleCompare = (school: School) => {
@@ -261,11 +290,6 @@ export default function App() {
       searchQuery: '',
       sort: 'distance'
     });
-  };
-
-  // Restablecer a estado inicial con valores por defecto
-  const handleResetInitial = () => {
-    setSearchState(INITIAL_SEARCH_STATE);
   };
 
   // Copiar enlace compartible completo (sin coordenadas GPS personales)
@@ -687,8 +711,36 @@ export default function App() {
                 </div>
               )}
 
-              {/* Si hay cero resultados, mostrar análisis y relajación asistida */}
-              {filteredSchools.length === 0 && zeroResultsAnalysis ? (
+              {/* Estado de carga o error de red del catálogo JSON */}
+              {isCatalogLoading ? (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="bg-white border border-slate-200 rounded-2xl p-8 text-center space-y-3 shadow-xs"
+                >
+                  <div className="w-8 h-8 rounded-full border-3 border-blue-200 border-t-blue-700 animate-spin mx-auto" aria-hidden="true" />
+                  <p className="text-sm font-bold text-slate-900">
+                    Cargando catálogo oficial ({OFFICIAL_TEA_SOURCE.totalCentrosCatalogo} centros y equipos)...
+                  </p>
+                  <p className="text-xs text-slate-600">
+                    Datos abiertos de la Comunidad de Madrid y Ayuntamiento de Madrid.
+                  </p>
+                </div>
+              ) : catalogError ? (
+                <div
+                  role="alert"
+                  className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-center space-y-3 shadow-xs"
+                >
+                  <p className="text-sm font-bold text-rose-950">{catalogError}</p>
+                  <button
+                    type="button"
+                    onClick={() => void loadCatalog()}
+                    className="px-4 py-2 bg-rose-700 hover:bg-rose-800 text-white rounded-xl text-xs font-bold cursor-pointer"
+                  >
+                    Reintentar carga
+                  </button>
+                </div>
+              ) : filteredSchools.length === 0 && zeroResultsAnalysis ? (
                 <ZeroResultsAdvice
                   state={searchState}
                   analysis={zeroResultsAnalysis}

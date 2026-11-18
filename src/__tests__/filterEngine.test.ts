@@ -18,7 +18,7 @@ import {
   INITIAL_SEARCH_STATE
 } from '../utils/filterEngine';
 import { School, SearchState } from '../types';
-import { SCHOOLS_DATA } from '../data/schools';
+import { TEST_ALL_SCHOOLS as SCHOOLS_DATA } from './catalogHelper';
 
 // Mock dataset representing varied school types, needs, and locations
 const mockSchools: School[] = [

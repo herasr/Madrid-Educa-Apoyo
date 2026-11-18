@@ -6,11 +6,14 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { OFFICIAL_ALL_SCHOOLS, OFFICIAL_TEA_SCHOOLS, OFFICIAL_TEA_SOURCE } from '../data/officialTea';
-import { DEMO_SCHOOLS, SCHOOLS_DATA } from '../data/schools';
+import { OFFICIAL_TEA_SOURCE } from '../data/officialTea';
+import { DEMO_SCHOOLS } from '../data/schools';
+import { TEST_ALL_SCHOOLS as OFFICIAL_ALL_SCHOOLS, TEST_TEA_SCHOOLS as OFFICIAL_TEA_SCHOOLS } from './catalogHelper';
 import { INITIAL_SEARCH_STATE, matchesCentre, serializeSearchStateToQuery } from '../utils/filterEngine';
 import { TEST_SCENARIOS } from '../data/testScenarios';
 import { SearchState } from '../types';
+
+const SCHOOLS_DATA = OFFICIAL_ALL_SCHOOLS;
 
 describe('Datos oficiales CAM + Ayto. Madrid + ONCE (433 entidades)', () => {
   it('carga los 336 centros del documento TEA con códigos únicos de 8 dígitos', () => {

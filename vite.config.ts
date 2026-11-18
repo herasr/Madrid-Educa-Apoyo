@@ -5,7 +5,9 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   const siteUrl = (
-    process.env.VITE_SITE_URL || 'https://datamadrid.github.io/madrid-educa-apoyo'
+    process.env.VITE_SITE_URL ||
+    process.env.CF_PAGES_URL ||
+    'https://herasr.github.io/Madrid-Educa-Apoyo'
   ).replace(/\/$/, '');
 
   return {

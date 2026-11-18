@@ -13,12 +13,7 @@ import React from 'react';
 import { School, SearchState } from '../types';
 import {
   GraduationCap,
-  ShieldCheck,
   AlertCircle,
-  Building,
-  ArrowRight,
-  ExternalLink,
-  MapPin,
   CheckCircle2
 } from 'lucide-react';
 import { calculateHaversineDistance, MUNICIPALITIES } from '../data/municipalities';

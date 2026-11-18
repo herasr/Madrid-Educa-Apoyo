@@ -3,17 +3,39 @@
 > **Buscador Educativo Accesible con Evidencia Oficial y Filtros Acumulativos**
 > *Comunidad de Madrid — Atención Educativa Especializada · Proyecto cívico DataMad 2026*
 
+[![CI / Datos y Despliegue](https://github.com/herasr/Madrid-Educa-Apoyo/actions/workflows/update_resources.yml/badge.svg)](https://github.com/herasr/Madrid-Educa-Apoyo/actions/workflows/update_resources.yml)
 [![Licencia](https://img.shields.io/badge/licencia-Apache--2.0-blue.svg)](LICENSE)
 [![Datos Abiertos CAM](https://img.shields.io/badge/datos-Portal%20Datos%20Abiertos%20CAM%20(CC%20BY%204.0)-1d4ed8.svg)](#-datos-cargados-y-procedencia)
-[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages%20(sin%20autenticación)-059669.svg)](#-publicación-en-vivo-github-pages)
+[![Demo GitHub Pages](https://img.shields.io/badge/demo%20p%C3%BAblica-GitHub%20Pages-059669.svg)](https://herasr.github.io/Madrid-Educa-Apoyo/)
 
 ---
 
-## 🌐 Publicación en vivo (GitHub Pages)
+## 🌐 Demo pública (GitHub Pages)
 
-Esta aplicación es un buscador estático sin servidor propio ni dependencias privadas. Al publicar el repositorio en GitHub y activar **Settings → Pages → Source: GitHub Actions**, el flujo [`.github/workflows/update_resources.yml`](.github/workflows/update_resources.yml) compila y despliega automáticamente la versión pública sin pantallas de acceso ni autenticación previa en:
+Esta aplicación es un buscador estático sin servidor propio ni dependencias privadas. Se compila y despliega automáticamente mediante [`.github/workflows/update_resources.yml`](.github/workflows/update_resources.yml) sin pantallas de autenticación previa en:
 
-- `https://<tu-usuario>.github.io/<nombre-del-repositorio>/`
+- 👉 **[https://herasr.github.io/Madrid-Educa-Apoyo/](https://herasr.github.io/Madrid-Educa-Apoyo/)**
+
+> **Nota de despliegue:** el repositorio requiere tener activado **Settings → Pages → Source: GitHub Actions** (o permisos de `enablement: true` en el token del flujo) y ejecutar el workflow en `main`.
+
+---
+
+## 🏗️ Arquitectura de datos y aplicación
+
+```mermaid
+flowchart LR
+  S1["CKAN CAM\n(centros_educativos)"] --> P["Pipeline Python\ningest → validate → reconcile\n→ detect_changes → export"]
+  S2["PDF / Snapshot TEA\n2024/25 (336 centros)"] --> P
+  S3["datos.madrid.es\n(300614-0 Capital)"] --> P
+  S4["IGN / INE\n179 municipios · 21 distritos"] --> P
+
+  P --> R["data/review/\nconflictos_nombres.json\nayto_matches_dudosos.json\nverificacion_tea_pdf.json"]
+  P --> D["data_products/\ncentros_apoyo.csv\ncentros_apoyo.geojson"]
+  P --> W["scripts/build_app_data.py\npublic/data/centros.json (~1,1 MB)\nsrc/data/officialTea.ts (metadatos)"]
+
+  W --> SPA["React + Vite + Leaflet\n(fuentes autoalojadas · cero GPS en URL)"]
+  SPA --> GHP["GitHub Pages\n(herasr.github.io/Madrid-Educa-Apoyo)"]
+```
 
 ---
 
@@ -44,7 +66,7 @@ El proyecto cruza **tres conjuntos públicos abiertos y verificables** —más l
 - `data/review/conflictos_nombres.json`, `ayto_matches_dudosos.json`, `verificacion_tea_pdf.json` — colas automáticas de revisión y verificación documental.
 - `data/reference/` — centroides de respaldo de los 179 municipios (IGN) y 21 distritos de Madrid, generados con `scripts/build_geo_reference.py`.
 - `data_products/` — productos reutilizables en **CSV** y **GeoJSON (RFC 7946, 433 registros)** con servicios, código de accesibilidad y observaciones incluidos.
-- `src/data/officialTea.ts` — módulo TypeScript generado automáticamente con `scripts/build_app_data.py`.
+- `public/data/centros.json` y `src/data/officialTea.ts` — catálogo JSON estático cargado de forma asíncrona (cacheable por separado del código JS) y módulo ligero de metadatos generados automáticamente con `scripts/build_app_data.py`.
 
 ---
 
@@ -76,9 +98,9 @@ El proyecto cruza **tres conjuntos públicos abiertos y verificables** —más l
 ## 🛠️ Requisitos e Instalación
 
 ### Requisitos previos
-- **Node.js**: v22.12+ (requerido por Vitest 4 y Vite)
+- **Node.js**: v22.12+ (requerido por Vitest 5 y Vite)
 - **npm**: v10+
-- **Python**: v3.10+ (para ejecutar el pipeline de datos)
+- **Python**: v3.10+ (para ejecutar el pipeline de datos y `pytest`)
 
 ### Instalación local
 ```bash
@@ -104,22 +126,38 @@ python3 -m pipelines.ingest && python3 -m pipelines.validate && python3 -m pipel
 - `reconcile.py`: valida los municipios contra el nomenclátor oficial de 179 municipios de la Comunidad de Madrid.
 - `detect_changes.py`: compara el hash SHA-256 del catálogo respecto a la ejecución anterior.
 - `export.py`: genera `data_products/centros_apoyo.csv` y `data_products/centros_apoyo.geojson` (433 features) incluyendo servicios, accesibilidad física, código oficial Ayto (`0..6`) y observaciones.
-- `scripts/build_app_data.py`: genera `src/data/officialTea.ts` para la aplicación web.
+- `scripts/build_app_data.py`: genera `public/data/centros.json` (catálogo asíncrono desacoplado del bundle inicial) y `src/data/officialTea.ts` (solo metadatos) para la aplicación web.
 
-El flujo de GitHub Actions (`.github/workflows/update_resources.yml`) se ejecuta automáticamente en cada `push`/`pull_request` y semanalmente cada lunes: ejecuta el pipeline Python, corre la suite de pruebas, verifica tipos TypeScript (`npm run lint`), compila la aplicación (`npm run build`) y la despliega en GitHub Pages en la rama principal.
+El flujo de GitHub Actions (`.github/workflows/update_resources.yml`) se ejecuta automáticamente en cada `push`/`pull_request` y semanalmente cada lunes: ejecuta el pipeline Python, valida la integridad con `pytest`, corre la suite de pruebas web y de accesibilidad (`axe-core`), verifica tipos TypeScript estrictos (`npm run lint`), compila la aplicación (`npm run build`) y la despliega en GitHub Pages en la rama principal.
 
 ---
 
 ## 🧪 Pruebas y Validación
 
-El proyecto incluye pruebas unitarias automatizadas para el motor de filtros, la integridad de las 433 entidades oficiales, la resolución de conflictos (`28020120` / `28011258`), el bloqueo de falsos enlaces municipales (`28012299` CEE Alenta), los códigos de accesibilidad Ayto (`0..6`), la privacidad en URLs compartibles y los 12 escenarios técnicos `FIL-001` a `FIL-012`:
+El proyecto combina pruebas del pipeline Python (`pytest`) con una suite React/Vitest + `@testing-library/react` + `axe-core` (WCAG 2A/2AA) que valida el motor de filtros (`FIL-001` a `FIL-012`), la integridad de las 433 entidades oficiales, la resolución de conflictos (`28020120` / `28011258`), el bloqueo de falsos enlaces municipales (`28012299` CEE Alenta), los códigos de accesibilidad Ayto (`0..6`), la gestión de foco en modales, el modo Lectura Fácil y la privacidad en URLs compartibles:
 ```bash
-# Ejecutar suite de pruebas con Vitest
+# Pruebas unitarias del pipeline Python (ETRS89→WGS84, conflictos, falsos enlaces, integridad JSON)
+python -m pytest -v
+
+# Suite de pruebas web + componentes + accesibilidad WCAG AA (Vitest + axe-core)
 npm test
 
-# Comprobar tipos TypeScript y compilación de producción
+# Comprobación estricta de tipos TypeScript y compilación de producción
 npm run lint && npm run build
 ```
+
+---
+
+## 🎤 Presentación DataMad (guion de 3 minutos y métricas clave)
+
+- **Problema:** Las familias con necesidades de apoyo educativo en la Comunidad de Madrid tienen la información fragmentada entre PDFs de Centros Preferentes TEA, el catálogo CKAN regional y los ficheros municipales de `datos.madrid.es`, sin una herramienta unificada ni accesible.
+- **Solución:** Buscador estático 100 % open-source (`0 €` de infraestructura) con trazabilidad campo a campo (A1/A2), lógica acumulativa real, mapa con dispersión en abanico, Lectura Fácil, Pasaporte Local privado y descarga abierta en CSV/GeoJSON.
+- **Cifras verificadas en el repositorio:**
+  - **433** entidades y equipos oficiales unificados (**336** TEA, **69** CEE, **14** Aulas Hospitalarias, **10** Altas Capacidades, **3** Discapacidad Visual y **3** EOEP Específicos CAM).
+  - **432 / 433** centros con coordenada oficial ETRS89 `EPSG:25830` convertida a WGS84 (`1` con centroide oficial de Valdemoro).
+  - **152** centros en Madrid capital enriquecidos vía `datos.madrid.es` (`300614-0`) con transporte, servicios y código PMR (`0..6`).
+  - **Actualización semanal automatizada** los lunes vía GitHub Actions, con fuentes autoalojadas (`@fontsource`) para evitar peticiones a terceros al cargar.
+- **Hoja de ruta abierta:** integración automatizada de próximos PDFs TEA que publique la Consejería en `comunidad.madrid` y extensión de enriquecimiento de servicios a más municipios conforme publiquen ficheros abiertos equivalentes a `300614-0`.
 
 ---
 

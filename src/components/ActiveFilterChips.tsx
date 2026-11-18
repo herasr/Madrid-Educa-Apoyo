@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { X, Trash2 } from 'lucide-react';
-import { AccessibilityId, EvidenceId, NeedId, OwnershipId, SearchState, ServiceId, StageId } from '../types';
+import { AccessibilityId, OwnershipId, SearchState, ServiceId, StageId } from '../types';
 
 interface ActiveFilterChipsProps {
   state: SearchState;

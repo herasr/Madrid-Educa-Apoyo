@@ -5,7 +5,7 @@
  * Permite ejecutar y verificar cada uno de los 12 escenarios de prueba con un solo clic.
  */
 
-import { SearchState, TestScenario } from '../types';
+import { TestScenario } from '../types';
 
 export const TEST_SCENARIOS: TestScenario[] = [
   {

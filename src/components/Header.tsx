@@ -19,7 +19,6 @@ import {
   Database,
   PlayCircle
 } from 'lucide-react';
-import { ProcedureTopic } from '../data/disclaimerAndProcedures';
 
 interface HeaderProps {
   currentTab: 'search' | 'continuity' | 'comparator' | 'passport' | 'sources';
